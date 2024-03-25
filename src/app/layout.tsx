@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { createClient } from "@supabase/supabase-js";
 
+import { Header } from "@/src/components/Header";
 import theme from "../theme";
 
 // Create a single supabase client for interacting with your database
@@ -34,6 +35,8 @@ export default function RootLayout({
         <body className={inter.className}>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
+              <Header />
+
               <Container maxWidth="sm">{children}</Container>
             </ThemeProvider>
           </AppRouterCacheProvider>
