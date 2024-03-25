@@ -1,20 +1,39 @@
 import Link from "next/link";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 export default function Home() {
   return (
-    <Box component="main">
-      <Typography variant="h1">Hello, world!</Typography>
+    <>
+      <Typography variant="h1">Sign Designer</Typography>
 
-      <Typography>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, sed
-        perferendis odit pariatur voluptate quos eum perspiciatis quod
-        reprehenderit numquam.
+      <Typography marginBottom={2}>
+        Design a design Lorem ipsum dolor, sit amet consectetur adipisicing
+        elit. Vitae, distinctio!
       </Typography>
 
-      <Link href="/log-in">Log in</Link>
-      <Link href="/sign-up">Sign up</Link>
-    </Box>
+      <Box sx={{ justifyContent: "center" }}>
+        <Button
+          component={Link}
+          href="/log-in"
+          variant="contained"
+          size="large"
+          sx={{ marginBottom: 2, width: "100%" }}
+        >
+          Design your sign
+        </Button>
+
+        <Button
+          component={Link}
+          href="/log-in"
+          variant="outlined"
+          size="large"
+          sx={{ width: "100%" }}
+        >
+          View our signs
+        </Button>
+      </Box>
+    </>
   );
 }
