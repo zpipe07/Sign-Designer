@@ -16,6 +16,7 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 
 import { SignOut } from "@/src/components/Header/SignOut";
+import theme from "@/src/theme";
 
 const pages = ["Products", "Pricing", "Blog"];
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -44,7 +45,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ marginBottom: theme.spacing(4) }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

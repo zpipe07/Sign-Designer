@@ -2,6 +2,8 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
+import { Form } from "@/src/components/Form";
+
 type Props = { onSubmit(formData: FormData): any };
 
 export type FormValues = {
@@ -11,12 +13,17 @@ export type FormValues = {
 
 export const SignUpFormView: React.FC<Props> = ({ onSubmit }) => {
   return (
-    <form action={onSubmit}>
-      <TextField type="email" name="email" />
-
-      <TextField type="password" name="password" />
-
-      <Button type="submit">Sign up</Button>
-    </form>
+    <Form
+      action={onSubmit}
+      inputComponents={[
+        <TextField type="email" name="email" key="email" fullWidth />,
+        <TextField type="password" name="password" key="password" fullWidth />,
+      ]}
+      actionComponents={[
+        <Button variant="contained" type="submit" key="sign up" fullWidth>
+          Sign up
+        </Button>,
+      ]}
+    />
   );
 };
