@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-import { SignUpForm } from "@/src/app/components/SignUpForm";
+import { SignUpForm } from "@/src/components/SignUpForm";
 
 export default function SignUp() {
   return (
