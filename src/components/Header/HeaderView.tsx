@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { User } from "@supabase/supabase-js";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -16,9 +17,12 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 
 import { SignOut } from "@/src/components/Header/SignOut";
-import theme from "@/src/theme";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [
+  { label: "Design your sign", href: "/design" },
+  { label: "View our work", href: "/our-work" },
+  { label: "About us", href: "/about-us" },
+];
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 type Props = {
@@ -46,14 +50,14 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
 
   return (
     <AppBar position="static" sx={{ marginBottom: 4 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -64,7 +68,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Sign Designer
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -96,9 +100,15 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map(({ label, href }) => (
+                // @ts-ignore
+                <MenuItem
+                  key={label}
+                  component={Link}
+                  href={href}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -108,7 +118,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -120,16 +130,18 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Sign Designer
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages.map(({ label, href }) => (
               <Button
-                key={page}
+                component={Link}
+                href={href}
+                key={label}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {label}
               </Button>
             ))}
           </Box>

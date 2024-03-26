@@ -22,7 +22,7 @@ type Shape = "rectangular" | "circular";
 
 type Text = {
   text: string;
-  // fontSize: number;
+  fontSize: number;
 };
 
 type Color = "red" | "green" | "blue" | "indigo" | "violet";
@@ -39,7 +39,7 @@ export type Inputs = {
 export const SignDesignerForm = () => {
   const { register, control, watch } = useForm<Inputs>({
     defaultValues: {
-      texts: [{ text: "123 Main Street" }],
+      texts: [{ text: "123 Main Street", fontSize: 16 }],
     },
   });
   const { fields, append, remove } = useFieldArray({ control, name: "texts" });
@@ -47,6 +47,7 @@ export const SignDesignerForm = () => {
   const addRow = () => {
     append({
       text: "",
+      fontSize: 16,
     });
   };
 
@@ -128,21 +129,29 @@ export const SignDesignerForm = () => {
             <FormLabel>Text</FormLabel>
             <Grid container spacing={1} marginBottom={1}>
               {fields.map((field, index) => (
-                <Grid item xs={12} key={field.id}>
-                  <TextField
-                    placeholder="Enter your text here"
-                    {...register(`texts.${index}.text`)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton onClick={() => deleteRow(index)}>
-                            <DeleteForeverIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
+                <>
+                  <Grid item xs={6}>
+                    <TextField
+                      placeholder="Enter your text here"
+                      {...register(`texts.${index}.text`)}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={() => deleteRow(index)}>
+                              <DeleteForeverIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      {...register(`texts.${index}.fontSize`)}
+                    />
+                  </Grid>
+                </>
               ))}
             </Grid>
             <Button onClick={addRow}>Add text row</Button>

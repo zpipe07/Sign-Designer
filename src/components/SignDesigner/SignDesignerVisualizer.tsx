@@ -19,7 +19,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               opacity={0.75}
             />
 
-            {inputs.texts.map(({ text }, index) => (
+            {inputs.texts.map(({ text, fontSize }, index) => (
               <text
                 x="150"
                 y={index * 15 + 75 - inputs.texts.length * 5}
@@ -27,6 +27,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
                 key={text}
                 alignmentBaseline="middle"
                 textAnchor="middle"
+                fontSize={fontSize}
               >
                 {text}
               </text>
@@ -44,7 +45,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               opacity={0.75}
             />
 
-            {inputs.texts.map(({ text }, index) => (
+            {inputs.texts.map(({ text, fontSize }, index) => (
               <text
                 x="0"
                 y="0"
@@ -52,6 +53,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
                 key={text}
                 alignmentBaseline="middle"
                 textAnchor="middle"
+                fontSize={fontSize}
               >
                 {text}
               </text>

@@ -37,7 +37,7 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <Header />
 
-              <Container maxWidth="sm">{children}</Container>
+              <Container maxWidth="md">{children}</Container>
             </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
