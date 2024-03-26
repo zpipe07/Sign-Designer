@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+
 import { Inputs } from "@/src/components/SignDesigner/SignDesignerForm";
 
 type Props = {
@@ -6,26 +8,57 @@ type Props = {
 
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
   return (
-    <svg>
-      {inputs.shape === "rectangular" && (
-        <rect width="200" height="100" fill="blue" opacity={0.25} />
-      )}
+    <Box display="flex" justifyContent="center">
+      <svg height="300" width="300">
+        {inputs.shape === "rectangular" && (
+          <g transform="translate(0,0)">
+            <rect
+              width="300"
+              height="150"
+              fill={inputs.backgroundColor}
+              opacity={0.75}
+            />
 
-      {inputs.shape === "circular" && (
-        <circle r="50" cx="50" cy="50" fill="blue" opacity={0.25} />
-      )}
+            {inputs.texts.map(({ text }, index) => (
+              <text
+                x="150"
+                y={index * 15 + 75 - inputs.texts.length * 5}
+                fill={inputs.textColor}
+                key={text}
+                alignmentBaseline="middle"
+                textAnchor="middle"
+              >
+                {text}
+              </text>
+            ))}
+          </g>
+        )}
 
-      {inputs.texts.map(({ text }, index) => (
-        <text
-          x="5"
-          y={index * 20 + 15}
-          fill="red"
-          key={text}
-          dominantBaseline="middle"
-        >
-          {text}
-        </text>
-      ))}
-    </svg>
+        {inputs.shape === "circular" && (
+          <g transform="translate(150,150)">
+            <circle
+              r="150"
+              cx="0"
+              cy="0"
+              fill={inputs.backgroundColor}
+              opacity={0.75}
+            />
+
+            {inputs.texts.map(({ text }, index) => (
+              <text
+                x="0"
+                y="0"
+                fill={inputs.textColor}
+                key={text}
+                alignmentBaseline="middle"
+                textAnchor="middle"
+              >
+                {text}
+              </text>
+            ))}
+          </g>
+        )}
+      </svg>
+    </Box>
   );
 };

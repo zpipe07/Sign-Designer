@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
 
 import { Form } from "@/src/components/Form";
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
@@ -24,15 +25,21 @@ type Text = {
   // fontSize: number;
 };
 
+type Color = "red" | "green" | "blue" | "indigo" | "violet";
+
+const backgroundColors: Color[] = ["red", "green", "blue", "indigo", "violet"];
+
 export type Inputs = {
   shape: Shape;
   texts: Text[];
+  backgroundColor: Color;
+  textColor: Color;
 };
 
 export const SignDesignerForm = () => {
   const { register, control, watch } = useForm<Inputs>({
     defaultValues: {
-      texts: [{ text: "" }],
+      texts: [{ text: "123 Main Street" }],
     },
   });
   const { fields, append, remove } = useFieldArray({ control, name: "texts" });
@@ -77,6 +84,46 @@ export const SignDesignerForm = () => {
               </Box>
             </RadioGroup>
           </FormControl>,
+          <FormControl key="background-color">
+            <FormLabel id="background-color-label">Background color</FormLabel>
+            <RadioGroup
+              aria-labelledby="background-color-label"
+              defaultValue="rectangular"
+              name="backgroundColor"
+            >
+              <Box sx={{ display: "flex" }}>
+                {backgroundColors.map((backgroundColor) => (
+                  <FormControlLabel
+                    value={backgroundColor}
+                    control={<Radio />}
+                    label={backgroundColor}
+                    {...register("backgroundColor")}
+                    key={backgroundColor}
+                  />
+                ))}
+              </Box>
+            </RadioGroup>
+          </FormControl>,
+          <FormControl key="text-color">
+            <FormLabel id="text-color-label">Text color</FormLabel>
+            <RadioGroup
+              aria-labelledby="text-color-label"
+              defaultValue="rectangular"
+              name="textColor"
+            >
+              <Box sx={{ display: "flex" }}>
+                {backgroundColors.map((backgroundColor) => (
+                  <FormControlLabel
+                    value={backgroundColor}
+                    control={<Radio />}
+                    label={backgroundColor}
+                    {...register("textColor")}
+                    key={backgroundColor}
+                  />
+                ))}
+              </Box>
+            </RadioGroup>
+          </FormControl>,
           <FormGroup key="text">
             <FormLabel>Text</FormLabel>
             <Grid container spacing={1} marginBottom={1}>
@@ -98,11 +145,13 @@ export const SignDesignerForm = () => {
                 </Grid>
               ))}
             </Grid>
-            <Button onClick={addRow}>Add row</Button>
+            <Button onClick={addRow}>Add text row</Button>
           </FormGroup>,
         ]}
         actionComponents={[]}
       />
+
+      <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
 
       <SignDesignerVisualizer inputs={inputs} />
     </>
