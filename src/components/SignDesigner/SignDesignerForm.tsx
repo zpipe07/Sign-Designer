@@ -15,6 +15,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Grid from "@mui/material/Grid";
 
 import { Form } from "@/src/components/Form";
+import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
 
 type Shape = "rectangular" | "circular";
 
@@ -23,13 +24,13 @@ type Text = {
   // fontSize: number;
 };
 
-type Inputs = {
+export type Inputs = {
   shape: Shape;
   texts: Text[];
 };
 
 export const SignDesignerForm = () => {
-  const { register, control } = useForm<Inputs>({
+  const { register, control, watch } = useForm<Inputs>({
     defaultValues: {
       texts: [{ text: "" }],
     },
@@ -46,58 +47,64 @@ export const SignDesignerForm = () => {
     remove(index);
   };
 
+  const inputs = watch();
+
   return (
-    <Form
-      action={() => {}}
-      inputComponents={[
-        <FormControl key="shape">
-          <FormLabel id="shape-label">Shape</FormLabel>
-          <RadioGroup
-            aria-labelledby="shape-label"
-            defaultValue="rectangular"
-            name="shape"
-          >
-            <Box sx={{ display: "flex" }}>
-              <FormControlLabel
-                value="rectangular"
-                control={<Radio />}
-                label="Rectangular"
-                {...register("shape")}
-              />
-              <FormControlLabel
-                value="circular"
-                control={<Radio />}
-                label="Circular"
-                {...register("shape")}
-              />
-            </Box>
-          </RadioGroup>
-        </FormControl>,
-        <FormGroup key="text">
-          <FormLabel>Text</FormLabel>
-          <Grid container spacing={1} marginBottom={1}>
-            {fields.map((field, index) => (
-              <Grid item xs={12} key={field.id}>
-                <TextField
-                  placeholder="Enter your text here"
-                  {...register(`texts.${index}.text`)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={() => deleteRow(index)}>
-                          <DeleteForeverIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+    <>
+      <Form
+        action={() => {}}
+        inputComponents={[
+          <FormControl key="shape">
+            <FormLabel id="shape-label">Shape</FormLabel>
+            <RadioGroup
+              aria-labelledby="shape-label"
+              defaultValue="rectangular"
+              name="shape"
+            >
+              <Box sx={{ display: "flex" }}>
+                <FormControlLabel
+                  value="rectangular"
+                  control={<Radio />}
+                  label="Rectangular"
+                  {...register("shape")}
                 />
-              </Grid>
-            ))}
-          </Grid>
-          <Button onClick={addRow}>Add row</Button>
-        </FormGroup>,
-      ]}
-      actionComponents={[]}
-    />
+                <FormControlLabel
+                  value="circular"
+                  control={<Radio />}
+                  label="Circular"
+                  {...register("shape")}
+                />
+              </Box>
+            </RadioGroup>
+          </FormControl>,
+          <FormGroup key="text">
+            <FormLabel>Text</FormLabel>
+            <Grid container spacing={1} marginBottom={1}>
+              {fields.map((field, index) => (
+                <Grid item xs={12} key={field.id}>
+                  <TextField
+                    placeholder="Enter your text here"
+                    {...register(`texts.${index}.text`)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => deleteRow(index)}>
+                            <DeleteForeverIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Button onClick={addRow}>Add row</Button>
+          </FormGroup>,
+        ]}
+        actionComponents={[]}
+      />
+
+      <SignDesignerVisualizer inputs={inputs} />
+    </>
   );
 };
