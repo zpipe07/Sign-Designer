@@ -16,7 +16,7 @@ export default function Home() {
       <Box sx={{ justifyContent: "center" }}>
         <Button
           component={Link}
-          href="/log-in"
+          href="/design"
           variant="contained"
           size="large"
           sx={{ marginBottom: 2, width: "100%" }}
