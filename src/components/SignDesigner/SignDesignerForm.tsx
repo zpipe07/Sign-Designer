@@ -1,5 +1,5 @@
 "use client";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,11 +7,6 @@ import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
-import FormGroup from "@mui/material/FormGroup";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
@@ -50,7 +45,8 @@ const colorCombos: ColorCombo[] = [
 
 export type Inputs = {
   shape: Shape;
-  texts: Text[];
+  streetNumber: string;
+  streetName: string;
   color: ColorCombo;
 };
 
@@ -58,22 +54,11 @@ export const SignDesignerForm = () => {
   const { register, control, watch, setValue } = useForm<Inputs>({
     defaultValues: {
       shape: "rectangular",
-      texts: [{ text: "123 Main Street", fontSize: 16 }],
+      streetNumber: "",
+      streetName: "",
       color: colorCombos[0],
     },
   });
-  const { fields, append, remove } = useFieldArray({ control, name: "texts" });
-
-  const addRow = () => {
-    append({
-      text: "",
-      fontSize: 16,
-    });
-  };
-
-  const deleteRow = (index: number) => {
-    remove(index);
-  };
 
   const inputs = watch();
 
@@ -105,6 +90,24 @@ export const SignDesignerForm = () => {
               </Box>
             </RadioGroup>
           </FormControl>,
+
+          <Grid container spacing={{ xs: 1, sm: 2 }} key="address">
+            <Grid item xs={5} sm={3}>
+              <TextField
+                label="Street number"
+                {...register("streetNumber")}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={7} sm={9}>
+              <TextField
+                label="Street name"
+                {...register("streetName")}
+                fullWidth
+              />
+            </Grid>
+          </Grid>,
 
           <Controller
             control={control}
@@ -186,40 +189,6 @@ export const SignDesignerForm = () => {
             }}
             key="color"
           />,
-
-          <FormGroup key="text">
-            <FormLabel>Text</FormLabel>
-            <Grid container spacing={1} marginBottom={1}>
-              {fields.map((field, index) => (
-                <>
-                  <Grid item xs={8}>
-                    <TextField
-                      placeholder="Enter your text here"
-                      {...register(`texts.${index}.text`)}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={() => deleteRow(index)}>
-                              <DeleteForeverIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField
-                      type="number"
-                      {...register(`texts.${index}.fontSize`)}
-                      fullWidth
-                    />
-                  </Grid>
-                </>
-              ))}
-            </Grid>
-            <Button onClick={addRow}>Add text row</Button>
-          </FormGroup>,
         ]}
         actionComponents={[]}
       />

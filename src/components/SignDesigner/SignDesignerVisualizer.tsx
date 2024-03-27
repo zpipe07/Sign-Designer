@@ -17,17 +17,37 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
         {inputs.shape === "rectangular" && (
           <g transform={`translate(${borderWidth},${borderWidth})`}>
             <rect
-              // width="400"
               width={width - borderWidth * 2}
-              // height="200"
               height={height - borderWidth * 2}
               fill={inputs.color.backgroundColor}
               stroke={inputs.color.foregroundColor}
               strokeWidth={borderWidth}
-              // opacity={0.75}
             />
 
-            {inputs.texts.map(({ text, fontSize }, index) => (
+            <text
+              y={75}
+              x={(width - borderWidth * 2) / 2}
+              fontSize={50}
+              fontWeight={800}
+              alignmentBaseline="middle"
+              textAnchor="middle"
+              fill={inputs.color.foregroundColor}
+            >
+              {inputs.streetNumber}
+            </text>
+            <text
+              y={125}
+              x={(width - borderWidth * 2) / 2}
+              fontSize={40}
+              fontWeight={600}
+              alignmentBaseline="middle"
+              textAnchor="middle"
+              fill={inputs.color.foregroundColor}
+            >
+              {inputs.streetName}
+            </text>
+
+            {/* {inputs.texts.map(({ text, fontSize }, index) => (
               <text
                 x="200"
                 y={index * 25 + 100 - inputs.texts.length * 5}
@@ -39,7 +59,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               >
                 {text}
               </text>
-            ))}
+            ))} */}
           </g>
         )}
 
@@ -51,10 +71,9 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               cy="0"
               fill={inputs.color.backgroundColor}
               stroke={inputs.color.foregroundColor}
-              // opacity={0.75}
             />
 
-            {inputs.texts.map(({ text, fontSize }, index) => (
+            {/* {inputs.texts.map(({ text, fontSize }, index) => (
               <text
                 x="0"
                 y={index * 25 - inputs.texts.length * 5}
@@ -66,7 +85,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               >
                 {text}
               </text>
-            ))}
+            ))} */}
           </g>
         )}
       </svg>
