@@ -15,7 +15,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
             <rect
               width="400"
               height="200"
-              fill={inputs.backgroundColor}
+              fill={inputs.color.backgroundColor}
               opacity={0.75}
             />
 
@@ -23,7 +23,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               <text
                 x="200"
                 y={index * 25 + 100 - inputs.texts.length * 5}
-                fill={inputs.textColor}
+                fill={inputs.color.foregroundColor}
                 key={text}
                 alignmentBaseline="middle"
                 textAnchor="middle"
@@ -41,7 +41,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               r="200"
               cx="0"
               cy="0"
-              fill={inputs.backgroundColor}
+              fill={inputs.color.backgroundColor}
               opacity={0.75}
             />
 
@@ -49,7 +49,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               <text
                 x="0"
                 y={index * 25 - inputs.texts.length * 5}
-                fill={inputs.textColor}
+                fill={inputs.color.foregroundColor}
                 key={text}
                 alignmentBaseline="middle"
                 textAnchor="middle"

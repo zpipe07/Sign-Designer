@@ -26,36 +26,40 @@ type Text = {
   fontSize: number;
 };
 
-type Color =
-  | "red"
-  | "orange"
-  | "yellow"
-  | "green"
-  | "blue"
-  | "indigo"
-  | "violet";
+type Color = "black" | "white" | "tan" | "green" | "yellow";
 
-const colors: Color[] = [
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "blue",
-  "indigo",
-  "violet",
+type ColorCombo = {
+  foregroundColor: Color;
+  backgroundColor: Color;
+};
+
+const colorCombos: ColorCombo[] = [
+  {
+    foregroundColor: "black",
+    backgroundColor: "white",
+  },
+  {
+    foregroundColor: "tan",
+    backgroundColor: "green",
+  },
+  {
+    foregroundColor: "yellow",
+    backgroundColor: "black",
+  },
 ];
 
 export type Inputs = {
   shape: Shape;
   texts: Text[];
-  backgroundColor: Color;
-  textColor: Color;
+  color: ColorCombo;
 };
 
 export const SignDesignerForm = () => {
-  const { register, control, watch } = useForm<Inputs>({
+  const { register, control, watch, setValue } = useForm<Inputs>({
     defaultValues: {
+      shape: "rectangular",
       texts: [{ text: "123 Main Street", fontSize: 16 }],
+      color: colorCombos[0],
     },
   });
   const { fields, append, remove } = useFieldArray({ control, name: "texts" });
@@ -101,99 +105,76 @@ export const SignDesignerForm = () => {
               </Box>
             </RadioGroup>
           </FormControl>,
-          <FormControl key="background-color">
-            <FormLabel id="background-color-label">Background color</FormLabel>
+
+          <FormControl key="color">
+            <FormLabel id="color-label">Color</FormLabel>
             <RadioGroup
-              aria-labelledby="background-color-label"
-              defaultValue="rectangular"
-              name="backgroundColor"
+              aria-labelledby="color-label"
+              defaultValue={JSON.stringify(colorCombos[0])}
+              name="color"
             >
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                {colors.map((backgroundColor) => (
-                  <FormControlLabel
-                    value={backgroundColor}
-                    control={
-                      <Tooltip
-                        arrow
-                        title={backgroundColor}
-                        slotProps={{
-                          popper: {
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -14],
-                                },
-                              },
-                            ],
-                          },
-                        }}
-                      >
-                        <Radio
-                          size="large"
-                          sx={{
-                            color: backgroundColor,
+                {colorCombos.map(({ foregroundColor, backgroundColor }) => {
+                  return (
+                    <FormControlLabel
+                      value={JSON.stringify({
+                        foregroundColor,
+                        backgroundColor,
+                      })}
+                      sx={{ marginLeft: 0 }}
+                      control={
+                        <Tooltip
+                          arrow
+                          title={`${foregroundColor}/${backgroundColor}`}
+                        >
+                          <Radio
+                            size="large"
+                            checkedIcon={<></>}
+                            icon={<></>}
+                            disableRipple
+                            sx={{
+                              borderRadius: 2,
+                              overflow: "hidden",
+                              position: "relative",
+                              border: "2px solid",
+                              height: 60,
+                              width: 60,
 
-                            "&.Mui-checked": {
-                              color: backgroundColor,
-                            },
-                          }}
-                        />
-                      </Tooltip>
-                    }
-                    label={null}
-                    {...register("backgroundColor")}
-                    key={backgroundColor}
-                  />
-                ))}
-              </Box>
-            </RadioGroup>
-          </FormControl>,
-          <FormControl key="text-color">
-            <FormLabel id="text-color-label">Text color</FormLabel>
-            <RadioGroup
-              aria-labelledby="text-color-label"
-              defaultValue="rectangular"
-              name="textColor"
-            >
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                {colors.map((backgroundColor) => (
-                  <FormControlLabel
-                    value={backgroundColor}
-                    control={
-                      <Tooltip
-                        arrow
-                        title={backgroundColor}
-                        slotProps={{
-                          popper: {
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -14],
-                                },
+                              ":before, :after": {
+                                content: "''",
+                                position: "absolute",
+                                left: 0,
+                                height: "50%",
+                                width: "100%",
                               },
-                            ],
-                          },
-                        }}
-                      >
-                        <Radio
-                          size="large"
-                          sx={{
-                            color: backgroundColor,
 
-                            "&.Mui-checked": {
-                              color: backgroundColor,
-                            },
-                          }}
-                        />
-                      </Tooltip>
-                    }
-                    label={null}
-                    {...register("textColor")}
-                    key={backgroundColor}
-                  />
-                ))}
+                              ":before": {
+                                top: 0,
+                                backgroundColor: foregroundColor,
+                              },
+                              ":after": {
+                                bottom: 0,
+                                backgroundColor: backgroundColor,
+                              },
+
+                              "&.Mui-checked": {
+                                boxShadow: "0 0 0 2px black",
+                                color: "inherit",
+                              },
+                            }}
+                          />
+                        </Tooltip>
+                      }
+                      label={null}
+                      {...register("color", {
+                        onChange: (e) => {
+                          setValue("color", JSON.parse(e.target.value));
+                        },
+                      })}
+                      key={`${foregroundColor}/${backgroundColor}`}
+                    />
+                  );
+                })}
               </Box>
             </RadioGroup>
           </FormControl>,
