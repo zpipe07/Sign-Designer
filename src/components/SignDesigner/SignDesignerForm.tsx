@@ -14,6 +14,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
 
 import { Form } from "@/src/components/Form";
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
@@ -25,9 +26,24 @@ type Text = {
   fontSize: number;
 };
 
-type Color = "red" | "green" | "blue" | "indigo" | "violet";
+type Color =
+  | "red"
+  | "orange"
+  | "yellow"
+  | "green"
+  | "blue"
+  | "indigo"
+  | "violet";
 
-const backgroundColors: Color[] = ["red", "green", "blue", "indigo", "violet"];
+const colors: Color[] = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "blue",
+  "indigo",
+  "violet",
+];
 
 export type Inputs = {
   shape: Shape;
@@ -69,7 +85,7 @@ export const SignDesignerForm = () => {
               defaultValue="rectangular"
               name="shape"
             >
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 <FormControlLabel
                   value="rectangular"
                   control={<Radio />}
@@ -92,12 +108,40 @@ export const SignDesignerForm = () => {
               defaultValue="rectangular"
               name="backgroundColor"
             >
-              <Box sx={{ display: "flex" }}>
-                {backgroundColors.map((backgroundColor) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                {colors.map((backgroundColor) => (
                   <FormControlLabel
                     value={backgroundColor}
-                    control={<Radio />}
-                    label={backgroundColor}
+                    control={
+                      <Tooltip
+                        arrow
+                        title={backgroundColor}
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -14],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <Radio
+                          size="large"
+                          sx={{
+                            color: backgroundColor,
+
+                            "&.Mui-checked": {
+                              color: backgroundColor,
+                            },
+                          }}
+                        />
+                      </Tooltip>
+                    }
+                    label={null}
                     {...register("backgroundColor")}
                     key={backgroundColor}
                   />
@@ -112,12 +156,40 @@ export const SignDesignerForm = () => {
               defaultValue="rectangular"
               name="textColor"
             >
-              <Box sx={{ display: "flex" }}>
-                {backgroundColors.map((backgroundColor) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                {colors.map((backgroundColor) => (
                   <FormControlLabel
                     value={backgroundColor}
-                    control={<Radio />}
-                    label={backgroundColor}
+                    control={
+                      <Tooltip
+                        arrow
+                        title={backgroundColor}
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -14],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <Radio
+                          size="large"
+                          sx={{
+                            color: backgroundColor,
+
+                            "&.Mui-checked": {
+                              color: backgroundColor,
+                            },
+                          }}
+                        />
+                      </Tooltip>
+                    }
+                    label={null}
                     {...register("textColor")}
                     key={backgroundColor}
                   />
@@ -130,7 +202,7 @@ export const SignDesignerForm = () => {
             <Grid container spacing={1} marginBottom={1}>
               {fields.map((field, index) => (
                 <>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}>
                     <TextField
                       placeholder="Enter your text here"
                       {...register(`texts.${index}.text`)}
@@ -143,12 +215,14 @@ export const SignDesignerForm = () => {
                           </InputAdornment>
                         ),
                       }}
+                      fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <TextField
                       type="number"
                       {...register(`texts.${index}.fontSize`)}
+                      fullWidth
                     />
                   </Grid>
                 </>

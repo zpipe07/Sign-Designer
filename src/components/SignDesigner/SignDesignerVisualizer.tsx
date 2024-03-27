@@ -9,20 +9,20 @@ type Props = {
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
   return (
     <Box display="flex" justifyContent="center">
-      <svg height="300" width="300">
+      <svg height="400" width="400">
         {inputs.shape === "rectangular" && (
           <g transform="translate(0,0)">
             <rect
-              width="300"
-              height="150"
+              width="400"
+              height="200"
               fill={inputs.backgroundColor}
               opacity={0.75}
             />
 
             {inputs.texts.map(({ text, fontSize }, index) => (
               <text
-                x="150"
-                y={index * 15 + 75 - inputs.texts.length * 5}
+                x="200"
+                y={index * 25 + 100 - inputs.texts.length * 5}
                 fill={inputs.textColor}
                 key={text}
                 alignmentBaseline="middle"
@@ -36,9 +36,9 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
         )}
 
         {inputs.shape === "circular" && (
-          <g transform="translate(150,150)">
+          <g transform="translate(200,200)">
             <circle
-              r="150"
+              r="200"
               cx="0"
               cy="0"
               fill={inputs.backgroundColor}
@@ -48,7 +48,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
             {inputs.texts.map(({ text, fontSize }, index) => (
               <text
                 x="0"
-                y="0"
+                y={index * 25 - inputs.texts.length * 5}
                 fill={inputs.textColor}
                 key={text}
                 alignmentBaseline="middle"
