@@ -7,16 +7,24 @@ type Props = {
 };
 
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
+  const width = 400;
+  const height = 250;
+  const borderWidth = 20;
+
   return (
     <Box display="flex" justifyContent="center">
       <svg height="400" width="400">
         {inputs.shape === "rectangular" && (
-          <g transform="translate(0,0)">
+          <g transform={`translate(${borderWidth},${borderWidth})`}>
             <rect
-              width="400"
-              height="200"
+              // width="400"
+              width={width - borderWidth * 2}
+              // height="200"
+              height={height - borderWidth * 2}
               fill={inputs.color.backgroundColor}
-              opacity={0.75}
+              stroke={inputs.color.foregroundColor}
+              strokeWidth={borderWidth}
+              // opacity={0.75}
             />
 
             {inputs.texts.map(({ text, fontSize }, index) => (
@@ -42,7 +50,8 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               cx="0"
               cy="0"
               fill={inputs.color.backgroundColor}
-              opacity={0.75}
+              stroke={inputs.color.foregroundColor}
+              // opacity={0.75}
             />
 
             {inputs.texts.map(({ text, fontSize }, index) => (

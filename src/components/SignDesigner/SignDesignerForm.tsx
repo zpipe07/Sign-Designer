@@ -1,5 +1,5 @@
 "use client";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -106,78 +106,87 @@ export const SignDesignerForm = () => {
             </RadioGroup>
           </FormControl>,
 
-          <FormControl key="color">
-            <FormLabel id="color-label">Color</FormLabel>
-            <RadioGroup
-              aria-labelledby="color-label"
-              defaultValue={JSON.stringify(colorCombos[0])}
-              name="color"
-            >
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                {colorCombos.map(({ foregroundColor, backgroundColor }) => {
-                  return (
-                    <FormControlLabel
-                      value={JSON.stringify({
-                        foregroundColor,
-                        backgroundColor,
-                      })}
-                      sx={{ marginLeft: 0 }}
-                      control={
-                        <Tooltip
-                          arrow
-                          title={`${foregroundColor}/${backgroundColor}`}
-                        >
-                          <Radio
-                            size="large"
-                            checkedIcon={<></>}
-                            icon={<></>}
-                            disableRipple
-                            sx={{
-                              borderRadius: 2,
-                              overflow: "hidden",
-                              position: "relative",
-                              border: "2px solid",
-                              height: 60,
-                              width: 60,
-
-                              ":before, :after": {
-                                content: "''",
-                                position: "absolute",
-                                left: 0,
-                                height: "50%",
-                                width: "100%",
-                              },
-
-                              ":before": {
-                                top: 0,
-                                backgroundColor: foregroundColor,
-                              },
-                              ":after": {
-                                bottom: 0,
-                                backgroundColor: backgroundColor,
-                              },
-
-                              "&.Mui-checked": {
-                                boxShadow: "0 0 0 2px black",
-                                color: "inherit",
-                              },
+          <Controller
+            control={control}
+            name="color"
+            render={({ field: { onChange } }) => {
+              return (
+                <FormControl>
+                  <FormLabel id="color-label">Color</FormLabel>
+                  <RadioGroup
+                    aria-labelledby="color-label"
+                    defaultValue={JSON.stringify(colorCombos[0])}
+                    name="color"
+                  >
+                    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                      {colorCombos.map((colorCombo) => {
+                        const { foregroundColor, backgroundColor } = colorCombo;
+                        return (
+                          <FormControlLabel
+                            onChange={(event) => {
+                              const target = event.target as HTMLInputElement;
+                              onChange(JSON.parse(target.value));
                             }}
-                          />
-                        </Tooltip>
-                      }
-                      label={null}
-                      {...register("color", {
-                        onChange: (e) => {
-                          setValue("color", JSON.parse(e.target.value));
-                        },
+                            value={JSON.stringify(colorCombo)}
+                            key={JSON.stringify(colorCombo)}
+                            label={null}
+                            sx={{ marginLeft: 0 }}
+                            control={
+                              <Tooltip
+                                arrow
+                                title={`${foregroundColor}/${backgroundColor}`}
+                              >
+                                <Radio
+                                  size="large"
+                                  checkedIcon={<></>}
+                                  icon={<></>}
+                                  disableRipple
+                                  sx={{
+                                    borderRadius: 2,
+                                    overflow: "hidden",
+                                    position: "relative",
+                                    border: "2px solid",
+                                    height: 60,
+                                    width: 60,
+                                    transition:
+                                      "box-shadow 0.15s ease-in-out 0s",
+
+                                    ":before, :after": {
+                                      content: "''",
+                                      position: "absolute",
+                                      left: 0,
+                                      height: "50%",
+                                      width: "100%",
+                                    },
+
+                                    ":before": {
+                                      top: 0,
+                                      backgroundColor: foregroundColor,
+                                    },
+                                    ":after": {
+                                      bottom: 0,
+                                      backgroundColor: backgroundColor,
+                                    },
+
+                                    "&.Mui-checked": {
+                                      boxShadow: "0 0 0 2px black",
+                                      color: "inherit",
+                                    },
+                                  }}
+                                />
+                              </Tooltip>
+                            }
+                          ></FormControlLabel>
+                        );
                       })}
-                      key={`${foregroundColor}/${backgroundColor}`}
-                    />
-                  );
-                })}
-              </Box>
-            </RadioGroup>
-          </FormControl>,
+                    </Box>
+                  </RadioGroup>
+                </FormControl>
+              );
+            }}
+            key="color"
+          />,
+
           <FormGroup key="text">
             <FormLabel>Text</FormLabel>
             <Grid container spacing={1} marginBottom={1}>
