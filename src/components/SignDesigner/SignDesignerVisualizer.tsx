@@ -14,7 +14,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
   return (
     <Box display="flex" justifyContent="center">
       <svg height="400" width="400">
-        {inputs.shape === "rectangular" && (
+        {inputs.shape === "rectangle" && (
           <g transform={`translate(${borderWidth},${borderWidth})`}>
             <rect
               width={width - borderWidth * 2}
@@ -65,7 +65,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           </g>
         )}
 
-        {inputs.shape === "circular" && (
+        {inputs.shape === "ellipse" && (
           <g transform="translate(200,200)">
             <circle
               r="200"

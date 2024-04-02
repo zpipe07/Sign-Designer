@@ -14,14 +14,22 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import capitalize from "@mui/material/utils/capitalize";
-
-import { Form } from "@/src/components/Form";
-import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
 import { useTheme } from "@mui/material";
 
-type Shape = "rectangular" | "circular";
+import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
+import { TopRound } from "@/src/components/SVG/TopRound";
+import { Rectangle } from "@/src/components/SVG/Rectangle";
+import { Ellipse } from "@/src/components/SVG/Ellipse";
 
-const shapes = ["rectangular", "circular"];
+type Shape = "rectangle" | "ellipse" | "oval" | "topRound" | "round-sides";
+
+const shapes: Shape[] = ["rectangle", "ellipse", "topRound"];
+
+const shapeIconMap: { [key in Shape]: React.FC } = {
+  rectangle: Rectangle,
+  ellipse: Ellipse,
+  topRound: TopRound,
+};
 
 type Color = "black" | "white" | "tan" | "green" | "yellow";
 
@@ -72,7 +80,7 @@ export const SignDesignerForm = () => {
 
   const { register, control, watch, handleSubmit } = useForm<Inputs>({
     defaultValues: {
-      shape: "rectangular",
+      shape: "rectangle",
       streetNumber: "",
       streetName: "",
       color: colorCombos[0],
@@ -100,19 +108,29 @@ export const SignDesignerForm = () => {
                 <FormLabel id="shape-label">Shape</FormLabel>
                 <RadioGroup
                   aria-labelledby="shape-label"
-                  defaultValue="rectangular"
+                  defaultValue="rectangle"
                   name="shape"
                 >
-                  <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                    {shapes.map((shape) => (
-                      <FormControlLabel
-                        value={shape}
-                        control={<Radio />}
-                        label={capitalize(shape)}
-                        {...register("shape")}
-                        key={shape}
-                      />
-                    ))}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {shapes.map((shape) => {
+                      const ShapeIcon = shapeIconMap[shape];
+
+                      return (
+                        <FormControlLabel
+                          value={shape}
+                          control={<Radio size="small" />}
+                          label={<ShapeIcon height={78} width={99} />}
+                          {...register("shape")}
+                          sx={{ marginLeft: 0 }}
+                          key={shape}
+                        />
+                      );
+                    })}
                   </Box>
                 </RadioGroup>
               </FormControl>
