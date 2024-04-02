@@ -3,24 +3,47 @@ import { SvgProps } from "@/src/components/SVG/types";
 export const TopRoundBorder: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
+  borderWidth = 0,
   streetNumber,
   streetName,
   foregroundColor,
   backgroundColor = "#D9D9D9",
   fontFamily,
 }) => {
-  const borderWidth = 20;
-
   return (
     <svg
-      width="400"
-      height="315"
-      viewBox="0 0 400 315"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M90.3147 75H96.2368L99.0836 69.8069C118.634 34.1432 156.505 10 200 10C243.495 10 281.366 34.1432 300.916 69.8069L303.763 75H309.685H380C385.523 75 390 79.4771 390 85V295C390 300.523 385.523 305 380 305H20C14.4772 305 10 300.523 10 295V85C10 79.4771 14.4772 75 20 75H90.3147Z"
+        d={`
+          m90.3147
+          75h5.9221l2.8468-5.1931c19.5504-35.6637
+          57.4214-59.8069
+          100.9164-59.8069
+          43.495
+          0
+          81.366
+          24.1432
+          100.916
+          59.8069l2.847
+          5.1931h5.922
+          70.315c5.523
+          0
+          10
+          4.4771
+          10
+          10v${height - 105}c0
+          5.523-4.477
+          10-10
+          10h-360c-5.5228
+          0-10-4.477-10-10v-${height - 105}c0-5.5229
+          4.4772-10
+          10-10h70.3147z
+        `}
         fill={backgroundColor}
         stroke={foregroundColor}
         strokeWidth={borderWidth}

@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import { Inputs } from "@/src/components/SignDesigner/SignDesignerForm";
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
-import { TopRound } from "@/src/components/SVG/TopRound";
 import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
+// import { TopRound } from "@/src/components/SVG/TopRound";
 
 type Props = {
   inputs: Inputs;
@@ -12,13 +12,16 @@ type Props = {
 
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
   const width = 400;
-  const height = 250;
+  const height = 200;
   const borderWidth = 20;
 
   return (
     <Box display="flex" justifyContent="center">
       {inputs.shape === "rectangle" && (
         <Rectangle
+          width={width}
+          height={height}
+          borderWidth={borderWidth}
           streetNumber={inputs.streetNumber}
           streetName={inputs.streetName}
           foregroundColor={inputs.color.foregroundColor}
@@ -29,6 +32,9 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
 
       {inputs.shape === "ellipse" && (
         <Ellipse
+          width={width}
+          height={height}
+          borderWidth={borderWidth}
           streetNumber={inputs.streetNumber}
           streetName={inputs.streetName}
           foregroundColor={inputs.color.foregroundColor}
@@ -39,6 +45,9 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
 
       {inputs.shape === "topRound" && (
         <TopRoundBorder
+          width={width}
+          height={height}
+          borderWidth={borderWidth}
           streetNumber={inputs.streetNumber}
           streetName={inputs.streetName}
           foregroundColor={inputs.color.foregroundColor}

@@ -198,24 +198,21 @@ export const SignDesignerForm = () => {
                                 }}
                                 value={JSON.stringify(colorCombo)}
                                 key={JSON.stringify(colorCombo)}
-                                label={null}
                                 sx={{ marginLeft: 0 }}
-                                control={
+                                control={<Radio size="small" />}
+                                label={
                                   <Tooltip
                                     arrow
                                     title={`${foregroundColor}/${backgroundColor}`}
                                   >
-                                    <Radio
-                                      checkedIcon={<></>}
-                                      icon={<></>}
-                                      disableRipple
+                                    <Box
                                       sx={{
                                         borderRadius: 2,
                                         overflow: "hidden",
                                         position: "relative",
                                         border: "2px solid",
-                                        height: 60,
-                                        width: 60,
+                                        height: 50,
+                                        width: 50,
                                         transition:
                                           "box-shadow 0.15s ease-in-out 0s",
 

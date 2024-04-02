@@ -3,6 +3,7 @@ import { Color, FontFamily } from "@/src/components/SignDesigner/SignDesignerFor
 export type SvgProps = {
   height?: number;
   width?: number;
+  borderWidth?: number;
   streetNumber?: string;
   streetName?: string;
   foregroundColor?: Color;
