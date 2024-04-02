@@ -285,20 +285,7 @@ export const SignDesignerForm = () => {
           <SignDesignerVisualizer inputs={inputs} />
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          sx={{
-            position: "fixed",
-            left: 0,
-            bottom: 0,
-            width: "100%",
-            backgroundColor: theme.palette.background.default,
-            boxShadow: theme.shadows[10],
-            padding: 2,
-            textAlign: "right",
-          }}
-        >
+        <Grid item xs={12}>
           <Button variant="outlined" size="large">
             Save
           </Button>

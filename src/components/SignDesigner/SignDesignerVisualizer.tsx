@@ -4,6 +4,7 @@ import { Inputs } from "@/src/components/SignDesigner/SignDesignerForm";
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { TopRound } from "@/src/components/SVG/TopRound";
+import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
 
 type Props = {
   inputs: Inputs;
@@ -36,7 +37,15 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
         />
       )}
 
-      {inputs.shape === "topRound" && <TopRound />}
+      {inputs.shape === "topRound" && (
+        <TopRoundBorder
+          streetNumber={inputs.streetNumber}
+          streetName={inputs.streetName}
+          foregroundColor={inputs.color.foregroundColor}
+          backgroundColor={inputs.color.backgroundColor}
+          fontFamily={inputs.fontFamily}
+        />
+      )}
       {/* <svg height="400" width="400">
         {inputs.shape === "rectangle" && (
           <g transform={`translate(${borderWidth},${borderWidth})`}>
