@@ -1,6 +1,9 @@
 import Box from "@mui/material/Box";
 
 import { Inputs } from "@/src/components/SignDesigner/SignDesignerForm";
+import { Rectangle } from "@/src/components/SVG/Rectangle";
+import { Ellipse } from "@/src/components/SVG/Ellipse";
+import { TopRound } from "@/src/components/SVG/TopRound";
 
 type Props = {
   inputs: Inputs;
@@ -13,7 +16,20 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
 
   return (
     <Box display="flex" justifyContent="center">
-      <svg height="400" width="400">
+      {inputs.shape === "rectangle" && (
+        <Rectangle
+          streetNumber={inputs.streetNumber}
+          streetName={inputs.streetName}
+          foregroundColor={inputs.color.foregroundColor}
+          backgroundColor={inputs.color.backgroundColor}
+          fontFamily={inputs.fontFamily}
+        />
+      )}
+
+      {inputs.shape === "ellipse" && <Ellipse />}
+
+      {inputs.shape === "topRound" && <TopRound />}
+      {/* <svg height="400" width="400">
         {inputs.shape === "rectangle" && (
           <g transform={`translate(${borderWidth},${borderWidth})`}>
             <rect
@@ -48,20 +64,6 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
             >
               {inputs.streetName}
             </text>
-
-            {/* {inputs.texts.map(({ text, fontSize }, index) => (
-              <text
-                x="200"
-                y={index * 25 + 100 - inputs.texts.length * 5}
-                fill={inputs.color.foregroundColor}
-                key={text}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fontSize={fontSize}
-              >
-                {text}
-              </text>
-            ))} */}
           </g>
         )}
 
@@ -74,23 +76,9 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               fill={inputs.color.backgroundColor}
               stroke={inputs.color.foregroundColor}
             />
-
-            {/* {inputs.texts.map(({ text, fontSize }, index) => (
-              <text
-                x="0"
-                y={index * 25 - inputs.texts.length * 5}
-                fill={inputs.color.foregroundColor}
-                key={text}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fontSize={fontSize}
-              >
-                {text}
-              </text>
-            ))} */}
           </g>
         )}
-      </svg>
+      </svg> */}
     </Box>
   );
 };

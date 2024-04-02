@@ -1,5 +1,6 @@
 "use client";
 import { useForm, Controller } from "react-hook-form";
+import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -8,13 +9,10 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import capitalize from "@mui/material/utils/capitalize";
-import { useTheme } from "@mui/material";
 
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
 import { TopRound } from "@/src/components/SVG/TopRound";
@@ -31,7 +29,7 @@ const shapeIconMap: { [key in Shape]: React.FC } = {
   topRound: TopRound,
 };
 
-type Color = "black" | "white" | "tan" | "green" | "yellow";
+export type Color = "black" | "white" | "tan" | "green" | "yellow";
 
 type ColorCombo = {
   foregroundColor: Color;
@@ -53,7 +51,7 @@ const colorCombos: ColorCombo[] = [
   },
 ];
 
-type FontFamily = "Times" | "Verdana" | "Lucida Console" | "Cursive";
+export type FontFamily = "Times" | "Verdana" | "Lucida Console" | "Cursive";
 
 const fontFamilies: FontFamily[] = [
   "Times",
@@ -102,6 +100,24 @@ export const SignDesignerForm = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={2}>
+            <Grid item xs={5} sm={3} md={5}>
+              {/* street number */}
+              <TextField
+                label="Street number"
+                {...register("streetNumber")}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={7} sm={5} md={7}>
+              {/* street name */}
+              <TextField
+                label="Street name"
+                {...register("streetName")}
+                fullWidth
+              />
+            </Grid>
+
             <Grid item xs={12}>
               {/* shape */}
               <FormControl key="shape" fullWidth>
@@ -124,9 +140,9 @@ export const SignDesignerForm = () => {
                         <FormControlLabel
                           value={shape}
                           control={<Radio size="small" />}
-                          label={<ShapeIcon height={78} width={99} />}
+                          label={<ShapeIcon height={55} width={70} />}
                           {...register("shape")}
-                          sx={{ marginLeft: 0 }}
+                          sx={{ marginLeft: 0, fontSize: 0 }}
                           key={shape}
                         />
                       );
@@ -134,24 +150,6 @@ export const SignDesignerForm = () => {
                   </Box>
                 </RadioGroup>
               </FormControl>
-            </Grid>
-
-            <Grid item xs={5} sm={3} md={5}>
-              {/* street number */}
-              <TextField
-                label="Street number"
-                {...register("streetNumber")}
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={7} sm={5} md={7}>
-              {/* street name */}
-              <TextField
-                label="Street name"
-                {...register("streetName")}
-                fullWidth
-              />
             </Grid>
 
             <Grid item xs={12} sm={4} md={12}>
