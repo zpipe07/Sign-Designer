@@ -10,16 +10,16 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import capitalize from "@mui/material/utils/capitalize";
 
 import { Form } from "@/src/components/Form";
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
 
 type Shape = "rectangular" | "circular";
 
-type Text = {
-  text: string;
-  fontSize: number;
-};
+const shapes = ["rectangular", "circular"];
 
 type Color = "black" | "white" | "tan" | "green" | "yellow";
 
@@ -43,11 +43,21 @@ const colorCombos: ColorCombo[] = [
   },
 ];
 
+type FontFamily = "Times" | "Verdana" | "Lucida Console" | "Cursive";
+
+const fontFamilies: FontFamily[] = [
+  "Times",
+  "Verdana",
+  "Lucida Console",
+  "Cursive",
+];
+
 export type Inputs = {
   shape: Shape;
   streetNumber: string;
   streetName: string;
   color: ColorCombo;
+  fontFamily: FontFamily;
 };
 
 export const SignDesignerForm = () => {
@@ -57,6 +67,7 @@ export const SignDesignerForm = () => {
       streetNumber: "",
       streetName: "",
       color: colorCombos[0],
+      fontFamily: "Times",
     },
   });
 
@@ -67,7 +78,8 @@ export const SignDesignerForm = () => {
       <Form
         action={() => {}}
         inputComponents={[
-          <FormControl key="shape">
+          // shape
+          <FormControl key="shape" fullWidth>
             <FormLabel id="shape-label">Shape</FormLabel>
             <RadioGroup
               aria-labelledby="shape-label"
@@ -75,22 +87,20 @@ export const SignDesignerForm = () => {
               name="shape"
             >
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                <FormControlLabel
-                  value="rectangular"
-                  control={<Radio />}
-                  label="Rectangular"
-                  {...register("shape")}
-                />
-                <FormControlLabel
-                  value="circular"
-                  control={<Radio />}
-                  label="Circular"
-                  {...register("shape")}
-                />
+                {shapes.map((shape) => (
+                  <FormControlLabel
+                    value={shape}
+                    control={<Radio />}
+                    label={capitalize(shape)}
+                    {...register("shape")}
+                    key={shape}
+                  />
+                ))}
               </Box>
             </RadioGroup>
           </FormControl>,
 
+          // address
           <Grid container spacing={{ xs: 1, sm: 2 }} key="address">
             <Grid item xs={5} sm={3}>
               <TextField
@@ -109,6 +119,7 @@ export const SignDesignerForm = () => {
             </Grid>
           </Grid>,
 
+          // color
           <Controller
             control={control}
             name="color"
@@ -140,7 +151,6 @@ export const SignDesignerForm = () => {
                                 title={`${foregroundColor}/${backgroundColor}`}
                               >
                                 <Radio
-                                  size="large"
                                   checkedIcon={<></>}
                                   icon={<></>}
                                   disableRipple
@@ -189,6 +199,23 @@ export const SignDesignerForm = () => {
             }}
             key="color"
           />,
+
+          // font
+          <FormControl key="font" fullWidth>
+            <InputLabel id="font-label">Font</InputLabel>
+            <Select
+              labelId="font-label"
+              label="Font"
+              native
+              {...register("fontFamily")}
+            >
+              {fontFamilies.map((fontFamily) => (
+                <option value={fontFamily} key={fontFamily}>
+                  {fontFamily}
+                </option>
+              ))}
+            </Select>
+          </FormControl>,
         ]}
         actionComponents={[]}
       />

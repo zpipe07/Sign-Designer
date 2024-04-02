@@ -32,6 +32,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               alignmentBaseline="middle"
               textAnchor="middle"
               fill={inputs.color.foregroundColor}
+              fontFamily={inputs.fontFamily}
             >
               {inputs.streetNumber}
             </text>
@@ -43,6 +44,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
               alignmentBaseline="middle"
               textAnchor="middle"
               fill={inputs.color.foregroundColor}
+              fontFamily={inputs.fontFamily}
             >
               {inputs.streetName}
             </text>
