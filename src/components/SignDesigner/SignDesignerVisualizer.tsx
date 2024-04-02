@@ -26,7 +26,15 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
         />
       )}
 
-      {inputs.shape === "ellipse" && <Ellipse />}
+      {inputs.shape === "ellipse" && (
+        <Ellipse
+          streetNumber={inputs.streetNumber}
+          streetName={inputs.streetName}
+          foregroundColor={inputs.color.foregroundColor}
+          backgroundColor={inputs.color.backgroundColor}
+          fontFamily={inputs.fontFamily}
+        />
+      )}
 
       {inputs.shape === "topRound" && <TopRound />}
       {/* <svg height="400" width="400">

@@ -19,44 +19,46 @@ export const Rectangle: React.FC<SvgProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        width="400"
-        height="315"
-        rx="10"
-        fill={backgroundColor}
-        stroke={foregroundColor}
-        strokeWidth={borderWidth}
-      />
+      <g transform={`translate(${borderWidth / 2},${borderWidth / 2})`}>
+        <rect
+          width={400 - borderWidth}
+          height={315 - borderWidth}
+          rx="10"
+          fill={backgroundColor}
+          stroke={foregroundColor}
+          strokeWidth={borderWidth}
+        />
 
-      {streetNumber && (
-        <text
-          y={75}
-          x={(width - borderWidth * 2) / 2}
-          fontSize={50}
-          fontWeight={800}
-          alignmentBaseline="middle"
-          textAnchor="middle"
-          fill={foregroundColor}
-          fontFamily={fontFamily}
-        >
-          {streetNumber}
-        </text>
-      )}
+        {streetNumber && (
+          <text
+            y={height / 2 - 30}
+            x={(width - borderWidth) / 2}
+            fontSize={50}
+            fontWeight={800}
+            alignmentBaseline="middle"
+            textAnchor="middle"
+            fill={foregroundColor}
+            fontFamily={fontFamily}
+          >
+            {streetNumber}
+          </text>
+        )}
 
-      {streetName && (
-        <text
-          y={125}
-          x={(width - borderWidth * 2) / 2}
-          fontSize={40}
-          fontWeight={600}
-          alignmentBaseline="middle"
-          textAnchor="middle"
-          fill={foregroundColor}
-          fontFamily={fontFamily}
-        >
-          {streetName}
-        </text>
-      )}
+        {streetName && (
+          <text
+            y={height / 2 + 20}
+            x={(width - borderWidth) / 2}
+            fontSize={40}
+            fontWeight={600}
+            alignmentBaseline="middle"
+            textAnchor="middle"
+            fill={foregroundColor}
+            fontFamily={fontFamily}
+          >
+            {streetName}
+          </text>
+        )}
+      </g>
     </svg>
   );
 };
