@@ -75,10 +75,9 @@ export const SignDesignerForm = () => {
 
   return (
     <>
-      <Form
-        action={() => {}}
-        inputComponents={[
-          // shape
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          {/* shape */}
           <FormControl key="shape" fullWidth>
             <FormLabel id="shape-label">Shape</FormLabel>
             <RadioGroup
@@ -98,28 +97,48 @@ export const SignDesignerForm = () => {
                 ))}
               </Box>
             </RadioGroup>
-          </FormControl>,
+          </FormControl>
+        </Grid>
 
-          // address
-          <Grid container spacing={{ xs: 1, sm: 2 }} key="address">
-            <Grid item xs={5} sm={3}>
-              <TextField
-                label="Street number"
-                {...register("streetNumber")}
-                fullWidth
-              />
-            </Grid>
+        <Grid item xs={5} sm={3}>
+          {/* street number */}
+          <TextField
+            label="Street number"
+            {...register("streetNumber")}
+            fullWidth
+          />
+        </Grid>
 
-            <Grid item xs={7} sm={9}>
-              <TextField
-                label="Street name"
-                {...register("streetName")}
-                fullWidth
-              />
-            </Grid>
-          </Grid>,
+        <Grid item xs={7} sm={5}>
+          {/* street name */}
+          <TextField
+            label="Street name"
+            {...register("streetName")}
+            fullWidth
+          />
+        </Grid>
 
-          // color
+        <Grid item xs={12} sm={4}>
+          {/* font */}
+          <FormControl key="font" fullWidth>
+            <InputLabel id="font-label">Font</InputLabel>
+            <Select
+              labelId="font-label"
+              label="Font"
+              native
+              {...register("fontFamily")}
+            >
+              {fontFamilies.map((fontFamily) => (
+                <option value={fontFamily} key={fontFamily}>
+                  {fontFamily}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12}>
+          {/* color */}
           <Controller
             control={control}
             name="color"
@@ -182,7 +201,7 @@ export const SignDesignerForm = () => {
                                     },
 
                                     "&.Mui-checked": {
-                                      boxShadow: "0 0 0 2px black",
+                                      boxShadow: "0 0 0 3px black",
                                       color: "inherit",
                                     },
                                   }}
@@ -198,27 +217,9 @@ export const SignDesignerForm = () => {
               );
             }}
             key="color"
-          />,
-
-          // font
-          <FormControl key="font" fullWidth>
-            <InputLabel id="font-label">Font</InputLabel>
-            <Select
-              labelId="font-label"
-              label="Font"
-              native
-              {...register("fontFamily")}
-            >
-              {fontFamilies.map((fontFamily) => (
-                <option value={fontFamily} key={fontFamily}>
-                  {fontFamily}
-                </option>
-              ))}
-            </Select>
-          </FormControl>,
-        ]}
-        actionComponents={[]}
-      />
+          />
+        </Grid>
+      </Grid>
 
       <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
 
