@@ -1,4 +1,4 @@
-import { Color, FontFamily } from "@/src/components/SignDesigner/SignDesignerForm";
+import { Color, Decoration, FontFamily } from "@/src/components/SignDesigner/SignDesignerForm";
 
 export type SvgProps = {
   height?: number;
@@ -9,4 +9,5 @@ export type SvgProps = {
   foregroundColor?: Color;
   backgroundColor?: Color;
   fontFamily?: FontFamily;
+  decoration?: Decoration | "";
 }
