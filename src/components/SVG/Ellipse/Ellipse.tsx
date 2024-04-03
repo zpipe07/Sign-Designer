@@ -1,4 +1,4 @@
-import { SvgProps } from "@/src/components/SVG/types";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
 
 export const Ellipse: React.FC<SvgProps> = ({
@@ -12,7 +12,9 @@ export const Ellipse: React.FC<SvgProps> = ({
   fontFamily,
   decoration,
 }) => {
-  const Decoration = decoration ? decorationIconMap[decoration] : null;
+  const Decoration: React.FC<FiligreeProps> | null = decoration
+    ? decorationIconMap[decoration]
+    : null;
 
   return (
     <svg

@@ -11,3 +11,12 @@ export type SvgProps = {
   fontFamily?: FontFamily;
   decoration?: Decoration | "";
 }
+
+export type FiligreeProps = {
+  height?: number;
+  width?: number;
+  x?: number;
+  y?: number;
+  transform?: string;
+  color?: Color;
+};

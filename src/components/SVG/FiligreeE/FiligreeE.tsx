@@ -1,15 +1,6 @@
-import { Color } from "@/src/components/SignDesigner/SignDesignerForm";
+import { FiligreeProps } from "@/src/components/SVG/types";
 
-type Props = {
-  height?: number;
-  width?: number;
-  x?: number;
-  y?: number;
-  transform?: string;
-  color?: Color;
-};
-
-export const FiligreeE: React.FC<Props> = ({
+export const FiligreeE: React.FC<FiligreeProps> = ({
   height = 10,
   width = 9,
   x,

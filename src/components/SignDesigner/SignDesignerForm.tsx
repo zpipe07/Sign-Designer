@@ -20,8 +20,11 @@ import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { FiligreeE } from "@/src/components/SVG/FiligreeE";
 import { FiligreeQ } from "@/src/components/SVG/FiligreeQ/FiligreeQ";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 
-type Shape = "rectangle" | "ellipse" | "oval" | "topRound" | "round-sides";
+type Shape = "rectangle" | "ellipse" | "topRound";
+// "oval" |
+// "round-sides";
 
 const shapes: Shape[] = ["rectangle", "ellipse", "topRound"];
 
@@ -147,7 +150,7 @@ export const SignDesignerForm = () => {
                     }}
                   >
                     {shapes.map((shape) => {
-                      const ShapeIcon = shapeIconMap[shape];
+                      const ShapeIcon: React.FC<SvgProps> = shapeIconMap[shape];
 
                       return (
                         <FormControlLabel
@@ -287,7 +290,9 @@ export const SignDesignerForm = () => {
                     />
 
                     {decorations.map((decoration) => {
-                      const Label = decorationIconMap[decoration];
+                      const Label: React.FC<FiligreeProps> =
+                        decorationIconMap[decoration];
+
                       return (
                         <FormControlLabel
                           value={decoration}
