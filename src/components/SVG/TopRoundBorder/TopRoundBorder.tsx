@@ -1,4 +1,5 @@
 import { SvgProps } from "@/src/components/SVG/types";
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
 
 export const TopRoundBorder: React.FC<SvgProps> = ({
   height = 315,
@@ -9,7 +10,10 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
   foregroundColor,
   backgroundColor = "#D9D9D9",
   fontFamily,
+  decoration,
 }) => {
+  const Decoration = decoration ? decorationIconMap[decoration] : null;
+
   return (
     <svg
       width={width}
@@ -77,6 +81,27 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         >
           {streetName}
         </text>
+      )}
+
+      {Decoration && (
+        <>
+          <Decoration
+            height={50}
+            width={50}
+            x={30}
+            y={105}
+            color={foregroundColor}
+          />
+
+          <Decoration
+            height={50}
+            width={50}
+            x={320}
+            y={105}
+            transform="scale(-1 1)"
+            color={foregroundColor}
+          />
+        </>
       )}
     </svg>
   );

@@ -41,6 +41,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           foregroundColor={inputs.color.foregroundColor}
           backgroundColor={inputs.color.backgroundColor}
           fontFamily={inputs.fontFamily}
+          decoration={inputs.decoration}
         />
       )}
 
@@ -54,6 +55,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           foregroundColor={inputs.color.foregroundColor}
           backgroundColor={inputs.color.backgroundColor}
           fontFamily={inputs.fontFamily}
+          decoration={inputs.decoration}
         />
       )}
       {/* <svg height="400" width="400">

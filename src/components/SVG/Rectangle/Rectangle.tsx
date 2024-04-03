@@ -64,14 +64,21 @@ export const Rectangle: React.FC<SvgProps> = ({
 
         {Decoration && (
           <>
-            <Decoration height={50} width={50} x={25} y={55} />
+            <Decoration
+              height={50}
+              width={50}
+              x={30}
+              y={30}
+              color={foregroundColor}
+            />
 
             <Decoration
               height={50}
               width={50}
-              x={305}
-              y={55}
+              x={300}
+              y={30}
               transform="scale(-1 1)"
+              color={foregroundColor}
             />
           </>
         )}
