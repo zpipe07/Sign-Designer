@@ -18,8 +18,13 @@ import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesign
 import { TopRound } from "@/src/components/SVG/TopRound";
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
+import { FiligreeE } from "@/src/components/SVG/FiligreeE";
+import { FiligreeQ } from "@/src/components/SVG/FiligreeQ/FiligreeQ";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 
-type Shape = "rectangle" | "ellipse" | "oval" | "topRound" | "round-sides";
+type Shape = "rectangle" | "ellipse" | "topRound";
+// "oval" |
+// "round-sides";
 
 const shapes: Shape[] = ["rectangle", "ellipse", "topRound"];
 
@@ -64,13 +69,23 @@ const fontFamilies: FontFamily[] = [
 
 // const sides: Side[] = ["single", "double"];
 
+export type Decoration = "foo" | "bar";
+
+const decorations: Decoration[] = ["foo", "bar"];
+
+export const decorationIconMap: { [key in Decoration]: React.FC } = {
+  foo: FiligreeE,
+  bar: FiligreeQ,
+};
+
 export type Inputs = {
   shape: Shape;
   streetNumber: string;
   streetName: string;
   color: ColorCombo;
   fontFamily: FontFamily;
-  sides: 1 | 2;
+  // sides: 1 | 2;
+  decoration: Decoration | "";
 };
 
 export const SignDesignerForm = () => {
@@ -83,7 +98,8 @@ export const SignDesignerForm = () => {
       streetName: "",
       color: colorCombos[0],
       fontFamily: "Times",
-      sides: 1,
+      // sides: 1,
+      decoration: "",
     },
   });
 
@@ -134,7 +150,7 @@ export const SignDesignerForm = () => {
                     }}
                   >
                     {shapes.map((shape) => {
-                      const ShapeIcon = shapeIconMap[shape];
+                      const ShapeIcon: React.FC<SvgProps> = shapeIconMap[shape];
 
                       return (
                         <FormControlLabel
@@ -142,7 +158,10 @@ export const SignDesignerForm = () => {
                           control={<Radio size="small" />}
                           label={<ShapeIcon height={55} width={70} />}
                           {...register("shape")}
-                          sx={{ marginLeft: 0, fontSize: 0 }}
+                          sx={{
+                            // marginLeft: 0,
+                            fontSize: 0,
+                          }}
                           key={shape}
                         />
                       );
@@ -198,7 +217,11 @@ export const SignDesignerForm = () => {
                                 }}
                                 value={JSON.stringify(colorCombo)}
                                 key={JSON.stringify(colorCombo)}
-                                sx={{ marginLeft: 0 }}
+                                sx={
+                                  {
+                                    // marginLeft: 0
+                                  }
+                                }
                                 control={<Radio size="small" />}
                                 label={
                                   <Tooltip
@@ -251,6 +274,39 @@ export const SignDesignerForm = () => {
                 }}
                 key="color"
               />
+            </Grid>
+
+            <Grid item xs={12}>
+              {/* decorations */}
+              <FormControl fullWidth>
+                <FormLabel>Decoration</FormLabel>
+                <RadioGroup name="decoration">
+                  <Box>
+                    <FormControlLabel
+                      value=""
+                      control={<Radio size="small" />}
+                      label="None"
+                      {...register("decoration")}
+                    />
+
+                    {decorations.map((decoration) => {
+                      const Label: React.FC<FiligreeProps> =
+                        decorationIconMap[decoration];
+
+                      return (
+                        <FormControlLabel
+                          value={decoration}
+                          control={<Radio size="small" />}
+                          // label={<FiligreeE height={50} width={50} />}
+                          label={<Label height={50} width={50} />}
+                          {...register("decoration")}
+                          key={decoration}
+                        />
+                      );
+                    })}
+                  </Box>
+                </RadioGroup>
+              </FormControl>
             </Grid>
 
             {/* <Grid item xs={12}>
