@@ -11,6 +11,10 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
     ? decorationIconMap[inputs.decoration]
     : null;
 
+  const textLines = inputs?.textLines.filter(({ value }) => {
+    return !!value;
+  });
+
   return (
     <svg
       width={width}
@@ -50,17 +54,19 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         strokeWidth={borderWidth}
       />
 
-      {inputs?.textLines.map(({ value }, index) => {
+      {textLines?.map(({ value }, index) => {
+        const yOffset = 170 - textLines.length * 30;
+
         return (
           <text
-            y={60 * index + 70}
+            y={60 * index + yOffset}
             x={width / 2}
             fontSize={50}
             fontWeight={800}
             alignmentBaseline="middle"
             textAnchor="middle"
-            fill={inputs.color.foregroundColor}
-            fontFamily={inputs.fontFamily}
+            fill={inputs?.color.foregroundColor}
+            fontFamily={inputs?.fontFamily}
             key={index}
           >
             {value}

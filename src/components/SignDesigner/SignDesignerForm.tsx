@@ -90,16 +90,17 @@ export type DesignFormInputs = {
 export const SignDesignerForm = () => {
   const theme = useTheme();
 
-  const { register, control, watch, handleSubmit } = useForm<DesignFormInputs>({
-    defaultValues: {
-      shape: "rectangle",
-      size: "large",
-      textLines: [{ value: "" }, { value: "" }, { value: "" }],
-      color: colorCombos[0],
-      fontFamily: "Times",
-      decoration: "",
-    },
-  });
+  const { register, control, watch, handleSubmit, setValue } =
+    useForm<DesignFormInputs>({
+      defaultValues: {
+        shape: "rectangle",
+        size: "large",
+        textLines: [{ value: "" }, { value: "" }, { value: "" }],
+        color: colorCombos[0],
+        fontFamily: "Times",
+        decoration: "",
+      },
+    });
   const { fields } = useFieldArray({ control, name: "textLines" });
   const inputs = watch();
 
@@ -199,7 +200,32 @@ export const SignDesignerForm = () => {
                             </>
                           }
                           key={size}
-                          {...register("size")}
+                          {...register("size", {
+                            onChange: (event) => {
+                              const { value } = event.target;
+
+                              if (value === "small") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                ]);
+                              }
+
+                              if (value === "medium") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                  { value: inputs.textLines[1]?.value || "" },
+                                ]);
+                              }
+
+                              if (value === "large") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                  { value: inputs.textLines[1]?.value || "" },
+                                  { value: inputs.textLines[2]?.value || "" },
+                                ]);
+                              }
+                            },
+                          })}
                         />
                       );
                     })}

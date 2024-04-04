@@ -7,12 +7,15 @@ export const Rectangle: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-
   inputs,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
     ? decorationIconMap[inputs.decoration]
     : null;
+
+  const textLines = inputs?.textLines.filter(({ value }) => {
+    return !!value;
+  });
 
   return (
     <svg
@@ -32,17 +35,19 @@ export const Rectangle: React.FC<SvgProps> = ({
           strokeWidth={borderWidth}
         />
 
-        {inputs?.textLines?.map(({ value }, index) => {
+        {textLines?.map(({ value }, index) => {
+          const yOffset = 130 - textLines.length * 20;
+
           return (
             <text
-              y={60 * index + 55}
+              y={50 * index + yOffset}
               x={(width - borderWidth) / 2}
               fontSize={50}
               fontWeight={800}
               alignmentBaseline="middle"
               textAnchor="middle"
-              fill={inputs.color.foregroundColor}
-              fontFamily={inputs.fontFamily}
+              fill={inputs?.color.foregroundColor}
+              fontFamily={inputs?.fontFamily}
               key={index}
             >
               {value}
