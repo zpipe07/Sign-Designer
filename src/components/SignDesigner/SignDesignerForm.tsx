@@ -251,10 +251,25 @@ export const SignDesignerForm = () => {
                     return null;
                   }
 
+                  let placeholder;
+
+                  if (index === 0) {
+                    placeholder = "E.g. 123";
+                  }
+
+                  if (index === 1) {
+                    placeholder = "E.g. Main Street";
+                  }
+
+                  if (index === 2) {
+                    placeholder = "E.g. The Smith's";
+                  }
+
                   return (
                     <Grid item xs={12} key={field.id}>
                       <TextField
                         {...register(`textLines.${index}.value`)}
+                        placeholder={placeholder}
                         fullWidth
                       />
                     </Grid>
@@ -389,7 +404,6 @@ export const SignDesignerForm = () => {
                         <FormControlLabel
                           value={decoration}
                           control={<Radio size="small" />}
-                          // label={<FiligreeE height={50} width={50} />}
                           label={<Label height={50} width={50} />}
                           {...register("decoration")}
                           key={decoration}
@@ -430,7 +444,7 @@ export const SignDesignerForm = () => {
           <SignDesignerVisualizer inputs={inputs} />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} marginTop={4}>
           <Button variant="outlined" size="large">
             Save
           </Button>
