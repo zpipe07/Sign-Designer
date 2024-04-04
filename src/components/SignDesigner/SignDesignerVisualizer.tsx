@@ -1,13 +1,12 @@
 import Box from "@mui/material/Box";
 
-import { Inputs } from "@/src/components/SignDesigner/SignDesignerForm";
+import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm";
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
-// import { TopRound } from "@/src/components/SVG/TopRound";
 
 type Props = {
-  inputs: Inputs;
+  inputs: DesignFormInputs;
 };
 
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
@@ -22,11 +21,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height}
           borderWidth={borderWidth}
-          textLines={inputs.textLines}
-          foregroundColor={inputs.color.foregroundColor}
-          backgroundColor={inputs.color.backgroundColor}
-          fontFamily={inputs.fontFamily}
-          decoration={inputs.decoration}
+          inputs={inputs}
         />
       )}
 
@@ -35,11 +30,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height + 40}
           borderWidth={borderWidth}
-          textLines={inputs.textLines}
-          foregroundColor={inputs.color.foregroundColor}
-          backgroundColor={inputs.color.backgroundColor}
-          fontFamily={inputs.fontFamily}
-          decoration={inputs.decoration}
+          inputs={inputs}
         />
       )}
 
@@ -48,11 +39,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height}
           borderWidth={borderWidth}
-          textLines={inputs.textLines}
-          foregroundColor={inputs.color.foregroundColor}
-          backgroundColor={inputs.color.backgroundColor}
-          fontFamily={inputs.fontFamily}
-          decoration={inputs.decoration}
+          inputs={inputs}
         />
       )}
       {/* <svg height="400" width="400">

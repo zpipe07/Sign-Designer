@@ -1,18 +1,16 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
 
+const defaultColor = "#D9D9D9";
+
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-  textLines,
-  foregroundColor,
-  backgroundColor = "#D9D9D9",
-  fontFamily,
-  decoration,
+  inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = decoration
-    ? decorationIconMap[decoration]
+  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
+    ? decorationIconMap[inputs.decoration]
     : null;
 
   return (
@@ -29,12 +27,12 @@ export const Ellipse: React.FC<SvgProps> = ({
           cy={height / 2 - borderWidth / 2}
           rx={width / 2 - borderWidth / 2}
           ry={height / 2 - borderWidth / 2}
-          fill={backgroundColor}
-          stroke={foregroundColor}
+          fill={inputs?.color.backgroundColor || defaultColor}
+          stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
         />
 
-        {textLines?.map(({ value }, index) => {
+        {inputs?.textLines?.map(({ value }, index) => {
           return (
             <text
               y={60 * index + 70}
@@ -43,9 +41,9 @@ export const Ellipse: React.FC<SvgProps> = ({
               fontWeight={800}
               alignmentBaseline="middle"
               textAnchor="middle"
-              fill={foregroundColor}
-              fontFamily={fontFamily}
-              key={value}
+              fill={inputs.color.foregroundColor}
+              fontFamily={inputs.fontFamily}
+              key={index}
             >
               {value}
             </text>
@@ -89,7 +87,7 @@ export const Ellipse: React.FC<SvgProps> = ({
               width={50}
               x={75}
               y={40}
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
 
             <Decoration
@@ -98,7 +96,7 @@ export const Ellipse: React.FC<SvgProps> = ({
               x={255}
               y={40}
               transform="scale(-1 1)"
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
           </>
         )}

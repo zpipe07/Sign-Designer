@@ -1,20 +1,17 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
 
+const defaultColor = "#D9D9D9";
+
 export const Rectangle: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-  // streetNumber,
-  // streetName,
-  textLines,
-  foregroundColor,
-  backgroundColor = "#D9D9D9",
-  fontFamily,
-  decoration,
+
+  inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = decoration
-    ? decorationIconMap[decoration]
+  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
+    ? decorationIconMap[inputs.decoration]
     : null;
 
   return (
@@ -30,12 +27,12 @@ export const Rectangle: React.FC<SvgProps> = ({
           width={width - borderWidth}
           height={height - borderWidth}
           rx="10"
-          fill={backgroundColor}
-          stroke={foregroundColor}
+          fill={inputs?.color.backgroundColor || defaultColor}
+          stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
         />
 
-        {textLines?.map(({ value }, index) => {
+        {inputs?.textLines?.map(({ value }, index) => {
           return (
             <text
               y={60 * index + 55}
@@ -44,9 +41,9 @@ export const Rectangle: React.FC<SvgProps> = ({
               fontWeight={800}
               alignmentBaseline="middle"
               textAnchor="middle"
-              fill={foregroundColor}
-              fontFamily={fontFamily}
-              key={value}
+              fill={inputs.color.foregroundColor}
+              fontFamily={inputs.fontFamily}
+              key={index}
             >
               {value}
             </text>
@@ -90,7 +87,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               width={50}
               x={30}
               y={30}
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
 
             <Decoration
@@ -99,7 +96,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               x={300}
               y={30}
               transform="scale(-1 1)"
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
           </>
         )}

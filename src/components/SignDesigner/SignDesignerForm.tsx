@@ -69,10 +69,6 @@ const fontFamilies: FontFamily[] = [
   "Cursive",
 ];
 
-// type Side = "single" | "double";
-
-// const sides: Side[] = ["single", "double"];
-
 export type Decoration = "foo" | "bar";
 
 const decorations: Decoration[] = ["foo", "bar"];
@@ -82,32 +78,25 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
   bar: FiligreeQ,
 };
 
-export type Inputs = {
+export type DesignFormInputs = {
   shape: Shape;
   size: Size;
-  // streetNumber: string;
-  // streetName: string;
   textLines: { value: string }[];
   color: ColorCombo;
   fontFamily: FontFamily;
-  // sides: 1 | 2;
   decoration: Decoration | "";
 };
 
 export const SignDesignerForm = () => {
   const theme = useTheme();
 
-  const { register, control, watch, handleSubmit } = useForm<Inputs>({
+  const { register, control, watch, handleSubmit } = useForm<DesignFormInputs>({
     defaultValues: {
       shape: "rectangle",
       size: "large",
-      // streetNumber: "",
-      // streetName: "",
       textLines: [{ value: "" }, { value: "" }, { value: "" }],
-      // textLines: [],
       color: colorCombos[0],
       fontFamily: "Times",
-      // sides: 1,
       decoration: "",
     },
   });
@@ -116,7 +105,7 @@ export const SignDesignerForm = () => {
 
   console.log({ inputs, fields });
 
-  const onSubmit = (data: Inputs) => {
+  const onSubmit = (data: DesignFormInputs) => {
     console.log({ data });
   };
 
