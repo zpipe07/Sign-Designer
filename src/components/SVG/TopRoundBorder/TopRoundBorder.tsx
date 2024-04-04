@@ -5,8 +5,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-  streetNumber,
-  streetName,
+  textLines,
   foregroundColor,
   backgroundColor = "#D9D9D9",
   fontFamily,
@@ -55,7 +54,25 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         strokeWidth={borderWidth}
       />
 
-      {streetNumber && (
+      {textLines?.map(({ value }, index) => {
+        return (
+          <text
+            y={60 * index + 70}
+            x={width / 2}
+            fontSize={50}
+            fontWeight={800}
+            alignmentBaseline="middle"
+            textAnchor="middle"
+            fill={foregroundColor}
+            fontFamily={fontFamily}
+            key={value}
+          >
+            {value}
+          </text>
+        );
+      })}
+
+      {/* {streetNumber && (
         <text
           y={height / 2 - 20}
           x={width / 2}
@@ -68,9 +85,9 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         >
           {streetNumber}
         </text>
-      )}
+      )} */}
 
-      {streetName && (
+      {/* {streetName && (
         <text
           y={height / 2 + 30}
           x={width / 2}
@@ -83,7 +100,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         >
           {streetName}
         </text>
-      )}
+      )} */}
 
       {Decoration && (
         <>
