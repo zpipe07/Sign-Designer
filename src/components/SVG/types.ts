@@ -4,8 +4,9 @@ export type SvgProps = {
   height?: number;
   width?: number;
   borderWidth?: number;
-  streetNumber?: string;
-  streetName?: string;
+  // streetNumber?: string;
+  // streetName?: string;
+  textLines?: {value: string}[];
   foregroundColor?: Color;
   backgroundColor?: Color;
   fontFamily?: FontFamily;

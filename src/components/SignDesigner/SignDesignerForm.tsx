@@ -1,5 +1,5 @@
 "use client";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -85,8 +85,9 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
 export type Inputs = {
   shape: Shape;
   size: Size;
-  streetNumber: string;
-  streetName: string;
+  // streetNumber: string;
+  // streetName: string;
+  textLines: { value: string }[];
   color: ColorCombo;
   fontFamily: FontFamily;
   // sides: 1 | 2;
@@ -100,18 +101,20 @@ export const SignDesignerForm = () => {
     defaultValues: {
       shape: "rectangle",
       size: "large",
-      streetNumber: "",
-      streetName: "",
+      // streetNumber: "",
+      // streetName: "",
+      textLines: [{ value: "" }, { value: "" }, { value: "" }],
+      // textLines: [],
       color: colorCombos[0],
       fontFamily: "Times",
       // sides: 1,
       decoration: "",
     },
   });
-
+  const { fields } = useFieldArray({ control, name: "textLines" });
   const inputs = watch();
 
-  console.log({ inputs });
+  console.log({ inputs, fields });
 
   const onSubmit = (data: Inputs) => {
     console.log({ data });
@@ -121,24 +124,22 @@ export const SignDesignerForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Grid container spacing={2}>
-            <Grid item xs={5} sm={3} md={5}>
-              {/* street number */}
+          <Grid container spacing={4}>
+            {/* <Grid item xs={5} sm={3} md={5}>
               <TextField
                 label="Street number"
                 {...register("streetNumber")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={7} sm={5} md={7}>
-              {/* street name */}
+            {/* <Grid item xs={7} sm={5} md={7}>
               <TextField
                 label="Street name"
                 {...register("streetName")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12}>
               {/* shape */}
@@ -216,6 +217,35 @@ export const SignDesignerForm = () => {
                   </Box>
                 </RadioGroup>
               </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              {/* text */}
+              {/* {inputs.textLines.map(() => {
+                return <TextField {...register("textLines")} />;
+              })} */}
+
+              <InputLabel>Text</InputLabel>
+              <Grid container spacing={1}>
+                {fields.map((field, index) => {
+                  if (inputs.size === "medium" && index > 1) {
+                    return null;
+                  }
+
+                  if (inputs.size === "small" && index > 0) {
+                    return null;
+                  }
+
+                  return (
+                    <Grid item xs={12} key={field.id}>
+                      <TextField
+                        {...register(`textLines.${index}.value`)}
+                        fullWidth
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
             </Grid>
 
             <Grid item xs={12} sm={4} md={12}>

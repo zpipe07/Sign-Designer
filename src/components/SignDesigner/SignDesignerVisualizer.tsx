@@ -12,7 +12,7 @@ type Props = {
 
 export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
   const width = 400;
-  const height = 200;
+  const height = 250;
   const borderWidth = 20;
 
   return (
@@ -22,8 +22,7 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height}
           borderWidth={borderWidth}
-          streetNumber={inputs.streetNumber}
-          streetName={inputs.streetName}
+          textLines={inputs.textLines}
           foregroundColor={inputs.color.foregroundColor}
           backgroundColor={inputs.color.backgroundColor}
           fontFamily={inputs.fontFamily}
@@ -36,8 +35,8 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height}
           borderWidth={borderWidth}
-          streetNumber={inputs.streetNumber}
-          streetName={inputs.streetName}
+          // streetNumber={inputs.streetNumber}
+          // streetName={inputs.streetName}
           foregroundColor={inputs.color.foregroundColor}
           backgroundColor={inputs.color.backgroundColor}
           fontFamily={inputs.fontFamily}
@@ -50,8 +49,8 @@ export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
           width={width}
           height={height}
           borderWidth={borderWidth}
-          streetNumber={inputs.streetNumber}
-          streetName={inputs.streetName}
+          // streetNumber={inputs.streetNumber}
+          // streetName={inputs.streetName}
           foregroundColor={inputs.color.foregroundColor}
           backgroundColor={inputs.color.backgroundColor}
           fontFamily={inputs.fontFamily}
