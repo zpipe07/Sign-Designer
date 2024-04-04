@@ -34,6 +34,10 @@ const shapeIconMap: { [key in Shape]: React.FC } = {
   topRound: TopRound,
 };
 
+type Size = "small" | "medium" | "large";
+
+const sizes: Size[] = ["large", "medium", "small"];
+
 export type Color = "black" | "white" | "tan" | "green" | "yellow";
 
 type ColorCombo = {
@@ -80,6 +84,7 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
 
 export type Inputs = {
   shape: Shape;
+  size: Size;
   streetNumber: string;
   streetName: string;
   color: ColorCombo;
@@ -94,6 +99,7 @@ export const SignDesignerForm = () => {
   const { register, control, watch, handleSubmit } = useForm<Inputs>({
     defaultValues: {
       shape: "rectangle",
+      size: "large",
       streetNumber: "",
       streetName: "",
       color: colorCombos[0],
@@ -163,6 +169,32 @@ export const SignDesignerForm = () => {
                             fontSize: 0,
                           }}
                           key={shape}
+                        />
+                      );
+                    })}
+                  </Box>
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              {/* size */}
+              <FormControl fullWidth>
+                <FormLabel id="size-label">Size</FormLabel>
+                <RadioGroup
+                  aria-labelledby="size-label"
+                  defaultValue="large"
+                  name="size"
+                >
+                  <Box>
+                    {sizes.map((size) => {
+                      return (
+                        <FormControlLabel
+                          value={size}
+                          control={<Radio size="small" />}
+                          label={size}
+                          key={size}
+                          {...register("size")}
                         />
                       );
                     })}
