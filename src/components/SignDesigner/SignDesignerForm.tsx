@@ -1,5 +1,5 @@
 "use client";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -34,6 +34,10 @@ const shapeIconMap: { [key in Shape]: React.FC } = {
   topRound: TopRound,
 };
 
+type Size = "small" | "medium" | "large";
+
+const sizes: Size[] = ["large", "medium", "small"];
+
 export type Color = "black" | "white" | "tan" | "green" | "yellow";
 
 type ColorCombo = {
@@ -65,10 +69,6 @@ const fontFamilies: FontFamily[] = [
   "Cursive",
 ];
 
-// type Side = "single" | "double";
-
-// const sides: Side[] = ["single", "double"];
-
 export type Decoration = "foo" | "bar";
 
 const decorations: Decoration[] = ["foo", "bar"];
@@ -78,36 +78,35 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
   bar: FiligreeQ,
 };
 
-export type Inputs = {
+export type DesignFormInputs = {
   shape: Shape;
-  streetNumber: string;
-  streetName: string;
+  size: Size;
+  textLines: { value: string }[];
   color: ColorCombo;
   fontFamily: FontFamily;
-  // sides: 1 | 2;
   decoration: Decoration | "";
 };
 
 export const SignDesignerForm = () => {
   const theme = useTheme();
 
-  const { register, control, watch, handleSubmit } = useForm<Inputs>({
-    defaultValues: {
-      shape: "rectangle",
-      streetNumber: "",
-      streetName: "",
-      color: colorCombos[0],
-      fontFamily: "Times",
-      // sides: 1,
-      decoration: "",
-    },
-  });
-
+  const { register, control, watch, handleSubmit, setValue } =
+    useForm<DesignFormInputs>({
+      defaultValues: {
+        shape: "rectangle",
+        size: "large",
+        textLines: [{ value: "" }, { value: "" }, { value: "" }],
+        color: colorCombos[0],
+        fontFamily: "Times",
+        decoration: "",
+      },
+    });
+  const { fields } = useFieldArray({ control, name: "textLines" });
   const inputs = watch();
 
-  console.log({ inputs });
+  console.log({ inputs, fields });
 
-  const onSubmit = (data: Inputs) => {
+  const onSubmit = (data: DesignFormInputs) => {
     console.log({ data });
   };
 
@@ -115,24 +114,22 @@ export const SignDesignerForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Grid container spacing={2}>
-            <Grid item xs={5} sm={3} md={5}>
-              {/* street number */}
+          <Grid container spacing={4}>
+            {/* <Grid item xs={5} sm={3} md={5}>
               <TextField
                 label="Street number"
                 {...register("streetNumber")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={7} sm={5} md={7}>
-              {/* street name */}
+            {/* <Grid item xs={7} sm={5} md={7}>
               <TextField
                 label="Street name"
                 {...register("streetName")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12}>
               {/* shape */}
@@ -156,7 +153,7 @@ export const SignDesignerForm = () => {
                         <FormControlLabel
                           value={shape}
                           control={<Radio size="small" />}
-                          label={<ShapeIcon height={55} width={70} />}
+                          label={<ShapeIcon height={60} width={75} />}
                           {...register("shape")}
                           sx={{
                             // marginLeft: 0,
@@ -169,6 +166,116 @@ export const SignDesignerForm = () => {
                   </Box>
                 </RadioGroup>
               </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              {/* size */}
+              <FormControl fullWidth>
+                <FormLabel id="size-label">Size</FormLabel>
+                <RadioGroup
+                  aria-labelledby="size-label"
+                  defaultValue="large"
+                  name="size"
+                >
+                  <Box>
+                    {sizes.map((size) => {
+                      const ShapeIcon: React.FC<SvgProps> =
+                        shapeIconMap[inputs.shape];
+
+                      return (
+                        <FormControlLabel
+                          value={size}
+                          control={<Radio size="small" />}
+                          label={
+                            <>
+                              {size === "large" && (
+                                <ShapeIcon height={60} width={75} />
+                              )}
+                              {size === "medium" && (
+                                <ShapeIcon height={45} width={60} />
+                              )}
+                              {size === "small" && (
+                                <ShapeIcon height={35} width={50} />
+                              )}
+                            </>
+                          }
+                          key={size}
+                          {...register("size", {
+                            onChange: (event) => {
+                              const { value } = event.target;
+
+                              if (value === "small") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                ]);
+                              }
+
+                              if (value === "medium") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                  { value: inputs.textLines[1]?.value || "" },
+                                ]);
+                              }
+
+                              if (value === "large") {
+                                return setValue("textLines", [
+                                  { value: inputs.textLines[0].value },
+                                  { value: inputs.textLines[1]?.value || "" },
+                                  { value: inputs.textLines[2]?.value || "" },
+                                ]);
+                              }
+                            },
+                          })}
+                        />
+                      );
+                    })}
+                  </Box>
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              {/* text */}
+              {/* {inputs.textLines.map(() => {
+                return <TextField {...register("textLines")} />;
+              })} */}
+
+              <InputLabel>Text</InputLabel>
+              <Grid container spacing={1}>
+                {fields.map((field, index) => {
+                  if (inputs.size === "medium" && index > 1) {
+                    return null;
+                  }
+
+                  if (inputs.size === "small" && index > 0) {
+                    return null;
+                  }
+
+                  let placeholder;
+
+                  if (index === 0) {
+                    placeholder = "E.g. 123";
+                  }
+
+                  if (index === 1) {
+                    placeholder = "E.g. Main Street";
+                  }
+
+                  if (index === 2) {
+                    placeholder = "E.g. The Smith's";
+                  }
+
+                  return (
+                    <Grid item xs={12} key={field.id}>
+                      <TextField
+                        {...register(`textLines.${index}.value`)}
+                        placeholder={placeholder}
+                        fullWidth
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
             </Grid>
 
             <Grid item xs={12} sm={4} md={12}>
@@ -297,7 +404,6 @@ export const SignDesignerForm = () => {
                         <FormControlLabel
                           value={decoration}
                           control={<Radio size="small" />}
-                          // label={<FiligreeE height={50} width={50} />}
                           label={<Label height={50} width={50} />}
                           {...register("decoration")}
                           key={decoration}
@@ -338,7 +444,7 @@ export const SignDesignerForm = () => {
           <SignDesignerVisualizer inputs={inputs} />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} marginTop={4}>
           <Button variant="outlined" size="large">
             Save
           </Button>

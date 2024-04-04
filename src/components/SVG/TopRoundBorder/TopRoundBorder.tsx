@@ -5,16 +5,15 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-  streetNumber,
-  streetName,
-  foregroundColor,
-  backgroundColor = "#D9D9D9",
-  fontFamily,
-  decoration,
+  inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = decoration
-    ? decorationIconMap[decoration]
+  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
+    ? decorationIconMap[inputs.decoration]
     : null;
+
+  const textLines = inputs?.textLines.filter(({ value }) => {
+    return !!value;
+  });
 
   return (
     <svg
@@ -50,12 +49,32 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
           4.4772-10
           10-10h70.3147z
         `}
-        fill={backgroundColor}
-        stroke={foregroundColor}
+        fill={inputs?.color.backgroundColor}
+        stroke={inputs?.color.foregroundColor}
         strokeWidth={borderWidth}
       />
 
-      {streetNumber && (
+      {textLines?.map(({ value }, index) => {
+        const yOffset = 170 - textLines.length * 30;
+
+        return (
+          <text
+            y={60 * index + yOffset}
+            x={width / 2}
+            fontSize={50}
+            fontWeight={800}
+            alignmentBaseline="middle"
+            textAnchor="middle"
+            fill={inputs?.color.foregroundColor}
+            fontFamily={inputs?.fontFamily}
+            key={index}
+          >
+            {value}
+          </text>
+        );
+      })}
+
+      {/* {streetNumber && (
         <text
           y={height / 2 - 20}
           x={width / 2}
@@ -68,9 +87,9 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         >
           {streetNumber}
         </text>
-      )}
+      )} */}
 
-      {streetName && (
+      {/* {streetName && (
         <text
           y={height / 2 + 30}
           x={width / 2}
@@ -83,7 +102,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         >
           {streetName}
         </text>
-      )}
+      )} */}
 
       {Decoration && (
         <>
@@ -92,7 +111,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
             width={50}
             x={30}
             y={105}
-            color={foregroundColor}
+            color={inputs?.color.foregroundColor}
           />
 
           <Decoration
@@ -101,7 +120,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
             x={320}
             y={105}
             transform="scale(-1 1)"
-            color={foregroundColor}
+            color={inputs?.color.foregroundColor}
           />
         </>
       )}

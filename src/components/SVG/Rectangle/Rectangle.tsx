@@ -1,20 +1,21 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
 
+const defaultColor = "#D9D9D9";
+
 export const Rectangle: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
-  streetNumber,
-  streetName,
-  foregroundColor,
-  backgroundColor = "#D9D9D9",
-  fontFamily,
-  decoration,
+  inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = decoration
-    ? decorationIconMap[decoration]
+  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
+    ? decorationIconMap[inputs.decoration]
     : null;
+
+  const textLines = inputs?.textLines.filter(({ value }) => {
+    return !!value;
+  });
 
   return (
     <svg
@@ -29,12 +30,32 @@ export const Rectangle: React.FC<SvgProps> = ({
           width={width - borderWidth}
           height={height - borderWidth}
           rx="10"
-          fill={backgroundColor}
-          stroke={foregroundColor}
+          fill={inputs?.color.backgroundColor || defaultColor}
+          stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
         />
 
-        {streetNumber && (
+        {textLines?.map(({ value }, index) => {
+          const yOffset = 130 - textLines.length * 20;
+
+          return (
+            <text
+              y={50 * index + yOffset}
+              x={(width - borderWidth) / 2}
+              fontSize={50}
+              fontWeight={800}
+              alignmentBaseline="middle"
+              textAnchor="middle"
+              fill={inputs?.color.foregroundColor}
+              fontFamily={inputs?.fontFamily}
+              key={index}
+            >
+              {value}
+            </text>
+          );
+        })}
+
+        {/* {streetNumber && (
           <text
             y={height / 2 - 30}
             x={(width - borderWidth) / 2}
@@ -47,9 +68,9 @@ export const Rectangle: React.FC<SvgProps> = ({
           >
             {streetNumber}
           </text>
-        )}
+        )} */}
 
-        {streetName && (
+        {/* {streetName && (
           <text
             y={height / 2 + 20}
             x={(width - borderWidth) / 2}
@@ -62,7 +83,7 @@ export const Rectangle: React.FC<SvgProps> = ({
           >
             {streetName}
           </text>
-        )}
+        )} */}
 
         {Decoration && (
           <>
@@ -71,7 +92,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               width={50}
               x={30}
               y={30}
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
 
             <Decoration
@@ -80,7 +101,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               x={300}
               y={30}
               transform="scale(-1 1)"
-              color={foregroundColor}
+              color={inputs?.color.foregroundColor}
             />
           </>
         )}
