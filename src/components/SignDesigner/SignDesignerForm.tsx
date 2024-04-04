@@ -162,7 +162,7 @@ export const SignDesignerForm = () => {
                         <FormControlLabel
                           value={shape}
                           control={<Radio size="small" />}
-                          label={<ShapeIcon height={55} width={70} />}
+                          label={<ShapeIcon height={60} width={75} />}
                           {...register("shape")}
                           sx={{
                             // marginLeft: 0,
@@ -188,11 +188,26 @@ export const SignDesignerForm = () => {
                 >
                   <Box>
                     {sizes.map((size) => {
+                      const ShapeIcon: React.FC<SvgProps> =
+                        shapeIconMap[inputs.shape];
+
                       return (
                         <FormControlLabel
                           value={size}
                           control={<Radio size="small" />}
-                          label={size}
+                          label={
+                            <>
+                              {size === "large" && (
+                                <ShapeIcon height={60} width={75} />
+                              )}
+                              {size === "medium" && (
+                                <ShapeIcon height={45} width={60} />
+                              )}
+                              {size === "small" && (
+                                <ShapeIcon height={35} width={50} />
+                              )}
+                            </>
+                          }
                           key={size}
                           {...register("size")}
                         />
