@@ -3,8 +3,6 @@ import { SvgProps } from "@/src/components/SVG/types";
 export const TopRound: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
-  streetNumber,
-  streetName,
   foregroundColor,
   backgroundColor = "#D9D9D9",
   fontFamily,
