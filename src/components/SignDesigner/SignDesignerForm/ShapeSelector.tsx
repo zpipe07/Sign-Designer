@@ -1,4 +1,4 @@
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -11,7 +11,6 @@ import { RectanglePreview } from "@/src/components/SVG/RectanglePreview";
 import { EllipsePreview } from "@/src/components/SVG/EllipsePreview";
 import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview";
 import { PreviewSvgProps } from "@/src/components/SVG/types";
-import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm";
 
 export type Shape = "rectangle" | "ellipse" | "topRound" | "sideRound";
 
@@ -24,11 +23,9 @@ export const shapeIconMap: { [key in Shape]: React.FC<PreviewSvgProps> } = {
   sideRound: SideRoundPreview,
 };
 
-type Props = {
-  register: UseFormRegister<DesignFormInputs>;
-};
+export const ShapeSelector: React.FC = () => {
+  const { register } = useFormContext();
 
-export const ShapeSelector: React.FC<Props> = ({ register }) => {
   return (
     <FormControl fullWidth>
       <FormLabel id="shape-label">Shape</FormLabel>
