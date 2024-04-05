@@ -1,91 +1,23 @@
 "use client";
-import {
-  useForm,
-  Controller,
-  useFieldArray,
-  FormProvider,
-} from "react-hook-form";
-import { useTheme } from "@mui/material";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import TextField from "@mui/material/TextField";
+import { useForm, FormProvider } from "react-hook-form";
 import Grid from "@mui/material/Grid";
-import Tooltip from "@mui/material/Tooltip";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
-import { FiligreeE } from "@/src/components/SVG/FiligreeE";
-import { FiligreeQ } from "@/src/components/SVG/FiligreeQ/FiligreeQ";
-import { FiligreeProps, PreviewSvgProps } from "@/src/components/SVG/types";
 import {
+  ColorCombo,
+  ColorSelector,
+  colorCombos,
+  Decoration,
+  DecorationSelector,
+  FontFamily,
+  FontSelector,
   Shape,
   ShapeSelector,
   Size,
   SizeSelector,
   TextInput,
-  shapeIconMap,
 } from "@/src/components/SignDesigner/SignDesignerForm";
-
-// type Shape = "rectangle" | "ellipse" | "topRound" | "sideRound";
-
-// const shapes: Shape[] = ["rectangle", "ellipse", "topRound", "sideRound"];
-
-// const shapeIconMap: { [key in Shape]: React.FC<PreviewSvgProps> } = {
-//   rectangle: RectanglePreview,
-//   ellipse: EllipsePreview,
-//   topRound: TopRoundPreview,
-//   sideRound: SideRoundPreview,
-// };
-
-// type Size = "small" | "medium" | "large";
-
-// const sizes: Size[] = ["large", "medium", "small"];
-
-export type Color = "black" | "white" | "tan" | "green" | "yellow";
-
-type ColorCombo = {
-  foregroundColor: Color;
-  backgroundColor: Color;
-};
-
-const colorCombos: ColorCombo[] = [
-  {
-    foregroundColor: "black",
-    backgroundColor: "white",
-  },
-  {
-    foregroundColor: "tan",
-    backgroundColor: "green",
-  },
-  {
-    foregroundColor: "yellow",
-    backgroundColor: "black",
-  },
-];
-
-export type FontFamily = "Times" | "Verdana" | "Lucida Console" | "Cursive";
-
-const fontFamilies: FontFamily[] = [
-  "Times",
-  "Verdana",
-  "Lucida Console",
-  "Cursive",
-];
-
-export type Decoration = "foo" | "bar";
-
-const decorations: Decoration[] = ["foo", "bar"];
-
-export const decorationIconMap: { [key in Decoration]: React.FC } = {
-  foo: FiligreeE,
-  bar: FiligreeQ,
-};
 
 export type TextLines = { value: string }[];
 
@@ -99,11 +31,6 @@ export type DesignFormInputs = {
 };
 
 export const SignDesignerForm = () => {
-  const theme = useTheme();
-
-  // const methods = useForm()
-
-  // const { register, control, watch, handleSubmit, setValue } =
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: "rectangle",
@@ -114,11 +41,8 @@ export const SignDesignerForm = () => {
       decoration: "",
     },
   });
-  const { register, control, watch, handleSubmit, setValue } = formMethods;
 
-  const inputs = watch();
-
-  // console.log({ inputs, fields });
+  const { handleSubmit } = formMethods;
 
   const onSubmit = (data: DesignFormInputs) => {
     console.log({ data });
@@ -159,140 +83,15 @@ export const SignDesignerForm = () => {
               </Grid>
 
               <Grid item xs={12} sm={4} md={12}>
-                {/* font */}
-                <FormControl key="font" fullWidth>
-                  <InputLabel id="font-label">Font</InputLabel>
-                  <Select
-                    labelId="font-label"
-                    label="Font"
-                    native
-                    {...register("fontFamily")}
-                  >
-                    {fontFamilies.map((fontFamily) => (
-                      <option value={fontFamily} key={fontFamily}>
-                        {fontFamily}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
+                <FontSelector />
               </Grid>
 
               <Grid item xs={12}>
-                {/* color */}
-                <Controller
-                  control={control}
-                  name="color"
-                  render={({ field: { onChange } }) => {
-                    return (
-                      <FormControl>
-                        <FormLabel id="color-label">Color</FormLabel>
-                        <RadioGroup
-                          aria-labelledby="color-label"
-                          defaultValue={JSON.stringify(colorCombos[0])}
-                          name="color"
-                        >
-                          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                            {colorCombos.map((colorCombo) => {
-                              const { foregroundColor, backgroundColor } =
-                                colorCombo;
-                              return (
-                                <FormControlLabel
-                                  onChange={(event) => {
-                                    const target =
-                                      event.target as HTMLInputElement;
-                                    onChange(JSON.parse(target.value));
-                                  }}
-                                  value={JSON.stringify(colorCombo)}
-                                  key={JSON.stringify(colorCombo)}
-                                  sx={
-                                    {
-                                      // marginLeft: 0
-                                    }
-                                  }
-                                  control={<Radio size="small" />}
-                                  label={
-                                    <Tooltip
-                                      arrow
-                                      title={`${foregroundColor}/${backgroundColor}`}
-                                    >
-                                      <Box
-                                        sx={{
-                                          borderRadius: 2,
-                                          overflow: "hidden",
-                                          position: "relative",
-                                          border: "2px solid",
-                                          height: 50,
-                                          width: 50,
-                                          transition:
-                                            "box-shadow 0.15s ease-in-out 0s",
-
-                                          ":before, :after": {
-                                            content: "''",
-                                            position: "absolute",
-                                            left: 0,
-                                            height: "50%",
-                                            width: "100%",
-                                          },
-
-                                          ":before": {
-                                            top: 0,
-                                            backgroundColor: foregroundColor,
-                                          },
-                                          ":after": {
-                                            bottom: 0,
-                                            backgroundColor: backgroundColor,
-                                          },
-
-                                          "&.Mui-checked": {
-                                            boxShadow: "0 0 0 3px black",
-                                            color: "inherit",
-                                          },
-                                        }}
-                                      />
-                                    </Tooltip>
-                                  }
-                                ></FormControlLabel>
-                              );
-                            })}
-                          </Box>
-                        </RadioGroup>
-                      </FormControl>
-                    );
-                  }}
-                  key="color"
-                />
+                <ColorSelector />
               </Grid>
 
               <Grid item xs={12}>
-                {/* decorations */}
-                <FormControl fullWidth>
-                  <FormLabel>Decoration</FormLabel>
-                  <RadioGroup name="decoration">
-                    <Box>
-                      <FormControlLabel
-                        value=""
-                        control={<Radio size="small" />}
-                        label="None"
-                        {...register("decoration")}
-                      />
-
-                      {decorations.map((decoration) => {
-                        const Label: React.FC<FiligreeProps> =
-                          decorationIconMap[decoration];
-
-                        return (
-                          <FormControlLabel
-                            value={decoration}
-                            control={<Radio size="small" />}
-                            label={<Label height={50} width={50} />}
-                            {...register("decoration")}
-                            key={decoration}
-                          />
-                        );
-                      })}
-                    </Box>
-                  </RadioGroup>
-                </FormControl>
+                <DecorationSelector />
               </Grid>
 
               {/* <Grid item xs={12}>
@@ -321,7 +120,7 @@ export const SignDesignerForm = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <SignDesignerVisualizer inputs={inputs} />
+            <SignDesignerVisualizer />
           </Grid>
 
           <Grid item xs={12} marginTop={4}>

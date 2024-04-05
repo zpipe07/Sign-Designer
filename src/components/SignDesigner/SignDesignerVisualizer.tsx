@@ -1,3 +1,4 @@
+import { useWatch } from "react-hook-form";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -6,17 +7,15 @@ import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
 
-type Props = {
-  inputs: DesignFormInputs;
-};
-
 const dimensionsMap = {
   small: { height: 15, width: 25 },
   medium: { height: 20, width: 30 },
   large: { height: 25, width: 35 },
 };
 
-export const SignDesignerVisualizer: React.FC<Props> = ({ inputs }) => {
+export const SignDesignerVisualizer: React.FC = () => {
+  const inputs = useWatch() as DesignFormInputs;
+
   const width = 400;
   const height = 250;
   const borderWidth = 20;
