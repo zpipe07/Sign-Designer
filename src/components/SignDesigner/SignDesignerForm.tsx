@@ -15,23 +15,29 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
-import { TopRound } from "@/src/components/SVG/TopRound";
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { FiligreeE } from "@/src/components/SVG/FiligreeE";
 import { FiligreeQ } from "@/src/components/SVG/FiligreeQ/FiligreeQ";
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
+import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview";
+import { RectanglePreview } from "@/src/components/SVG/RectanglePreview";
+import { EllipsePreview } from "@/src/components/SVG/EllipsePreview";
+import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview/SideRoundPreview";
+import {
+  FiligreeProps,
+  PreviewSvgProps,
+  SvgProps,
+} from "@/src/components/SVG/types";
 
-type Shape = "rectangle" | "ellipse" | "topRound";
-// "oval" |
-// "round-sides";
+type Shape = "rectangle" | "ellipse" | "topRound" | "sideRound";
 
-const shapes: Shape[] = ["rectangle", "ellipse", "topRound"];
+const shapes: Shape[] = ["rectangle", "ellipse", "topRound", "sideRound"];
 
-const shapeIconMap: { [key in Shape]: React.FC } = {
-  rectangle: Rectangle,
-  ellipse: Ellipse,
-  topRound: TopRound,
+const shapeIconMap: { [key in Shape]: React.FC<PreviewSvgProps> } = {
+  rectangle: RectanglePreview,
+  ellipse: EllipsePreview,
+  topRound: TopRoundPreview,
+  sideRound: SideRoundPreview,
 };
 
 type Size = "small" | "medium" | "large";
@@ -147,16 +153,16 @@ export const SignDesignerForm = () => {
                     }}
                   >
                     {shapes.map((shape) => {
-                      const ShapeIcon: React.FC<SvgProps> = shapeIconMap[shape];
+                      const ShapeIcon: React.FC<PreviewSvgProps> =
+                        shapeIconMap[shape];
 
                       return (
                         <FormControlLabel
                           value={shape}
                           control={<Radio size="small" />}
-                          label={<ShapeIcon height={60} width={75} />}
+                          label={<ShapeIcon />}
                           {...register("shape")}
                           sx={{
-                            // marginLeft: 0,
                             fontSize: 0,
                           }}
                           key={shape}
@@ -179,7 +185,7 @@ export const SignDesignerForm = () => {
                 >
                   <Box>
                     {sizes.map((size) => {
-                      const ShapeIcon: React.FC<SvgProps> =
+                      const ShapeIcon: React.FC<PreviewSvgProps> =
                         shapeIconMap[inputs.shape];
 
                       return (

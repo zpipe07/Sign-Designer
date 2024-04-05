@@ -12,6 +12,11 @@ export type SvgProps = {
   inputs?: DesignFormInputs;
 }
 
+export type PreviewSvgProps = {
+  height?: number;
+  width?: number;
+}
+
 export type FiligreeProps = {
   height?: number;
   width?: number;

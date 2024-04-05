@@ -1,14 +1,9 @@
-import { SvgProps } from "@/src/components/SVG/types";
+import { PreviewSvgProps } from "@/src/components/SVG/types";
 
-export const TopRound: React.FC<SvgProps> = ({
-  height = 315,
-  width = 400,
-  foregroundColor,
-  backgroundColor = "#D9D9D9",
-  fontFamily,
+export const TopRoundPreview: React.FC<PreviewSvgProps> = ({
+  height = 60,
+  width = 75,
 }) => {
-  const borderWidth = 20;
-
   return (
     <svg
       width={width}
@@ -52,9 +47,7 @@ export const TopRound: React.FC<SvgProps> = ({
           20
           65H90.3147Z
         `}
-        fill={backgroundColor}
-        stroke={foregroundColor}
-        strokeWidth={borderWidth}
+        fill="#D9D9D9"
       />
     </svg>
   );
