@@ -1,7 +1,7 @@
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 
-const defaultColor = "#D9D9D9";
+const defaultColor = "#D9D9D9"
 
 export const Rectangle: React.FC<SvgProps> = ({
   height = 315,
@@ -11,11 +11,11 @@ export const Rectangle: React.FC<SvgProps> = ({
 }) => {
   const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
     ? decorationIconMap[inputs.decoration]
-    : null;
+    : null
 
   const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value;
-  });
+    return !!value
+  })
 
   return (
     <svg
@@ -24,6 +24,7 @@ export const Rectangle: React.FC<SvgProps> = ({
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      transform={inputs.orientation === "vertical" ? `rotate(90)` : ""}
     >
       <g transform={`translate(${borderWidth / 2},${borderWidth / 2})`}>
         <rect
@@ -33,10 +34,15 @@ export const Rectangle: React.FC<SvgProps> = ({
           fill={inputs?.color.backgroundColor || defaultColor}
           stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
+          // transform={
+          //   inputs.orientation === "vertical"
+          //     ? `rotate(90, ${width / 2}, ${height / 2})`
+          //     : ""
+          // }
         />
 
         {textLines?.map(({ value }, index) => {
-          const yOffset = 130 - textLines.length * 20;
+          const yOffset = 130 - textLines.length * 20
 
           return (
             <text
@@ -52,7 +58,7 @@ export const Rectangle: React.FC<SvgProps> = ({
             >
               {value}
             </text>
-          );
+          )
         })}
 
         {/* {streetNumber && (
@@ -107,5 +113,5 @@ export const Rectangle: React.FC<SvgProps> = ({
         )}
       </g>
     </svg>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 
-const defaultColor = "#D9D9D9";
+const defaultColor = "#D9D9D9"
 
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,
@@ -11,11 +11,11 @@ export const Ellipse: React.FC<SvgProps> = ({
 }) => {
   const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
     ? decorationIconMap[inputs.decoration]
-    : null;
+    : null
 
   const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value;
-  });
+    return !!value
+  })
 
   return (
     <svg
@@ -24,6 +24,7 @@ export const Ellipse: React.FC<SvgProps> = ({
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      transform={inputs.orientation === "vertical" ? `rotate(90)` : ""}
     >
       <g transform={`translate(${borderWidth / 2},${borderWidth / 2})`}>
         <ellipse
@@ -37,7 +38,7 @@ export const Ellipse: React.FC<SvgProps> = ({
         />
 
         {textLines?.map(({ value }, index) => {
-          const yOffset = 150 - textLines.length * 25;
+          const yOffset = 150 - textLines.length * 25
 
           return (
             <text
@@ -53,7 +54,7 @@ export const Ellipse: React.FC<SvgProps> = ({
             >
               {value}
             </text>
-          );
+          )
         })}
 
         {/* {streetNumber && (
@@ -108,5 +109,5 @@ export const Ellipse: React.FC<SvgProps> = ({
         )}
       </g>
     </svg>
-  );
-};
+  )
+}

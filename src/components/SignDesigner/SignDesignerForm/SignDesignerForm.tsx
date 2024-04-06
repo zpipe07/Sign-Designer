@@ -1,9 +1,9 @@
-"use client";
-import { useForm, FormProvider } from "react-hook-form";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+"use client"
+import { useForm, FormProvider } from "react-hook-form"
+import Grid from "@mui/material/Grid"
+import Button from "@mui/material/Button"
 
-import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer";
+import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
 import {
   ColorCombo,
   ColorSelector,
@@ -17,36 +17,40 @@ import {
   Size,
   SizeSelector,
   TextInput,
-} from "@/src/components/SignDesigner/SignDesignerForm";
+  OrientationSelector,
+  Orientation,
+} from "@/src/components/SignDesigner/SignDesignerForm"
 
-export type TextLines = { value: string }[];
+export type TextLines = { value: string }[]
 
 export type DesignFormInputs = {
-  shape: Shape;
-  size: Size;
-  textLines: TextLines;
-  color: ColorCombo;
-  fontFamily: FontFamily;
-  decoration: Decoration | "";
-};
+  shape: Shape
+  orientation: Orientation
+  size: Size
+  textLines: TextLines
+  color: ColorCombo
+  fontFamily: FontFamily
+  decoration: Decoration | ""
+}
 
 export const SignDesignerForm = () => {
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: "rectangle",
+      orientation: "horizontal",
       size: "large",
       textLines: [{ value: "" }, { value: "" }, { value: "" }],
       color: colorCombos[0],
       fontFamily: "Times",
       decoration: "",
     },
-  });
+  })
 
-  const { handleSubmit } = formMethods;
+  const { handleSubmit } = formMethods
 
   const onSubmit = (data: DesignFormInputs) => {
-    console.log({ data });
-  };
+    console.log({ data })
+  }
 
   return (
     <FormProvider {...formMethods}>
@@ -72,6 +76,10 @@ export const SignDesignerForm = () => {
 
               <Grid item xs={12}>
                 <ShapeSelector />
+              </Grid>
+
+              <Grid item xs={12}>
+                <OrientationSelector />
               </Grid>
 
               <Grid item xs={12}>
@@ -135,5 +143,5 @@ export const SignDesignerForm = () => {
         </Grid>
       </form>
     </FormProvider>
-  );
-};
+  )
+}
