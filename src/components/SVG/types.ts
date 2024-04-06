@@ -1,15 +1,10 @@
 import { Color, Decoration, DesignFormInputs, FontFamily } from "@/src/components/SignDesigner/SignDesignerForm";
 
 export type SvgProps = {
-  height?: number;
-  width?: number;
-  borderWidth?: number;
-  textLines?: {value: string}[];
-  foregroundColor?: Color;
-  backgroundColor?: Color;
-  fontFamily?: FontFamily;
-  decoration?: Decoration | "";
-  inputs?: DesignFormInputs;
+  height: number;
+  width: number;
+  borderWidth: number;
+  inputs: DesignFormInputs;
 }
 
 export type PreviewSvgProps = {

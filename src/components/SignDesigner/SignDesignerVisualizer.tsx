@@ -6,6 +6,7 @@ import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm
 import { Rectangle } from "@/src/components/SVG/Rectangle";
 import { Ellipse } from "@/src/components/SVG/Ellipse";
 import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
+import { SideRound } from "@/src/components/SVG/SideRound";
 
 const dimensionsMap = {
   small: { height: 15, width: 25 },
@@ -43,6 +44,15 @@ export const SignDesignerVisualizer: React.FC = () => {
 
         {inputs.shape === "topRound" && (
           <TopRoundBorder
+            width={width}
+            height={height}
+            borderWidth={borderWidth}
+            inputs={inputs}
+          />
+        )}
+
+        {inputs.shape === "sideRound" && (
+          <SideRound
             width={width}
             height={height}
             borderWidth={borderWidth}
