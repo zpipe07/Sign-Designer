@@ -17,7 +17,7 @@ export const OrientationSelector = () => {
 
   const shape = useWatch({ name: "shape" })
 
-  const orientations = Object.keys(designOptions[shape])
+  const orientations = Object.keys(designOptions[shape]) as Orientation[]
 
   const selectedOrientation = useWatch({ name: "orientation" })
 
@@ -30,7 +30,7 @@ export const OrientationSelector = () => {
       <FormLabel id="orientation-label">Orientation</FormLabel>
       <RadioGroup aria-labelledby="orientation-label" name="orientation">
         <Box>
-          {orientations.map((orientation, index) => {
+          {orientations.map((orientation) => {
             return (
               <FormControlLabel
                 value={orientation}
