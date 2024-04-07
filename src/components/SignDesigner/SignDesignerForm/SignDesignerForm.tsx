@@ -38,7 +38,7 @@ export const SignDesignerForm = () => {
     defaultValues: {
       shape: "rectangle",
       orientation: "horizontal",
-      size: "large",
+      size: "small",
       textLines: [{ value: "" }, { value: "" }, { value: "" }],
       color: colorCombos[0],
       fontFamily: "Times",

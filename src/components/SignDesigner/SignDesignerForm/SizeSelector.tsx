@@ -1,3 +1,5 @@
+"use client"
+import { useEffect } from "react"
 import { useFormContext, useWatch } from "react-hook-form"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
@@ -17,24 +19,38 @@ import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/co
 export type Size = "small" | "medium" | "large"
 
 export const SizeSelector: React.FC = () => {
-  const { register } = useFormContext()
+  const { register, setValue } = useFormContext()
 
   const shape: Shape = useWatch({ name: "shape" })
   const orientation: Orientation = useWatch({ name: "orientation" })
-  const sizes = Object.keys(designOptions[shape][orientation]) as Size[]
+  const sizes = Object.keys(
+    designOptions[shape][orientation],
+  ) as Size[]
+
+  const selectedSize = useWatch({ name: "size" })
+
+  useEffect(() => {
+    setValue("size", sizes[0])
+  }, [shape, orientation, setValue])
 
   return (
     <FormControl fullWidth>
       <FormLabel id="size-label">Size</FormLabel>
-      <RadioGroup aria-labelledby="size-label" defaultValue="large" name="size">
+      <RadioGroup aria-labelledby="size-label" name="size">
         <Box>
           {sizes.map((size) => {
-            const ShapeIcon: React.FC<PreviewSvgProps> = shapeIconMap[shape]
+            // const ShapeIcon: React.FC<PreviewSvgProps> =
+            //   shapeIconMap[shape]
 
             return (
               <FormControlLabel
                 value={size}
-                control={<Radio size="small" />}
+                control={
+                  <Radio
+                    size="small"
+                    checked={selectedSize === size}
+                  />
+                }
                 label={size}
                 // label={
                 //   <>
