@@ -1,25 +1,26 @@
-import { useWatch } from "react-hook-form";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { useWatch } from "react-hook-form"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
-import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm";
-import { Rectangle } from "@/src/components/SVG/Rectangle";
-import { Ellipse } from "@/src/components/SVG/Ellipse";
-import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder";
-import { SideRound } from "@/src/components/SVG/SideRound";
+import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm"
+import { Rectangle } from "@/src/components/SVG/Rectangle"
+import { Ellipse } from "@/src/components/SVG/Ellipse"
+import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder"
+import { SideRound } from "@/src/components/SVG/SideRound"
 
 const dimensionsMap = {
   small: { height: 15, width: 25 },
   medium: { height: 20, width: 30 },
   large: { height: 25, width: 35 },
-};
+}
 
 export const SignDesignerVisualizer: React.FC = () => {
-  const inputs = useWatch() as DesignFormInputs;
+  const inputs = useWatch() as DesignFormInputs
+  console.log({ inputs })
 
-  const width = 400;
-  const height = 250;
-  const borderWidth = 20;
+  const width = 400
+  const height = 250
+  const borderWidth = 20
 
   return (
     <Box display="flex" justifyContent="center">
@@ -110,7 +111,7 @@ export const SignDesignerVisualizer: React.FC = () => {
         )}
       </svg> */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             bottom: -20,
@@ -179,8 +180,8 @@ export const SignDesignerVisualizer: React.FC = () => {
           >
             {dimensionsMap[inputs.size].height}&nbsp;inches
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
-  );
-};
+  )
+}

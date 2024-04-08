@@ -1,7 +1,7 @@
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 
-const defaultColor = "#D9D9D9";
+const defaultColor = "#D9D9D9"
 
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,
@@ -9,13 +9,12 @@ export const Ellipse: React.FC<SvgProps> = ({
   borderWidth = 0,
   inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
-    ? decorationIconMap[inputs.decoration]
-    : null;
+  const Decoration: React.FC<FiligreeProps> | null =
+    inputs?.decoration ? decorationIconMap[inputs.decoration] : null
 
   const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value;
-  });
+    return !!value
+  })
 
   return (
     <svg
@@ -24,8 +23,13 @@ export const Ellipse: React.FC<SvgProps> = ({
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      transform={
+        inputs.orientation === "vertical" ? `rotate(90)` : ""
+      }
     >
-      <g transform={`translate(${borderWidth / 2},${borderWidth / 2})`}>
+      <g
+        transform={`translate(${borderWidth / 2},${borderWidth / 2})`}
+      >
         <ellipse
           cx={width / 2 - borderWidth / 2}
           cy={height / 2 - borderWidth / 2}
@@ -36,25 +40,49 @@ export const Ellipse: React.FC<SvgProps> = ({
           strokeWidth={borderWidth}
         />
 
-        {textLines?.map(({ value }, index) => {
-          const yOffset = 150 - textLines.length * 25;
+        {inputs.orientation === "horizontal" &&
+          textLines?.map(({ value }, index) => {
+            const yOffset = 150 - textLines.length * 25
 
-          return (
-            <text
-              y={60 * index + yOffset}
-              x={(width - borderWidth) / 2}
-              fontSize={50}
-              fontWeight={800}
-              alignmentBaseline="middle"
-              textAnchor="middle"
-              fill={inputs?.color.foregroundColor}
-              fontFamily={inputs?.fontFamily}
-              key={index}
-            >
-              {value}
-            </text>
-          );
-        })}
+            return (
+              <text
+                y={60 * index + yOffset}
+                x={(width - borderWidth) / 2}
+                fontSize={50}
+                fontWeight={800}
+                alignmentBaseline="middle"
+                textAnchor="middle"
+                fill={inputs?.color.foregroundColor}
+                fontFamily={inputs?.fontFamily}
+                key={index}
+              >
+                {value}
+              </text>
+            )
+          })}
+
+        {inputs.orientation === "vertical" &&
+          textLines[0]?.value.split("").map((char, index) => {
+            const x = 130 + index * 50
+            const y = 130
+
+            return (
+              <text
+                y={y}
+                x={x}
+                transform={`rotate(-90, ${x}, ${y})`}
+                fontSize={50}
+                fontWeight={800}
+                alignmentBaseline="middle"
+                textAnchor="middle"
+                fill={inputs?.color.foregroundColor}
+                fontFamily={inputs?.fontFamily}
+                key={index}
+              >
+                {char}
+              </text>
+            )
+          })}
 
         {/* {streetNumber && (
           <text
@@ -108,5 +136,5 @@ export const Ellipse: React.FC<SvgProps> = ({
         )}
       </g>
     </svg>
-  );
-};
+  )
+}
