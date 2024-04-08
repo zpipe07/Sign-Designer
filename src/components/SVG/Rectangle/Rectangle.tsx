@@ -37,11 +37,6 @@ export const Rectangle: React.FC<SvgProps> = ({
           fill={inputs?.color.backgroundColor || defaultColor}
           stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
-          // transform={
-          //   inputs.orientation === "vertical"
-          //     ? `rotate(90, ${width / 2}, ${height / 2})`
-          //     : ""
-          // }
         />
 
         {inputs.orientation === "horizontal" &&
