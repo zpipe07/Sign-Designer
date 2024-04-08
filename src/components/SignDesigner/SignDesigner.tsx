@@ -10,7 +10,7 @@ import {
   Shape,
   SignDesignerForm,
   Size,
-  TextLines,
+  TextLine,
   colorCombos,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
@@ -19,7 +19,7 @@ export type DesignFormInputs = {
   shape: Shape
   orientation: Orientation
   size: Size
-  textLines: TextLines
+  textLines: TextLine[]
   color: ColorCombo
   fontFamily: FontFamily
   decoration: Decoration | ""

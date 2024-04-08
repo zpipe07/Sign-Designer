@@ -1,19 +1,26 @@
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types";
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm";
+import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import {
+  Decoration,
+  TextLine,
+  decorationIconMap,
+} from "@/src/components/SignDesigner/SignDesignerForm"
 
-export const TopRoundBorder: React.FC<SvgProps> = ({
+export const TopRound: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
   borderWidth = 0,
   inputs,
 }) => {
-  const Decoration: React.FC<FiligreeProps> | null = inputs?.decoration
-    ? decorationIconMap[inputs.decoration]
-    : null;
+  const Decoration: React.FC<FiligreeProps> | null =
+    inputs?.decoration
+      ? decorationIconMap[inputs.decoration as Decoration]
+      : null
 
-  const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value;
-  });
+  const textLines: TextLine[] = inputs.textLines.filter(
+    ({ value }: TextLine) => {
+      return !!value
+    },
+  )
 
   return (
     <svg
@@ -55,7 +62,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
       />
 
       {textLines?.map(({ value }, index) => {
-        const yOffset = 170 - textLines.length * 30;
+        const yOffset = 170 - textLines.length * 30
 
         return (
           <text
@@ -71,7 +78,7 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
           >
             {value}
           </text>
-        );
+        )
       })}
 
       {/* {streetNumber && (
@@ -125,5 +132,5 @@ export const TopRoundBorder: React.FC<SvgProps> = ({
         </>
       )}
     </svg>
-  );
-};
+  )
+}

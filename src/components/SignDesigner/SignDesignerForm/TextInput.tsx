@@ -21,7 +21,7 @@ export const TextInput = () => {
   const orientation: Orientation = useWatch({ name: "orientation" })
   const size: Size = useWatch({ name: "size", control })
   const maxLinesOfText =
-    designOptions[shape][orientation][size]?.maxLinesOfText || 1
+    designOptions[shape][orientation]?.[size]?.maxLinesOfText || 1
 
   const { fields } = useFieldArray({
     name: "textLines",
