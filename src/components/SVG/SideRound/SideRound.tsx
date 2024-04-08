@@ -1,4 +1,4 @@
-import { SvgProps } from "@/src/components/SVG/types";
+import { SvgProps } from "@/src/components/SVG/types"
 
 export const SideRound: React.FC<SvgProps> = ({
   height,
@@ -6,9 +6,9 @@ export const SideRound: React.FC<SvgProps> = ({
   borderWidth,
   inputs,
 }) => {
-  const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value;
-  });
+  const textLines = inputs?.textLines.filter(({ value }: any) => {
+    return !!value
+  })
 
   return (
     <svg
@@ -25,8 +25,8 @@ export const SideRound: React.FC<SvgProps> = ({
         strokeWidth={borderWidth}
       />
 
-      {textLines?.map(({ value }, index) => {
-        const yOffset = 120 - textLines.length * 20;
+      {textLines?.map(({ value }: any, index: any) => {
+        const yOffset = 120 - textLines.length * 20
 
         return (
           <text
@@ -42,8 +42,8 @@ export const SideRound: React.FC<SvgProps> = ({
           >
             {value}
           </text>
-        );
+        )
       })}
     </svg>
-  );
-};
+  )
+}
