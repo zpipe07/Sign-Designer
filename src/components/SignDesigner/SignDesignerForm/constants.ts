@@ -39,6 +39,18 @@ export const designOptions: any = {
       },
     },
   },
+  sideRound: {
+    horizontal: {
+      small: {
+        maxLinesOfText: 1,
+      },
+    },
+    vertical: {
+      small: {
+        maxLinesOfText: 1,
+      },
+    },
+  },
 }
 
 // const options = {

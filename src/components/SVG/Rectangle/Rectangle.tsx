@@ -1,5 +1,9 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
+import {
+  Decoration,
+  TextLine,
+  decorationIconMap,
+} from "@/src/components/SignDesigner/SignDesignerForm"
 
 const defaultColor = "#D9D9D9"
 
@@ -10,21 +14,24 @@ export const Rectangle: React.FC<SvgProps> = ({
   inputs,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
-    inputs?.decoration ? decorationIconMap[inputs.decoration] : null
+    inputs?.decoration
+      ? decorationIconMap[inputs.decoration as Decoration]
+      : null
 
-  const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value
-  })
+  const textLines: TextLine[] = inputs?.textLines.filter(
+    ({ value }: TextLine) => {
+      return !!value
+    },
+  )
 
   return (
     <svg
-      width={width}
-      height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       transform={
-        inputs.orientation === "vertical" ? `rotate(90)` : ""
+        inputs.orientation === "vertical"
+          ? `rotate(90) translate(75 0)`
+          : ""
       }
     >
       <g
@@ -37,15 +44,10 @@ export const Rectangle: React.FC<SvgProps> = ({
           fill={inputs?.color.backgroundColor || defaultColor}
           stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
-          // transform={
-          //   inputs.orientation === "vertical"
-          //     ? `rotate(90, ${width / 2}, ${height / 2})`
-          //     : ""
-          // }
         />
 
         {inputs.orientation === "horizontal" &&
-          textLines?.map(({ value }, index) => {
+          textLines?.map(({ value }: TextLine, index: number) => {
             const yOffset = 130 - textLines.length * 20
 
             return (
@@ -66,27 +68,29 @@ export const Rectangle: React.FC<SvgProps> = ({
           })}
 
         {inputs.orientation === "vertical" &&
-          textLines[0]?.value.split("").map((char, index) => {
-            const x = 100 + index * 50
-            const y = 110
+          textLines[0]?.value
+            .split("")
+            .map((char: string, index: number) => {
+              const x = 100 + index * 50
+              const y = 110
 
-            return (
-              <text
-                y={y}
-                x={x}
-                transform={`rotate(-90, ${x}, ${y})`}
-                fontSize={50}
-                fontWeight={800}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fill={inputs?.color.foregroundColor}
-                fontFamily={inputs?.fontFamily}
-                key={index}
-              >
-                {char}
-              </text>
-            )
-          })}
+              return (
+                <text
+                  y={y}
+                  x={x}
+                  transform={`rotate(-90, ${x}, ${y})`}
+                  fontSize={50}
+                  fontWeight={800}
+                  alignmentBaseline="middle"
+                  textAnchor="middle"
+                  fill={inputs?.color.foregroundColor}
+                  fontFamily={inputs?.fontFamily}
+                  key={index}
+                >
+                  {char}
+                </text>
+              )
+            })}
 
         {/* {streetNumber && (
           <text

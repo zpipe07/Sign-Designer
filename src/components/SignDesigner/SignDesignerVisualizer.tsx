@@ -1,12 +1,11 @@
 import { useWatch } from "react-hook-form"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 
-import { DesignFormInputs } from "@/src/components/SignDesigner/SignDesignerForm"
 import { Rectangle } from "@/src/components/SVG/Rectangle"
 import { Ellipse } from "@/src/components/SVG/Ellipse"
-import { TopRoundBorder } from "@/src/components/SVG/TopRoundBorder"
+import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
+import { DesignFormInputs } from "@/src/components/SignDesigner"
 
 const dimensionsMap = {
   small: { height: 15, width: 25 },
@@ -24,7 +23,16 @@ export const SignDesignerVisualizer: React.FC = () => {
 
   return (
     <Box display="flex" justifyContent="center">
-      <Box position="relative">
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 400,
+
+          ...(inputs.orientation === "vertical" && {
+            minHeight: 400,
+          }),
+        }}
+      >
         {inputs.shape === "rectangle" && (
           <Rectangle
             width={width}
@@ -44,7 +52,7 @@ export const SignDesignerVisualizer: React.FC = () => {
         )}
 
         {inputs.shape === "topRound" && (
-          <TopRoundBorder
+          <TopRound
             width={width}
             height={height}
             borderWidth={borderWidth}
