@@ -1,6 +1,8 @@
 "use client"
 import { FormProvider, useForm } from "react-hook-form"
+import { useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
+import Box from "@mui/material/Box"
 
 import {
   ColorCombo,
@@ -26,6 +28,8 @@ export type DesignFormInputs = {
 }
 
 export const SignDesigner = () => {
+  const theme = useTheme()
+
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: "rectangle",
@@ -40,13 +44,22 @@ export const SignDesigner = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <SignDesignerForm />
+          <Box
+            sx={{
+              [theme.breakpoints.up("md")]: {
+                position: "sticky",
+                top: theme.spacing(2),
+              },
+            }}
+          >
+            <SignDesignerVisualizer />
+          </Box>
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <SignDesignerVisualizer />
+          <SignDesignerForm />
         </Grid>
       </Grid>
     </FormProvider>

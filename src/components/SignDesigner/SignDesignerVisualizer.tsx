@@ -23,7 +23,7 @@ export const SignDesignerVisualizer: React.FC = () => {
 
   return (
     <Box display="flex" justifyContent="center">
-      <Box position="relative">
+      <Box position="relative" width="100%">
         {inputs.shape === "rectangle" && (
           <Rectangle
             width={width}

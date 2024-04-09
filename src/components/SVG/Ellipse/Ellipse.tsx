@@ -1,5 +1,9 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
+import {
+  Decoration,
+  TextLine,
+  decorationIconMap,
+} from "@/src/components/SignDesigner/SignDesignerForm"
 
 const defaultColor = "#D9D9D9"
 
@@ -10,16 +14,20 @@ export const Ellipse: React.FC<SvgProps> = ({
   inputs,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
-    inputs?.decoration ? decorationIconMap[inputs.decoration] : null
+    inputs?.decoration
+      ? decorationIconMap[inputs.decoration as Decoration]
+      : null
 
-  const textLines = inputs?.textLines.filter(({ value }) => {
-    return !!value
-  })
+  const textLines: TextLine[] = inputs?.textLines.filter(
+    ({ value }: TextLine) => {
+      return !!value
+    },
+  )
 
   return (
     <svg
-      width={width}
-      height={height}
+      // width={width}
+      // height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
