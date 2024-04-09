@@ -15,13 +15,14 @@ import {
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 export const TextInput = () => {
-  const { register, control } = useFormContext()
+  const { register } = useFormContext()
 
   const shape: Shape = useWatch({ name: "shape" })
   const orientation: Orientation = useWatch({ name: "orientation" })
-  const size: Size = useWatch({ name: "size", control })
+  const size: Size = useWatch({ name: "size" })
+
   const maxLinesOfText =
-    designOptions[shape][orientation]?.[size]?.maxLinesOfText || 1
+    designOptions[shape][orientation]?.[size]?.maxLinesOfText
 
   const { fields } = useFieldArray({
     name: "textLines",

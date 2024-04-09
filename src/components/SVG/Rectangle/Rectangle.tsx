@@ -48,18 +48,21 @@ export const Rectangle: React.FC<SvgProps> = ({
 
         {inputs.orientation === "horizontal" &&
           textLines?.map(({ value }: TextLine, index: number) => {
-            const yOffset = 130 - textLines.length * 20
+            const chars = value.length
+            const fontSize = 95 - chars * 3.5
+            const y = 70 * index + 145 - textLines.length * 30
 
             return (
               <text
-                y={50 * index + yOffset}
+                y={y}
                 x={(width - borderWidth) / 2}
-                fontSize={50}
+                fontSize={fontSize}
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"
                 fill={inputs?.color.foregroundColor}
                 fontFamily={inputs?.fontFamily}
+                letterSpacing={1}
                 key={index}
               >
                 {value}
