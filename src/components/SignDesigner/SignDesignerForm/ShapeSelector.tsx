@@ -6,14 +6,20 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 
+import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
 import { RectanglePreview } from "@/src/components/SVG/RectanglePreview"
 import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
 import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview"
 import { PreviewSvgProps } from "@/src/components/SVG/types"
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { BreadPreview } from "@/src/components/SVG/BreadPreview"
 
-export type Shape = "rectangle" | "ellipse" | "topRound" | "sideRound"
+export type Shape =
+  | "rectangle"
+  | "ellipse"
+  | "topRound"
+  | "sideRound"
+  | "bread"
 
 // const shapes: Shape[] = ["rectangle", "ellipse", "topRound", "sideRound"];
 
@@ -24,6 +30,7 @@ export const shapeIconMap: {
   ellipse: EllipsePreview,
   topRound: TopRoundPreview,
   sideRound: SideRoundPreview,
+  bread: BreadPreview,
 }
 
 const shapes = Object.keys(designOptions) as Shape[]
