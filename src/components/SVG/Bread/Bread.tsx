@@ -1,4 +1,5 @@
 import { SvgProps } from "@/src/components/SVG/types"
+import { TextLine } from "@/src/components/SignDesigner/SignDesignerForm"
 
 export const Bread: React.FC<SvgProps> = ({
   // height = 315,
@@ -6,6 +7,12 @@ export const Bread: React.FC<SvgProps> = ({
   borderWidth = 0,
   inputs,
 }) => {
+  const textLines: TextLine[] = inputs.textLines.filter(
+    ({ value }: TextLine) => {
+      return !!value
+    },
+  )
+
   return (
     <svg
       width="400"
@@ -20,6 +27,27 @@ export const Bread: React.FC<SvgProps> = ({
         stroke={inputs?.color.foregroundColor}
         strokeWidth={borderWidth}
       />
+
+      {textLines?.map(({ value }, index) => {
+        const yOffset = 170 - textLines.length * 30
+
+        return (
+          <text
+            y={60 * index + yOffset}
+            // x={width / 2}
+            x={200}
+            fontSize={50}
+            fontWeight={800}
+            alignmentBaseline="middle"
+            textAnchor="middle"
+            fill={inputs?.color.foregroundColor}
+            fontFamily={inputs?.fontFamily}
+            key={index}
+          >
+            {value}
+          </text>
+        )
+      })}
     </svg>
   )
 }
