@@ -74,7 +74,9 @@ export const Rectangle: React.FC<SvgProps> = ({
           textLines[0]?.value
             .split("")
             .map((char: string, index: number) => {
-              const x = 100 + index * 50
+              const chars = textLines[0]?.value.length
+              const fontSize = 100 - chars * 8
+              const x = 200 + index * 70 - chars * 28
               const y = 110
 
               return (
@@ -82,7 +84,7 @@ export const Rectangle: React.FC<SvgProps> = ({
                   y={y}
                   x={x}
                   transform={`rotate(-90, ${x}, ${y})`}
-                  fontSize={50}
+                  fontSize={fontSize}
                   fontWeight={800}
                   alignmentBaseline="middle"
                   textAnchor="middle"
