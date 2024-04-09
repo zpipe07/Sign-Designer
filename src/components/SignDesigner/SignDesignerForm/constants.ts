@@ -51,6 +51,16 @@ export const designOptions: any = {
       },
     },
   },
+  bread: {
+    horizontal: {
+      small: {
+        maxLinesOfText: 1,
+      },
+      medium: {
+        maxLinesOfText: 2,
+      },
+    },
+  },
 }
 
 // const options = {

@@ -24,7 +24,8 @@ export const TopRound: React.FC<SvgProps> = ({
 
   return (
     <svg
-      viewBox={`0 0 ${width} ${height}`}
+      // viewBox={`0 0 ${width} ${height}`}
+      viewBox="0 0 400 315"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
