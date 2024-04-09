@@ -26,13 +26,12 @@ export const Rectangle: React.FC<SvgProps> = ({
 
   return (
     <svg
-      // width={width}
-      // height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       transform={
-        inputs.orientation === "vertical" ? `rotate(90)` : ""
+        inputs.orientation === "vertical"
+          ? `rotate(90) translate(75 0)`
+          : ""
       }
     >
       <g

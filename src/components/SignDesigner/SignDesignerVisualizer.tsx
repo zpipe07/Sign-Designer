@@ -23,7 +23,16 @@ export const SignDesignerVisualizer: React.FC = () => {
 
   return (
     <Box display="flex" justifyContent="center">
-      <Box position="relative" width="100%">
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 400,
+
+          ...(inputs.orientation === "vertical" && {
+            minHeight: 400,
+          }),
+        }}
+      >
         {inputs.shape === "rectangle" && (
           <Rectangle
             width={width}
