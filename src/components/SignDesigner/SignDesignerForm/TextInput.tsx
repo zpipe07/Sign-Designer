@@ -7,12 +7,12 @@ import Grid from "@mui/material/Grid"
 import InputLabel from "@mui/material/InputLabel"
 import TextField from "@mui/material/TextField"
 
+import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   Orientation,
   Shape,
   Size,
-} from "@/src/components/SignDesigner/SignDesignerForm"
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+} from "@/src/components/SignDesigner/types"
 
 export const TextInput = () => {
   const { register } = useFormContext()

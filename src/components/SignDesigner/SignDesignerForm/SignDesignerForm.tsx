@@ -13,8 +13,6 @@ import {
   OrientationSelector,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 
-export type TextLine = { value: string }
-
 export const SignDesignerForm = () => {
   const { handleSubmit } = useFormContext()
 

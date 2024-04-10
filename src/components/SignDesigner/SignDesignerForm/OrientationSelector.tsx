@@ -9,8 +9,7 @@ import Box from "@mui/material/Box"
 import Radio from "@mui/material/Radio"
 
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-
-export type Orientation = "horizontal" | "vertical"
+import { Orientation } from "@/src/components/SignDesigner/types"
 
 export const OrientationSelector = () => {
   const { setValue, register } = useFormContext()
