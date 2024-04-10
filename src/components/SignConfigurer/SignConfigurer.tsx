@@ -1,6 +1,7 @@
 import Grid from "@mui/material/Grid"
 
-import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
+import { SignDesignerVisualizer } from "@/src/components/SignDesigner"
+import { SignConfigurerForm } from "@/src/components/SignConfigurer"
 
 export const SignConfigurer = () => {
   return (
@@ -10,7 +11,7 @@ export const SignConfigurer = () => {
       </Grid>
 
       <Grid item xs={12} md={6}>
-        SignConfigurerForm
+        <SignConfigurerForm />
       </Grid>
     </Grid>
   )
