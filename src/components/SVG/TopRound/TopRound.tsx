@@ -61,18 +61,21 @@ export const TopRound: React.FC<SvgProps> = ({
       />
 
       {textLines?.map(({ value }, index) => {
-        const yOffset = 170 - textLines.length * 30
+        const chars = value.length
+        const fontSize = 100 - chars * 4
+        const y = 50 * index + 190 - textLines.length * 40
 
         return (
           <text
-            y={60 * index + yOffset}
+            y={y}
             x={width / 2}
-            fontSize={50}
+            fontSize={fontSize}
             fontWeight={800}
             alignmentBaseline="middle"
             textAnchor="middle"
             fill={inputs?.color.foregroundColor}
             fontFamily={inputs?.fontFamily}
+            letterSpacing={1}
             key={index}
           >
             {value}

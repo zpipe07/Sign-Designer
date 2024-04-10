@@ -15,8 +15,6 @@ export const Bread: React.FC<SvgProps> = ({
 
   return (
     <svg
-      width="400"
-      height="292"
       viewBox="0 0 400 292"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -29,19 +27,21 @@ export const Bread: React.FC<SvgProps> = ({
       />
 
       {textLines?.map(({ value }, index) => {
-        const yOffset = 170 - textLines.length * 30
+        const chars = value.length
+        const fontSize = 90 - chars * 3
+        const y = 70 * index + 180 - textLines.length * 30
 
         return (
           <text
-            y={60 * index + yOffset}
-            // x={width / 2}
+            y={y}
             x={200}
-            fontSize={50}
+            fontSize={fontSize}
             fontWeight={800}
             alignmentBaseline="middle"
             textAnchor="middle"
             fill={inputs?.color.foregroundColor}
             fontFamily={inputs?.fontFamily}
+            letterSpacing={1}
             key={index}
           >
             {value}
