@@ -5,8 +5,6 @@ import {
   decorationIconMap,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 
-const defaultColor = "#D9D9D9"
-
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,
   width = 400,
@@ -43,20 +41,22 @@ export const Ellipse: React.FC<SvgProps> = ({
           cy={height / 2 - borderWidth / 2}
           rx={width / 2 - borderWidth / 2}
           ry={height / 2 - borderWidth / 2}
-          fill={inputs?.color.backgroundColor || defaultColor}
+          fill={inputs?.color.backgroundColor}
           stroke={inputs?.color.foregroundColor}
           strokeWidth={borderWidth}
         />
 
         {inputs.orientation === "horizontal" &&
           textLines?.map(({ value }, index) => {
-            const yOffset = 150 - textLines.length * 25
+            const chars = value.length
+            const fontSize = 95 - chars * 3.5
+            const y = 70 * index + 170 - textLines.length * 30
 
             return (
               <text
-                y={60 * index + yOffset}
+                y={y}
                 x={(width - borderWidth) / 2}
-                fontSize={50}
+                fontSize={fontSize}
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"
@@ -71,15 +71,17 @@ export const Ellipse: React.FC<SvgProps> = ({
 
         {inputs.orientation === "vertical" &&
           textLines[0]?.value.split("").map((char, index) => {
-            const x = 130 + index * 50
-            const y = 130
+            const chars = textLines[0]?.value.length
+            const fontSize = 100 - chars * 8
+            const x = 200 + index * 60 - chars * 25
+            const y = 135
 
             return (
               <text
                 y={y}
                 x={x}
                 transform={`rotate(-90, ${x}, ${y})`}
-                fontSize={50}
+                fontSize={fontSize}
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"

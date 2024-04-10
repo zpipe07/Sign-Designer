@@ -22,6 +22,9 @@ export const designOptions: any = {
       small: {
         maxLinesOfText: 1,
       },
+      medium: {
+        maxLinesOfText: 2,
+      },
     },
     vertical: {
       small: {
