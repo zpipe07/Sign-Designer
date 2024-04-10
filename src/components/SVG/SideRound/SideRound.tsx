@@ -34,7 +34,7 @@ export const SideRound: React.FC<SvgProps> = ({
         textLines?.map(({ value }: any, index: any) => {
           const chars = value.length
           const fontSize = 100 - chars * 3
-          const y = 60 * index + 120 - textLines.length * 20
+          const y = 60 * index + 125 - textLines.length * 20
 
           return (
             <text
