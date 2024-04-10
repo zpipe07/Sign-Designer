@@ -32,13 +32,15 @@ export const SideRound: React.FC<SvgProps> = ({
 
       {inputs.orientation === "horizontal" &&
         textLines?.map(({ value }: any, index: any) => {
-          const yOffset = 120 - textLines.length * 20
+          const chars = value.length
+          const fontSize = 100 - chars * 3
+          const y = 60 * index + 120 - textLines.length * 20
 
           return (
             <text
-              y={60 * index + yOffset}
+              y={y}
               x={width / 2 + borderWidth * 2}
-              fontSize={50}
+              fontSize={fontSize}
               fontWeight={800}
               alignmentBaseline="middle"
               textAnchor="middle"
@@ -53,15 +55,17 @@ export const SideRound: React.FC<SvgProps> = ({
 
       {inputs.orientation === "vertical" &&
         textLines[0]?.value.split("").map((char, index) => {
-          const x = 140 + index * 60
-          const y = 100
+          const chars = textLines[0]?.value.length
+          const fontSize = 100 - chars * 6
+          const x = 290 + index * 80 - chars * 42
+          const y = 99
 
           return (
             <text
               y={y}
               x={x}
               transform={`rotate(-90, ${x}, ${y})`}
-              fontSize={50}
+              fontSize={fontSize}
               fontWeight={800}
               alignmentBaseline="middle"
               textAnchor="middle"

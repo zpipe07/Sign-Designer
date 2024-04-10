@@ -23,8 +23,8 @@ export const SizeSelector: React.FC = () => {
 
   const shape: Shape = useWatch({ name: "shape" })
   const orientation: Orientation = useWatch({ name: "orientation" })
-  const sizes = designOptions[shape][orientation]
-    ? (Object.keys(designOptions[shape]?.[orientation]) as Size[])
+  const sizes = designOptions[shape]?.[orientation]
+    ? (Object.keys(designOptions[shape][orientation]) as Size[])
     : []
 
   const selectedSize = useWatch({ name: "size" })
