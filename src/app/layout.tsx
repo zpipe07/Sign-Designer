@@ -1,10 +1,11 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { createClient } from "@supabase/supabase-js"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Container from "@mui/material/Container"
-import { createClient } from "@supabase/supabase-js"
+import Box from "@mui/material/Box"
 
 import { Header } from "@/src/components/Header"
 import theme from "../theme"
@@ -32,7 +33,11 @@ export default function RootLayout({
       <CssBaseline />
 
       <html lang="en">
-        <body className={inter.className}>
+        <Box
+          component="body"
+          className={inter.className}
+          paddingBottom={4}
+        >
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
               <Header />
@@ -40,7 +45,7 @@ export default function RootLayout({
               <Container maxWidth="lg">{children}</Container>
             </ThemeProvider>
           </AppRouterCacheProvider>
-        </body>
+        </Box>
       </html>
     </>
   )

@@ -1,5 +1,6 @@
 "use client"
 import { useFormContext } from "react-hook-form"
+import { useRouter } from "next/navigation"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 
@@ -14,10 +15,13 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm"
 
 export const SignDesignerForm = () => {
+  const router = useRouter()
+
   const { handleSubmit } = useFormContext()
 
   const onSubmit = (data: any) => {
     console.log({ data })
+    router.push("/design/configure")
   }
 
   return (
@@ -56,9 +60,9 @@ export const SignDesignerForm = () => {
         </Grid>
 
         <Grid item xs={12} marginTop={4}>
-          <Button variant="outlined" size="large">
+          {/* <Button variant="outlined" size="large">
             Save
-          </Button>
+          </Button> */}
 
           <Button variant="contained" size="large" type="submit">
             Next

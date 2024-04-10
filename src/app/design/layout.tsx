@@ -1,5 +1,5 @@
-import { useForm } from "react-hook-form"
-import Box from "@mui/material/Box"
+"use client"
+import { FormProvider, useForm } from "react-hook-form"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { colorCombos } from "@/src/components/SignDesigner/SignDesignerForm"
@@ -12,12 +12,12 @@ export default function Layout({
       shape: "rectangle",
       orientation: "horizontal",
       size: "small",
-      textLines: [{ value: "" }, { value: "" }, { value: "" }],
+      textLines: [{ value: "" }, { value: "" }],
       color: colorCombos[0],
       fontFamily: "Times",
       decoration: "",
     },
   })
 
-  return <Box sx={{ backgroundColor: "blue" }}>{children}</Box>
+  return <FormProvider {...formMethods}>{children}</FormProvider>
 }
