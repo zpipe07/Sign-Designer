@@ -1,3 +1,4 @@
+"use client"
 import { useWatch } from "react-hook-form"
 import Box from "@mui/material/Box"
 
@@ -5,8 +6,8 @@ import { Rectangle } from "@/src/components/SVG/Rectangle"
 import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
-import { DesignFormInputs } from "@/src/components/SignDesigner"
 import { Bread } from "@/src/components/SVG/Bread"
+import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
 const dimensionsMap = {
   small: { height: 15, width: 25 },

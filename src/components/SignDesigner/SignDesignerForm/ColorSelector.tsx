@@ -1,18 +1,13 @@
-import { Controller, useFormContext } from "react-hook-form";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Tooltip from "@mui/material/Tooltip";
+import { Controller, useFormContext } from "react-hook-form"
+import Box from "@mui/material/Box"
+import FormControl from "@mui/material/FormControl"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormLabel from "@mui/material/FormLabel"
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import Tooltip from "@mui/material/Tooltip"
 
-export type Color = "black" | "white" | "tan" | "green" | "yellow";
-
-export type ColorCombo = {
-  foregroundColor: Color;
-  backgroundColor: Color;
-};
+import { ColorCombo } from "@/src/components/SignDesigner/types"
 
 export const colorCombos: ColorCombo[] = [
   {
@@ -27,10 +22,10 @@ export const colorCombos: ColorCombo[] = [
     foregroundColor: "yellow",
     backgroundColor: "black",
   },
-];
+]
 
-export const ColorSelector = () => {
-  const { control } = useFormContext();
+export const ColorSelector: React.FC = () => {
+  const { control } = useFormContext()
 
   return (
     <Controller
@@ -47,12 +42,14 @@ export const ColorSelector = () => {
             >
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 {colorCombos.map((colorCombo) => {
-                  const { foregroundColor, backgroundColor } = colorCombo;
+                  const { foregroundColor, backgroundColor } =
+                    colorCombo
                   return (
                     <FormControlLabel
                       onChange={(event) => {
-                        const target = event.target as HTMLInputElement;
-                        onChange(JSON.parse(target.value));
+                        const target =
+                          event.target as HTMLInputElement
+                        onChange(JSON.parse(target.value))
                       }}
                       value={JSON.stringify(colorCombo)}
                       key={JSON.stringify(colorCombo)}
@@ -75,7 +72,8 @@ export const ColorSelector = () => {
                               border: "2px solid",
                               height: 50,
                               width: 50,
-                              transition: "box-shadow 0.15s ease-in-out 0s",
+                              transition:
+                                "box-shadow 0.15s ease-in-out 0s",
 
                               ":before, :after": {
                                 content: "''",
@@ -103,14 +101,14 @@ export const ColorSelector = () => {
                         </Tooltip>
                       }
                     ></FormControlLabel>
-                  );
+                  )
                 })}
               </Box>
             </RadioGroup>
           </FormControl>
-        );
+        )
       }}
       key="color"
     />
-  );
-};
+  )
+}

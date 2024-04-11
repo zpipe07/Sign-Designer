@@ -9,8 +9,7 @@ import RadioGroup from "@mui/material/RadioGroup"
 import { FiligreeE } from "@/src/components/SVG/FiligreeE"
 import { FiligreeQ } from "@/src/components/SVG/FiligreeQ"
 import { FiligreeProps } from "@/src/components/SVG/types"
-
-export type Decoration = "foo" | "bar"
+import { Decoration } from "@/src/components/SignDesigner/types"
 
 const decorations: Decoration[] = ["foo", "bar"]
 
@@ -19,7 +18,7 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
   bar: FiligreeQ,
 }
 
-export const DecorationSelector = () => {
+export const DecorationSelector: React.FC = () => {
   const { register } = useFormContext()
 
   return (

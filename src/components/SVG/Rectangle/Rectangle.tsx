@@ -1,9 +1,9 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
   Decoration,
   TextLine,
-  decorationIconMap,
-} from "@/src/components/SignDesigner/SignDesignerForm"
+} from "@/src/components/SignDesigner/types"
 
 const defaultColor = "#D9D9D9"
 

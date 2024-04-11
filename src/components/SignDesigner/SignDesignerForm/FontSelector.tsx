@@ -1,19 +1,19 @@
-import { useFormContext } from "react-hook-form";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+import { useFormContext } from "react-hook-form"
+import FormControl from "@mui/material/FormControl"
+import InputLabel from "@mui/material/InputLabel"
+import Select from "@mui/material/Select"
 
-export type FontFamily = "Times" | "Verdana" | "Lucida Console" | "Cursive";
+import { FontFamily } from "@/src/components/SignDesigner/types"
 
 const fontFamilies: FontFamily[] = [
   "Times",
   "Verdana",
   "Lucida Console",
   "Cursive",
-];
+]
 
-export const FontSelector = () => {
-  const { register } = useFormContext();
+export const FontSelector: React.FC = () => {
+  const { register } = useFormContext()
 
   return (
     <FormControl fullWidth>
@@ -31,5 +31,5 @@ export const FontSelector = () => {
         ))}
       </Select>
     </FormControl>
-  );
-};
+  )
+}

@@ -8,15 +8,12 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 
-import { PreviewSvgProps } from "@/src/components/SVG/types"
+import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   Orientation,
   Shape,
-  shapeIconMap,
-} from "@/src/components/SignDesigner/SignDesignerForm"
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-
-export type Size = "small" | "medium" | "large"
+  Size,
+} from "@/src/components/SignDesigner/types"
 
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()

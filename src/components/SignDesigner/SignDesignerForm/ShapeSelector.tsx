@@ -13,15 +13,7 @@ import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
 import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview"
 import { PreviewSvgProps } from "@/src/components/SVG/types"
 import { BreadPreview } from "@/src/components/SVG/BreadPreview"
-
-export type Shape =
-  | "rectangle"
-  | "ellipse"
-  | "topRound"
-  | "sideRound"
-  | "bread"
-
-// const shapes: Shape[] = ["rectangle", "ellipse", "topRound", "sideRound"];
+import { Shape } from "@/src/components/SignDesigner/types"
 
 export const shapeIconMap: {
   [key in Shape]: React.FC<PreviewSvgProps>

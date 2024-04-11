@@ -1,9 +1,9 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
+import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
-  Decoration,
   TextLine,
-  decorationIconMap,
-} from "@/src/components/SignDesigner/SignDesignerForm"
+  Decoration,
+} from "@/src/components/SignDesigner/types"
 
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,

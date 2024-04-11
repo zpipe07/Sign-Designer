@@ -1,5 +1,5 @@
 import { SvgProps } from "@/src/components/SVG/types"
-import { TextLine } from "@/src/components/SignDesigner/SignDesignerForm"
+import { TextLine } from "@/src/components/SignDesigner/types"
 
 export const SideRound: React.FC<SvgProps> = ({
   height,
@@ -8,7 +8,7 @@ export const SideRound: React.FC<SvgProps> = ({
   inputs,
 }) => {
   const textLines: TextLine[] = inputs.textLines.filter(
-    ({ value }: any) => {
+    ({ value }: TextLine) => {
       return !!value
     },
   )
