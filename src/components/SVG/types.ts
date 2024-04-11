@@ -1,5 +1,7 @@
-import { DesignFormInputs } from "@/src/components/SignDesigner"
-import { Color } from "@/src/components/SignDesigner/SignDesignerForm"
+import {
+  Color,
+  DesignFormInputs,
+} from "@/src/components/SignDesigner/types"
 
 export type SvgProps = {
   height: number
