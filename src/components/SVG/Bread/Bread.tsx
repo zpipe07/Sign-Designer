@@ -1,5 +1,5 @@
 import { SvgProps } from "@/src/components/SVG/types"
-import { TextLine } from "@/src/components/SignDesigner/SignDesignerForm"
+import { TextLine } from "@/src/components/SignDesigner/types"
 
 export const Bread: React.FC<SvgProps> = ({
   // height = 315,
