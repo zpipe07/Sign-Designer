@@ -10,7 +10,7 @@ import {
   SidesSelector,
 } from "@/src/components/SignConfigurer"
 
-export const SignConfigurerForm = () => {
+export const SignConfigurerForm: React.FC = () => {
   const theme = useTheme()
 
   const { handleSubmit } = useFormContext()

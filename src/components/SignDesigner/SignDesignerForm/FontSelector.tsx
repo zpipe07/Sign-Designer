@@ -12,7 +12,7 @@ const fontFamilies: FontFamily[] = [
   "Cursive",
 ]
 
-export const FontSelector = () => {
+export const FontSelector: React.FC = () => {
   const { register } = useFormContext()
 
   return (

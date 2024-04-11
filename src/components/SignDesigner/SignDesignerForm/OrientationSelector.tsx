@@ -11,7 +11,7 @@ import Radio from "@mui/material/Radio"
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { Orientation } from "@/src/components/SignDesigner/types"
 
-export const OrientationSelector = () => {
+export const OrientationSelector: React.FC = () => {
   const { setValue, register } = useFormContext()
 
   const shape = useWatch({ name: "shape" })

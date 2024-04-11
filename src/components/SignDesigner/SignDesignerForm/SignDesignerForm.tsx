@@ -14,7 +14,7 @@ import {
   OrientationSelector,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 
-export const SignDesignerForm = () => {
+export const SignDesignerForm: React.FC = () => {
   const router = useRouter()
 
   const { handleSubmit } = useFormContext()

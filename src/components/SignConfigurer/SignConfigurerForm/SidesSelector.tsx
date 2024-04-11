@@ -7,7 +7,7 @@ import Radio from "@mui/material/Radio"
 
 const sides = ["single", "double"]
 
-export const SidesSelector = () => {
+export const SidesSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="sides-label">Sides</FormLabel>

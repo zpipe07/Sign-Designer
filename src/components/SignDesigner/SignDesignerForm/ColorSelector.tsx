@@ -24,7 +24,7 @@ export const colorCombos: ColorCombo[] = [
   },
 ]
 
-export const ColorSelector = () => {
+export const ColorSelector: React.FC = () => {
   const { control } = useFormContext()
 
   return (

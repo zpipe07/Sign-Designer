@@ -18,7 +18,7 @@ export const decorationIconMap: { [key in Decoration]: React.FC } = {
   bar: FiligreeQ,
 }
 
-export const DecorationSelector = () => {
+export const DecorationSelector: React.FC = () => {
   const { register } = useFormContext()
 
   return (

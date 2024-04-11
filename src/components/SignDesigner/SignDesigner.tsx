@@ -6,7 +6,7 @@ import Box from "@mui/material/Box"
 import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm"
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
 
-export const SignDesigner = () => {
+export const SignDesigner: React.FC = () => {
   const theme = useTheme()
 
   return (

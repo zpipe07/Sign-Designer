@@ -7,7 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup"
 
 const mountOptions = ["hanging", "wall mounted"]
 
-export const MountingSelector = () => {
+export const MountingSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="mounting-label">Mounting style</FormLabel>
