@@ -18,6 +18,8 @@ export async function GET(request: Request) {
             products {
               edges {
                 node {
+                  id
+                  entityId
                   name
                   productOptions {
                     edges {
