@@ -19,28 +19,11 @@ export async function GET(request: Request) {
               edges {
                 node {
                   name
-                  sku
-                  defaultImage {
-                    url(width: 1280)
-                  }
-                  variants(first: 100) {
+                  productOptions {
                     edges {
                       node {
-                        id
-                        options(first: 10) {
-                          edges {
-                            node {
-                              displayName
-                              values {
-                                edges {
-                                  node {
-                                    label
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
+                        entityId
+                        displayName
                       }
                     }
                   }
