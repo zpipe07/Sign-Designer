@@ -1,233 +1,233 @@
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | null
 
 export type Connection<T> = {
-  edges: Array<Edge<T>>;
-};
+  edges: Array<Edge<T>>
+}
 
 export type Edge<T> = {
-  node: T;
-};
+  node: T
+}
 
 export type VercelPage = {
-  id: string;
-  title: string;
-  handle: string;
-  body: string;
-  bodySummary: string;
-  seo?: VercelSEO;
-  createdAt: string;
-  updatedAt: string;
-};
+  id: string
+  title: string
+  handle: string
+  body: string
+  bodySummary: string
+  seo?: VercelSEO
+  createdAt: string
+  updatedAt: string
+}
 
 export type VercelMenu = {
-  title: string;
-  path: string;
-};
+  title: string
+  path: string
+}
 
 export type VercelCollection = {
-  handle: string;
-  title: string;
-  description: string;
-  seo: VercelSEO;
-  updatedAt: string;
-  path: string;
-};
+  handle: string
+  title: string
+  description: string
+  seo: VercelSEO
+  updatedAt: string
+  path: string
+}
 
 type VercelMoney = {
-  amount: string;
-  currencyCode: string;
-};
+  amount: string
+  currencyCode: string
+}
 
 export type Image = {
-  url: string;
-  altText: string;
-  width: number;
-  height: number;
-};
+  url: string
+  altText: string
+  width: number
+  height: number
+}
 
 export type VercelProduct = {
-  id: string;
-  handle: string;
-  availableForSale: boolean;
-  title: string;
-  description: string;
-  descriptionHtml: string;
-  options: VercelProductOption[];
+  id: string
+  handle: string
+  availableForSale: boolean
+  title: string
+  description: string
+  descriptionHtml: string
+  options: VercelProductOption[]
   priceRange: {
-    maxVariantPrice: VercelMoney;
-    minVariantPrice: VercelMoney;
-  };
-  variants: VercelProductVariant[];
-  featuredImage: Image;
-  images: Image[];
-  seo: VercelSEO;
-  tags: string[];
-  updatedAt: string;
-};
+    maxVariantPrice: VercelMoney
+    minVariantPrice: VercelMoney
+  }
+  variants: VercelProductVariant[]
+  featuredImage: Image
+  images: Image[]
+  seo: VercelSEO
+  tags: string[]
+  updatedAt: string
+}
 
 export type VercelProductOption = {
-  id: string;
-  name: string;
-  values: string[];
-};
+  id: string
+  name: string
+  values: string[]
+}
 
 export type VercelProductVariant = {
-  parentId?: string;
-  id: string;
-  title: string;
-  availableForSale: boolean;
+  parentId?: string
+  id: string
+  title: string
+  availableForSale: boolean
   selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-  price: VercelMoney;
-};
+    name: string
+    value: string
+  }[]
+  price: VercelMoney
+}
 
 export type VercelSEO = {
-  title: string;
-  description: string;
-};
+  title: string
+  description: string
+}
 
 export type VercelCartItem = {
-  id: string;
-  quantity: number;
+  id: string
+  quantity: number
   cost: {
-    totalAmount: VercelMoney;
-  };
+    totalAmount: VercelMoney
+  }
   merchandise: {
-    id: string;
-    title: string;
+    id: string
+    title: string
     selectedOptions: {
-      name: string;
-      value: string;
-    }[];
-    product: VercelProduct;
-  };
-};
+      name: string
+      value: string
+    }[]
+    product: VercelProduct
+  }
+}
 
 export type VercelCart = {
-  id: string;
-  checkoutUrl: string;
+  id: string
+  checkoutUrl: string
   cost: {
-    subtotalAmount: VercelMoney;
-    totalAmount: VercelMoney;
-    totalTaxAmount: VercelMoney;
-  };
-  lines: VercelCartItem[];
-  totalQuantity: number;
-};
+    subtotalAmount: VercelMoney
+    totalAmount: VercelMoney
+    totalTaxAmount: VercelMoney
+  }
+  lines: VercelCartItem[]
+  totalQuantity: number
+}
 
 export type BigCommerceCartOperation = {
   data: {
     site: {
-      cart: BigCommerceCart;
-    };
-  };
+      cart: BigCommerceCart
+    }
+  }
   variables: {
-    entityId: string;
-  };
-};
+    entityId: string
+  }
+}
 
 export type BigCommerceCreateCartOperation = {
   data: {
     cart: {
       createCart: {
-        cart: BigCommerceCart;
-      };
-    };
-  };
+        cart: BigCommerceCart
+      }
+    }
+  }
   variables: {
     createCartInput: {
-      lineItems: CartItem[];
-    };
-  };
-};
+      lineItems: CartItem[]
+    }
+  }
+}
 
 export type BigCommerceAddToCartOperation = {
   data: {
     cart: {
       addCartLineItems: {
-        cart: BigCommerceCart;
-      };
-    };
-  };
+        cart: BigCommerceCart
+      }
+    }
+  }
   variables: {
     addCartLineItemsInput: {
-      cartEntityId: string;
+      cartEntityId: string
       data: {
-        lineItems: CartItem[];
-      };
-    };
-  };
-};
+        lineItems: CartItem[]
+      }
+    }
+  }
+}
 
 export type BigCommerceDeleteCartItemOperation = {
   data: {
     cart: {
       deleteCartLineItem: {
-        cart: BigCommerceCart;
-      };
-    };
-  };
+        cart: BigCommerceCart
+      }
+    }
+  }
   variables: {
     deleteCartLineItemInput: {
-      cartEntityId: string;
-      lineItemEntityId: string;
-    };
-  };
-};
+      cartEntityId: string
+      lineItemEntityId: string
+    }
+  }
+}
 
 export type BigCommerceUpdateCartItemOperation = {
   data: {
     cart: {
       updateCartLineItem: {
-        cart: BigCommerceCart;
-      };
-    };
-  };
+        cart: BigCommerceCart
+      }
+    }
+  }
   variables: {
     updateCartLineItemInput: {
-      cartEntityId: string;
-      lineItemEntityId: string;
+      cartEntityId: string
+      lineItemEntityId: string
       data: {
-        lineItem: CartItem;
-      };
-    };
-  };
-};
+        lineItem: CartItem
+      }
+    }
+  }
+}
 
 export type BigCommerceCheckoutOperation = {
   data: {
     site: {
-      checkout: BigCommerceCheckout;
-    };
-  };
+      checkout: BigCommerceCheckout
+    }
+  }
   variables: {
-    entityId: string;
-  };
-};
+    entityId: string
+  }
+}
 
 export type BigCommerceProductOperation = {
   data: {
     site: {
-      product: BigCommerceProduct;
-    };
-  };
+      product: BigCommerceProduct
+    }
+  }
   variables: {
-    productId: number;
-  };
-};
+    productId: number
+  }
+}
 
 export type BigCommerceProductsOperation = {
   data: {
     site: {
-      products: Connection<BigCommerceProduct>;
-    };
-  };
+      products: Connection<BigCommerceProduct>
+    }
+  }
   variables: {
-    entityIds: number[] | [];
-  };
-};
+    entityIds: number[] | []
+  }
+}
 
 export type BigCommerceEntityIdOperation = {
   data: {
@@ -235,372 +235,419 @@ export type BigCommerceEntityIdOperation = {
       route: {
         node: {
           __typename:
-            | 'Product'
-            | 'Category'
-            | 'Brand'
-            | 'NormalPage'
-            | 'ContactPage'
-            | 'RawHtmlPage'
-            | 'BlogIndexPage';
-          entityId: number;
-        };
-      };
-    };
-  };
+            | "Product"
+            | "Category"
+            | "Brand"
+            | "NormalPage"
+            | "ContactPage"
+            | "RawHtmlPage"
+            | "BlogIndexPage"
+          entityId: number
+        }
+      }
+    }
+  }
   variables: {
-    path: string;
-  };
-};
+    path: string
+  }
+}
 
 export type BigCommerceRecommendationsOperation = {
   data: {
     site: {
       product: {
-        relatedProducts: Connection<BigCommerceProduct>;
-      };
-    };
-  };
+        relatedProducts: Connection<BigCommerceProduct>
+      }
+    }
+  }
   variables: {
-    productId: number | string;
-  };
-};
+    productId: number | string
+  }
+}
 
 export type BigCommerceSearchProductsOperation = {
   data: {
     site: {
       search: {
         searchProducts: {
-          products: Connection<BigCommerceProduct>;
-        };
-      };
-    };
-  };
+          products: Connection<BigCommerceProduct>
+        }
+      }
+    }
+  }
   variables: {
     filters: {
-      searchTerm: string;
-    };
-    sort: string | null;
-  };
-};
+      searchTerm: string
+    }
+    sort: string | null
+  }
+}
 
 export type BigCommerceMenuOperation = {
   data: {
     site: {
-      categoryTree: BigCommerceCategoryTreeItem[];
-    };
-  };
-};
+      categoryTree: BigCommerceCategoryTreeItem[]
+    }
+  }
+}
 
 export type BigCommerceCollectionOperation = {
   data: {
     site: {
-      category: BigCommerceCollection;
-    };
-  };
+      category: BigCommerceCollection
+    }
+  }
   variables: {
-    entityId: number;
-  };
-};
+    entityId: number
+  }
+}
 
 export type BigCommerceProductsCollectionOperation = {
   data: {
     site: {
       category: {
-        products: Connection<BigCommerceProduct>;
-      };
-    };
-  };
+        products: Connection<BigCommerceProduct>
+      }
+    }
+  }
   variables: {
-    entityId: number;
-    sortBy: string | null;
-    hideOutOfStock: boolean;
-    first: number;
-  };
-};
+    entityId: number
+    sortBy: string | null
+    hideOutOfStock: boolean
+    first: number
+  }
+}
 
 export type BigCommerceNewestProductsOperation = {
   data: {
     site: {
-      newestProducts: Connection<BigCommerceProduct>;
-    };
-  };
+      newestProducts: Connection<BigCommerceProduct>
+    }
+  }
   variables: {
-    first: number;
-  };
-};
+    first: number
+  }
+}
 
 export type BigCommerceFeaturedProductsOperation = {
   data: {
     site: {
-      featuredProducts: Connection<BigCommerceProduct>;
-    };
-  };
+      featuredProducts: Connection<BigCommerceProduct>
+    }
+  }
   variables: {
-    first: number;
-  };
-};
+    first: number
+  }
+}
 
 export type BigCommercePopularProductsOperation = {
   data: {
     site: {
-      bestSellingProducts: Connection<BigCommerceProduct>;
-    };
-  };
+      bestSellingProducts: Connection<BigCommerceProduct>
+    }
+  }
   variables: {
-    first: number;
-  };
-};
+    first: number
+  }
+}
 
 export type BigCommerceCollectionsOperation = {
   data: {
     site: {
-      categoryTree: BigCommerceCategoryWithId[];
-    };
-  };
-};
+      categoryTree: BigCommerceCategoryWithId[]
+    }
+  }
+}
 
 export type BigCommercePageOperation = {
   data: {
     site: {
       content: {
-        page: BigCommercePage;
-      };
-    };
-  };
-  variables: { entityId: number };
-};
+        page: BigCommercePage
+      }
+    }
+  }
+  variables: { entityId: number }
+}
 
 export type BigCommercePagesOperation = {
   data: {
     site: {
       content: {
-        pages: Connection<BigCommercePage>;
-      };
-    };
-  };
-};
+        pages: Connection<BigCommercePage>
+      }
+    }
+  }
+}
 
 export type BigCommerceCheckout = {
-  subtotal: BigCommerceMoney;
-  grandTotal: BigCommerceMoney;
-  taxTotal: BigCommerceMoney;
-};
+  subtotal: BigCommerceMoney
+  grandTotal: BigCommerceMoney
+  taxTotal: BigCommerceMoney
+}
 
-export type BigCommerceCategoryWithId = Omit<BigCommerceCollection, 'description' | 'seo' | 'path'>;
+export type BigCommerceCategoryWithId = Omit<
+  BigCommerceCollection,
+  "description" | "seo" | "path"
+>
 
 export type BigCommerceSEO = {
-  pageTitle: string;
-  metaDescription: string;
-  metaKeywords: string;
-};
+  pageTitle: string
+  metaDescription: string
+  metaKeywords: string
+}
 
 export type BigCommerceCollection = {
-  entityId: number;
-  name: string;
-  path: string;
-  description: string;
-  seo: BigCommerceSEO;
-};
+  entityId: number
+  name: string
+  path: string
+  description: string
+  seo: BigCommerceSEO
+}
 
 export type BigCommerceCart = {
-  entityId: string;
-  currencyCode: string;
-  isTaxIncluded: boolean;
-  baseAmount: BigCommerceMoney;
-  discountedAmount: BigCommerceMoney;
-  amount: BigCommerceMoney;
-  discounts: CartDiscount[];
-  lineItems: CartLineItems;
-  createdAt: { utc: Date };
-  updatedAt: { utc: Date };
-  locale: string;
-};
+  entityId: string
+  currencyCode: string
+  isTaxIncluded: boolean
+  baseAmount: BigCommerceMoney
+  discountedAmount: BigCommerceMoney
+  amount: BigCommerceMoney
+  discounts: CartDiscount[]
+  lineItems: CartLineItems
+  createdAt: { utc: Date }
+  updatedAt: { utc: Date }
+  locale: string
+}
 
 type CartLineItems = {
-  physicalItems: DigitalOrPhysicalItem[];
-  digitalItems: DigitalOrPhysicalItem[];
-  customItems: CartCustomItem[];
-  giftCertificates: CartGiftCertificate[];
-  totalQuantity: number;
-};
+  physicalItems: DigitalOrPhysicalItem[]
+  digitalItems: DigitalOrPhysicalItem[]
+  customItems: CartCustomItem[]
+  giftCertificates: CartGiftCertificate[]
+  totalQuantity: number
+}
+
+type CartSelectedCheckboxOptionInput = {
+  optionEntityId: number
+  optionValueEntityId: number
+}
+
+type CartSelectedDateFieldOptionInput = {
+  optionEntityId: number
+  date: Date
+}
+
+type CartSelectedMultiLineTextFieldOptionInput = {
+  optionEntityId: number
+  text: string
+}
+
+type CartSelectedMultipleChoiceOptionInput = {
+  optionEntityId: number
+  optionValueEntityId: number
+}
+
+type CartSelectedNumberFieldOptionInput = {
+  optionEntityId: number
+  number: number
+}
+
+type CartSelectedTextFieldOptionInput = {
+  optionEntityId: number
+  text: string
+}
+
+type CartSelectedOptionsInput = {
+  checkboxes?: CartSelectedCheckboxOptionInput[]
+  dateFields?: CartSelectedDateFieldOptionInput[]
+  multiLineTextFields?: CartSelectedMultiLineTextFieldOptionInput[]
+  multipleChoices?: CartSelectedMultipleChoiceOptionInput[]
+  numberFields?: CartSelectedNumberFieldOptionInput[]
+  textFields?: CartSelectedTextFieldOptionInput[]
+}
 
 type CartItem = {
-  quantity: number;
-  productEntityId: number;
-  variantEntityId?: number;
-};
+  quantity: number
+  productEntityId: number
+  variantEntityId?: number
+  selectedOptions?: CartSelectedOptionsInput
+}
 
 export type BigCommerceCategoryTreeItem = {
-  name: string;
-  path: string;
-  hasChildren: boolean;
-  entityId: number;
-  children?: BigCommerceCategoryTreeItem[];
-};
+  name: string
+  path: string
+  hasChildren: boolean
+  entityId: number
+  children?: BigCommerceCategoryTreeItem[]
+}
 
 export type BigCommercePage = {
-  __typename: 'NormalPage' | 'ContactPage' | 'RawHtmlPage' | 'BlogIndexPage';
-  entityId: number;
-  name: string;
-  isVisibleInNavigation: boolean;
-  seo: BigCommerceSEO;
-  path: string;
-  plainTextSummary?: string;
-  htmlBody?: string;
-};
+  __typename:
+    | "NormalPage"
+    | "ContactPage"
+    | "RawHtmlPage"
+    | "BlogIndexPage"
+  entityId: number
+  name: string
+  isVisibleInNavigation: boolean
+  seo: BigCommerceSEO
+  path: string
+  plainTextSummary?: string
+  htmlBody?: string
+}
 
 export type BigCommerceMoney = {
-  value: number;
-  currencyCode: string;
-};
+  value: number
+  currencyCode: string
+}
 
 type CartDiscount = {
-  entityId: string;
-  discountedAmount: BigCommerceMoney;
-};
+  entityId: string
+  discountedAmount: BigCommerceMoney
+}
 
 type CartGiftCertificatePersonDetails = {
-  name: string;
-  email: string;
-};
+  name: string
+  email: string
+}
 
 export type DigitalOrPhysicalItem = {
-  entityId: number;
-  parentEntityId: number | null;
-  productEntityId: number;
-  variantEntityId: number | null;
-  sku: string;
-  name: string;
-  url: string;
-  imageUrl: string | null;
-  brand: string | null;
-  quantity: number;
-  isTaxable: boolean;
-  listPrice: BigCommerceMoney;
-  extendedListPrice: BigCommerceMoney;
+  entityId: number
+  parentEntityId: number | null
+  productEntityId: number
+  variantEntityId: number | null
+  sku: string
+  name: string
+  url: string
+  imageUrl: string | null
+  brand: string | null
+  quantity: number
+  isTaxable: boolean
+  listPrice: BigCommerceMoney
+  extendedListPrice: BigCommerceMoney
   selectedOptions: {
-    entityId: number;
-    name: string;
-    value?: string;
-    date?: { utc: Date };
-    text?: string;
-    number?: string;
-    fileName?: ScrollSetting;
-  }[];
-  isShippingRequired: boolean;
-};
+    entityId: number
+    name: string
+    value?: string
+    date?: { utc: Date }
+    text?: string
+    number?: string
+    fileName?: ScrollSetting
+  }[]
+  isShippingRequired: boolean
+}
 
 export type CartCustomItem = {
-  entityId: string;
-  productEntityId: undefined;
-  sku: string;
-  name: string;
-  quantity: number;
-  listPrice: BigCommerceMoney;
-  extendedListPrice: BigCommerceMoney;
-};
+  entityId: string
+  productEntityId: undefined
+  sku: string
+  name: string
+  quantity: number
+  listPrice: BigCommerceMoney
+  extendedListPrice: BigCommerceMoney
+}
 
 type CartGiftCertificate = {
-  entityId: number;
-  productEntityId: undefined;
-  name: string;
-  amount: BigCommerceMoney;
-  isTaxable: boolean;
-  message: string;
-  sender: CartGiftCertificatePersonDetails;
-  recipient: CartGiftCertificatePersonDetails;
-};
+  entityId: number
+  productEntityId: undefined
+  name: string
+  amount: BigCommerceMoney
+  isTaxable: boolean
+  message: string
+  sender: CartGiftCertificatePersonDetails
+  recipient: CartGiftCertificatePersonDetails
+}
 
 export type BigCommerceProductVariant = {
-  id: number;
-  entityId: number;
-  sku: string;
-  upc: string | null;
-  isPurchasable: boolean;
+  id: number
+  entityId: number
+  sku: string
+  upc: string | null
+  isPurchasable: boolean
   prices: {
-    price: BigCommerceMoney;
+    price: BigCommerceMoney
     priceRange: {
-      min: BigCommerceMoney;
-      max: BigCommerceMoney;
-    };
-  };
+      min: BigCommerceMoney
+      max: BigCommerceMoney
+    }
+  }
   options: {
     edges: Array<{
       node: {
-        entityId: number;
-        displayName: string;
+        entityId: number
+        displayName: string
         values: {
           edges: Array<{
             node: {
-              entityId: number;
-              label: string;
-            };
-          }>;
-        };
-      };
-    }>;
-  };
-};
+              entityId: number
+              label: string
+            }
+          }>
+        }
+      }
+    }>
+  }
+}
 
 export type BigCommerceProductOption = {
-  __typename: string;
-  entityId: number;
-  displayName: string;
-  isRequired: boolean;
-  displayStyle: string;
+  __typename: string
+  entityId: number
+  displayName: string
+  isRequired: boolean
+  displayStyle: string
   values: {
     edges: Array<{
       node: {
-        entityId: number;
-        label: string;
-        isDefault: boolean;
-        hexColors: string[];
-        imageUrl: string | null;
-        isSelected: boolean;
-      };
-    }>;
-  };
-};
+        entityId: number
+        label: string
+        isDefault: boolean
+        hexColors: string[]
+        imageUrl: string | null
+        isSelected: boolean
+      }
+    }>
+  }
+}
 
 export type BigCommerceProduct = {
-  id: number;
-  entityId: number;
-  sku: string;
-  upc: string | null;
-  name: string;
+  id: number
+  entityId: number
+  sku: string
+  upc: string | null
+  name: string
   brand: {
-    name: string;
-  } | null;
-  plainTextDescription: string;
-  description: string;
+    name: string
+  } | null
+  plainTextDescription: string
+  description: string
   availabilityV2: {
-    status: string;
-    description: string;
-  };
+    status: string
+    description: string
+  }
   defaultImage: {
-    url: string;
-    altText: string;
-  };
+    url: string
+    altText: string
+  }
   images: {
     edges: Array<{
       node: {
-        url: string;
-        altText: string;
-      };
-    }>;
-  };
-  seo: BigCommerceSEO;
-  path: string;
+        url: string
+        altText: string
+      }
+    }>
+  }
+  seo: BigCommerceSEO
+  path: string
   prices: {
-    price: BigCommerceMoney;
+    price: BigCommerceMoney
     priceRange: {
-      min: BigCommerceMoney;
-      max: BigCommerceMoney;
-    };
-  };
+      min: BigCommerceMoney
+      max: BigCommerceMoney
+    }
+  }
   createdAt: {
-    utc: Date;
-  };
-  variants: Connection<BigCommerceProductVariant>;
-  productOptions: Connection<BigCommerceProductOption>;
-};
+    utc: Date
+  }
+  variants: Connection<BigCommerceProductVariant>
+  productOptions: Connection<BigCommerceProductOption>
+}

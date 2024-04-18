@@ -29,6 +29,13 @@ export async function GET(request: Request) {
                       }
                     }
                   }
+                  variants(first: 50) {
+                    edges {
+                      node {
+                        entityId
+                      }
+                    }
+                  }
                 }
               }
             }
