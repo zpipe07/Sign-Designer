@@ -427,13 +427,23 @@ const formToCartMap = {
     sideRound: 115,
     bread: 116,
   },
+  orientation: {
+    entityId: 120,
+    horizontal: 117,
+    vertical: 118,
+  },
+  size: {
+    entityId: 121,
+    small: 119,
+    medium: 120,
+  },
+  textLine: {
+    entityId: 117,
+  },
   font: {
     entityId: 118,
     times: 110,
     verdana: 111,
-  },
-  textLine: {
-    entityId: 117,
   },
 }
 
@@ -446,12 +456,19 @@ export const formDataToCartItem = (
     variantEntityId: 77, // is this necessary?
     selectedOptions: {
       multipleChoices: [
-        // { optionEntityId: 119, optionValueEntityId: 112 },
         {
           optionEntityId: formToCartMap.shape.entityId,
           optionValueEntityId: formToCartMap.shape[data.shape],
         },
-        // { optionEntityId: 118, optionValueEntityId: 110 },
+        {
+          optionEntityId: formToCartMap.orientation.entityId,
+          optionValueEntityId:
+            formToCartMap.orientation[data.orientation],
+        },
+        {
+          optionEntityId: formToCartMap.size.entityId,
+          optionValueEntityId: formToCartMap.size[data.size],
+        },
         {
           optionEntityId: formToCartMap.font.entityId,
           optionValueEntityId: formToCartMap.font[data.fontFamily],
