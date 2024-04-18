@@ -162,6 +162,8 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
             ))}
           </Box>
 
+          <Cart />
+
           <Box sx={{ flexGrow: 0 }}>
             {user ? (
               <>
@@ -193,8 +195,6 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
                 </Menu>
               </>
             ) : null}
-
-            <Cart />
           </Box>
         </Toolbar>
       </Container>

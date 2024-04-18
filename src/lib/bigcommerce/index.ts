@@ -129,7 +129,6 @@ export async function bigCommerceFetch<T>({
       body,
     }
   } catch (e) {
-    console.log({ e })
     if (isVercelCommerceError(e)) {
       throw {
         status: e.status || 500,

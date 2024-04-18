@@ -16,13 +16,10 @@ export const SignConfigurerForm: React.FC = () => {
   const { handleSubmit } = useFormContext()
 
   const onSubmit = async (formData: any) => {
-    // console.log({ data })
     const res = await fetch("/api/v1/cart", {
       method: "POST",
     })
     const data = await res.json()
-
-    console.log({ data })
   }
 
   return (

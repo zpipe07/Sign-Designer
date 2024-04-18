@@ -13,5 +13,11 @@ export async function GET(
     cache: "no-store",
   })
 
-  return Response.json(res)
+  const cart = res.body.data.site.cart
+
+  if (!cart) {
+    return undefined
+  }
+
+  return Response.json(cart)
 }
