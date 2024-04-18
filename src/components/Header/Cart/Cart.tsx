@@ -1,5 +1,6 @@
-import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import Box from "@mui/material/Box"
+
+import { useGetCart } from "@/src/hooks/queries/useGetCart"
 
 export const Cart: React.FC = () => {
   const { data, isLoading } = useGetCart(
@@ -13,8 +14,7 @@ export const Cart: React.FC = () => {
 
   return (
     <Box>
-      This is Cart: {data.body.data.site.cart.lineItems.totalQuantity}{" "}
-      Item(s)
+      Cart: {data.body.data.site.cart.lineItems.totalQuantity} Item(s)
     </Box>
   )
 }

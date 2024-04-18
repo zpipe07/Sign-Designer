@@ -12,7 +12,7 @@ export async function POST(request: Request) {
           {
             quantity: 1,
             productEntityId: 112,
-            variantEntityId: 77,
+            variantEntityId: 77, // is this necessary?
             selectedOptions: {
               multipleChoices: [
                 { optionEntityId: 119, optionValueEntityId: 112 },
