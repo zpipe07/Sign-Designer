@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton"
 
 import { Typography } from "@mui/material"
 import { BigCommerceCart } from "@/src/lib/bigcommerce/types"
+import { CartItemsList } from "@/src/components/Header/Cart/CartItemsList"
 
 type Props = {
   cart?: BigCommerceCart
@@ -31,7 +32,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
   return (
     <>
       <IconButton
-        aria-controls={open ? "basic-menu" : undefined}
+        // aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
@@ -40,13 +41,13 @@ export const CartView: React.FC<Props> = ({ cart }) => {
       </IconButton>
 
       <Menu
-        id="basic-menu"
+        // id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
+        // MenuListProps={{
+        //   "aria-labelledby": "basic-button",
+        // }}
       >
         <Box padding={2}>
           <Typography variant="subtitle1">Shopping Cart</Typography>
@@ -60,6 +61,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
               <Typography>
                 Items: {cart.lineItems.totalQuantity}
               </Typography>
+              <CartItemsList lineItems={cart.lineItems} />
             </>
           )}
         </Box>

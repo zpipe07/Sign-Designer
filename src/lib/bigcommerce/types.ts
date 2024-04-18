@@ -419,7 +419,7 @@ export type BigCommerceCart = {
   locale: string
 }
 
-type CartLineItems = {
+export type CartLineItems = {
   physicalItems: DigitalOrPhysicalItem[]
   digitalItems: DigitalOrPhysicalItem[]
   customItems: CartCustomItem[]
