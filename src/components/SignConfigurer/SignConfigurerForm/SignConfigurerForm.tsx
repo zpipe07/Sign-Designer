@@ -9,17 +9,56 @@ import {
   MountingSelector,
   SidesSelector,
 } from "@/src/components/SignConfigurer"
+import { useGetCart } from "@/src/hooks/queries/useGetCart"
 
 export const SignConfigurerForm: React.FC = () => {
+  const { data: cart, isLoading } = useGetCart(
+    "0a98b86b-2d20-4610-a160-d1366fffd65a",
+  )
+
   const theme = useTheme()
 
   const { handleSubmit } = useFormContext()
 
   const onSubmit = async (formData: any) => {
-    const res = await fetch("/api/v1/cart", {
-      method: "POST",
-    })
-    const data = await res.json()
+    if (cart) {
+      // update cart
+      const res = await fetch(`/api/v1/cart/${cart.entityId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          lineItems: [
+            {
+              quantity: 1,
+              productEntityId: 112,
+              variantEntityId: 77, // is this necessary?
+              selectedOptions: {
+                multipleChoices: [
+                  { optionEntityId: 119, optionValueEntityId: 112 },
+                  { optionEntityId: 118, optionValueEntityId: 110 },
+                ],
+                textFields: [
+                  {
+                    optionEntityId: 117,
+                    text: "Example foobar text",
+                  },
+                ],
+              },
+            },
+          ],
+        }),
+      })
+      const data = await res.json()
+
+      console.log({ data })
+    } else {
+      // create new cart
+      const res = await fetch("/api/v1/cart", {
+        method: "POST",
+      })
+      const data = await res.json()
+
+      console.log({ data })
+    }
   }
 
   return (
