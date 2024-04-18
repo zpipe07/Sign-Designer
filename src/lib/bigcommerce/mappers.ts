@@ -12,6 +12,7 @@ import {
   BigCommerceProductOption,
   BigCommerceProductVariant,
   CartCustomItem,
+  CartItem,
   DigitalOrPhysicalItem,
   VercelCart,
   VercelCartItem,
@@ -21,6 +22,7 @@ import {
   VercelProductOption,
   VercelProductVariant,
 } from "./types"
+import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
 type ProductsList = {
   productId: number
@@ -412,5 +414,55 @@ export const bigCommerceToVercelPageContent = (
     },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+  }
+}
+
+const signProductId = 112
+const formToCartMap = {
+  shape: {
+    entityId: 119,
+    rectangle: 112,
+    ellipse: 113,
+    topRound: 114,
+    sideRound: 115,
+    bread: 116,
+  },
+  font: {
+    entityId: 118,
+    times: 110,
+    verdana: 111,
+  },
+  textLine: {
+    entityId: 117,
+  },
+}
+
+export const formDataToCartItem = (
+  data: DesignFormInputs,
+): CartItem => {
+  return {
+    quantity: 1,
+    productEntityId: signProductId,
+    variantEntityId: 77, // is this necessary?
+    selectedOptions: {
+      multipleChoices: [
+        // { optionEntityId: 119, optionValueEntityId: 112 },
+        {
+          optionEntityId: formToCartMap.shape.entityId,
+          optionValueEntityId: formToCartMap.shape[data.shape],
+        },
+        // { optionEntityId: 118, optionValueEntityId: 110 },
+        {
+          optionEntityId: formToCartMap.font.entityId,
+          optionValueEntityId: formToCartMap.font[data.fontFamily],
+        },
+      ],
+      textFields: [
+        {
+          optionEntityId: formToCartMap.textLine.entityId,
+          text: data.textLines[0].value,
+        },
+      ],
+    },
   }
 }

@@ -4,29 +4,16 @@ import { BigCommerceCreateCartOperation } from "@/src/lib/bigcommerce/types"
 
 export async function POST(request: Request) {
   // create cart
+  const body = await request.json()
   const res = await bigCommerceFetch<BigCommerceCreateCartOperation>({
     query: createCartMutation,
     variables: {
       createCartInput: {
-        lineItems: [
-          {
-            quantity: 1,
-            productEntityId: 112,
-            variantEntityId: 77, // is this necessary?
-            selectedOptions: {
-              multipleChoices: [
-                { optionEntityId: 119, optionValueEntityId: 112 },
-                { optionEntityId: 118, optionValueEntityId: 110 },
-              ],
-              textFields: [
-                { optionEntityId: 117, text: "Example text" },
-              ],
-            },
-          },
-        ],
+        lineItems: body.lineItems,
       },
     },
   })
+  const cart = res.body.data.cart.createCart.cart
 
-  return Response.json(res)
+  return Response.json({ cart })
 }

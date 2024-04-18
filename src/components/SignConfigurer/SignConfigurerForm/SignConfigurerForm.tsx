@@ -1,7 +1,7 @@
 "use client"
 import { useFormContext } from "react-hook-form"
-import Link from "next/link"
 import { useTheme } from "@mui/material"
+import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 
@@ -10,6 +10,9 @@ import {
   SidesSelector,
 } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
+import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { CartItem } from "@/src/lib/bigcommerce/types"
+import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 
 export const SignConfigurerForm: React.FC = () => {
   const { data: cart, isLoading } = useGetCart(
@@ -18,33 +21,17 @@ export const SignConfigurerForm: React.FC = () => {
 
   const theme = useTheme()
 
-  const { handleSubmit } = useFormContext()
+  const { handleSubmit } = useFormContext<DesignFormInputs>()
 
-  const onSubmit = async (formData: any) => {
+  const onSubmit = async (formData: DesignFormInputs) => {
+    const lineItem = formDataToCartItem(formData)
+
     if (cart) {
       // update cart
       const res = await fetch(`/api/v1/cart/${cart.entityId}`, {
         method: "PUT",
         body: JSON.stringify({
-          lineItems: [
-            {
-              quantity: 1,
-              productEntityId: 112,
-              variantEntityId: 77, // is this necessary?
-              selectedOptions: {
-                multipleChoices: [
-                  { optionEntityId: 119, optionValueEntityId: 112 },
-                  { optionEntityId: 118, optionValueEntityId: 110 },
-                ],
-                textFields: [
-                  {
-                    optionEntityId: 117,
-                    text: "Example foobar text",
-                  },
-                ],
-              },
-            },
-          ],
+          lineItems: [lineItem],
         }),
       })
       const data = await res.json()
@@ -54,6 +41,9 @@ export const SignConfigurerForm: React.FC = () => {
       // create new cart
       const res = await fetch("/api/v1/cart", {
         method: "POST",
+        body: JSON.stringify({
+          lineItems: [lineItem],
+        }),
       })
       const data = await res.json()
 

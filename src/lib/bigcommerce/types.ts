@@ -466,7 +466,7 @@ type CartSelectedOptionsInput = {
   textFields?: CartSelectedTextFieldOptionInput[]
 }
 
-type CartItem = {
+export type CartItem = {
   quantity: number
   productEntityId: number
   variantEntityId?: number
