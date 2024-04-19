@@ -1,6 +1,6 @@
-import Typography from "@mui/material/Typography";
+import Typography from "@mui/material/Typography"
 
-import { SignDesigner } from "@/src/components/SignDesigner";
+import { SignDesigner } from "@/src/components/SignDesigner"
 
 export default function Page() {
   return (
@@ -11,5 +11,5 @@ export default function Page() {
 
       <SignDesigner />
     </>
-  );
+  )
 }

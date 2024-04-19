@@ -20,7 +20,6 @@ export const SignDesignerForm: React.FC = () => {
   const { handleSubmit } = useFormContext()
 
   const onSubmit = (data: any) => {
-    console.log({ data })
     router.push("/design/configure")
   }
 

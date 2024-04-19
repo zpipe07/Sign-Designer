@@ -17,7 +17,6 @@ const dimensionsMap = {
 
 export const SignDesignerVisualizer: React.FC = () => {
   const inputs = useWatch() as DesignFormInputs
-  console.log({ inputs })
 
   const width = 400
   const height = 250

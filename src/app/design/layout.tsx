@@ -14,7 +14,7 @@ export default function Layout({
       size: "small",
       textLines: [{ value: "" }, { value: "" }],
       color: colorCombos[0],
-      fontFamily: "Times",
+      fontFamily: "times",
       decoration: "",
     },
   })

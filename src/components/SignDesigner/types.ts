@@ -7,11 +7,9 @@ export type ColorCombo = {
 
 export type Decoration = "foo" | "bar"
 
-export type FontFamily =
-  | "Times"
-  | "Verdana"
-  | "Lucida Console"
-  | "Cursive"
+export type FontFamily = "times" | "verdana"
+// | "lucida Console"
+// | "cursive"
 
 export type Orientation = "horizontal" | "vertical"
 
@@ -22,7 +20,8 @@ export type Shape =
   | "sideRound"
   | "bread"
 
-export type Size = "small" | "medium" | "large"
+export type Size = "small" | "medium"
+// | "large"
 
 export type TextLine = { value: string }
 

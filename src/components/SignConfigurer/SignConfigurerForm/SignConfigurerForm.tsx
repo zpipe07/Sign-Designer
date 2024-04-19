@@ -1,7 +1,8 @@
 "use client"
 import { useFormContext } from "react-hook-form"
-import Link from "next/link"
 import { useTheme } from "@mui/material"
+import { useSWRConfig } from "swr"
+import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 
@@ -9,14 +10,49 @@ import {
   MountingSelector,
   SidesSelector,
 } from "@/src/components/SignConfigurer"
+import { useGetCart } from "@/src/hooks/queries/useGetCart"
+import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { Line } from "@/src/lib/bigcommerce/types"
+import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
+import { CART_ID } from "@/src/components/CheckoutButton"
 
 export const SignConfigurerForm: React.FC = () => {
+  const { mutate } = useSWRConfig()
+
+  const { data, isLoading } = useGetCart(CART_ID)
+
   const theme = useTheme()
 
-  const { handleSubmit } = useFormContext()
+  const { handleSubmit } = useFormContext<DesignFormInputs>()
 
-  const onSubmit = (data: any) => {
-    console.log({ data })
+  const onSubmit = async (formData: DesignFormInputs) => {
+    const lineItem = formDataToCartItem(formData)
+
+    if (data?.cart) {
+      // update cart
+      const res = await fetch(`/api/v1/cart/${data?.cart.id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          lineItems: [lineItem] as Line[],
+        }),
+      })
+      const { cart } = await res.json()
+
+      console.log({ cart })
+      mutate(`/api/v1/cart/${data.cart.id}`, { cart })
+    } else {
+      // create new cart
+      const res = await fetch("/api/v1/cart", {
+        method: "POST",
+        body: JSON.stringify({
+          lineItems: [lineItem] as Line[],
+        }),
+      })
+      const { cart } = await res.json()
+
+      console.log({ cart })
+      mutate(`/api/v1/cart/${data?.cart?.id}`, { cart })
+    }
   }
 
   return (
