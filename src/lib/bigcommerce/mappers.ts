@@ -14,6 +14,7 @@ import {
   CartCustomItem,
   CartItem,
   DigitalOrPhysicalItem,
+  Line,
   VercelCart,
   VercelCartItem,
   VercelCollection,
@@ -447,13 +448,11 @@ const formToCartMap = {
   },
 }
 
-export const formDataToCartItem = (
-  data: DesignFormInputs,
-): CartItem => {
+export const formDataToCartItem = (data: DesignFormInputs): Line => {
   return {
     quantity: 1,
-    productEntityId: signProductId,
-    variantEntityId: 77, // is this necessary?
+    productId: signProductId.toString(10),
+    merchandiseId: "77",
     selectedOptions: {
       multipleChoices: [
         {

@@ -651,3 +651,10 @@ export type BigCommerceProduct = {
   variants: Connection<BigCommerceProductVariant>
   productOptions: Connection<BigCommerceProductOption>
 }
+
+export type Line = {
+  merchandiseId: string
+  quantity: number
+  productId?: string
+  selectedOptions?: CartSelectedOptionsInput
+}

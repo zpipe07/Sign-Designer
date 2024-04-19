@@ -1,6 +1,7 @@
 "use client"
 import { useFormContext } from "react-hook-form"
 import { useTheme } from "@mui/material"
+import { useSWRConfig } from "swr"
 import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
@@ -11,12 +12,14 @@ import {
 } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
-import { CartItem } from "@/src/lib/bigcommerce/types"
+import { Line } from "@/src/lib/bigcommerce/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 
 export const SignConfigurerForm: React.FC = () => {
-  const { data: cart, isLoading } = useGetCart(
-    "0a98b86b-2d20-4610-a160-d1366fffd65a",
+  const { mutate } = useSWRConfig()
+
+  const { data, isLoading } = useGetCart(
+    "ebed58ae-9ec9-47b0-8ac4-ca7e90658228",
   )
 
   const theme = useTheme()
@@ -26,28 +29,30 @@ export const SignConfigurerForm: React.FC = () => {
   const onSubmit = async (formData: DesignFormInputs) => {
     const lineItem = formDataToCartItem(formData)
 
-    if (cart) {
+    if (data?.cart) {
       // update cart
-      const res = await fetch(`/api/v1/cart/${cart.entityId}`, {
+      const res = await fetch(`/api/v1/cart/${data?.cart.id}`, {
         method: "PUT",
         body: JSON.stringify({
-          lineItems: [lineItem],
+          lineItems: [lineItem] as Line[],
         }),
       })
-      const data = await res.json()
+      const { cart } = await res.json()
 
-      console.log({ data })
+      console.log({ cart })
+      mutate(`/api/v1/cart/${data.cart.id}`, { cart })
     } else {
       // create new cart
       const res = await fetch("/api/v1/cart", {
         method: "POST",
         body: JSON.stringify({
-          lineItems: [lineItem],
+          lineItems: [lineItem] as Line[],
         }),
       })
-      const data = await res.json()
+      const { cart } = await res.json()
 
-      console.log({ data })
+      console.log({ cart })
+      mutate(`/api/v1/cart/${data?.cart?.id}`, { cart })
     }
   }
 

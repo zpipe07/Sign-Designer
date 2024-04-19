@@ -61,6 +61,7 @@ import {
   BigCommerceRecommendationsOperation,
   BigCommerceSearchProductsOperation,
   BigCommerceUpdateCartItemOperation,
+  Line,
   VercelCart,
   VercelCollection,
   VercelMenu,
@@ -278,12 +279,8 @@ export async function createCart(): Promise<VercelCart> {
 }
 
 export async function addToCart(
-  cartId: string,
-  lines: {
-    merchandiseId: string
-    quantity: number
-    productId?: string
-  }[],
+  cartId: string | undefined,
+  lines: Line[],
 ): Promise<VercelCart> {
   let bigCommerceCart: BigCommerceCart
 
@@ -296,10 +293,16 @@ export async function addToCart(
             cartEntityId: cartId,
             data: {
               lineItems: lines.map(
-                ({ merchandiseId, quantity, productId }) => ({
+                ({
+                  merchandiseId,
+                  quantity,
+                  productId,
+                  selectedOptions,
+                }) => ({
                   productEntityId: parseInt(productId!, 10),
                   variantEntityId: parseInt(merchandiseId, 10),
                   quantity,
+                  selectedOptions,
                 }),
               ),
             },
@@ -311,16 +314,39 @@ export async function addToCart(
 
     bigCommerceCart = res.body.data.cart.addCartLineItems.cart
   } else {
+    const variables = {
+      createCartInput: {
+        lineItems: lines.map(
+          ({
+            merchandiseId,
+            quantity,
+            productId,
+            selectedOptions,
+          }) => ({
+            productEntityId: parseInt(productId!, 10),
+            variantEntityId: parseInt(merchandiseId, 10),
+            quantity,
+            selectedOptions,
+          }),
+        ),
+      },
+    }
     const res =
       await bigCommerceFetch<BigCommerceCreateCartOperation>({
         query: createCartMutation,
         variables: {
           createCartInput: {
             lineItems: lines.map(
-              ({ merchandiseId, quantity, productId }) => ({
+              ({
+                merchandiseId,
+                quantity,
+                productId,
+                selectedOptions,
+              }) => ({
                 productEntityId: parseInt(productId!, 10),
                 variantEntityId: parseInt(merchandiseId, 10),
                 quantity,
+                selectedOptions,
               }),
             ),
           },

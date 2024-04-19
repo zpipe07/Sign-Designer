@@ -5,7 +5,7 @@ import { useGetCheckout } from "@/src/hooks/queries/useGetCheckout"
 
 export const CheckoutButton: React.FC = () => {
   const { data: checkout, isLoading } = useGetCheckout(
-    "0a98b86b-2d20-4610-a160-d1366fffd65a",
+    "ebed58ae-9ec9-47b0-8ac4-ca7e90658228",
   )
 
   if (isLoading) {

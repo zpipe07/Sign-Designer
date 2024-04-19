@@ -5,12 +5,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 
-import { BigCommerceCart } from "@/src/lib/bigcommerce/types"
+import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CartItemsList } from "@/src/components/Header/Cart/CartItemsList"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
 
 type Props = {
-  cart?: BigCommerceCart
+  cart?: VercelCart
 }
 
 export const CartView: React.FC<Props> = ({ cart }) => {
@@ -28,7 +28,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
     setAnchorEl(null)
   }
 
-  const isCartEmpty = !cart || cart.lineItems.totalQuantity === 0
+  const isCartEmpty = !cart || cart.totalQuantity === 0
 
   return (
     <>
@@ -59,10 +59,8 @@ export const CartView: React.FC<Props> = ({ cart }) => {
             </>
           ) : (
             <>
-              <Typography>
-                Items: {cart.lineItems.totalQuantity}
-              </Typography>
-              <CartItemsList lineItems={cart.lineItems} />
+              <Typography>Items: {cart.totalQuantity}</Typography>
+              <CartItemsList cart={cart} />
 
               <CheckoutButton />
             </>
