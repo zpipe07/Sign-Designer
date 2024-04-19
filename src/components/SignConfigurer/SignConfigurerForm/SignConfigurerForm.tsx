@@ -37,7 +37,11 @@ export const SignConfigurerForm: React.FC = () => {
       })
       const { cart } = await res.json()
 
-      mutate("/api/v1/cart", { cart })
+      mutate(
+        "/api/v1/cart",
+        { cart },
+        { populateCache: (cart) => cart, revalidate: false },
+      )
     } else {
       // create new cart
       const res = await fetch("/api/v1/cart", {
@@ -48,7 +52,11 @@ export const SignConfigurerForm: React.FC = () => {
       })
       const { cart } = await res.json()
 
-      mutate("/api/v1/cart", { cart })
+      mutate(
+        "/api/v1/cart",
+        { cart },
+        { populateCache: (cart) => cart, revalidate: false },
+      )
     }
   }
 

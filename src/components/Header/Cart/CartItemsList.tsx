@@ -26,7 +26,10 @@ export const CartItemsList: React.FC<Props> = ({ cart }) => {
     )
     const cart = await res.json()
 
-    mutate("/api/v1/cart", cart)
+    mutate("/api/v1/cart", cart, {
+      populateCache: (cart) => cart,
+      revalidate: false,
+    })
   }
 
   return (
