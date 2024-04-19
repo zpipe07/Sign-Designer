@@ -83,7 +83,7 @@ export const SignConfigurerForm: React.FC = () => {
           </Button>
 
           <Button variant="contained" size="large" type="submit">
-            Next
+            Add to cart
           </Button>
         </Grid>
       </Grid>
