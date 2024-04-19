@@ -3,10 +3,11 @@ import Box from "@mui/material/Box"
 import Menu from "@mui/material/Menu"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
 
-import { Typography } from "@mui/material"
 import { BigCommerceCart } from "@/src/lib/bigcommerce/types"
 import { CartItemsList } from "@/src/components/Header/Cart/CartItemsList"
+import { CheckoutButton } from "@/src/components/CheckoutButton"
 
 type Props = {
   cart?: BigCommerceCart
@@ -62,6 +63,8 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                 Items: {cart.lineItems.totalQuantity}
               </Typography>
               <CartItemsList lineItems={cart.lineItems} />
+
+              <CheckoutButton />
             </>
           )}
         </Box>
