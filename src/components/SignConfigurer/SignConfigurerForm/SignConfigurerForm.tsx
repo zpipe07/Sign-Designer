@@ -14,13 +14,12 @@ import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { Line } from "@/src/lib/bigcommerce/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
+import { CART_ID } from "@/src/components/CheckoutButton"
 
 export const SignConfigurerForm: React.FC = () => {
   const { mutate } = useSWRConfig()
 
-  const { data, isLoading } = useGetCart(
-    "ebed58ae-9ec9-47b0-8ac4-ca7e90658228",
-  )
+  const { data, isLoading } = useGetCart(CART_ID)
 
   const theme = useTheme()
 

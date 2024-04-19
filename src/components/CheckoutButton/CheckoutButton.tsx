@@ -3,10 +3,10 @@ import Button from "@mui/material/Button"
 
 import { useGetCheckout } from "@/src/hooks/queries/useGetCheckout"
 
+export const CART_ID = "dac81236-2ddd-47dc-853b-c5f3a2567ab2"
+
 export const CheckoutButton: React.FC = () => {
-  const { data: checkout, isLoading } = useGetCheckout(
-    "ebed58ae-9ec9-47b0-8ac4-ca7e90658228",
-  )
+  const { data: checkout, isLoading } = useGetCheckout(CART_ID)
 
   if (isLoading) {
     return null
