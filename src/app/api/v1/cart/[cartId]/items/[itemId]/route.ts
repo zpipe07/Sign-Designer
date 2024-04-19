@@ -1,3 +1,5 @@
+import { cookies } from "next/headers"
+
 import { removeFromCart } from "@/src/lib/bigcommerce"
 
 export async function DELETE(
@@ -5,6 +7,10 @@ export async function DELETE(
   { params }: { params: { cartId: string; itemId: string } },
 ) {
   const cart = await removeFromCart(params.cartId, [params.itemId])
+
+  if (!cart) {
+    cookies().delete("cartId")
+  }
 
   return Response.json({ cart })
 }

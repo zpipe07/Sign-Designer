@@ -14,12 +14,11 @@ import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { Line } from "@/src/lib/bigcommerce/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
-import { CART_ID } from "@/src/components/CheckoutButton"
 
 export const SignConfigurerForm: React.FC = () => {
   const { mutate } = useSWRConfig()
 
-  const { data, isLoading } = useGetCart(CART_ID)
+  const { data, isLoading } = useGetCart()
 
   const theme = useTheme()
 
@@ -38,8 +37,11 @@ export const SignConfigurerForm: React.FC = () => {
       })
       const { cart } = await res.json()
 
-      console.log({ cart })
-      mutate(`/api/v1/cart/${data.cart.id}`, { cart })
+      mutate(
+        "/api/v1/cart",
+        { cart },
+        { populateCache: (cart) => cart, revalidate: false },
+      )
     } else {
       // create new cart
       const res = await fetch("/api/v1/cart", {
@@ -50,8 +52,11 @@ export const SignConfigurerForm: React.FC = () => {
       })
       const { cart } = await res.json()
 
-      console.log({ cart })
-      mutate(`/api/v1/cart/${data?.cart?.id}`, { cart })
+      mutate(
+        "/api/v1/cart",
+        { cart },
+        { populateCache: (cart) => cart, revalidate: false },
+      )
     }
   }
 
@@ -78,7 +83,7 @@ export const SignConfigurerForm: React.FC = () => {
           </Button>
 
           <Button variant="contained" size="large" type="submit">
-            Next
+            Add to cart
           </Button>
         </Grid>
       </Grid>
