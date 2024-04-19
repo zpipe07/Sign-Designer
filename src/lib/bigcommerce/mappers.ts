@@ -418,6 +418,7 @@ export const bigCommerceToVercelPageContent = (
   }
 }
 
+// TODO construct this mapping dynamically
 const signProductId = 112
 const formToCartMap = {
   shape: {
