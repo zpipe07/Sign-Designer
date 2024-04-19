@@ -50,7 +50,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         //   "aria-labelledby": "basic-button",
         // }}
       >
-        <Box padding={2}>
+        <Box padding={2} sx={{ minWidth: 300 }}>
           <Typography variant="subtitle1">Shopping Cart</Typography>
 
           {isCartEmpty ? (
