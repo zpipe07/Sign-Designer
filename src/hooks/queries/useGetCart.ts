@@ -5,7 +5,7 @@ import { VercelCart } from "@/src/lib/bigcommerce/types"
 
 export const useGetCart = (cartId: string) => {
   return useSWR<{ cart: VercelCart | undefined }>(
-    `/api/v1/cart/${cartId}`,
+    "/api/v1/cart",
     fetcher,
   )
 }

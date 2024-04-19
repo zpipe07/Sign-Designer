@@ -1,13 +1,4 @@
-import { addToCart, getCart } from "@/src/lib/bigcommerce"
-
-export async function GET(
-  _request: Request,
-  { params }: { params: { cartId: string } },
-) {
-  const cart = await getCart(params.cartId)
-
-  return Response.json({ cart })
-}
+import { addToCart } from "@/src/lib/bigcommerce"
 
 export async function PUT(
   request: Request,
