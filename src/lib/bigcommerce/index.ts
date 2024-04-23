@@ -756,12 +756,12 @@ export async function getPages(): Promise<VercelPage[]> {
 }
 
 export async function getProduct(
-  handle: string,
+  productId: string,
 ): Promise<VercelProduct | undefined> {
   const res = await bigCommerceFetch<BigCommerceProductOperation>({
     query: getProductQuery,
     variables: {
-      productId: parseInt(handle, 10),
+      productId: parseInt(productId, 10),
     },
   })
 

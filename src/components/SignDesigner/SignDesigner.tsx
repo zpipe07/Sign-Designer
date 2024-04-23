@@ -5,9 +5,14 @@ import Box from "@mui/material/Box"
 
 import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm"
 import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
+import { signProductId } from "@/src/lib/bigcommerce/mappers"
 
 export const SignDesigner: React.FC = () => {
   const theme = useTheme()
+
+  const { data } = useGetProduct(signProductId)
+  console.log({ data })
 
   return (
     <Grid container spacing={2}>
