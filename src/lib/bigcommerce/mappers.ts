@@ -12,9 +12,8 @@ import {
   BigCommerceProductOption,
   BigCommerceProductVariant,
   CartCustomItem,
-  CartItem,
   DigitalOrPhysicalItem,
-  Line,
+  LineItem,
   VercelCart,
   VercelCartItem,
   VercelCollection,
@@ -58,7 +57,10 @@ const bigCommerceToVercelOptions = (
       id: option.entityId.toString(),
       name: option.displayName.toString(),
       values: option.values
-        ? option.values.edges.map(({ node: value }) => value.label)
+        ? option.values.edges.map(({ node: value }) => ({
+            label: value.label,
+            entityId: value.entityId,
+          }))
         : [],
     }
   })
@@ -419,7 +421,7 @@ export const bigCommerceToVercelPageContent = (
 }
 
 // TODO construct this mapping dynamically
-const signProductId = 112
+export const signProductId = 112
 const formToCartMap = {
   shape: {
     entityId: 119,
@@ -449,7 +451,21 @@ const formToCartMap = {
   },
 }
 
-export const formDataToCartItem = (data: DesignFormInputs): Line => {
+export const getProductFormMapping = (product: VercelProduct) => {
+  const productFormMapping: any = {}
+  product.options.forEach(({ id, name, values }) => {
+    productFormMapping[name] = {
+      entityId: id,
+      values,
+    }
+  })
+
+  return productFormMapping
+}
+
+export const formDataToCartItem = (
+  data: DesignFormInputs,
+): LineItem => {
   return {
     quantity: 1,
     productId: signProductId.toString(10),

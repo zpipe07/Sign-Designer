@@ -12,7 +12,7 @@ import {
 } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
-import { Line } from "@/src/lib/bigcommerce/types"
+import { LineItem } from "@/src/lib/bigcommerce/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 
 export const SignConfigurerForm: React.FC = () => {
@@ -32,7 +32,7 @@ export const SignConfigurerForm: React.FC = () => {
       const res = await fetch(`/api/v1/cart/${data?.cart.id}`, {
         method: "PUT",
         body: JSON.stringify({
-          lineItems: [lineItem] as Line[],
+          lineItems: [lineItem] as LineItem[],
         }),
       })
       const { cart } = await res.json()
@@ -47,7 +47,7 @@ export const SignConfigurerForm: React.FC = () => {
       const res = await fetch("/api/v1/cart", {
         method: "POST",
         body: JSON.stringify({
-          lineItems: [lineItem] as Line[],
+          lineItems: [lineItem] as LineItem[],
         }),
       })
       const { cart } = await res.json()

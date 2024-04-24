@@ -68,7 +68,7 @@ export type VercelProduct = {
 export type VercelProductOption = {
   id: string
   name: string
-  values: string[]
+  values: { label: string; entityId: number }[]
 }
 
 export type VercelProductVariant = {
@@ -652,7 +652,7 @@ export type BigCommerceProduct = {
   productOptions: Connection<BigCommerceProductOption>
 }
 
-export type Line = {
+export type LineItem = {
   merchandiseId: string
   quantity: number
   productId?: string

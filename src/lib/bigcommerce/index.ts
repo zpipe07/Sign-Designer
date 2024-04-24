@@ -61,7 +61,7 @@ import {
   BigCommerceRecommendationsOperation,
   BigCommerceSearchProductsOperation,
   BigCommerceUpdateCartItemOperation,
-  Line,
+  LineItem,
   VercelCart,
   VercelCollection,
   VercelMenu,
@@ -280,7 +280,7 @@ export async function createCart(): Promise<VercelCart> {
 
 export async function addToCart(
   cartId: string | undefined,
-  lines: Line[],
+  lines: LineItem[],
 ): Promise<VercelCart> {
   let bigCommerceCart: BigCommerceCart
 
@@ -756,12 +756,12 @@ export async function getPages(): Promise<VercelPage[]> {
 }
 
 export async function getProduct(
-  handle: string,
+  productId: string,
 ): Promise<VercelProduct | undefined> {
   const res = await bigCommerceFetch<BigCommerceProductOperation>({
     query: getProductQuery,
     variables: {
-      productId: parseInt(handle, 10),
+      productId: parseInt(productId, 10),
     },
   })
 
