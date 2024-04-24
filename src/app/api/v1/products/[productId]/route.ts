@@ -10,7 +10,7 @@ export async function GET(
   const product = await getProduct(params.productId)
 
   if (!product) {
-    return { product: undefined }
+    return Response.json({ product: undefined })
   }
 
   const productFormMapping = getProductFormMapping(product)
