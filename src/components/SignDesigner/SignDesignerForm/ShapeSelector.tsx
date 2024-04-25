@@ -1,11 +1,11 @@
 "use client"
 import { useFormContext } from "react-hook-form"
-import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
+import FormHelperText from "@mui/material/FormHelperText"
 
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
@@ -33,7 +33,11 @@ export const ShapeSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="shape-label">Shape</FormLabel>
+      <FormLabel id="shape-label">Select your sign shape</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0, marginBottom: 1 }}>
+        Some sign shapes can fit more text than others
+      </FormHelperText>
+
       <RadioGroup
         aria-labelledby="shape-label"
         defaultValue="rectangle"
