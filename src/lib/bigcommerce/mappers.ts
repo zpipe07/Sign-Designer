@@ -1,3 +1,4 @@
+import React from "react"
 import {
   BigCommerceSortKeys,
   VercelSortKeys,
@@ -23,6 +24,7 @@ import {
   VercelProductVariant,
 } from "./types"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 
 type ProductsList = {
   productId: number
@@ -466,9 +468,15 @@ export const getProductFormMapping = (product: VercelProduct) => {
   return productFormMapping
 }
 
-export const formDataToCartItem = (
+export const formDataToCartItem = async (
   data: DesignFormInputs,
-): LineItem => {
+): Promise<LineItem> => {
+  const ReactDOMServer = (await import("react-dom/server")).default
+  const component = React.createElement(SignDesignerVisualizerView, {
+    inputs: data,
+  })
+  const svg = ReactDOMServer.renderToString(component)
+
   return {
     quantity: 1,
     productId: signProductId.toString(10),
@@ -499,9 +507,8 @@ export const formDataToCartItem = (
           text: data.textLines[0].value,
         },
         {
-          // svg
           optionEntityId: formToCartMap.svg.entityId,
-          text: data.textLines[0].value, // add svg here
+          text: svg,
         },
       ],
     },
