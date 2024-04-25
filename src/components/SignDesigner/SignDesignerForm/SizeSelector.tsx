@@ -14,6 +14,7 @@ import {
   Shape,
   Size,
 } from "@/src/components/SignDesigner/types"
+import FormHelperText from "@mui/material/FormHelperText"
 
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()
@@ -32,13 +33,18 @@ export const SizeSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="size-label">Size</FormLabel>
+      <FormLabel id="size-label">Select your sign size</FormLabel>
+      <FormHelperText
+        sx={{
+          marginLeft: 0,
+        }}
+      >
+        Select a size to see actual dimensions
+      </FormHelperText>
+
       <RadioGroup aria-labelledby="size-label" name="size">
         <Box>
           {sizes.map((size) => {
-            // const ShapeIcon: React.FC<PreviewSvgProps> =
-            //   shapeIconMap[shape]
-
             return (
               <FormControlLabel
                 value={size}
