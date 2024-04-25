@@ -3,6 +3,7 @@ import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerFor
 import {
   TextLine,
   Decoration,
+  Color,
 } from "@/src/components/SignDesigner/types"
 
 export const Ellipse: React.FC<SvgProps> = ({
@@ -21,6 +22,9 @@ export const Ellipse: React.FC<SvgProps> = ({
       return !!value
     },
   )
+  const [foregroundColor, backgroundColor] = inputs.color.split(
+    "/",
+  ) as Color[]
 
   return (
     <svg
@@ -41,8 +45,8 @@ export const Ellipse: React.FC<SvgProps> = ({
           cy={height / 2 - borderWidth / 2}
           rx={width / 2 - borderWidth / 2}
           ry={height / 2 - borderWidth / 2}
-          fill={inputs?.color.backgroundColor}
-          stroke={inputs?.color.foregroundColor}
+          fill={backgroundColor}
+          stroke={foregroundColor}
           strokeWidth={borderWidth}
         />
 
@@ -60,7 +64,7 @@ export const Ellipse: React.FC<SvgProps> = ({
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"
-                fill={inputs?.color.foregroundColor}
+                fill={foregroundColor}
                 fontFamily={inputs?.fontFamily}
                 key={index}
               >
@@ -85,7 +89,7 @@ export const Ellipse: React.FC<SvgProps> = ({
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"
-                fill={inputs?.color.foregroundColor}
+                fill={foregroundColor}
                 fontFamily={inputs?.fontFamily}
                 key={index}
               >
@@ -131,7 +135,7 @@ export const Ellipse: React.FC<SvgProps> = ({
               width={50}
               x={75}
               y={40}
-              color={inputs?.color.foregroundColor}
+              color={foregroundColor}
             />
 
             <Decoration
@@ -140,7 +144,7 @@ export const Ellipse: React.FC<SvgProps> = ({
               x={255}
               y={40}
               transform="scale(-1 1)"
-              color={inputs?.color.foregroundColor}
+              color={foregroundColor}
             />
           </>
         )}
