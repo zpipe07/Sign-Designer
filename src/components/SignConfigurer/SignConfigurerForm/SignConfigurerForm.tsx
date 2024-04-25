@@ -12,8 +12,6 @@ import {
 } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
-import { LineItem } from "@/src/lib/bigcommerce/types"
-import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 
 export const SignConfigurerForm: React.FC = () => {
   const { mutate } = useSWRConfig()

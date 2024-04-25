@@ -7,7 +7,7 @@ import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 export async function POST(request: Request) {
   // create cart and set cartID cookie
   const formData: DesignFormInputs = await request.json()
-  const lineItem = formDataToCartItem(formData)
+  const lineItem = await formDataToCartItem(formData)
   const cart = await addToCart(undefined, [lineItem])
 
   cookies().set("cartId", cart.id)
@@ -19,7 +19,7 @@ export async function PUT(request: Request) {
   // read cartId cookie and update cart
   const formData: DesignFormInputs = await request.json()
   const cartId = cookies().get("cartId")?.value
-  const lineItem = formDataToCartItem(formData)
+  const lineItem = await formDataToCartItem(formData)
   const cart = await addToCart(cartId, [lineItem])
 
   return Response.json({ cart })
