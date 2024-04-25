@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 
 import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm"
-import { SignDesignerVisualizer } from "@/src/components/SignDesigner/SignDesignerVisualizer"
+import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizer"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { signProductId } from "@/src/lib/bigcommerce/mappers"
 

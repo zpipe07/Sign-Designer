@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: { productId: string } },
 ) {
   // get a product by ID
-
   const product = await getProduct(params.productId)
 
   if (!product) {
