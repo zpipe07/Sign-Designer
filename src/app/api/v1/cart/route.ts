@@ -1,11 +1,14 @@
 import { cookies } from "next/headers"
 
 import { addToCart, getCart } from "@/src/lib/bigcommerce"
+import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 
 export async function POST(request: Request) {
   // create cart and set cartID cookie
-  const body = await request.json()
-  const cart = await addToCart(undefined, body.lineItems)
+  const formData: DesignFormInputs = await request.json()
+  const lineItem = formDataToCartItem(formData)
+  const cart = await addToCart(undefined, [lineItem])
 
   cookies().set("cartId", cart.id)
 
@@ -14,9 +17,10 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   // read cartId cookie and update cart
-  const body = await request.json()
+  const formData: DesignFormInputs = await request.json()
   const cartId = cookies().get("cartId")?.value
-  const cart = await addToCart(cartId, body.lineItems)
+  const lineItem = formDataToCartItem(formData)
+  const cart = await addToCart(cartId, [lineItem])
 
   return Response.json({ cart })
 }

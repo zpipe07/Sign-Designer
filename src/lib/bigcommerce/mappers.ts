@@ -449,6 +449,9 @@ const formToCartMap = {
     times: 110,
     verdana: 111,
   },
+  svg: {
+    entityId: 122,
+  },
 }
 
 export const getProductFormMapping = (product: VercelProduct) => {
@@ -494,6 +497,11 @@ export const formDataToCartItem = (
         {
           optionEntityId: formToCartMap.textLine.entityId,
           text: data.textLines[0].value,
+        },
+        {
+          // svg
+          optionEntityId: formToCartMap.svg.entityId,
+          text: data.textLines[0].value, // add svg here
         },
       ],
     },

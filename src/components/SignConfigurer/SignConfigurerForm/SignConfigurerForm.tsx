@@ -25,15 +25,11 @@ export const SignConfigurerForm: React.FC = () => {
   const { handleSubmit } = useFormContext<DesignFormInputs>()
 
   const onSubmit = async (formData: DesignFormInputs) => {
-    const lineItem = formDataToCartItem(formData)
-
     if (data?.cart) {
       // update cart
-      const res = await fetch(`/api/v1/cart/${data?.cart.id}`, {
+      const res = await fetch(`/api/v1/cart/${data.cart.id}`, {
         method: "PUT",
-        body: JSON.stringify({
-          lineItems: [lineItem] as LineItem[],
-        }),
+        body: JSON.stringify(formData),
       })
       const { cart } = await res.json()
 
@@ -46,9 +42,7 @@ export const SignConfigurerForm: React.FC = () => {
       // create new cart
       const res = await fetch("/api/v1/cart", {
         method: "POST",
-        body: JSON.stringify({
-          lineItems: [lineItem] as LineItem[],
-        }),
+        body: JSON.stringify(formData),
       })
       const { cart } = await res.json()
 

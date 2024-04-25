@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid"
 
-import { SignDesignerVisualizer } from "@/src/components/SignDesigner"
+import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer"
 import { SignConfigurerForm } from "@/src/components/SignConfigurer"
 
 export const SignConfigurer: React.FC = () => {
