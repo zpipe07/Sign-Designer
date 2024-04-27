@@ -24,6 +24,7 @@ export const Rectangle: React.FC<SvgProps> = ({
       return !!value
     },
   )
+
   const [foregroundColor, backgroundColor] = inputs.color.split(
     "/",
   ) as Color[]
