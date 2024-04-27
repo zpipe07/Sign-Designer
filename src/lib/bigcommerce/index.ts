@@ -334,23 +334,24 @@ export async function addToCart(
     const res =
       await bigCommerceFetch<BigCommerceCreateCartOperation>({
         query: createCartMutation,
-        variables: {
-          createCartInput: {
-            lineItems: lines.map(
-              ({
-                merchandiseId,
-                quantity,
-                productId,
-                selectedOptions,
-              }) => ({
-                productEntityId: parseInt(productId!, 10),
-                variantEntityId: parseInt(merchandiseId, 10),
-                quantity,
-                selectedOptions,
-              }),
-            ),
-          },
-        },
+        variables,
+        // variables: {
+        //   createCartInput: {
+        //     lineItems: lines.map(
+        //       ({
+        //         merchandiseId,
+        //         quantity,
+        //         productId,
+        //         selectedOptions,
+        //       }) => ({
+        //         productEntityId: parseInt(productId!, 10),
+        //         variantEntityId: parseInt(merchandiseId, 10),
+        //         quantity,
+        //         selectedOptions,
+        //       }),
+        //     ),
+        //   },
+        // },
         cache: "no-store",
       })
 

@@ -12,9 +12,11 @@ export async function GET(
     return Response.json({ product: undefined })
   }
 
-  const productFormMapping = getProductFormMapping(product)
+  return Response.json({ product })
 
-  return Response.json({
-    product: { ...product, formMapping: productFormMapping },
-  })
+  // const productFormMapping = getProductFormMapping(product)
+
+  // return Response.json({
+  //   product: { ...product, formMapping: productFormMapping },
+  // })
 }

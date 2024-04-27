@@ -1,6 +1,7 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
+  Color,
   Decoration,
   TextLine,
 } from "@/src/components/SignDesigner/types"
@@ -21,6 +22,9 @@ export const TopRound: React.FC<SvgProps> = ({
       return !!value
     },
   )
+  const [foregroundColor, backgroundColor] = inputs.color.split(
+    "/",
+  ) as Color[]
 
   return (
     <svg
@@ -55,8 +59,8 @@ export const TopRound: React.FC<SvgProps> = ({
           4.4772-10
           10-10h70.3147z
         `}
-        fill={inputs?.color.backgroundColor}
-        stroke={inputs?.color.foregroundColor}
+        fill={backgroundColor}
+        stroke={foregroundColor}
         strokeWidth={borderWidth}
       />
 
@@ -73,7 +77,7 @@ export const TopRound: React.FC<SvgProps> = ({
             fontWeight={800}
             alignmentBaseline="middle"
             textAnchor="middle"
-            fill={inputs?.color.foregroundColor}
+            fill={foregroundColor}
             fontFamily={inputs?.fontFamily}
             letterSpacing={1}
             key={index}
@@ -120,7 +124,7 @@ export const TopRound: React.FC<SvgProps> = ({
             width={50}
             x={30}
             y={105}
-            color={inputs?.color.foregroundColor}
+            color={foregroundColor}
           />
 
           <Decoration
@@ -129,7 +133,7 @@ export const TopRound: React.FC<SvgProps> = ({
             x={320}
             y={105}
             transform="scale(-1 1)"
-            color={inputs?.color.foregroundColor}
+            color={foregroundColor}
           />
         </>
       )}

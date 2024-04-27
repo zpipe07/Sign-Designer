@@ -11,8 +11,8 @@ export default function Layout({
     defaultValues: {
       shape: "rectangle",
       orientation: "horizontal",
-      size: "small",
-      textLines: [{ value: "" }, { value: "" }],
+      size: "medium",
+      textLines: [{ value: "Your" }, { value: "Text goes  here" }],
       color: colorCombos[0],
       fontFamily: "times",
       decoration: "",

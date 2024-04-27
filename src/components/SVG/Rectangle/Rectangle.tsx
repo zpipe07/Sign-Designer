@@ -1,6 +1,7 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
+  Color,
   Decoration,
   TextLine,
 } from "@/src/components/SignDesigner/types"
@@ -24,6 +25,10 @@ export const Rectangle: React.FC<SvgProps> = ({
     },
   )
 
+  const [foregroundColor, backgroundColor] = inputs.color.split(
+    "/",
+  ) as Color[]
+
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -41,8 +46,8 @@ export const Rectangle: React.FC<SvgProps> = ({
           width={width - borderWidth}
           height={height - borderWidth}
           rx="10"
-          fill={inputs?.color.backgroundColor || defaultColor}
-          stroke={inputs?.color.foregroundColor}
+          fill={backgroundColor || defaultColor}
+          stroke={foregroundColor}
           strokeWidth={borderWidth}
         />
 
@@ -60,7 +65,7 @@ export const Rectangle: React.FC<SvgProps> = ({
                 fontWeight={800}
                 alignmentBaseline="middle"
                 textAnchor="middle"
-                fill={inputs?.color.foregroundColor}
+                fill={foregroundColor}
                 fontFamily={inputs?.fontFamily}
                 letterSpacing={1}
                 key={index}
@@ -88,7 +93,7 @@ export const Rectangle: React.FC<SvgProps> = ({
                   fontWeight={800}
                   alignmentBaseline="middle"
                   textAnchor="middle"
-                  fill={inputs?.color.foregroundColor}
+                  fill={foregroundColor}
                   fontFamily={inputs?.fontFamily}
                   key={index}
                 >
@@ -134,7 +139,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               width={50}
               x={30}
               y={30}
-              color={inputs?.color.foregroundColor}
+              color={foregroundColor}
             />
 
             <Decoration
@@ -143,7 +148,7 @@ export const Rectangle: React.FC<SvgProps> = ({
               x={300}
               y={30}
               transform="scale(-1 1)"
-              color={inputs?.color.foregroundColor}
+              color={foregroundColor}
             />
           </>
         )}

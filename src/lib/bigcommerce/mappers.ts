@@ -451,6 +451,12 @@ const formToCartMap = {
     times: 110,
     verdana: 111,
   },
+  color: {
+    entityId: 123,
+    "black/white": 121,
+    "tan/green": 122,
+    "yellow/black": 123,
+  },
   svg: {
     entityId: 122,
   },
@@ -499,6 +505,11 @@ export const formDataToCartItem = async (
         {
           optionEntityId: formToCartMap.font.entityId,
           optionValueEntityId: formToCartMap.font[data.fontFamily],
+        },
+        {
+          optionEntityId: formToCartMap.color.entityId,
+          // @ts-ignore
+          optionValueEntityId: formToCartMap.color[data.color],
         },
       ],
       textFields: [
