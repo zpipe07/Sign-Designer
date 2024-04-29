@@ -12,7 +12,7 @@ export default function Layout({
       shape: "rectangle",
       orientation: "horizontal",
       size: "medium",
-      textLines: [{ value: "Your" }, { value: "Text goes  here" }],
+      textLines: [{ value: "Your" }, { value: "Text goes here" }],
       color: colorCombos[0],
       fontFamily: "times",
       decoration: "",
