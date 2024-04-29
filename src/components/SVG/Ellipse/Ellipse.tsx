@@ -1,10 +1,6 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
-import {
-  TextLine,
-  Decoration,
-  Color,
-} from "@/src/components/SignDesigner/types"
+import { Decoration } from "@/src/components/SignDesigner/types"
 
 export const Ellipse: React.FC<SvgProps> = ({
   height = 315,
@@ -12,15 +8,13 @@ export const Ellipse: React.FC<SvgProps> = ({
   borderWidth = 0,
   inputs,
   textLines,
+  foregroundColor,
+  backgroundColor,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
     inputs?.decoration
       ? decorationIconMap[inputs.decoration as Decoration]
       : null
-
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
 
   return (
     <svg

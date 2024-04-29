@@ -4,6 +4,7 @@ import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
 import { Bread } from "@/src/components/SVG/Bread"
 import {
+  Color,
   DesignFormInputs,
   TextLine,
 } from "@/src/components/SignDesigner/types"
@@ -28,6 +29,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     .filter(({ value }: TextLine) => {
       return !!value
     })
+  const [foregroundColor, backgroundColor] = inputs.color.split(
+    "/",
+  ) as Color[]
 
   return (
     <>
@@ -38,6 +42,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -48,6 +54,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -58,6 +66,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -68,6 +78,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -78,6 +90,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
     </>

@@ -10,6 +10,8 @@ export type SvgProps = {
   borderWidth: number
   inputs: DesignFormInputs
   textLines: TextLine[]
+  foregroundColor: Color
+  backgroundColor: Color
 }
 
 export type PreviewSvgProps = {

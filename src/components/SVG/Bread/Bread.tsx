@@ -7,11 +7,9 @@ export const Bread: React.FC<SvgProps> = ({
   borderWidth = 0,
   inputs,
   textLines,
+  foregroundColor,
+  backgroundColor,
 }) => {
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
-
   return (
     <svg
       viewBox="0 0 400 292"
