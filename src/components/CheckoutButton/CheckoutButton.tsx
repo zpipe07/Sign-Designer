@@ -24,7 +24,7 @@ export const CheckoutButton: React.FC = () => {
       href={data.cart.checkoutUrl}
       fullWidth
     >
-      View Cart
+      Checkout now
     </Button>
   )
 }
