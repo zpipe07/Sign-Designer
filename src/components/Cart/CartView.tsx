@@ -4,6 +4,7 @@ import TableHead from "@mui/material/TableHead"
 import TableContainer from "@mui/material/TableContainer"
 import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
+import TableBody from "@mui/material/TableBody"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
@@ -26,16 +27,18 @@ export const CartView: React.FC<Props> = ({ cart }) => {
             </TableRow>
           </TableHead>
 
-          {cart.lines.map(({ id, merchandise, cost, quantity }) => {
-            return (
-              <TableRow key={id}>
-                <TableCell>{merchandise.title}</TableCell>
-                <TableCell>${cost.totalAmount.amount}</TableCell>
-                <TableCell>{quantity}</TableCell>
-                <TableCell>${cost.totalAmount.amount}</TableCell>
-              </TableRow>
-            )
-          })}
+          <TableBody>
+            {cart.lines.map(({ id, merchandise, cost, quantity }) => {
+              return (
+                <TableRow key={id}>
+                  <TableCell>{merchandise.title}</TableCell>
+                  <TableCell>${cost.totalAmount.amount}</TableCell>
+                  <TableCell>{quantity}</TableCell>
+                  <TableCell>${cost.totalAmount.amount}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
         </Table>
       </TableContainer>
 

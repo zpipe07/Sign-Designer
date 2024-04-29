@@ -2,6 +2,7 @@
 import { useFormContext } from "react-hook-form"
 import { useTheme } from "@mui/material"
 import { useSWRConfig } from "swr"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
@@ -16,6 +17,8 @@ import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 export const SignConfigurerForm: React.FC = () => {
   const { mutate } = useSWRConfig()
 
+  const router = useRouter()
+
   const { data, isLoading } = useGetCart()
 
   const theme = useTheme()
@@ -25,31 +28,39 @@ export const SignConfigurerForm: React.FC = () => {
   const onSubmit = async (formData: DesignFormInputs) => {
     if (data?.cart) {
       // update cart
-      const res = await fetch(`/api/v1/cart/${data.cart.id}`, {
-        method: "PUT",
-        body: JSON.stringify(formData),
-      })
-      const { cart } = await res.json()
+      const updateCartItem = async () => {
+        const res = await fetch(`/api/v1/cart/${data.cart?.id}`, {
+          method: "PUT",
+          body: JSON.stringify(formData),
+        })
+        const { cart } = await res.json()
+        console.log({ cart })
+        return cart
+      }
 
-      mutate(
-        "/api/v1/cart",
-        { cart },
-        { populateCache: (cart) => cart, revalidate: false },
-      )
+      mutate("/api/v1/cart", updateCartItem, {
+        populateCache: (cart) => cart,
+        revalidate: false,
+      })
     } else {
       // create new cart
-      const res = await fetch("/api/v1/cart", {
-        method: "POST",
-        body: JSON.stringify(formData),
-      })
-      const { cart } = await res.json()
+      const createCart = async () => {
+        const res = await fetch("/api/v1/cart", {
+          method: "POST",
+          body: JSON.stringify(formData),
+        })
+        const { cart } = await res.json()
+        console.log({ cart })
+        return cart
+      }
 
-      mutate(
-        "/api/v1/cart",
-        { cart },
-        { populateCache: (cart) => cart, revalidate: false },
-      )
+      mutate("/api/v1/cart", createCart, {
+        populateCache: (cart) => cart,
+        revalidate: false,
+      })
     }
+
+    router.push("/cart")
   }
 
   return (
