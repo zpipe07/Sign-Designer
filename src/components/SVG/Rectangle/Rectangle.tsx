@@ -1,7 +1,6 @@
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
-  Color,
   Decoration,
   TextLine,
 } from "@/src/components/SignDesigner/types"
@@ -13,21 +12,14 @@ export const Rectangle: React.FC<SvgProps> = ({
   width = 400,
   borderWidth = 0,
   inputs,
+  textLines,
+  foregroundColor,
+  backgroundColor,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
     inputs?.decoration
       ? decorationIconMap[inputs.decoration as Decoration]
       : null
-
-  const textLines: TextLine[] = inputs?.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
-
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
 
   return (
     <svg

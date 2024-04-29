@@ -3,7 +3,12 @@ import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
 import { Bread } from "@/src/components/SVG/Bread"
-import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import {
+  Color,
+  DesignFormInputs,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
+import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   inputs: DesignFormInputs
@@ -16,6 +21,18 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   const height = 250
   const borderWidth = 20
 
+  const maxLinesOfText =
+    designOptions[inputs.shape][inputs.orientation]?.[inputs.size]
+      ?.maxLinesOfText
+  const textLines: TextLine[] = inputs?.textLines
+    .slice(0, maxLinesOfText)
+    .filter(({ value }: TextLine) => {
+      return !!value
+    })
+  const [foregroundColor, backgroundColor] = inputs.color.split(
+    "/",
+  ) as Color[]
+
   return (
     <>
       {inputs.shape === "rectangle" && (
@@ -24,6 +41,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           height={height}
           borderWidth={borderWidth}
           inputs={inputs}
+          textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -33,6 +53,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           height={height + 40}
           borderWidth={borderWidth}
           inputs={inputs}
+          textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -42,6 +65,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           height={height}
           borderWidth={borderWidth}
           inputs={inputs}
+          textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -51,6 +77,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           height={height}
           borderWidth={borderWidth}
           inputs={inputs}
+          textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
 
@@ -60,6 +89,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           height={height}
           borderWidth={borderWidth}
           inputs={inputs}
+          textLines={textLines}
+          foregroundColor={foregroundColor}
+          backgroundColor={backgroundColor}
         />
       )}
     </>

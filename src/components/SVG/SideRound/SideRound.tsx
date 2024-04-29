@@ -1,21 +1,14 @@
 import { SvgProps } from "@/src/components/SVG/types"
-import { Color, TextLine } from "@/src/components/SignDesigner/types"
 
 export const SideRound: React.FC<SvgProps> = ({
   height,
   width,
   borderWidth,
   inputs,
+  textLines,
+  foregroundColor,
+  backgroundColor,
 }) => {
-  const textLines: TextLine[] = inputs.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
-
   return (
     <svg
       viewBox="0 0 480 200"

@@ -1,6 +1,7 @@
 import {
   Color,
   DesignFormInputs,
+  TextLine,
 } from "@/src/components/SignDesigner/types"
 
 export type SvgProps = {
@@ -8,6 +9,9 @@ export type SvgProps = {
   width: number
   borderWidth: number
   inputs: DesignFormInputs
+  textLines: TextLine[]
+  foregroundColor: Color
+  backgroundColor: Color
 }
 
 export type PreviewSvgProps = {

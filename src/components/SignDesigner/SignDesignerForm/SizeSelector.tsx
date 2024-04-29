@@ -28,7 +28,7 @@ export const SizeSelector: React.FC = () => {
   const selectedSize = useWatch({ name: "size" })
 
   useEffect(() => {
-    setValue("size", sizes[0])
+    setValue("size", sizes[sizes.length - 1])
   }, [shape, orientation, setValue])
 
   return (

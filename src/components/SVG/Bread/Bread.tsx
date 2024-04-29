@@ -1,21 +1,14 @@
 import { SvgProps } from "@/src/components/SVG/types"
-import { Color, TextLine } from "@/src/components/SignDesigner/types"
 
 export const Bread: React.FC<SvgProps> = ({
   // height = 315,
   // width = 400,
   borderWidth = 0,
   inputs,
+  textLines,
+  foregroundColor,
+  backgroundColor,
 }) => {
-  const textLines: TextLine[] = inputs.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
-
   return (
     <svg
       viewBox="0 0 400 292"
