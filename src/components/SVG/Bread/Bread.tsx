@@ -6,12 +6,8 @@ export const Bread: React.FC<SvgProps> = ({
   // width = 400,
   borderWidth = 0,
   inputs,
+  textLines,
 }) => {
-  const textLines: TextLine[] = inputs.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
   const [foregroundColor, backgroundColor] = inputs.color.split(
     "/",
   ) as Color[]

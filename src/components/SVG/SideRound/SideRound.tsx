@@ -6,12 +6,8 @@ export const SideRound: React.FC<SvgProps> = ({
   width,
   borderWidth,
   inputs,
+  textLines,
 }) => {
-  const textLines: TextLine[] = inputs.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
   const [foregroundColor, backgroundColor] = inputs.color.split(
     "/",
   ) as Color[]

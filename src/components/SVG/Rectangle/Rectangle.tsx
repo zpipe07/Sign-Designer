@@ -13,17 +13,12 @@ export const Rectangle: React.FC<SvgProps> = ({
   width = 400,
   borderWidth = 0,
   inputs,
+  textLines,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
     inputs?.decoration
       ? decorationIconMap[inputs.decoration as Decoration]
       : null
-
-  const textLines: TextLine[] = inputs?.textLines.filter(
-    ({ value }: TextLine) => {
-      return !!value
-    },
-  )
 
   const [foregroundColor, backgroundColor] = inputs.color.split(
     "/",
