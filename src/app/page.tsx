@@ -1,8 +1,9 @@
-"use client";
-import Link from "next/link";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+"use client"
+
+import Link from "next/link"
+import Typography from "@mui/material/Typography"
+import Button from "@mui/material/Button"
+import Grid from "@mui/material/Grid"
 
 export default function Home() {
   return (
@@ -12,8 +13,8 @@ export default function Home() {
       </Typography>
 
       <Typography marginBottom={2}>
-        Design a design Lorem ipsum dolor, sit amet consectetur adipisicing
-        elit. Vitae, distinctio!
+        Design a design Lorem ipsum dolor, sit amet consectetur
+        adipisicing elit. Vitae, distinctio!
       </Typography>
 
       <Grid container spacing={2}>
@@ -42,5 +43,5 @@ export default function Home() {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }

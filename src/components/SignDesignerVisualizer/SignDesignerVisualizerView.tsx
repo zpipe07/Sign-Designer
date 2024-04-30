@@ -22,16 +22,15 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   const borderWidth = 20
 
   const maxLinesOfText =
-    designOptions[inputs.shape][inputs.orientation]?.[inputs.size]
+    designOptions[inputs.shape]?.[inputs.orientation]?.[inputs.size]
       ?.maxLinesOfText
   const textLines: TextLine[] = inputs?.textLines
-    .slice(0, maxLinesOfText)
+    ?.slice(0, maxLinesOfText)
     .filter(({ value }: TextLine) => {
       return !!value
     })
-  const [foregroundColor, backgroundColor] = inputs.color.split(
-    "/",
-  ) as Color[]
+  const [foregroundColor, backgroundColor] =
+    (inputs?.color?.split("/") as Color[]) || []
 
   return (
     <>

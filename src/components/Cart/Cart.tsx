@@ -1,4 +1,5 @@
 "use client"
+
 import { CartView } from "@/src/components/Cart/CartView"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 
