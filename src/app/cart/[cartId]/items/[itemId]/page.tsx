@@ -62,7 +62,7 @@ export default function Page() {
     <>
       <Typography>Edit item</Typography>
 
-      <SignDesigner />
+      <SignDesigner isEditing />
     </>
   )
 }

@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form"
 import { useTheme } from "@mui/material"
 import { useSWRConfig } from "swr"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
@@ -15,7 +15,13 @@ import {
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
-export const SignConfigurerForm: React.FC = () => {
+type Props = {
+  isEditing?: boolean
+}
+
+export const SignConfigurerForm: React.FC<Props> = ({
+  isEditing,
+}) => {
   const { mutate } = useSWRConfig()
 
   const router = useRouter()
@@ -23,6 +29,8 @@ export const SignConfigurerForm: React.FC = () => {
   const { data, isLoading } = useGetCart()
 
   const theme = useTheme()
+
+  const params = useParams<{ cartId: string; itemId: string }>()
 
   const { handleSubmit } = useFormContext<DesignFormInputs>()
 
@@ -78,7 +86,11 @@ export const SignConfigurerForm: React.FC = () => {
         <Grid item xs={12} marginTop={4}>
           <Button
             component={Link}
-            href="/design"
+            href={
+              isEditing
+                ? `/cart/${params.cartId}/items/${params.itemId}`
+                : "/design"
+            }
             variant="outlined"
             size="large"
             sx={{ marginRight: theme.spacing(1) }}

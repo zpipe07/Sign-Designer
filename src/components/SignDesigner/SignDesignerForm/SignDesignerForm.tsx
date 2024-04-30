@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormContext } from "react-hook-form"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
 
@@ -15,12 +15,25 @@ import {
   OrientationSelector,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 
-export const SignDesignerForm: React.FC = () => {
+type Props = {
+  isEditing?: boolean
+}
+
+export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
   const router = useRouter()
+
+  const params = useParams<{ cartId: string; itemId: string }>()
 
   const { handleSubmit } = useFormContext()
 
   const onSubmit = (data: any) => {
+    if (isEditing) {
+      router.push(
+        `/cart/${params.cartId}/items/${params.itemId}/configure`,
+      )
+      return
+    }
+
     router.push("/design/configure")
   }
 

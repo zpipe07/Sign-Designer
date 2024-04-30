@@ -27,7 +27,7 @@ export const ColorSelector: React.FC = () => {
       </FormLabel>
       <RadioGroup
         aria-labelledby="color-label"
-        defaultValue={colorCombos[0]}
+        // defaultValue={colorCombos[0]}
         name="color"
       >
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
