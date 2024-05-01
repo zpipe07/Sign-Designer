@@ -35,9 +35,32 @@ export const SignConfigurerForm: React.FC<Props> = ({
   const { handleSubmit } = useFormContext<DesignFormInputs>()
 
   const onSubmit = async (formData: DesignFormInputs) => {
+    if (isEditing) {
+      // update cart item
+      const updateCartItem = async () => {
+        const res = await fetch(
+          `/api/v1/cart/${params.cartId}/items/${params.itemId}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify(formData),
+          },
+        )
+        const { cart } = await res.json()
+        console.log({ cart })
+        return cart
+      }
+
+      mutate("/api/v1/cart", updateCartItem, {
+        populateCache: (cart) => cart,
+        revalidate: false,
+      })
+
+      return
+    }
+
     if (data?.cart) {
       // update cart
-      const updateCartItem = async () => {
+      const addCartItem = async () => {
         const res = await fetch(`/api/v1/cart/${data.cart?.id}`, {
           method: "PUT",
           body: JSON.stringify(formData),
@@ -47,7 +70,7 @@ export const SignConfigurerForm: React.FC<Props> = ({
         return cart
       }
 
-      mutate("/api/v1/cart", updateCartItem, {
+      mutate("/api/v1/cart", addCartItem, {
         populateCache: (cart) => cart,
         revalidate: false,
       })
