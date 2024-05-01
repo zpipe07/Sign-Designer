@@ -60,7 +60,9 @@ export default function Page() {
 
   return (
     <>
-      <Typography>Edit item</Typography>
+      <Typography variant="h3" component="h1" marginBottom={2}>
+        Edit item
+      </Typography>
 
       <SignDesigner isEditing />
     </>

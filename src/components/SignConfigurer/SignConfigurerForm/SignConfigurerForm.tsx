@@ -107,7 +107,7 @@ export const SignConfigurerForm: React.FC<Props> = ({
               isPendingUpdateCartItem
             }
           >
-            Add to cart
+            {isEditing ? "Update" : "Add to cart"}
           </LoadingButton>
         </Grid>
       </Grid>

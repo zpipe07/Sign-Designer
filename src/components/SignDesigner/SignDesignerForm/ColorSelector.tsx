@@ -1,6 +1,6 @@
 "use client"
 
-import { useFormContext } from "react-hook-form"
+import { useFormContext, useWatch } from "react-hook-form"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
@@ -20,16 +20,14 @@ export const colorCombos: ColorCombo[] = [
 export const ColorSelector: React.FC = () => {
   const { register } = useFormContext()
 
+  const selectedColor = useWatch({ name: "color" })
+
   return (
     <FormControl fullWidth>
       <FormLabel id="color-label" sx={{ marginBottom: 1 }}>
         Select your sign colors
       </FormLabel>
-      <RadioGroup
-        aria-labelledby="color-label"
-        // defaultValue={colorCombos[0]}
-        name="color"
-      >
+      <RadioGroup aria-labelledby="color-label" name="color">
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {colorCombos.map((colorCombo) => {
             const [foregroundColor, backgroundColor] =
@@ -38,7 +36,12 @@ export const ColorSelector: React.FC = () => {
             return (
               <FormControlLabel
                 value={colorCombo}
-                control={<Radio size="small" />}
+                control={
+                  <Radio
+                    size="small"
+                    checked={selectedColor === colorCombo}
+                  />
+                }
                 label={
                   <Tooltip
                     arrow
