@@ -1,4 +1,5 @@
 "use client"
+
 import { useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
@@ -8,7 +9,11 @@ import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer/
 // import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 // import { signProductId } from "@/src/lib/bigcommerce/mappers"
 
-export const SignDesigner: React.FC = () => {
+type Props = {
+  isEditing?: boolean
+}
+
+export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
   const theme = useTheme()
 
   // const { data } = useGetProduct(signProductId)
@@ -30,7 +35,7 @@ export const SignDesigner: React.FC = () => {
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <SignDesignerForm />
+        <SignDesignerForm isEditing={isEditing} />
       </Grid>
     </Grid>
   )

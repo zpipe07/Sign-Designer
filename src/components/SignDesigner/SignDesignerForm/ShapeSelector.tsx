@@ -1,5 +1,6 @@
 "use client"
-import { useFormContext } from "react-hook-form"
+
+import { useFormContext, useWatch } from "react-hook-form"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
@@ -32,6 +33,8 @@ const shapes = Object.keys(designOptions) as Shape[]
 
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
+
+  const selectedShape = useWatch({ name: "shape" })
 
   // const { data } = useGetProduct(signProductId)
 
@@ -67,7 +70,7 @@ export const ShapeSelector: React.FC = () => {
 
       <RadioGroup
         aria-labelledby="shape-label"
-        defaultValue="rectangle"
+        // defaultValue="rectangle"
         name="shape"
         sx={{ flexDirection: "row" }}
       >
@@ -80,6 +83,7 @@ export const ShapeSelector: React.FC = () => {
               value={shape}
               control={<Radio size="small" />}
               label={<ShapeIcon />}
+              checked={shape === selectedShape}
               {...register("shape")}
               sx={{
                 fontSize: 0,

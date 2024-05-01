@@ -457,7 +457,7 @@ type CartSelectedTextFieldOptionInput = {
   text: string
 }
 
-type CartSelectedOptionsInput = {
+export type CartSelectedOptionsInput = {
   checkboxes?: CartSelectedCheckboxOptionInput[]
   dateFields?: CartSelectedDateFieldOptionInput[]
   multiLineTextFields?: CartSelectedMultiLineTextFieldOptionInput[]

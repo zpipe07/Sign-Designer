@@ -9,6 +9,7 @@ import {
   bigCommerceToVercelPageContent,
   bigCommerceToVercelProduct,
   bigCommerceToVercelProducts,
+  signProductId,
   vercelFromBigCommerceLineItems,
   vercelToBigCommerceSorting,
 } from "./mappers"
@@ -61,6 +62,7 @@ import {
   BigCommerceRecommendationsOperation,
   BigCommerceSearchProductsOperation,
   BigCommerceUpdateCartItemOperation,
+  CartSelectedOptionsInput,
   LineItem,
   VercelCart,
   VercelCollection,
@@ -433,7 +435,7 @@ export async function updateCart(
     id: string
     merchandiseId: string
     quantity: number
-    productSlug?: string
+    selectedOptions?: CartSelectedOptionsInput
   }[],
 ): Promise<VercelCart> {
   let cartState:
@@ -441,10 +443,9 @@ export async function updateCart(
     | undefined
 
   for (let updates = lines.length; updates > 0; updates--) {
-    const { id, merchandiseId, quantity, productSlug } =
+    const { id, merchandiseId, quantity, selectedOptions } =
       lines[updates - 1]!
-    const productEntityId = (await getProductIdBySlug(productSlug!))
-      ?.entityId!
+    const productEntityId = signProductId
 
     const res =
       await bigCommerceFetch<BigCommerceUpdateCartItemOperation>({
@@ -458,6 +459,7 @@ export async function updateCart(
                 variantEntityId: parseInt(merchandiseId, 10),
                 productEntityId,
                 quantity,
+                selectedOptions,
               },
             },
           },

@@ -1,15 +1,16 @@
-"use client";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+"use client"
 
-import { Form } from "@/src/components/Form";
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
 
-type Props = { onSubmit(formData: FormData): any };
+import { Form } from "@/src/components/Form"
+
+type Props = { onSubmit(formData: FormData): any }
 
 export type FormValues = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}
 
 export const SignUpFormView: React.FC<Props> = ({ onSubmit }) => {
   return (
@@ -17,13 +18,23 @@ export const SignUpFormView: React.FC<Props> = ({ onSubmit }) => {
       action={onSubmit}
       inputComponents={[
         <TextField type="email" name="email" key="email" fullWidth />,
-        <TextField type="password" name="password" key="password" fullWidth />,
+        <TextField
+          type="password"
+          name="password"
+          key="password"
+          fullWidth
+        />,
       ]}
       actionComponents={[
-        <Button variant="contained" type="submit" key="sign up" fullWidth>
+        <Button
+          variant="contained"
+          type="submit"
+          key="sign up"
+          fullWidth
+        >
           Sign up
         </Button>,
       ]}
     />
-  );
-};
+  )
+}

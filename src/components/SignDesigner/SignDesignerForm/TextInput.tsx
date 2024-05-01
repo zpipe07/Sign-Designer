@@ -1,4 +1,5 @@
 "use client"
+
 import {
   useFieldArray,
   useFormContext,
@@ -23,7 +24,7 @@ export const TextInput: React.FC = () => {
   const size: Size = useWatch({ name: "size" })
 
   const maxLinesOfText =
-    designOptions[shape][orientation]?.[size]?.maxLinesOfText
+    designOptions[shape]?.[orientation]?.[size]?.maxLinesOfText
 
   const { fields } = useFieldArray({
     name: "textLines",

@@ -1,4 +1,5 @@
 "use client"
+
 import { useFormContext } from "react-hook-form"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
@@ -26,7 +27,7 @@ export const ColorSelector: React.FC = () => {
       </FormLabel>
       <RadioGroup
         aria-labelledby="color-label"
-        defaultValue={colorCombos[0]}
+        // defaultValue={colorCombos[0]}
         name="color"
       >
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
