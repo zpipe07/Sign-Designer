@@ -1,13 +1,14 @@
 import { useState } from "react"
+import Link from "next/link"
 import Box from "@mui/material/Box"
 import Menu from "@mui/material/Menu"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
+import Button from "@mui/material/Button"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CartItemsList } from "@/src/components/Header/Cart/CartItemsList"
-import { CheckoutButton } from "@/src/components/CheckoutButton"
 
 type Props = {
   cart?: VercelCart
@@ -63,7 +64,15 @@ export const CartView: React.FC<Props> = ({ cart }) => {
               <Typography>Items: {cart.totalQuantity}</Typography>
               <CartItemsList cart={cart} />
 
-              <CheckoutButton />
+              <Button
+                component={Link}
+                href="/cart"
+                variant="contained"
+                fullWidth
+                onClick={handleClose}
+              >
+                View cart
+              </Button>
             </>
           )}
         </Box>
