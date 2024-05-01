@@ -1,4 +1,3 @@
-import { useSWRConfig } from "swr"
 import ListItem from "@mui/material/ListItem"
 import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"

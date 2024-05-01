@@ -1,14 +1,8 @@
-// import useSWR from "swr"
-
-// import { fetcher } from "@/src/utils/fetcher"
-// import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { useQuery } from "@tanstack/react-query"
 
+import { VercelCart } from "@/src/lib/bigcommerce/types"
+
 export const useGetCart = () => {
-  // return useSWR<{ cart: VercelCart | undefined }>(
-  //   "/api/v1/cart",
-  //   fetcher,
-  // )
   const getCart = async () => {
     const res = await fetch("/api/v1/cart")
     const cart = await res.json()
@@ -16,5 +10,8 @@ export const useGetCart = () => {
     return cart
   }
 
-  return useQuery({ queryKey: ["/api/v1/cart"], queryFn: getCart })
+  return useQuery<{ cart: VercelCart | undefined }>({
+    queryKey: ["/api/v1/cart"],
+    queryFn: getCart,
+  })
 }
