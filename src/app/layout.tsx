@@ -1,14 +1,12 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { createClient } from "@supabase/supabase-js"
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
-import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
 
 import { Header } from "@/src/components/Header"
-import theme from "../theme"
+import { Providers } from "@/src/components/Providers/Providers"
 
 // Create a single supabase client for interacting with your database
 const supabase = createClient(
@@ -38,13 +36,11 @@ export default function RootLayout({
           className={inter.className}
           paddingBottom={4}
         >
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <Header />
+          <Providers>
+            <Header />
 
-              <Container maxWidth="lg">{children}</Container>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
+            <Container maxWidth="lg">{children}</Container>
+          </Providers>
         </Box>
       </html>
     </>
