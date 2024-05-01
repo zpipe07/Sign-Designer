@@ -2,11 +2,11 @@
 
 import { useFormContext } from "react-hook-form"
 import { useTheme } from "@mui/material"
-// import { useSWRConfig } from "swr"
 import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Button from "@mui/material/Button"
+import LoadingButton from "@mui/lab/LoadingButton"
 
 import {
   MountingSelector,
@@ -25,13 +25,20 @@ type Props = {
 export const SignConfigurerForm: React.FC<Props> = ({
   isEditing,
 }) => {
-  // const { mutate } = useSWRConfig()
+  const onSuccess = () => {
+    router.push("/cart")
+  }
 
-  const { mutate: createCart } = useCreateCart()
+  const { mutate: createCart, isPending: isPendingCreateCart } =
+    useCreateCart({ onSuccess })
 
-  const { mutate: addCartItem } = useAddCartItem()
+  const { mutate: addCartItem, isPending: isPendingAddCartItem } =
+    useAddCartItem({ onSuccess })
 
-  const { mutate: updateCartItem } = useUpdateCartItem()
+  const {
+    mutate: updateCartItem,
+    isPending: isPendingUpdateCartItem,
+  } = useUpdateCartItem({ onSuccess })
 
   const router = useRouter()
 
@@ -51,23 +58,6 @@ export const SignConfigurerForm: React.FC<Props> = ({
         itemId: params.itemId,
         formData,
       })
-      // const updateCartItem = async () => {
-      //   const res = await fetch(
-      //     `/api/v1/cart/${params.cartId}/items/${params.itemId}`,
-      //     {
-      //       method: "PATCH",
-      //       body: JSON.stringify(formData),
-      //     },
-      //   )
-      //   const { cart } = await res.json()
-      //   console.log({ cart })
-      //   return cart
-      // }
-
-      // mutate("/api/v1/cart", updateCartItem, {
-      //   populateCache: (cart) => cart,
-      //   revalidate: false,
-      // })
 
       return
     }
@@ -75,40 +65,10 @@ export const SignConfigurerForm: React.FC<Props> = ({
     if (data?.cart) {
       // update cart
       addCartItem({ cartId: data.cart.id, formData })
-      // const addCartItem = async () => {
-      //   const res = await fetch(`/api/v1/cart/${data.cart?.id}`, {
-      //     method: "PUT",
-      //     body: JSON.stringify(formData),
-      //   })
-      //   const { cart } = await res.json()
-      //   console.log({ cart })
-      //   return cart
-      // }
-
-      // mutate("/api/v1/cart", addCartItem, {
-      //   populateCache: (cart) => cart,
-      //   revalidate: false,
-      // })
     } else {
       // create new cart
       createCart(formData)
-      // const createCart = async () => {
-      //   const res = await fetch("/api/v1/cart", {
-      //     method: "POST",
-      //     body: JSON.stringify(formData),
-      //   })
-      //   const { cart } = await res.json()
-      //   console.log({ cart })
-      //   return cart
-      // }
-
-      // mutate("/api/v1/cart", createCart, {
-      //   populateCache: (cart) => cart,
-      //   revalidate: false,
-      // })
     }
-
-    router.push("/cart")
   }
 
   return (
@@ -137,9 +97,18 @@ export const SignConfigurerForm: React.FC<Props> = ({
             Back
           </Button>
 
-          <Button variant="contained" size="large" type="submit">
+          <LoadingButton
+            variant="contained"
+            size="large"
+            type="submit"
+            loading={
+              isPendingCreateCart ||
+              isPendingAddCartItem ||
+              isPendingUpdateCartItem
+            }
+          >
             Add to cart
-          </Button>
+          </LoadingButton>
         </Grid>
       </Grid>
     </form>

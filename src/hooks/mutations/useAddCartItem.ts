@@ -1,8 +1,12 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import {
+  UseMutationOptions,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
-export const useAddCartItem = () => {
+export const useAddCartItem = (options: UseMutationOptions) => {
   const queryClient = useQueryClient()
 
   const addCartItem = async ({
@@ -22,8 +26,11 @@ export const useAddCartItem = () => {
   }
 
   const onSuccess = (data: any) => {
-    console.log({ data })
     queryClient.setQueryData(["/api/v1/cart"], { cart: data })
+
+    if (options.onSuccess) {
+      options.onSuccess(data, undefined, undefined)
+    }
   }
 
   return useMutation({
