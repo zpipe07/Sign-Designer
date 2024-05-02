@@ -1,5 +1,8 @@
 "use client"
 
+import CircularProgress from "@mui/material/CircularProgress"
+import Box from "@mui/material/Box"
+
 import { CartView } from "@/src/components/Cart/CartView"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 
@@ -7,7 +10,18 @@ export const Cart: React.FC = () => {
   const { data, isLoading } = useGetCart()
 
   if (isLoading) {
-    return null
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: 10,
+          paddingBottom: 10,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    )
   }
 
   if (!data?.cart) {
