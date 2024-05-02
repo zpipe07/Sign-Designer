@@ -525,3 +525,50 @@ export const formDataToCartItem = async (
     },
   }
 }
+
+export const formDataToCartItemRest = async (
+  data: DesignFormInputs,
+): Promise<any> => {
+  const ReactDOMServer = (await import("react-dom/server")).default
+  const component = React.createElement(SignDesignerVisualizerView, {
+    inputs: data,
+  })
+  const svg = ReactDOMServer.renderToString(component)
+
+  return {
+    quantity: 1,
+    product_id: signProductId,
+    variant_id: 77,
+    option_selections: [
+      {
+        option_id: formToCartMap.shape.entityId,
+        option_value: formToCartMap.shape[data.shape],
+      },
+      {
+        option_id: formToCartMap.orientation.entityId,
+        option_value: formToCartMap.orientation[data.orientation],
+      },
+      {
+        option_id: formToCartMap.size.entityId,
+        option_value: formToCartMap.size[data.size],
+      },
+      {
+        option_id: formToCartMap.font.entityId,
+        option_value: formToCartMap.font[data.fontFamily],
+      },
+      {
+        option_id: formToCartMap.color.entityId,
+        // @ts-ignore
+        option_value: formToCartMap.color[data.color],
+      },
+      {
+        option_id: formToCartMap.textLine.entityId,
+        option_value: data.textLines[0].value,
+      },
+      {
+        option_id: formToCartMap.svg.entityId,
+        option_value: svg,
+      },
+    ],
+  }
+}

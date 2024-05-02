@@ -337,23 +337,6 @@ export async function addToCart(
       await bigCommerceFetch<BigCommerceCreateCartOperation>({
         query: createCartMutation,
         variables,
-        // variables: {
-        //   createCartInput: {
-        //     lineItems: lines.map(
-        //       ({
-        //         merchandiseId,
-        //         quantity,
-        //         productId,
-        //         selectedOptions,
-        //       }) => ({
-        //         productEntityId: parseInt(productId!, 10),
-        //         variantEntityId: parseInt(merchandiseId, 10),
-        //         quantity,
-        //         selectedOptions,
-        //       }),
-        //     ),
-        //   },
-        // },
         cache: "no-store",
       })
 
@@ -853,4 +836,37 @@ export async function revalidate(
     revalidated: true,
     now: Date.now(),
   })
+}
+
+export const addToCartRest = async (
+  cartId: string | undefined,
+  lines: LineItem[],
+): Promise<any> => {
+  const options = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Auth-Token": "6l56fg1g0g49mqdnursxjos1p7r1vnq",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      line_items: lines,
+      locale: "en",
+    }),
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.bigcommerce.com/stores/dh8nzctx6e/v3/carts/${cartId}/items`,
+      options,
+    )
+    const { data } = await res.json()
+    console.log({
+      data,
+    })
+    return data
+  } catch (error: any) {
+    console.log({ error })
+  }
 }
