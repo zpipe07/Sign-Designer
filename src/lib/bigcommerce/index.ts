@@ -1,7 +1,11 @@
+import axios from "axios"
 // import { isVercelCommerceError } from 'lib/type-guards';
 import { notFound } from "next/navigation"
 import { NextRequest, NextResponse } from "next/server"
-import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from "./constants"
+import {
+  BIGCOMMERCE_API_URL,
+  BIGCOMMERCE_GRAPHQL_API_ENDPOINT,
+} from "./constants"
 
 import {
   bigCommerceToVercelCart,
@@ -37,7 +41,10 @@ import {
   searchProductsQuery,
 } from "./queries/product"
 import { getEntityIdByRouteQuery } from "./queries/route"
-import { memoizedCartRedirectUrl } from "./storefront-config"
+import {
+  StorefrontCheckoutResponse,
+  memoizedCartRedirectUrl,
+} from "./storefront-config"
 import {
   BigCommerceAddToCartOperation,
   BigCommerceCart,
@@ -840,33 +847,84 @@ export async function revalidate(
 
 export const addToCartRest = async (
   cartId: string | undefined,
-  lines: LineItem[],
+  // lines: LineItem[],
+  lines: any,
 ): Promise<any> => {
-  const options = {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-Auth-Token": "6l56fg1g0g49mqdnursxjos1p7r1vnq",
-      "Access-Control-Allow-Origin": "*",
-    },
-    body: JSON.stringify({
-      line_items: lines,
-      locale: "en",
-    }),
-  }
+  // console.log({ lines })
+  // const options = {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "application/json",
+  //     // "Content-Type": "application/json",
+  //     // "Content-Type": "multipart/form-data",
+  //     "X-Auth-Token": "6l56fg1g0g49mqdnursxjos1p7r1vnq",
+  //     "Access-Control-Allow-Origin": "*",
+  //   },
+  //   // body: JSON.stringify({
+  //   //   line_items: lines,
+  //   //   locale: "en",
+  //   // }),
+  //   body: lines,
+  // }
+
+  // try {
+  //   const res = await fetch(
+  //     `https://api.bigcommerce.com/stores/dh8nzctx6e/v3/carts/${cartId}/items`,
+  //     options,
+  //   )
+  //   console.log({ res, body: res.body })
+  //   const { data } = await res.json()
+  //   console.log({
+  //     data,
+  //   })
+  //   return data
+  // } catch (error: any) {
+  //   console.log({ error })
+  // }
 
   try {
-    const res = await fetch(
+    // const foo = new FormData()
+    // const foo = new URLSearchParams()
+    // foo.append("line_items", JSON.stringify(lines))
+    // foo.append("line_items", "foo")
+    const { data } = await axios.post(
       `https://api.bigcommerce.com/stores/dh8nzctx6e/v3/carts/${cartId}/items`,
-      options,
+      { line_items: lines },
+      // { line_items: [] },
+      // foo,
+      // { line_items: ["foo", "bar"] },
+      {
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          // "Content-Disposition": "form-data",
+          "X-Auth-Token": "6l56fg1g0g49mqdnursxjos1p7r1vnq",
+          // "Access-Control-Allow-Origin": "*",
+        },
+      },
     )
-    const { data } = await res.json()
-    console.log({
-      data,
-    })
+    console.log({ data })
+    // const response = await fetch(
+    //   `${BIGCOMMERCE_API_URL}/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v3/carts/${cartId}/redirect_urls`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       accept: "application/json",
+    //       "content-type": "application/json",
+    //       "x-auth-token": process.env.BIGCOMMERCE_ACCESS_TOKEN!,
+    //     },
+    //   },
+    // )
+    // const foo = (await response.json()) as StorefrontCheckoutResponse
+    // console.log({ foo })
+
     return data
   } catch (error: any) {
-    console.log({ error })
+    console.log({
+      // error,
+      // res: error.response,
+      reqData: error.response.config.data,
+      // foobar: error.response.config.data.get("line_items"),
+      data: error.response.data,
+    })
   }
 }
