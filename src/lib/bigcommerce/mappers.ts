@@ -26,6 +26,8 @@ import {
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 
+var fs = require("fs")
+
 type ProductsList = {
   productId: number
   productData: BigCommerceProduct
@@ -524,4 +526,151 @@ export const formDataToCartItem = async (
       ],
     },
   }
+}
+
+export const formDataToCartItemRest = async (
+  data: DesignFormInputs,
+): Promise<any> => {
+  const ReactDOMServer = (await import("react-dom/server")).default
+  const component = React.createElement(SignDesignerVisualizerView, {
+    inputs: data,
+  })
+  const svg = ReactDOMServer.renderToString(component)
+
+  // return fs.writeFile("some_file_name.svg", svg, function (err: any) {
+  //   if (err) {
+  //     console.log(err)
+  //   }
+
+  //   console.log("Successfully Written to File.")
+
+  const readStream = fs.createReadStream("some_file_name.svg")
+  // const formData = new FormData()
+  // formData.append("action", "add")
+  // formData.append("product_id","112")
+  // formData.append("attribute[119]", "112")
+  // formData.append("attribute[120]", "117")
+  // formData.append("attribute[117]", "123")
+  // return formData
+  // action: add
+  // product_id: 112
+  // attribute[119]: 112
+  // attribute[120]: 117
+  // attribute[117]: 123
+  // attribute[118]: 110
+  // attribute[124]: (binary)
+  // qty[]: 1
+
+  // const formData = new FormData()
+  // formData.append("quantity", "1")
+  // formData.append("product_id", signProductId.toString())
+  // formData.append("variant_id", "77")
+
+  // formData.append(
+  //   "option_selections[0]['option_id']",
+  //   formToCartMap.shape.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[0]['option_value']",
+  //   formToCartMap.shape[data.shape].toString(),
+  // )
+
+  // formData.append(
+  //   "option_selections[1]['option_id']",
+  //   formToCartMap.orientation.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[1]['option_value']",
+  //   formToCartMap.orientation[data.orientation].toString(),
+  // )
+
+  // formData.append(
+  //   "option_selections[2]['option_id']",
+  //   formToCartMap.size.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[2]['option_value']",
+  //   formToCartMap.size[data.size].toString(),
+  // )
+
+  // formData.append(
+  //   "option_selections[3]['option_id']",
+  //   formToCartMap.font.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[3]['option_value']",
+  //   formToCartMap.font[data.fontFamily].toString(),
+  // )
+
+  // formData.append(
+  //   "option_selections[4]['option_id']",
+  //   formToCartMap.color.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[4]['option_value']",
+  //   // @ts-ignore
+  //   formToCartMap.color[data.color].toString(),
+  // )
+
+  // formData.append(
+  //   "option_selections[5]['option_id']",
+  //   formToCartMap.textLine.entityId.toString(),
+  // )
+  // formData.append(
+  //   "option_selections[5]['option_value']",
+  //   data.textLines[0].value,
+  // )
+
+  // formData.append(
+  //   "option_selections[6]['option_id']",
+  //   formToCartMap.svg.entityId.toString(),
+  // )
+  // formData.append("option_selections[6]['option_value']", svg)
+
+  // // console.log({ ...formData })
+
+  // return formData
+
+  return {
+    quantity: 1,
+    product_id: signProductId,
+    variant_id: 77,
+    option_selections: [
+      {
+        option_id: formToCartMap.shape.entityId,
+        option_value: formToCartMap.shape[data.shape],
+      },
+      {
+        option_id: formToCartMap.orientation.entityId,
+        option_value: formToCartMap.orientation[data.orientation],
+      },
+      {
+        option_id: formToCartMap.size.entityId,
+        option_value: formToCartMap.size[data.size],
+      },
+      {
+        option_id: formToCartMap.font.entityId,
+        option_value: formToCartMap.font[data.fontFamily],
+      },
+      {
+        option_id: formToCartMap.color.entityId,
+        // @ts-ignore
+        option_value: formToCartMap.color[data.color],
+      },
+      {
+        option_id: formToCartMap.textLine.entityId,
+        option_value: data.textLines[0].value,
+      },
+      {
+        option_id: formToCartMap.svg.entityId,
+        option_value: svg,
+      },
+      // {
+      //   option_id: 124,
+      //   // options_value: "some_file_name.svg",
+      //   option_value: readStream,
+      // },
+    ],
+  }
+  // })
 }
