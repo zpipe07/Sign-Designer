@@ -512,9 +512,9 @@ export const formDataToCartItem = async (
 
   const {
     data: { publicUrl },
-  } = supabase.storage
-    .from("signs")
-    .getPublicUrl(`${id}.svg`, { download: true })
+  } = supabase.storage.from("signs").getPublicUrl(`${id}.svg`, {
+    // download: true
+  })
 
   return {
     quantity: 1,
