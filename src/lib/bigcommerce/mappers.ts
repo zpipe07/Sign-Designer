@@ -1,4 +1,10 @@
 import React from "react"
+// import fs from "fs"
+import { promises as fs } from "fs"
+import { decode } from "base64-arraybuffer"
+import { randomUUID } from "crypto"
+
+import { createClient } from "@/src/utils/supabase/server"
 import {
   BigCommerceSortKeys,
   VercelSortKeys,
@@ -457,8 +463,11 @@ const formToCartMap = {
     "tan/green": 122,
     "yellow/black": 123,
   },
-  svg: {
+  svgRaw: {
     entityId: 122,
+  },
+  svgFile: {
+    entityId: 124,
   },
 }
 
@@ -482,6 +491,31 @@ export const formDataToCartItem = async (
     inputs: data,
   })
   const svg = ReactDOMServer.renderToString(component)
+  const id = randomUUID()
+
+  // generate SVG file
+  await fs.writeFile(`/tmp/${id}.svg`, svg)
+  const file = await fs.readFile(`/tmp/${id}.svg`, {
+    encoding: "base64",
+  })
+
+  // save file to supabase
+  const supabase = createClient()
+  const { error } = await supabase.storage
+    .from("signs")
+    .upload(`${id}.svg`, decode(file), {
+      contentType: "image/svg+xml",
+    })
+
+  if (error) {
+    throw error
+  }
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage
+    .from("signs")
+    .getPublicUrl(`${id}.svg`, { download: true })
 
   return {
     quantity: 1,
@@ -518,8 +552,12 @@ export const formDataToCartItem = async (
           text: data.textLines[0].value,
         },
         {
-          optionEntityId: formToCartMap.svg.entityId,
+          optionEntityId: formToCartMap.svgRaw.entityId,
           text: svg,
+        },
+        {
+          optionEntityId: formToCartMap.svgFile.entityId,
+          text: publicUrl,
         },
       ],
     },
