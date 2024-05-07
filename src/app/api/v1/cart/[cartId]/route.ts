@@ -6,7 +6,6 @@ export async function PUT(
   request: Request,
   { params }: { params: { cartId: string } },
 ) {
-  // save reference to file
   const formData: DesignFormInputs = await request.json()
   const lineItem = await formDataToCartItem(formData)
   const cart = await addToCart(params.cartId, [lineItem])
