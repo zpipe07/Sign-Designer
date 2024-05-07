@@ -67,7 +67,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
+            component={Link}
             href="/"
             sx={{
               mr: 2,
@@ -132,7 +132,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
+            component={Link}
             href="/"
             sx={{
               mr: 2,

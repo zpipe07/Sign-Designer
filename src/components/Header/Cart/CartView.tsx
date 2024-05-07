@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
+import Badge from "@mui/material/Badge"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CartItemsList } from "@/src/components/Header/Cart/CartItemsList"
@@ -33,14 +34,24 @@ export const CartView: React.FC<Props> = ({ cart }) => {
 
   return (
     <>
-      <IconButton
-        // aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={
+          <Typography variant="subtitle1">
+            {cart?.totalQuantity}
+          </Typography>
+        }
       >
-        <ShoppingCartIcon color="action" />
-      </IconButton>
+        <IconButton
+          // aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <ShoppingCartIcon color="action" />
+        </IconButton>
+      </Badge>
 
       <Menu
         // id="basic-menu"
