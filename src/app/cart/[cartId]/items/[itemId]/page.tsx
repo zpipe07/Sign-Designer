@@ -4,6 +4,8 @@ import { useEffect } from "react"
 import { useParams } from "next/navigation"
 import { useFormContext } from "react-hook-form"
 import Typography from "@mui/material/Typography"
+import Box from "@mui/material/Box"
+import CircularProgress from "@mui/material/CircularProgress"
 
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { SignDesigner } from "@/src/components/SignDesigner"
@@ -51,7 +53,18 @@ export default function Page() {
   }, [data?.cart?.lines, params.itemId, setValue])
 
   if (isLoading) {
-    return null
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: 10,
+          paddingBottom: 10,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    )
   }
 
   if (!data) {
@@ -60,7 +73,9 @@ export default function Page() {
 
   return (
     <>
-      <Typography>Edit item</Typography>
+      <Typography variant="h3" component="h1" marginBottom={2}>
+        Edit item
+      </Typography>
 
       <SignDesigner isEditing />
     </>
