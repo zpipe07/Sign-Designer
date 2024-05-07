@@ -13,6 +13,7 @@ export const SideRound: React.FC<SvgProps> = ({
     <svg
       viewBox="0 0 480 200"
       fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       transform={
         inputs.orientation === "vertical"
           ? `rotate(90) translate(100 0)`
