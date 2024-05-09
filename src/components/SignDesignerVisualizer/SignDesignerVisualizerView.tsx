@@ -1,3 +1,5 @@
+import opentype from "opentype.js"
+
 import { Rectangle } from "@/src/components/SVG/Rectangle"
 import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
@@ -12,10 +14,12 @@ import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/co
 
 type Props = {
   inputs: DesignFormInputs
+  font: opentype.Font | null
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
+  font,
 }) => {
   const width = 400
   const height = 250
@@ -43,6 +47,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
+          font={font}
         />
       )}
 

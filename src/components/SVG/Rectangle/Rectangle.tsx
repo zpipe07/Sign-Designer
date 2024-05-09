@@ -1,3 +1,7 @@
+///<reference path="../../../../node_modules/makerjs/dist/index.d.ts" />
+
+import makerjs from "makerjs"
+
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import {
@@ -15,11 +19,14 @@ export const Rectangle: React.FC<SvgProps> = ({
   textLines,
   foregroundColor,
   backgroundColor,
+  font,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
     inputs?.decoration
       ? decorationIconMap[inputs.decoration as Decoration]
       : null
+
+  if (!font) return null
 
   return (
     <svg
@@ -49,23 +56,44 @@ export const Rectangle: React.FC<SvgProps> = ({
             const chars = value.length
             const fontSize = 95 - chars * 3.5
             const y = 70 * index + 145 - textLines.length * 30
+            const textModel = new makerjs.models.Text(
+              font,
+              value,
+              fontSize,
+              false,
+              false,
+              0,
+              {},
+            )
+            const svg = makerjs.exporter.toSVG(textModel, {
+              fill: foregroundColor,
+              stroke: "none",
+            })
 
             return (
-              <text
-                y={y}
-                x={(width - borderWidth) / 2}
-                fontSize={fontSize}
-                fontWeight={800}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fill={foregroundColor}
-                fontFamily={inputs?.fontFamily}
-                letterSpacing={1}
-                key={index}
-              >
-                {value}
-              </text>
+              <g
+                dangerouslySetInnerHTML={{ __html: svg }}
+                transform={`translate(${(width - borderWidth) / chars}, ${y})`}
+                key={value}
+              ></g>
             )
+
+            // return (
+            //   <text
+            //     y={y}
+            //     x={(width - borderWidth) / 2}
+            //     fontSize={fontSize}
+            //     fontWeight={800}
+            //     alignmentBaseline="middle"
+            //     textAnchor="middle"
+            //     fill={foregroundColor}
+            //     fontFamily={inputs?.fontFamily}
+            //     letterSpacing={1}
+            //     key={index}
+            //   >
+            //     {value}
+            //   </text>
+            // )
           })}
 
         {inputs.orientation === "vertical" &&
