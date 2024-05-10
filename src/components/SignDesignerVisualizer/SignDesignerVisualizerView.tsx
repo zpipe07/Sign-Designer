@@ -14,7 +14,7 @@ import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/co
 
 type Props = {
   inputs: DesignFormInputs
-  font: opentype.Font | null
+  font: opentype.Font
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
@@ -60,6 +60,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
+          font={font}
         />
       )}
 
@@ -72,6 +73,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
+          font={font}
         />
       )}
 
@@ -84,6 +86,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
+          font={font}
         />
       )}
 
@@ -96,6 +99,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
+          font={font}
         />
       )}
     </>

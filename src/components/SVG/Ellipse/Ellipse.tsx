@@ -1,3 +1,5 @@
+import makerjs from "makerjs"
+
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import { Decoration } from "@/src/components/SignDesigner/types"
@@ -10,6 +12,7 @@ export const Ellipse: React.FC<SvgProps> = ({
   textLines,
   foregroundColor,
   backgroundColor,
+  font,
 }) => {
   const Decoration: React.FC<FiligreeProps> | null =
     inputs?.decoration
@@ -45,22 +48,43 @@ export const Ellipse: React.FC<SvgProps> = ({
             const chars = value.length
             const fontSize = 95 - chars * 3.5
             const y = 70 * index + 170 - textLines.length * 30
+            const textModel = new makerjs.models.Text(
+              font,
+              value,
+              fontSize,
+              false,
+              false,
+              0,
+              {},
+            )
+            const svg = makerjs.exporter.toSVG(textModel, {
+              fill: foregroundColor,
+              stroke: "none",
+            })
 
             return (
-              <text
-                y={y}
-                x={(width - borderWidth) / 2}
-                fontSize={fontSize}
-                fontWeight={800}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fill={foregroundColor}
-                fontFamily={inputs?.fontFamily}
-                key={index}
-              >
-                {value}
-              </text>
+              <g
+                dangerouslySetInnerHTML={{ __html: svg }}
+                transform={`translate(${(width - borderWidth) / chars}, ${y})`}
+                key={value}
+              ></g>
             )
+
+            // return (
+            //   <text
+            //     y={y}
+            //     x={(width - borderWidth) / 2}
+            //     fontSize={fontSize}
+            //     fontWeight={800}
+            //     alignmentBaseline="middle"
+            //     textAnchor="middle"
+            //     fill={foregroundColor}
+            //     fontFamily={inputs?.fontFamily}
+            //     key={index}
+            //   >
+            //     {value}
+            //   </text>
+            // )
           })}
 
         {inputs.orientation === "vertical" &&
@@ -70,22 +94,43 @@ export const Ellipse: React.FC<SvgProps> = ({
             const x = 200 + index * 60 - chars * 25
             const y = 135
 
-            return (
-              <text
-                y={y}
-                x={x}
-                transform={`rotate(-90, ${x}, ${y})`}
-                fontSize={fontSize}
-                fontWeight={800}
-                alignmentBaseline="middle"
-                textAnchor="middle"
-                fill={foregroundColor}
-                fontFamily={inputs?.fontFamily}
-                key={index}
-              >
-                {char}
-              </text>
+            const textModel = new makerjs.models.Text(
+              font,
+              char,
+              fontSize,
+              true,
+              true,
+              0,
+              {},
             )
+            const svg = makerjs.exporter.toSVG(textModel, {
+              fill: foregroundColor,
+              stroke: "none",
+            })
+
+            return (
+              <g
+                dangerouslySetInnerHTML={{ __html: svg }}
+                transform={`rotate(-90, ${x}, ${y}) translate(${x}, ${y})`}
+                key={char}
+              ></g>
+            )
+            // return (
+            //   <text
+            //     y={y}
+            //     x={x}
+            //     transform={`rotate(-90, ${x}, ${y})`}
+            //     fontSize={fontSize}
+            //     fontWeight={800}
+            //     alignmentBaseline="middle"
+            //     textAnchor="middle"
+            //     fill={foregroundColor}
+            //     fontFamily={inputs?.fontFamily}
+            //     key={index}
+            //   >
+            //     {char}
+            //   </text>
+            // )
           })}
 
         {/* {streetNumber && (

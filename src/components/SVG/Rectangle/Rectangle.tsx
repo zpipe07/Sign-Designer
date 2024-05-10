@@ -26,8 +26,6 @@ export const Rectangle: React.FC<SvgProps> = ({
       ? decorationIconMap[inputs.decoration as Decoration]
       : null
 
-  if (!font) return null
-
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -102,25 +100,47 @@ export const Rectangle: React.FC<SvgProps> = ({
             .map((char: string, index: number) => {
               const chars = textLines[0]?.value.length
               const fontSize = 100 - chars * 8
-              const x = 200 + index * 70 - chars * 28
-              const y = 110
+              // const x = 200 + index * 70 - chars * 28
+              // const y = 110
+              const x = 70 * index + 130 - chars * 20
+              const y = 130
+              const textModel = new makerjs.models.Text(
+                font,
+                char,
+                fontSize,
+                true,
+                true,
+                0,
+                {},
+              )
+              const svg = makerjs.exporter.toSVG(textModel, {
+                fill: foregroundColor,
+                stroke: "none",
+              })
 
               return (
-                <text
-                  y={y}
-                  x={x}
-                  transform={`rotate(-90, ${x}, ${y})`}
-                  fontSize={fontSize}
-                  fontWeight={800}
-                  alignmentBaseline="middle"
-                  textAnchor="middle"
-                  fill={foregroundColor}
-                  fontFamily={inputs?.fontFamily}
-                  key={index}
-                >
-                  {char}
-                </text>
+                <g
+                  dangerouslySetInnerHTML={{ __html: svg }}
+                  transform={`rotate(-90, ${x}, ${y}) translate(${x}, ${y})`}
+                  key={char}
+                ></g>
               )
+              // return (
+              //   <text
+              //     y={y}
+              //     x={x}
+              //     transform={`rotate(-90, ${x}, ${y})`}
+              //     fontSize={fontSize}
+              //     fontWeight={800}
+              //     alignmentBaseline="middle"
+              //     textAnchor="middle"
+              //     fill={foregroundColor}
+              //     fontFamily={inputs?.fontFamily}
+              //     key={index}
+              //   >
+              //     {char}
+              //   </text>
+              // )
             })}
 
         {/* {streetNumber && (

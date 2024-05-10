@@ -14,7 +14,7 @@ export type SvgProps = {
   textLines: TextLine[]
   foregroundColor: Color
   backgroundColor: Color
-  font?: opentype.Font | null
+  font: opentype.Font
 }
 
 export type PreviewSvgProps = {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useWatch } from "react-hook-form"
 import opentype from "opentype.js"
 import Box from "@mui/material/Box"
+import CircularProgress from "@mui/material/CircularProgress"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizerView"
@@ -32,12 +33,21 @@ export const SignDesignerVisualizer: React.FC = () => {
     )
   }, [inputs.fontFamily])
 
+  if (!font) {
+    return (
+      <Box display="flex" justifyContent="center" marginTop={10}>
+        <CircularProgress />
+      </Box>
+    )
+  }
+
   return (
     <Box display="flex" justifyContent="center">
       <Box
         sx={{
           width: "100%",
           maxWidth: 400,
+          minHeight: 250,
 
           ...(inputs.orientation === "vertical" && {
             minHeight: 400,
