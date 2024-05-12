@@ -28,13 +28,28 @@ export const Ellipse: React.FC<SvgProps> = ({
   // const bolts = new makerjs.models.BoltRectangle(180, 260, 2)
   // bolts.origin = [10, 10]
 
-  const textModel = new makerjs.models.Text(
-    font,
-    textLines[0].value,
-    40,
-  )
-  textModel.origin = [-100, 0]
-  textModel.layer = "text"
+  const textModels = {}
+
+  for (const textLine of textLines) {
+    const index = Object.keys(textModels).length
+    const chars = textLine.value.length
+    const fontSize = 95 - chars * 3.5
+    const x = -1 * chars * 8 - 50
+    const y = textLines.length * 10 + 0 - 60 * index
+    const textModel = new makerjs.models.Text(
+      font,
+      textLine.value,
+      fontSize,
+      false,
+      false,
+      0,
+      {},
+    )
+
+    textModel.origin = [x, y]
+    textModel.layer = "text"
+    textModels[`textModel${index}`] = textModel
+  }
 
   const tabletFaceMount = {
     // paths: { buttonhole: buttonhole },
@@ -42,7 +57,8 @@ export const Ellipse: React.FC<SvgProps> = ({
       outer: outer,
       inner: inner,
       // bolts: bolts,
-      textModel,
+      // textModel,
+      ...textModels,
     },
   }
 
