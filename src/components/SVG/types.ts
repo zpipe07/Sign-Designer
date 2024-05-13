@@ -1,3 +1,5 @@
+import opentype from "opentype.js"
+
 import {
   Color,
   DesignFormInputs,
@@ -12,6 +14,7 @@ export type SvgProps = {
   textLines: TextLine[]
   foregroundColor: Color
   backgroundColor: Color
+  font: opentype.Font
 }
 
 export type PreviewSvgProps = {

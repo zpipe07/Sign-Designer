@@ -486,6 +486,7 @@ export const formDataToCartItem = async (
   data: DesignFormInputs,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
+  // @ts-ignore
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
   })
