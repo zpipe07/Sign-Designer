@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
       color: "black/green",
       fontFamily: "times",
       decoration: "",
+      // @ts-ignore
       font,
     },
   })
