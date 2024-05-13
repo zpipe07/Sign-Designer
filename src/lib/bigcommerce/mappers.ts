@@ -1,4 +1,5 @@
 import React from "react"
+import opentype from "opentype.js"
 import { promises as fs } from "fs"
 import { decode } from "base64-arraybuffer"
 import { randomUUID } from "crypto"
@@ -462,9 +463,9 @@ const formToCartMap = {
     "tan/green": 122,
     "yellow/black": 123,
   },
-  svgRaw: {
-    entityId: 122,
-  },
+  // svgRaw: {
+  //   entityId: 122,
+  // },
   svgFile: {
     entityId: 124,
   },
@@ -486,9 +487,12 @@ export const formDataToCartItem = async (
   data: DesignFormInputs,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
-  // @ts-ignore
+  const font = opentype.loadSync(
+    "public/fonts/AlbertSans-VariableFont_wght.ttf",
+  )
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
+    font,
   })
   const svg = ReactDOMServer.renderToString(component)
   const id = randomUUID()
@@ -551,10 +555,10 @@ export const formDataToCartItem = async (
           optionEntityId: formToCartMap.textLine.entityId,
           text: data.textLines[0].value,
         },
-        {
-          optionEntityId: formToCartMap.svgRaw.entityId,
-          text: svg,
-        },
+        // {
+        //   optionEntityId: formToCartMap.svgRaw.entityId,
+        //   text: svg,
+        // },
         {
           optionEntityId: formToCartMap.svgFile.entityId,
           text: publicUrl,
