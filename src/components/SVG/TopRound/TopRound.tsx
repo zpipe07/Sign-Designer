@@ -19,6 +19,7 @@ export const TopRound: React.FC<SvgProps> = ({
     new makerjs.models.Oval(200, 200),
     [100, 50],
   )
+  // @ts-ignore
   outerRect.layer = "outer"
   outerOval.layer = "outer"
 
@@ -58,8 +59,11 @@ export const TopRound: React.FC<SvgProps> = ({
       {},
     )
 
+    // @ts-ignore
     textModel.origin = [x, y]
+    // @ts-ignore
     textModel.layer = "text"
+    // @ts-ignore
     textModels[`textModel${index}`] = textModel
   }
 

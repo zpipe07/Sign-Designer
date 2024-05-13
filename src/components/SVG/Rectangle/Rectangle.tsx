@@ -22,10 +22,12 @@ export const Rectangle: React.FC<SvgProps> = ({
   font,
 }) => {
   const outer = new makerjs.models.RoundRectangle(400, 280, 8)
+  // @ts-ignore
   outer.layer = "outer"
 
   const inner = new makerjs.models.RoundRectangle(360, 240, 8)
   inner.origin = [20, 20]
+  // @ts-ignore
   inner.layer = "inner"
 
   // const textModels = textLines.map(
@@ -66,8 +68,11 @@ export const Rectangle: React.FC<SvgProps> = ({
       {},
     )
 
+    // @ts-ignore
     textModel.origin = [x, y]
+    // @ts-ignore
     textModel.layer = "text"
+    // @ts-ignore
     textModels[`textModel${index}`] = textModel
   }
 

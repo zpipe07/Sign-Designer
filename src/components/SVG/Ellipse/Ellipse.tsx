@@ -16,10 +16,12 @@ export const Ellipse: React.FC<SvgProps> = ({
 }) => {
   // const outer = new makerjs.models.RoundRectangle(400, 280, 8)
   const outer = new makerjs.models.Ellipse(200, 150)
+  // @ts-ignore
   outer.layer = "outer"
 
   // const inner = new makerjs.models.RoundRectangle(360, 230, 8)
   const inner = new makerjs.models.Ellipse(180, 130, 8)
+  // @ts-ignore
   inner.layer = "inner"
   // inner.origin = [20, 30]
 
@@ -46,8 +48,11 @@ export const Ellipse: React.FC<SvgProps> = ({
       {},
     )
 
+    // @ts-ignore
     textModel.origin = [x, y]
+    // @ts-ignore
     textModel.layer = "text"
+    // @ts-ignore
     textModels[`textModel${index}`] = textModel
   }
 
