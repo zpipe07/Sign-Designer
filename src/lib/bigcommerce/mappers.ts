@@ -483,6 +483,199 @@ export const getProductFormMapping = (product: VercelProduct) => {
   return productFormMapping
 }
 
+const product = {
+  id: "UHJvZHVjdDoxMTI=",
+  handle: "/custom-sign/",
+  availableForSale: true,
+  title: "Custom Sign",
+  description: "",
+  descriptionHtml: "",
+  options: [
+    {
+      id: "127",
+      name: "Shape",
+      values: [
+        {
+          label: "Rectangle",
+          entityId: 129,
+        },
+        {
+          label: "Ellipse",
+          entityId: 130,
+        },
+      ],
+    },
+    {
+      id: "119",
+      name: "shape_modifier",
+      values: [
+        {
+          label: "rectangle",
+          entityId: 112,
+        },
+        {
+          label: "ellipse",
+          entityId: 113,
+        },
+        {
+          label: "topRound",
+          entityId: 114,
+        },
+        {
+          label: "sideRound",
+          entityId: 115,
+        },
+        {
+          label: "bread",
+          entityId: 116,
+        },
+      ],
+    },
+    {
+      id: "120",
+      name: "orientation_modifier",
+      values: [
+        {
+          label: "horizontal",
+          entityId: 117,
+        },
+        {
+          label: "vertical",
+          entityId: 118,
+        },
+      ],
+    },
+    {
+      id: "121",
+      name: "size_modifier",
+      values: [
+        {
+          label: "small",
+          entityId: 119,
+        },
+        {
+          label: "medium",
+          entityId: 120,
+        },
+      ],
+    },
+    {
+      id: "117",
+      name: "textLine",
+      values: [],
+    },
+    {
+      id: "118",
+      name: "font",
+      values: [
+        {
+          label: "times",
+          entityId: 110,
+        },
+        {
+          label: "verdana",
+          entityId: 111,
+        },
+      ],
+    },
+    {
+      id: "123",
+      name: "color",
+      values: [
+        {
+          label: "black/white",
+          entityId: 121,
+        },
+        {
+          label: "tan/green",
+          entityId: 122,
+        },
+        {
+          label: "yellow/black",
+          entityId: 123,
+        },
+      ],
+    },
+    {
+      id: "122",
+      name: "svgRaw",
+      values: [],
+    },
+    {
+      id: "124",
+      name: "svgFile",
+      values: [],
+    },
+  ],
+  priceRange: {
+    maxVariantPrice: {
+      amount: "20",
+      currencyCode: "USD",
+    },
+    minVariantPrice: {
+      amount: "20",
+      currencyCode: "USD",
+    },
+  },
+  variants: [
+    {
+      parentId: "112",
+      id: "149",
+      title: "",
+      availableForSale: true,
+      selectedOptions: [
+        {
+          name: "shape",
+          value: "rectangle",
+        },
+      ],
+      price: {
+        amount: "20",
+        currencyCode: "USD",
+      },
+    },
+    {
+      parentId: "112",
+      id: "150",
+      title: "",
+      availableForSale: true,
+      selectedOptions: [
+        {
+          name: "shape",
+          value: "ellipse",
+        },
+      ],
+      price: {
+        amount: "20",
+        currencyCode: "USD",
+      },
+    },
+  ],
+  images: [],
+  featuredImage: {
+    url: "",
+    altText: "",
+    width: 2048,
+    height: 2048,
+  },
+  seo: {
+    title: "Custom Sign",
+    description: "",
+  },
+  tags: [""],
+  updatedAt: "2024-04-17T15:47:21Z",
+}
+
+const getMerchandiseId = (data: DesignFormInputs) => {
+  return product.variants.find((selectedOptions) => {
+    console.log({ selectedOptions })
+    return selectedOptions.selectedOptions.every((option) => {
+      console.log({ option })
+      return data[option.name] === option.value
+    })
+  })?.id
+}
+
 export const formDataToCartItem = async (
   data: DesignFormInputs,
 ): Promise<LineItem> => {
@@ -521,16 +714,20 @@ export const formDataToCartItem = async (
     // download: true
   })
 
+  const merchandiseId = getMerchandiseId(data)
+  console.log({ merchandiseId })
+
   return {
     quantity: 1,
     productId: signProductId.toString(10),
-    merchandiseId: "77",
+    // merchandiseId: "77",
+    merchandiseId: "149",
     selectedOptions: {
       multipleChoices: [
-        {
-          optionEntityId: formToCartMap.shape.entityId,
-          optionValueEntityId: formToCartMap.shape[data.shape],
-        },
+        // {
+        //   optionEntityId: formToCartMap.shape.entityId,
+        //   optionValueEntityId: formToCartMap.shape[data.shape],
+        // },
         {
           optionEntityId: formToCartMap.orientation.entityId,
           optionValueEntityId:
@@ -559,10 +756,10 @@ export const formDataToCartItem = async (
         //   optionEntityId: formToCartMap.svgRaw.entityId,
         //   text: svg,
         // },
-        {
-          optionEntityId: formToCartMap.svgFile.entityId,
-          text: publicUrl,
-        },
+        // {
+        //   optionEntityId: formToCartMap.svgFile.entityId,
+        //   text: publicUrl,
+        // },
       ],
     },
   }

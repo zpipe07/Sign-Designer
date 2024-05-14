@@ -16,8 +16,7 @@ import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview"
 import { PreviewSvgProps } from "@/src/components/SVG/types"
 import { BreadPreview } from "@/src/components/SVG/BreadPreview"
 import { Shape } from "@/src/components/SignDesigner/types"
-// import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
-// import { signProductId } from "@/src/lib/bigcommerce/mappers"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 export const shapeIconMap: {
   [key in Shape]: React.FC<PreviewSvgProps>
@@ -34,7 +33,11 @@ const shapes = Object.keys(designOptions) as Shape[]
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
 
+  const { data } = useGetProduct(112)
+  console.log(data?.product)
+
   const selectedShape = useWatch({ name: "shape" })
+  console.log({ selectedShape })
 
   // const { data } = useGetProduct(signProductId)
 
