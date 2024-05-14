@@ -26,9 +26,8 @@ export async function GET(request: NextRequest) {
       color: "black/green",
       fontFamily: "times",
       decoration: "",
-      // @ts-ignore
-      font,
     },
+    font,
   })
   const string = ReactDOMServer.renderToString(component)
 

@@ -10,19 +10,22 @@ import Button from "@mui/material/Button"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
+import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
 
 type Props = {
   cart: VercelCart
 }
 
 export const CartView: React.FC<Props> = ({ cart }) => {
+  const { mutate: removeFromCart } = useRemoveFromCart()
+
   return (
     <>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              <TableCell>Item</TableCell>
               <TableCell></TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Quantity</TableCell>
@@ -34,7 +37,36 @@ export const CartView: React.FC<Props> = ({ cart }) => {
             {cart.lines.map(({ id, merchandise, cost, quantity }) => {
               return (
                 <TableRow key={id}>
-                  <TableCell>{merchandise.title}</TableCell>
+                  <TableCell>
+                    <Typography>{merchandise.title}</Typography>
+
+                    <Typography variant="body2">
+                      <strong>Shape: </strong>
+                      {
+                        merchandise.selectedOptions.find(
+                          ({ name }) => name === "shape_modifier",
+                        )?.value
+                      }
+                    </Typography>
+
+                    <Typography variant="body2">
+                      <strong>Size: </strong>
+                      {
+                        merchandise.selectedOptions.find(
+                          ({ name }) => name === "size_modifier",
+                        )?.value
+                      }
+                    </Typography>
+
+                    <Typography variant="body2">
+                      <strong>Color: </strong>
+                      {
+                        merchandise.selectedOptions.find(
+                          ({ name }) => name === "color",
+                        )?.value
+                      }
+                    </Typography>
+                  </TableCell>
                   <TableCell>
                     <Button
                       component={Link}
@@ -43,7 +75,16 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                       Edit
                     </Button>
 
-                    <Button>Remove from cart</Button>
+                    <Button
+                      onClick={() => {
+                        removeFromCart({
+                          cartId: cart.id,
+                          lineItemId: id,
+                        })
+                      }}
+                    >
+                      Remove from cart
+                    </Button>
                   </TableCell>
                   <TableCell>${cost.totalAmount.amount}</TableCell>
                   <TableCell>{quantity}</TableCell>

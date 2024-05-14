@@ -2,6 +2,7 @@
 
 import CircularProgress from "@mui/material/CircularProgress"
 import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 import { CartView } from "@/src/components/Cart/CartView"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
@@ -25,7 +26,7 @@ export const Cart: React.FC = () => {
   }
 
   if (!data?.cart) {
-    return null
+    return <Typography variant="body1">Your cart is empty</Typography>
   }
 
   return <CartView cart={data.cart} />
