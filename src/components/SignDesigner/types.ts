@@ -23,11 +23,12 @@ export type Size = "small" | "medium"
 export type TextLine = { value: string }
 
 export type DesignFormInputs = {
-  shape: Shape
-  orientation: Orientation
-  size: Size
-  textLines: TextLine[]
-  color: ColorCombo
-  fontFamily: FontFamily
-  decoration: Decoration | ""
+  [key: string]: any
+  // shape: Shape
+  // orientation: Orientation
+  // size: Size
+  // textLines: TextLine[]
+  // color: ColorCombo
+  // fontFamily: FontFamily
+  // decoration: Decoration | ""
 }

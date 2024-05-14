@@ -7,8 +7,9 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import FormHelperText from "@mui/material/FormHelperText"
+import LinearProgress from "@mui/material/LinearProgress"
 
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+// import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
 import { RectanglePreview } from "@/src/components/SVG/RectanglePreview"
 import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
@@ -28,27 +29,22 @@ export const shapeIconMap: {
   bread: BreadPreview,
 }
 
-const shapes = Object.keys(designOptions) as Shape[]
+// const shapes = Object.keys(designOptions) as Shape[]
 
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
 
-  const { data } = useGetProduct(112)
-  console.log(data?.product)
-
   const selectedShape = useWatch({ name: "shape" })
-  console.log({ selectedShape })
 
-  // const { data } = useGetProduct(signProductId)
+  const { data, isLoading, error } = useGetProduct(112)
 
-  // if (!data) {
-  //   return null
-  // }
+  if (isLoading) {
+    return <LinearProgress />
+  }
 
-  // const option = data.product.options.find(
-  //   ({ name }) => name === "shape",
-  // )
-  // console.log({ data, option })
+  if (!data) {
+    return null
+  }
 
   return (
     <FormControl fullWidth>
@@ -58,14 +54,14 @@ export const ShapeSelector: React.FC = () => {
       </FormHelperText>
 
       {/* <RadioGroup>
-        {option?.values.map(({ label, entityId }) => {
+        {shapeOption.values.map(({ label, entityId }) => {
           return (
             <FormControlLabel
               label={label}
               value={entityId}
               control={<Radio size="small" />}
               key={entityId}
-              {...register(option.id)}
+              {...register(shapeOption.id)}
             />
           )
         })}
@@ -77,24 +73,26 @@ export const ShapeSelector: React.FC = () => {
         name="shape"
         sx={{ flexDirection: "row" }}
       >
-        {shapes.map((shape) => {
-          const ShapeIcon: React.FC<PreviewSvgProps> =
-            shapeIconMap[shape]
+        {data.productOptionsMap.shape.values.map(
+          ({ label, entityId }) => {
+            // const ShapeIcon: React.FC<PreviewSvgProps> =
+            //   shapeIconMap[shape]
 
-          return (
-            <FormControlLabel
-              value={shape}
-              control={<Radio size="small" />}
-              label={<ShapeIcon />}
-              checked={shape === selectedShape}
-              {...register("shape")}
-              sx={{
-                fontSize: 0,
-              }}
-              key={shape}
-            />
-          )
-        })}
+            return (
+              <FormControlLabel
+                value={entityId}
+                control={<Radio size="small" />}
+                label={label}
+                // checked={shape === selectedShape}
+                key={entityId}
+                sx={{
+                  fontSize: 0,
+                }}
+                {...register(data.productOptionsMap.shape.id)}
+              />
+            )
+          },
+        )}
       </RadioGroup>
     </FormControl>
   )

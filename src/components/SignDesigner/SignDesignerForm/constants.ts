@@ -108,3 +108,231 @@ export const designOptions: any = {
 //     },
 //   },
 // }
+export const signProductId = 112
+
+export const product = {
+  id: "UHJvZHVjdDoxMTI=",
+  handle: "/custom-sign/",
+  availableForSale: true,
+  title: "Custom Sign",
+  description: "",
+  descriptionHtml: "",
+  options: [
+    {
+      id: "127",
+      name: "shape",
+      values: [
+        {
+          label: "rectangle",
+          entityId: 129,
+        },
+        {
+          label: "ellipse",
+          entityId: 130,
+        },
+      ],
+    },
+    {
+      id: "119",
+      name: "shape_modifier",
+      values: [
+        {
+          label: "rectangle",
+          entityId: 112,
+        },
+        {
+          label: "ellipse",
+          entityId: 113,
+        },
+        {
+          label: "topRound",
+          entityId: 114,
+        },
+        {
+          label: "sideRound",
+          entityId: 115,
+        },
+        {
+          label: "bread",
+          entityId: 116,
+        },
+      ],
+    },
+    {
+      id: "120",
+      name: "orientation_modifier",
+      values: [
+        {
+          label: "horizontal",
+          entityId: 117,
+        },
+        {
+          label: "vertical",
+          entityId: 118,
+        },
+      ],
+    },
+    {
+      id: "121",
+      name: "size_modifier",
+      values: [
+        {
+          label: "small",
+          entityId: 119,
+        },
+        {
+          label: "medium",
+          entityId: 120,
+        },
+      ],
+    },
+    {
+      id: "117",
+      name: "textLine",
+      values: [],
+    },
+    {
+      id: "118",
+      name: "font",
+      values: [
+        {
+          label: "times",
+          entityId: 110,
+        },
+        {
+          label: "verdana",
+          entityId: 111,
+        },
+      ],
+    },
+    {
+      id: "123",
+      name: "color",
+      values: [
+        {
+          label: "black/white",
+          entityId: 121,
+        },
+        {
+          label: "tan/green",
+          entityId: 122,
+        },
+        {
+          label: "yellow/black",
+          entityId: 123,
+        },
+      ],
+    },
+    {
+      id: "122",
+      name: "svgRaw",
+      values: [],
+    },
+    {
+      id: "124",
+      name: "svgFile",
+      values: [],
+    },
+  ],
+  priceRange: {
+    maxVariantPrice: {
+      amount: "20",
+      currencyCode: "USD",
+    },
+    minVariantPrice: {
+      amount: "20",
+      currencyCode: "USD",
+    },
+  },
+  variants: [
+    {
+      parentId: "112",
+      id: "149",
+      title: "",
+      availableForSale: true,
+      selectedOptions: [
+        {
+          name: "shape",
+          value: "rectangle",
+        },
+      ],
+      price: {
+        amount: "20",
+        currencyCode: "USD",
+      },
+    },
+    {
+      parentId: "112",
+      id: "150",
+      title: "",
+      availableForSale: true,
+      selectedOptions: [
+        {
+          name: "shape",
+          value: "ellipse",
+        },
+      ],
+      price: {
+        amount: "20",
+        currencyCode: "USD",
+      },
+    },
+  ],
+  images: [],
+  featuredImage: {
+    url: "",
+    altText: "",
+    width: 2048,
+    height: 2048,
+  },
+  seo: {
+    title: "Custom Sign",
+    description: "",
+  },
+  tags: [""],
+  updatedAt: "2024-04-17T15:47:21Z",
+}
+
+const PRODUCT_INPUT_MAP = {
+  shape: {
+    // id: "127",
+    // values: [],
+    entityId: 119,
+    rectangle: 112,
+    ellipse: 113,
+    topRound: 114,
+    sideRound: 115,
+    bread: 116,
+  },
+
+  orientation: {
+    entityId: 120,
+    horizontal: 117,
+    vertical: 118,
+  },
+  size: {
+    entityId: 121,
+    small: 119,
+    medium: 120,
+  },
+  textLine: {
+    entityId: 117,
+  },
+  font: {
+    entityId: 118,
+    times: 110,
+    verdana: 111,
+  },
+  color: {
+    entityId: 123,
+    "black/white": 121,
+    "tan/green": 122,
+    "yellow/black": 123,
+  },
+  // svgRaw: {
+  //   entityId: 122,
+  // },
+  svgFile: {
+    entityId: 124,
+  },
+}
