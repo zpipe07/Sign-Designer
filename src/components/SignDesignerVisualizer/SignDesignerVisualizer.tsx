@@ -8,11 +8,14 @@ import CircularProgress from "@mui/material/CircularProgress"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizerView"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 export const SignDesignerVisualizer: React.FC = () => {
   const [font, setFont] = useState<opentype.Font | null>(null)
 
   const inputs = useWatch() as DesignFormInputs
+
+  const { data, isLoading } = useGetProduct(112)
 
   useEffect(() => {
     opentype.load(
@@ -33,12 +36,16 @@ export const SignDesignerVisualizer: React.FC = () => {
     )
   }, [inputs.fontFamily])
 
-  if (!font) {
+  if (!font || isLoading) {
     return (
       <Box display="flex" justifyContent="center" marginTop={10}>
         <CircularProgress />
       </Box>
     )
+  }
+
+  if (!data) {
+    return null
   }
 
   return (
@@ -54,7 +61,11 @@ export const SignDesignerVisualizer: React.FC = () => {
           }),
         }}
       >
-        <SignDesignerVisualizerView inputs={inputs} font={font} />
+        <SignDesignerVisualizerView
+          inputs={inputs}
+          font={font}
+          productOptionsMap={data?.productOptionsMap}
+        />
       </Box>
     </Box>
   )

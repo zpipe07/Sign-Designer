@@ -1,27 +1,28 @@
 import opentype from "opentype.js"
-import Typography from "@mui/material/Typography"
 
 import {
   Color,
   DesignFormInputs,
   TextLine,
 } from "@/src/components/SignDesigner/types"
+import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { Rectangle } from "@/src/components/SVG/Rectangle"
 import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
 import { Bread } from "@/src/components/SVG/Bread"
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 type Props = {
   inputs: DesignFormInputs
   font: opentype.Font
+  productOptionsMap: ProductOptionsMap
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
   font,
+  productOptionsMap,
 }) => {
   const width = 400
   const height = 250
@@ -38,26 +39,16 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
 
-  const { data } = useGetProduct(112)
-
-  const rectangleId = data?.productOptionsMap.shape.values.find(
+  const rectangleId = productOptionsMap.shape.values.find(
     ({ label }) => label === "rectangle",
   )?.entityId
-  const ellipseId = data?.productOptionsMap.shape.values.find(
+  const ellipseId = productOptionsMap.shape.values.find(
     ({ label }) => label === "ellipse",
   )?.entityId
 
-  if (
-    !data ||
-    !data.productOptionsMap ||
-    !data.productOptionsMap.shape
-  ) {
-    return null
-  }
-
   return (
     <>
-      {inputs[data.productOptionsMap.shape.id] ===
+      {inputs[productOptionsMap.shape.id] ===
         rectangleId?.toString() && (
         <Rectangle
           width={width}
@@ -71,7 +62,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         />
       )}
 
-      {inputs[data.productOptionsMap.shape.id] ===
+      {inputs[productOptionsMap.shape.id] ===
         ellipseId?.toString() && (
         <Ellipse
           width={width}

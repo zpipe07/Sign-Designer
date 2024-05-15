@@ -31,7 +31,11 @@ import {
 } from "./types"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
-import { product } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import {
+  product,
+  signProductId,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 
 type ProductsList = {
   productId: number
@@ -496,6 +500,7 @@ const getMerchandiseId = (data: DesignFormInputs) => {
 
 export const formDataToCartItem = async (
   data: DesignFormInputs,
+  productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
   const font = opentype.loadSync(
@@ -504,6 +509,7 @@ export const formDataToCartItem = async (
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
     font,
+    productOptionsMap,
   })
   const svg = ReactDOMServer.renderToString(component)
   const id = randomUUID()
@@ -537,6 +543,7 @@ export const formDataToCartItem = async (
 
   return {
     quantity: 1,
+    // productId: signProductId.toString(10),
     productId: signProductId.toString(10),
     // merchandiseId: "77",
     merchandiseId: "149",
@@ -546,30 +553,30 @@ export const formDataToCartItem = async (
         //   optionEntityId: formToCartMap.shape.entityId,
         //   optionValueEntityId: formToCartMap.shape[data.shape],
         // },
-        {
-          optionEntityId: formToCartMap.orientation.entityId,
-          optionValueEntityId:
-            formToCartMap.orientation[data.orientation],
-        },
-        {
-          optionEntityId: formToCartMap.size.entityId,
-          optionValueEntityId: formToCartMap.size[data.size],
-        },
-        {
-          optionEntityId: formToCartMap.font.entityId,
-          optionValueEntityId: formToCartMap.font[data.fontFamily],
-        },
-        {
-          optionEntityId: formToCartMap.color.entityId,
-          // @ts-ignore
-          optionValueEntityId: formToCartMap.color[data.color],
-        },
+        // {
+        //   optionEntityId: formToCartMap.orientation.entityId,
+        //   optionValueEntityId:
+        //     formToCartMap.orientation[data.orientation],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.size.entityId,
+        //   optionValueEntityId: formToCartMap.size[data.size],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.font.entityId,
+        //   optionValueEntityId: formToCartMap.font[data.fontFamily],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.color.entityId,
+        //   // @ts-ignore
+        //   optionValueEntityId: formToCartMap.color[data.color],
+        // },
       ],
       textFields: [
-        {
-          optionEntityId: formToCartMap.textLine.entityId,
-          text: data.textLines[0].value,
-        },
+        // {
+        //   optionEntityId: formToCartMap.textLine.entityId,
+        //   text: data.textLines[0].value,
+        // },
         // {
         //   optionEntityId: formToCartMap.svgRaw.entityId,
         //   text: svg,

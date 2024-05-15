@@ -21,7 +21,7 @@ export const useAddCartItem = (options: UseMutationOptions) => {
       body: JSON.stringify(formData),
     })
     const { cart } = await res.json()
-    console.log({ cart })
+
     return cart
   }
 

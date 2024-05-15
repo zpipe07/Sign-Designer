@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query"
 
 import { VercelProduct } from "@/src/lib/bigcommerce/types"
 
-type ProductOptionsMap = {
+export type ProductOptionsMap = {
   [key: string]: {
     id: string
     values: { label: string; entityId: number }[]
   }
 }
 
-const createProductOptionsMap = (product: VercelProduct) => {
+export const createProductOptionsMap = (product: VercelProduct) => {
   const optionsMap: ProductOptionsMap = {}
 
   product.options.forEach(({ id, name, values }) => {
