@@ -13,6 +13,7 @@ export async function POST(request: Request) {
   const formData: DesignFormInputs = await request.json()
   const lineItem = await formDataToCartItem(
     formData,
+    data.product,
     productOptionsMap,
   )
   const cart = await addToCart(undefined, [lineItem])

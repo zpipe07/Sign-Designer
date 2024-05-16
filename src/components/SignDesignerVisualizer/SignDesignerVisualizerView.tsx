@@ -48,8 +48,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
 
   return (
     <>
-      {inputs[productOptionsMap.shape.id] ===
-        rectangleId?.toString() && (
+      {inputs.shape === "rectangle" && (
         <Rectangle
           width={width}
           height={height}
@@ -62,8 +61,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         />
       )}
 
-      {inputs[productOptionsMap.shape.id] ===
-        ellipseId?.toString() && (
+      {inputs.shape === "ellipse" && (
         <Ellipse
           width={width}
           height={height + 40}

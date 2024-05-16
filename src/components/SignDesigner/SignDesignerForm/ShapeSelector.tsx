@@ -80,7 +80,7 @@ export const ShapeSelector: React.FC = () => {
 
             return (
               <FormControlLabel
-                value={entityId}
+                value={label}
                 control={<Radio size="small" />}
                 label={label}
                 // checked={shape === selectedShape}
@@ -88,7 +88,7 @@ export const ShapeSelector: React.FC = () => {
                 sx={{
                   fontSize: 0,
                 }}
-                {...register(data.productOptionsMap.shape.id)}
+                {...register("shape")}
               />
             )
           },

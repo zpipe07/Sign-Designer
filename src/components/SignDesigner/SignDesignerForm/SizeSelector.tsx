@@ -8,6 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
+import LinearProgress from "@mui/material/LinearProgress"
 
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
@@ -16,21 +17,32 @@ import {
   Size,
 } from "@/src/components/SignDesigner/types"
 import FormHelperText from "@mui/material/FormHelperText"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()
 
-  const shape: Shape = useWatch({ name: "shape" })
-  const orientation: Orientation = useWatch({ name: "orientation" })
-  const sizes = designOptions[shape]?.[orientation]
-    ? (Object.keys(designOptions[shape][orientation]) as Size[])
-    : []
+  const { data, isLoading, error } = useGetProduct(112)
 
-  const selectedSize = useWatch({ name: "size" })
+  if (isLoading) {
+    return <LinearProgress />
+  }
 
-  useEffect(() => {
-    setValue("size", sizes[sizes.length - 1])
-  }, [shape, orientation, setValue])
+  if (!data) {
+    return null
+  }
+
+  // const shape: Shape = useWatch({ name: "shape" })
+  // const orientation: Orientation = useWatch({ name: "orientation" })
+  // const sizes = designOptions[shape]?.[orientation]
+  //   ? (Object.keys(designOptions[shape][orientation]) as Size[])
+  //   : []
+
+  // const selectedSize = useWatch({ name: "size" })
+
+  // useEffect(() => {
+  //   setValue("size", sizes[sizes.length - 1])
+  // }, [shape, orientation, setValue])
 
   return (
     <FormControl fullWidth>
@@ -44,8 +56,26 @@ export const SizeSelector: React.FC = () => {
       </FormHelperText>
 
       <RadioGroup aria-labelledby="size-label" name="size">
-        <Box>
-          {sizes.map((size) => {
+        {data.productOptionsMap.size.values.map(
+          ({ label, entityId }) => {
+            return (
+              <FormControlLabel
+                value={label}
+                control={
+                  <Radio
+                    size="small"
+                    // checked={selectedSize === size}
+                  />
+                }
+                label={label}
+                key={entityId}
+                {...register("size")}
+              />
+            )
+          },
+        )}
+
+        {/* {sizes.map((size) => {
             return (
               <FormControlLabel
                 value={size}
@@ -89,8 +119,7 @@ export const SizeSelector: React.FC = () => {
                 })}
               />
             )
-          })}
-        </Box>
+          })} */}
       </RadioGroup>
     </FormControl>
   )

@@ -488,11 +488,12 @@ export const getProductFormMapping = (product: VercelProduct) => {
   return productFormMapping
 }
 
-const getMerchandiseId = (data: DesignFormInputs) => {
-  return product.variants.find((selectedOptions) => {
-    console.log({ selectedOptions })
-    return selectedOptions.selectedOptions.every((option) => {
-      console.log({ option })
+const getMerchandiseId = (
+  data: DesignFormInputs,
+  product: VercelProduct,
+) => {
+  return product.variants.find((variant) => {
+    return variant.selectedOptions.every((option) => {
       return data[option.name] === option.value
     })
   })?.id
@@ -500,6 +501,7 @@ const getMerchandiseId = (data: DesignFormInputs) => {
 
 export const formDataToCartItem = async (
   data: DesignFormInputs,
+  product: VercelProduct,
   productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
@@ -538,15 +540,20 @@ export const formDataToCartItem = async (
     // download: true
   })
 
-  const merchandiseId = getMerchandiseId(data)
+  const merchandiseId = getMerchandiseId(data, product)
   console.log({ merchandiseId })
+
+  if (!merchandiseId) {
+    throw new Error("Merchandise ID not found")
+  }
 
   return {
     quantity: 1,
     // productId: signProductId.toString(10),
     productId: signProductId.toString(10),
     // merchandiseId: "77",
-    merchandiseId: "149",
+    // merchandiseId: "149",
+    merchandiseId,
     selectedOptions: {
       multipleChoices: [
         // {
