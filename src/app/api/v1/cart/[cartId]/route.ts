@@ -13,6 +13,7 @@ export async function PUT(
   const formData: DesignFormInputs = await request.json()
   const lineItem = await formDataToCartItem(
     formData,
+    data.product,
     productOptionsMap,
   )
   const cart = await addToCart(params.cartId, [lineItem])
