@@ -36,7 +36,7 @@ import {
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
-import { getMerchandiseId } from "@/src/lib/bigcommerce/utils"
+import { getProductVariant } from "@/src/lib/bigcommerce/utils"
 
 type ProductsList = {
   productId: number
@@ -530,20 +530,16 @@ export const formDataToCartItem = async (
     // download: true
   })
 
-  const merchandiseId = getMerchandiseId(data, product)
-  console.log({ merchandiseId })
+  const variant = getProductVariant(data, product)
 
-  if (!merchandiseId) {
-    throw new Error("Merchandise ID not found")
+  if (!variant) {
+    throw new Error("Product variant not found")
   }
 
   return {
     quantity: 1,
-    // productId: signProductId.toString(10),
     productId: signProductId.toString(10),
-    // merchandiseId: "77",
-    // merchandiseId: "149",
-    merchandiseId,
+    merchandiseId: variant.id,
     selectedOptions: {
       multipleChoices: [
         // {

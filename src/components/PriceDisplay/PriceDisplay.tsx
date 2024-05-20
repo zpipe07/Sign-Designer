@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { PriceDisplayView } from "@/src/components/PriceDisplay/PriceDisplayView"
-import { getMerchandiseId } from "@/src/lib/bigcommerce/utils"
+import { getProductVariant } from "@/src/lib/bigcommerce/utils"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
 export const PriceDisplay: React.FC = () => {
@@ -24,10 +24,7 @@ export const PriceDisplay: React.FC = () => {
     return null
   }
 
-  const merchandiseId = getMerchandiseId(inputs, data.product)
-  const variant = data.product.variants.find(
-    (variant) => variant.id === merchandiseId,
-  )
+  const variant = getProductVariant(inputs, data.product)
 
   if (!variant) {
     return null
