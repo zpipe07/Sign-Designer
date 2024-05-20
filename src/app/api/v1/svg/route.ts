@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
     productOptionsMap,
   })
   const string = ReactDOMServer.renderToString(component)
+  console.log({ string })
 
-  return Response.json({ string })
+  return Response.json({})
 }
