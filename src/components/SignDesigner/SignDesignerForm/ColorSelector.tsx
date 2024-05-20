@@ -1,23 +1,20 @@
 "use client"
 
 import { useFormContext, useWatch } from "react-hook-form"
-import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
-import Tooltip from "@mui/material/Tooltip"
 import LinearProgress from "@mui/material/LinearProgress"
 
-import { ColorCombo } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
-export const colorCombos: ColorCombo[] = [
-  "black/white",
-  "tan/green",
-  "yellow/black",
-]
+// export const colorCombos: ColorCombo[] = [
+//   "black/white",
+//   "tan/green",
+//   "yellow/black",
+// ]
 
 export const ColorSelector: React.FC = () => {
   const { register } = useFormContext()
@@ -49,7 +46,7 @@ export const ColorSelector: React.FC = () => {
                 control={
                   <Radio
                     size="small"
-                    // checked={selectedColor === entityId}
+                    checked={selectedColor === label}
                   />
                 }
                 key={entityId}

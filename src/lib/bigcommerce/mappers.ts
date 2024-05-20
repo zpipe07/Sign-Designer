@@ -574,10 +574,27 @@ export const formDataToCartItem = async (
         //   optionEntityId: formToCartMap.svgRaw.entityId,
         //   text: svg,
         // },
-        // {
-        //   optionEntityId: formToCartMap.svgFile.entityId,
-        //   text: publicUrl,
-        // },
+        {
+          // optionEntityId: formToCartMap.svgFile.entityId,
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "svgFile")
+              ?.id as string,
+            10,
+          ),
+          text: publicUrl,
+        },
+      ],
+      multiLineTextFields: [
+        {
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "textLines")
+              ?.id as string,
+            10,
+          ),
+          text: data.textLines
+            .map(({ value }: { value: string }) => value)
+            .join("\n"),
+        },
       ],
     },
   }

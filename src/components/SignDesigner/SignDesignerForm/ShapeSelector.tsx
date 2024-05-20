@@ -9,7 +9,6 @@ import RadioGroup from "@mui/material/RadioGroup"
 import FormHelperText from "@mui/material/FormHelperText"
 import LinearProgress from "@mui/material/LinearProgress"
 
-// import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
 import { RectanglePreview } from "@/src/components/SVG/RectanglePreview"
 import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
@@ -83,7 +82,7 @@ export const ShapeSelector: React.FC = () => {
                 value={label}
                 control={<Radio size="small" />}
                 label={label}
-                // checked={shape === selectedShape}
+                checked={label === selectedShape}
                 key={entityId}
                 sx={{
                   fontSize: 0,

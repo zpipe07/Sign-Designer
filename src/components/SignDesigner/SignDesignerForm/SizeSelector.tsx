@@ -22,6 +22,8 @@ import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()
 
+  const selectedSize = useWatch({ name: "size" })
+
   const { data, isLoading, error } = useGetProduct(112)
 
   if (isLoading) {
@@ -37,8 +39,6 @@ export const SizeSelector: React.FC = () => {
   // const sizes = designOptions[shape]?.[orientation]
   //   ? (Object.keys(designOptions[shape][orientation]) as Size[])
   //   : []
-
-  // const selectedSize = useWatch({ name: "size" })
 
   // useEffect(() => {
   //   setValue("size", sizes[sizes.length - 1])
@@ -64,7 +64,7 @@ export const SizeSelector: React.FC = () => {
                 control={
                   <Radio
                     size="small"
-                    // checked={selectedSize === size}
+                    checked={selectedSize === label}
                   />
                 }
                 label={label}
