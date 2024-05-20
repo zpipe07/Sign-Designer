@@ -4,9 +4,10 @@ import { type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
+import { getBaseUrl } from "@/src/utils/vercel"
 
 export async function GET(request: NextRequest) {
-  const res = await fetch("http://localhost:3000/api/v1/products/112")
+  const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
   const data = await res.json()
   const productOptionsMap = createProductOptionsMap(data.product)
 
