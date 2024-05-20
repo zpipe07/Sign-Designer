@@ -1,25 +1,28 @@
 import opentype from "opentype.js"
 
-import { Rectangle } from "@/src/components/SVG/Rectangle"
-import { Ellipse } from "@/src/components/SVG/Ellipse"
-import { TopRound } from "@/src/components/SVG/TopRound"
-import { SideRound } from "@/src/components/SVG/SideRound"
-import { Bread } from "@/src/components/SVG/Bread"
 import {
   Color,
   DesignFormInputs,
   TextLine,
 } from "@/src/components/SignDesigner/types"
+import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
+import { Rectangle } from "@/src/components/SVG/Rectangle"
+import { Ellipse } from "@/src/components/SVG/Ellipse"
+import { TopRound } from "@/src/components/SVG/TopRound"
+import { SideRound } from "@/src/components/SVG/SideRound"
+import { Bread } from "@/src/components/SVG/Bread"
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   inputs: DesignFormInputs
   font: opentype.Font
+  productOptionsMap: ProductOptionsMap
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
   font,
+  productOptionsMap,
 }) => {
   const width = 400
   const height = 250
@@ -35,6 +38,13 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     })
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
+
+  const rectangleId = productOptionsMap.shape.values.find(
+    ({ label }) => label === "rectangle",
+  )?.entityId
+  const ellipseId = productOptionsMap.shape.values.find(
+    ({ label }) => label === "ellipse",
+  )?.entityId
 
   return (
     <>

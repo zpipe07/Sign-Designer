@@ -1,10 +1,18 @@
 import React from "react"
 import opentype from "opentype.js"
-import { type NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
+import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
+import { getBaseUrl } from "@/src/utils/vercel"
 
 export async function GET(request: NextRequest) {
+  console.log("getBaseUrl()", getBaseUrl())
+
+  const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
+  const data = await res.json()
+  const productOptionsMap = createProductOptionsMap(data.product)
+
   const searchParams = request.nextUrl.searchParams
   const shape = searchParams.get("shape")
   const orientation = searchParams.get("orientation")
@@ -28,8 +36,13 @@ export async function GET(request: NextRequest) {
       decoration: "",
     },
     font,
+    productOptionsMap,
   })
-  const string = ReactDOMServer.renderToString(component)
+  const svg = ReactDOMServer.renderToString(component)
 
-  return Response.json({ string })
+  return new NextResponse(svg, {
+    headers: { "Content-Type": "image/svg+xml" },
+  })
 }
+
+export const dynamic = "force-dynamic"

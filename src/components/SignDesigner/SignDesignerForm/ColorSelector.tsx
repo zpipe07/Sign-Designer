@@ -8,8 +8,10 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import Tooltip from "@mui/material/Tooltip"
+import LinearProgress from "@mui/material/LinearProgress"
 
 import { ColorCombo } from "@/src/components/SignDesigner/types"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 export const colorCombos: ColorCombo[] = [
   "black/white",
@@ -22,12 +24,42 @@ export const ColorSelector: React.FC = () => {
 
   const selectedColor = useWatch({ name: "color" })
 
+  const { data, isLoading, error } = useGetProduct(112)
+
+  if (isLoading) {
+    return <LinearProgress />
+  }
+
+  if (!data) {
+    return null
+  }
+
   return (
     <FormControl fullWidth>
       <FormLabel id="color-label" sx={{ marginBottom: 1 }}>
         Select your sign colors
       </FormLabel>
       <RadioGroup aria-labelledby="color-label" name="color">
+        {data.productOptionsMap.color.values.map(
+          ({ label, entityId }) => {
+            return (
+              <FormControlLabel
+                label={label}
+                value={label}
+                control={
+                  <Radio
+                    size="small"
+                    // checked={selectedColor === entityId}
+                  />
+                }
+                key={entityId}
+                {...register("color")}
+              />
+            )
+          },
+        )}
+      </RadioGroup>
+      {/* <RadioGroup aria-labelledby="color-label" name="color">
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {colorCombos.map((colorCombo) => {
             const [foregroundColor, backgroundColor] =
@@ -88,7 +120,7 @@ export const ColorSelector: React.FC = () => {
             )
           })}
         </Box>
-      </RadioGroup>
+      </RadioGroup> */}
     </FormControl>
   )
 }

@@ -148,7 +148,7 @@ const productFragment = /* GraphQL */ `
     createdAt {
       utc
     }
-    variants(first: 5) {
+    variants(first: 50) {
       edges {
         node {
           ...productVariant

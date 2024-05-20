@@ -1,4 +1,3 @@
-// import { isVercelCommerceError } from 'lib/type-guards';
 import { notFound } from "next/navigation"
 import { NextRequest, NextResponse } from "next/server"
 import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from "./constants"
@@ -9,7 +8,6 @@ import {
   bigCommerceToVercelPageContent,
   bigCommerceToVercelProduct,
   bigCommerceToVercelProducts,
-  signProductId,
   vercelFromBigCommerceLineItems,
   vercelToBigCommerceSorting,
 } from "./mappers"
@@ -71,6 +69,7 @@ import {
   VercelProduct,
 } from "./types"
 import { isVercelCommerceError } from "@/src/lib/type-guards"
+import { signProductId } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const channelIdSegment =
   parseInt(process.env.BIGCOMMERCE_CHANNEL_ID!) !== 1
@@ -333,27 +332,11 @@ export async function addToCart(
         ),
       },
     }
+
     const res =
       await bigCommerceFetch<BigCommerceCreateCartOperation>({
         query: createCartMutation,
         variables,
-        // variables: {
-        //   createCartInput: {
-        //     lineItems: lines.map(
-        //       ({
-        //         merchandiseId,
-        //         quantity,
-        //         productId,
-        //         selectedOptions,
-        //       }) => ({
-        //         productEntityId: parseInt(productId!, 10),
-        //         variantEntityId: parseInt(merchandiseId, 10),
-        //         quantity,
-        //         selectedOptions,
-        //       }),
-        //     ),
-        //   },
-        // },
         cache: "no-store",
       })
 

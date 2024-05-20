@@ -6,8 +6,8 @@ import Box from "@mui/material/Box"
 
 import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm"
 import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizer"
-// import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
-// import { signProductId } from "@/src/lib/bigcommerce/mappers"
+import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
+import { PriceDisplay } from "@/src/components/PriceDisplay"
 
 type Props = {
   isEditing?: boolean
@@ -16,8 +16,7 @@ type Props = {
 export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
   const theme = useTheme()
 
-  // const { data } = useGetProduct(signProductId)
-  // console.log({ data })
+  const { data } = useGetProduct(112)
 
   return (
     <Grid container spacing={2}>
@@ -31,6 +30,8 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
           }}
         >
           <SignDesignerVisualizer />
+
+          <PriceDisplay />
         </Box>
       </Grid>
 

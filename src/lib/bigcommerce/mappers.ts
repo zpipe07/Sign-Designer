@@ -31,6 +31,12 @@ import {
 } from "./types"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
+import {
+  product,
+  signProductId,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
+import { getProductVariant } from "@/src/lib/bigcommerce/utils"
 
 type ProductsList = {
   productId: number
@@ -429,47 +435,47 @@ export const bigCommerceToVercelPageContent = (
 }
 
 // TODO construct this mapping dynamically
-export const signProductId = 112
-const formToCartMap = {
-  shape: {
-    entityId: 119,
-    rectangle: 112,
-    ellipse: 113,
-    topRound: 114,
-    sideRound: 115,
-    bread: 116,
-  },
-  orientation: {
-    entityId: 120,
-    horizontal: 117,
-    vertical: 118,
-  },
-  size: {
-    entityId: 121,
-    small: 119,
-    medium: 120,
-  },
-  textLine: {
-    entityId: 117,
-  },
-  font: {
-    entityId: 118,
-    times: 110,
-    verdana: 111,
-  },
-  color: {
-    entityId: 123,
-    "black/white": 121,
-    "tan/green": 122,
-    "yellow/black": 123,
-  },
-  // svgRaw: {
-  //   entityId: 122,
-  // },
-  svgFile: {
-    entityId: 124,
-  },
-}
+// export const signProductId = 112
+// const formToCartMap = {
+//   shape: {
+//     entityId: 119,
+//     rectangle: 112,
+//     ellipse: 113,
+//     topRound: 114,
+//     sideRound: 115,
+//     bread: 116,
+//   },
+//   orientation: {
+//     entityId: 120,
+//     horizontal: 117,
+//     vertical: 118,
+//   },
+//   size: {
+//     entityId: 121,
+//     small: 119,
+//     medium: 120,
+//   },
+//   textLine: {
+//     entityId: 117,
+//   },
+//   font: {
+//     entityId: 118,
+//     times: 110,
+//     verdana: 111,
+//   },
+//   color: {
+//     entityId: 123,
+//     "black/white": 121,
+//     "tan/green": 122,
+//     "yellow/black": 123,
+//   },
+//   // svgRaw: {
+//   //   entityId: 122,
+//   // },
+//   svgFile: {
+//     entityId: 124,
+//   },
+// }
 
 export const getProductFormMapping = (product: VercelProduct) => {
   const productFormMapping: any = {}
@@ -485,6 +491,8 @@ export const getProductFormMapping = (product: VercelProduct) => {
 
 export const formDataToCartItem = async (
   data: DesignFormInputs,
+  product: VercelProduct,
+  productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
   const font = opentype.loadSync(
@@ -493,6 +501,7 @@ export const formDataToCartItem = async (
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
     font,
+    productOptionsMap,
   })
   const svg = ReactDOMServer.renderToString(component)
   const id = randomUUID()
@@ -521,48 +530,54 @@ export const formDataToCartItem = async (
     // download: true
   })
 
+  const variant = getProductVariant(data, product)
+
+  if (!variant) {
+    throw new Error("Product variant not found")
+  }
+
   return {
     quantity: 1,
     productId: signProductId.toString(10),
-    merchandiseId: "77",
+    merchandiseId: variant.id,
     selectedOptions: {
       multipleChoices: [
-        {
-          optionEntityId: formToCartMap.shape.entityId,
-          optionValueEntityId: formToCartMap.shape[data.shape],
-        },
-        {
-          optionEntityId: formToCartMap.orientation.entityId,
-          optionValueEntityId:
-            formToCartMap.orientation[data.orientation],
-        },
-        {
-          optionEntityId: formToCartMap.size.entityId,
-          optionValueEntityId: formToCartMap.size[data.size],
-        },
-        {
-          optionEntityId: formToCartMap.font.entityId,
-          optionValueEntityId: formToCartMap.font[data.fontFamily],
-        },
-        {
-          optionEntityId: formToCartMap.color.entityId,
-          // @ts-ignore
-          optionValueEntityId: formToCartMap.color[data.color],
-        },
+        // {
+        //   optionEntityId: formToCartMap.shape.entityId,
+        //   optionValueEntityId: formToCartMap.shape[data.shape],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.orientation.entityId,
+        //   optionValueEntityId:
+        //     formToCartMap.orientation[data.orientation],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.size.entityId,
+        //   optionValueEntityId: formToCartMap.size[data.size],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.font.entityId,
+        //   optionValueEntityId: formToCartMap.font[data.fontFamily],
+        // },
+        // {
+        //   optionEntityId: formToCartMap.color.entityId,
+        //   // @ts-ignore
+        //   optionValueEntityId: formToCartMap.color[data.color],
+        // },
       ],
       textFields: [
-        {
-          optionEntityId: formToCartMap.textLine.entityId,
-          text: data.textLines[0].value,
-        },
+        // {
+        //   optionEntityId: formToCartMap.textLine.entityId,
+        //   text: data.textLines[0].value,
+        // },
         // {
         //   optionEntityId: formToCartMap.svgRaw.entityId,
         //   text: svg,
         // },
-        {
-          optionEntityId: formToCartMap.svgFile.entityId,
-          text: publicUrl,
-        },
+        // {
+        //   optionEntityId: formToCartMap.svgFile.entityId,
+        //   text: publicUrl,
+        // },
       ],
     },
   }
