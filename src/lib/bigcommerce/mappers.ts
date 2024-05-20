@@ -36,6 +36,7 @@ import {
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
+import { getMerchandiseId } from "@/src/lib/bigcommerce/utils"
 
 type ProductsList = {
   productId: number
@@ -486,17 +487,6 @@ export const getProductFormMapping = (product: VercelProduct) => {
   })
 
   return productFormMapping
-}
-
-const getMerchandiseId = (
-  data: DesignFormInputs,
-  product: VercelProduct,
-) => {
-  return product.variants.find((variant) => {
-    return variant.selectedOptions.every((option) => {
-      return data[option.name] === option.value
-    })
-  })?.id
 }
 
 export const formDataToCartItem = async (
