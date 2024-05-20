@@ -1,6 +1,6 @@
 import React from "react"
 import opentype from "opentype.js"
-import { type NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
@@ -38,10 +38,11 @@ export async function GET(request: NextRequest) {
     font,
     productOptionsMap,
   })
-  const string = ReactDOMServer.renderToString(component)
-  console.log({ string })
+  const svg = ReactDOMServer.renderToString(component)
 
-  return Response.json({})
+  return new NextResponse(svg, {
+    headers: { "Content-Type": "image/svg+xml" },
+  })
 }
 
 export const dynamic = "force-dynamic"
