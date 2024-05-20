@@ -3,8 +3,13 @@ import opentype from "opentype.js"
 import { type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
+import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 
 export async function GET(request: NextRequest) {
+  const res = await fetch("http://localhost:3000/api/v1/products/112")
+  const data = await res.json()
+  const productOptionsMap = createProductOptionsMap(data.product)
+
   const searchParams = request.nextUrl.searchParams
   const shape = searchParams.get("shape")
   const orientation = searchParams.get("orientation")
@@ -28,6 +33,7 @@ export async function GET(request: NextRequest) {
       decoration: "",
     },
     font,
+    productOptionsMap,
   })
   const string = ReactDOMServer.renderToString(component)
 
