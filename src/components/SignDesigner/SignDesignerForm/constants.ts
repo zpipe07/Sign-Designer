@@ -1,5 +1,5 @@
 import {
-  Dimension,
+  SizeConfig,
   FontFamily,
   Size,
 } from "@/src/components/SignDesigner/types"
@@ -351,25 +351,65 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
 }
 
-export const SIZE_DIMENSIONS_MAP: { [key in Size]: Dimension } = {
+export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
   "extra small": {
-    width: 1500,
-    height: 300,
+    horizontal: {
+      width: 1500,
+      height: 300,
+      maxLinesOfText: 1,
+    },
+    vertical: {
+      width: 300,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
   },
   small: {
-    width: 1500,
-    height: 700,
+    horizontal: {
+      width: 1500,
+      height: 700,
+      maxLinesOfText: 1,
+    },
+    vertical: {
+      width: 700,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
   },
   medium: {
-    width: 1500,
-    height: 1000,
+    horizontal: {
+      width: 1500,
+      height: 1000,
+      maxLinesOfText: 2,
+    },
+    vertical: {
+      width: 1000,
+      height: 1500,
+      maxLinesOfText: 2,
+    },
   },
   large: {
-    width: 1200,
-    height: 1400,
+    horizontal: {
+      width: 1200,
+      height: 1400,
+      maxLinesOfText: 2,
+    },
+    vertical: {
+      width: 1400,
+      height: 1200,
+      maxLinesOfText: 2,
+    },
   },
   "extra large": {
-    width: 1400,
-    height: 1500,
+    horizontal: {
+      width: 1400,
+      height: 1500,
+      maxLinesOfText: 3,
+    },
+    vertical: {
+      width: 1500,
+      height: 1400,
+      maxLinesOfText: 3,
+    },
   },
 }

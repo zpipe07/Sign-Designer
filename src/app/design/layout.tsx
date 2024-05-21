@@ -12,7 +12,11 @@ export default function Layout({
       shape: "rectangle",
       size: "extra large",
       color: "black/white",
-      textLines: [{ value: "Your" }, { value: "Text goes here" }],
+      textLines: [
+        { value: "123" },
+        { value: "Main Street" },
+        { value: "The Smith's" },
+      ],
       orientation: "horizontal",
       // fontFamily: "times",
       // decoration: "",

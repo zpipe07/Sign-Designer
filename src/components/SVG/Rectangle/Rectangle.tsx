@@ -55,9 +55,8 @@ export const Rectangle: React.FC<SvgProps> = ({
     const x = (width - measure.width) / 2
     const y =
       (height - measure.height) / 2 -
-      200 * index +
-      textLines.length * 100 +
-      fontSize / 2
+      250 * index +
+      (textLines.length - 1) * 100
 
     // @ts-ignore
     textModel.origin = [x, y]

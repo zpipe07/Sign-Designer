@@ -32,9 +32,12 @@ export type Size =
   | "extra large"
 // | "large"
 
-export type Dimension = {
-  width: number
-  height: number
+export type SizeConfig = {
+  [key in Orientation]: {
+    width: number
+    height: number
+    maxLinesOfText: number
+  }
 }
 
 export type TextLine = { value: string }

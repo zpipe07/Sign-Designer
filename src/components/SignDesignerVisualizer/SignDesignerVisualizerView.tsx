@@ -3,6 +3,7 @@ import opentype from "opentype.js"
 import {
   Color,
   DesignFormInputs,
+  Orientation,
   Size,
   TextLine,
 } from "@/src/components/SignDesigner/types"
@@ -12,10 +13,7 @@ import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
 import { Bread } from "@/src/components/SVG/Bread"
-import {
-  SIZE_DIMENSIONS_MAP,
-  designOptions,
-} from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   inputs: DesignFormInputs
@@ -31,8 +29,9 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   const borderWidth = 20
 
   const maxLinesOfText =
-    designOptions[inputs.shape]?.[inputs.orientation]?.[inputs.size]
-      ?.maxLinesOfText
+    SIZE_CONFIG_MAP[inputs.size as Size][
+      inputs.orientation as Orientation
+    ].maxLinesOfText
   const textLines: TextLine[] = inputs?.textLines
     ?.slice(0, maxLinesOfText)
     .filter(({ value }: TextLine) => {
@@ -41,7 +40,10 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
 
-  const { width, height } = SIZE_DIMENSIONS_MAP[inputs.size as Size]
+  const { width, height } =
+    SIZE_CONFIG_MAP[inputs.size as Size][
+      inputs.orientation as Orientation
+    ]
 
   return (
     <>
