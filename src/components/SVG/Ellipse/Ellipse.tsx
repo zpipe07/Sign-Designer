@@ -1,68 +1,90 @@
 import makerjs from "makerjs"
+import Box from "@mui/material/Box"
 
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
-import { Decoration } from "@/src/components/SignDesigner/types"
+import { SvgProps } from "@/src/components/SVG/types"
 
 export const Ellipse: React.FC<SvgProps> = ({
-  height = 315,
-  width = 400,
-  borderWidth = 0,
+  height,
+  width,
+  borderWidth,
   inputs,
   textLines,
   foregroundColor,
   backgroundColor,
   font,
 }) => {
-  // const outer = new makerjs.models.RoundRectangle(400, 280, 8)
-  const outer = new makerjs.models.Ellipse(200, 150)
+  const outer = new makerjs.models.Ellipse(width / 2, height / 2)
   // @ts-ignore
   outer.layer = "outer"
 
-  // const inner = new makerjs.models.RoundRectangle(360, 230, 8)
-  const inner = new makerjs.models.Ellipse(180, 130, 8)
+  const inner = new makerjs.models.Ellipse(
+    width / 2 - borderWidth,
+    height / 2 - borderWidth,
+  )
   // @ts-ignore
   inner.layer = "inner"
-  // inner.origin = [20, 30]
-
-  // const buttonhole = new makerjs.paths.Circle([100, 15], 8)
-
-  // const bolts = new makerjs.models.BoltRectangle(180, 260, 2)
-  // bolts.origin = [10, 10]
 
   const textModels = {}
 
   for (const textLine of textLines) {
-    const index = Object.keys(textModels).length
-    const chars = textLine.value.length
-    const fontSize = 95 - chars * 3.5
-    const x = -1 * chars * 8 - 50
-    const y = textLines.length * 10 + 0 - 60 * index
-    const textModel = new makerjs.models.Text(
-      font,
-      textLine.value,
-      fontSize,
-      true,
-      false,
-      0,
-      {},
-    )
+    if (inputs.orientation === "horizontal") {
+      const index = Object.keys(textModels).length
+      const chars = textLine.value.length
+      const fontSize = 300 - chars * 10
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y =
+        (textLines.length - 1) * 125 -
+        250 * index -
+        measure.height / 2
 
-    // @ts-ignore
-    textModel.origin = [x, y]
-    // @ts-ignore
-    textModel.layer = "text"
-    // @ts-ignore
-    textModels[`textModel${index}`] = textModel
+      // @ts-ignore
+      textModel.origin = [x, y]
+      // @ts-ignore
+      textModel.layer = "text"
+      // @ts-ignore
+      textModels[`textModel${index}`] = textModel
+    } else if (inputs.orientation === "vertical") {
+      textLine.value.split("").forEach((char, index) => {
+        const chars = textLine.value.length
+        const fontSize = 300 - chars * 10
+        const textModel = new makerjs.models.Text(
+          font,
+          char,
+          fontSize,
+          true,
+          false,
+          0,
+          {},
+        )
+        const measure = makerjs.measure.modelExtents(textModel)
+        const x = measure?.width / -2
+        const y =
+          (chars - 1) * 125 - 250 * index - measure?.height / 2
+
+        // @ts-ignore
+        textModel.origin = [x, y]
+        // @ts-ignore
+        textModel.layer = "text"
+        // @ts-ignore
+        textModels[`textModel${index}`] = textModel
+      })
+    }
   }
 
   const tabletFaceMount = {
-    // paths: { buttonhole: buttonhole },
     models: {
       outer: outer,
       inner: inner,
-      // bolts: bolts,
-      // textModel,
       ...textModels,
     },
   }
@@ -75,16 +97,30 @@ export const Ellipse: React.FC<SvgProps> = ({
       },
       outer: {
         fill: backgroundColor,
-        // stroke: backgroundColor,
       },
       text: {
         fill: backgroundColor,
         stroke: backgroundColor,
       },
     },
+    viewBox: true,
+    svgAttrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      height: "100%",
+      width: "100%",
+      viewBox: `0 0 ${width} ${height}`,
+    },
+    fillRule: "nonzero",
+    accuracy: 0.1,
   })
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }}></div>
+  return (
+    <Box
+      component="div"
+      sx={{ height: "100%" }}
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  )
   // const Decoration: React.FC<FiligreeProps> | null =
   //   inputs?.decoration
   //     ? decorationIconMap[inputs.decoration as Decoration]

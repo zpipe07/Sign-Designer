@@ -385,7 +385,7 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     vertical: {
       width: 1000,
       height: 1500,
-      maxLinesOfText: 2,
+      maxLinesOfText: 1,
     },
   },
   large: {
@@ -397,7 +397,7 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     vertical: {
       width: 1200,
       height: 1400,
-      maxLinesOfText: 2,
+      maxLinesOfText: 1,
     },
   },
   "extra large": {
@@ -409,7 +409,7 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     vertical: {
       width: 1400,
       height: 1500,
-      maxLinesOfText: 3,
+      maxLinesOfText: 1,
     },
   },
 }
