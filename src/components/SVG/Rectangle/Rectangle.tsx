@@ -22,17 +22,29 @@ export const Rectangle: React.FC<SvgProps> = ({
   backgroundColor,
   font,
 }) => {
-  const outer = new makerjs.models.RoundRectangle(width, height, 8)
+  const container = new makerjs.models.Rectangle(width, height)
+  const containerOffset = 5
+  // @ts-ignore
+  container.layer = "container"
+
+  const outer = new makerjs.models.RoundRectangle(
+    width - containerOffset * 2,
+    height - containerOffset * 2,
+    100,
+  )
+  // makerjs.model.center(outer)
+  outer.origin = [containerOffset, containerOffset]
   // @ts-ignore
   outer.layer = "outer"
 
   const inner = new makerjs.models.RoundRectangle(
     width - borderWidth * 2,
     height - borderWidth * 2,
-    8,
+    100,
   )
 
   inner.origin = [borderWidth, borderWidth]
+  // makerjs.model.center(inner)
   // @ts-ignore
   inner.layer = "inner"
 
@@ -58,6 +70,8 @@ export const Rectangle: React.FC<SvgProps> = ({
       250 * index +
       (textLines.length - 1) * 100
 
+    // makerjs.model.center(textModel)
+
     // @ts-ignore
     textModel.origin = [x, y]
     // @ts-ignore
@@ -68,6 +82,7 @@ export const Rectangle: React.FC<SvgProps> = ({
 
   const tabletFaceMount = {
     models: {
+      container,
       outer: outer,
       inner: inner,
       ...textModels,
@@ -76,13 +91,17 @@ export const Rectangle: React.FC<SvgProps> = ({
 
   const svg = makerjs.exporter.toSVG(tabletFaceMount, {
     layerOptions: {
+      container: { stroke: "none" },
       inner: {
         fill: foregroundColor,
         stroke: foregroundColor,
       },
       outer: {
         fill: backgroundColor,
+        // strokeWidth: 10,
         // stroke: backgroundColor,
+        stroke: foregroundColor,
+        // strokeWidth: 1,
       },
       text: {
         fill: backgroundColor,
@@ -98,7 +117,9 @@ export const Rectangle: React.FC<SvgProps> = ({
       width: "100%",
       viewBox: `0 0 ${width} ${height}`,
     },
+    fillRule: "nonzero",
     accuracy: 0.01,
+    // accuracy: 1,
   })
 
   return <div dangerouslySetInnerHTML={{ __html: svg }}></div>

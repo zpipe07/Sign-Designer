@@ -390,25 +390,25 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
   },
   large: {
     horizontal: {
-      width: 1200,
-      height: 1400,
+      width: 1400,
+      height: 1200,
       maxLinesOfText: 2,
     },
     vertical: {
-      width: 1400,
-      height: 1200,
+      width: 1200,
+      height: 1400,
       maxLinesOfText: 2,
     },
   },
   "extra large": {
     horizontal: {
-      width: 1400,
-      height: 1500,
+      width: 1500,
+      height: 1400,
       maxLinesOfText: 3,
     },
     vertical: {
-      width: 1500,
-      height: 1400,
+      width: 1400,
+      height: 1500,
       maxLinesOfText: 3,
     },
   },
