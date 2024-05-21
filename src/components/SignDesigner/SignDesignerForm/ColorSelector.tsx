@@ -21,7 +21,7 @@ export const ColorSelector: React.FC = () => {
 
   const selectedColor = useWatch({ name: "color" })
 
-  const { data, isLoading, error } = useGetProduct(112)
+  const { data, isLoading } = useGetProduct(112)
 
   if (isLoading) {
     return <LinearProgress />
@@ -36,7 +36,11 @@ export const ColorSelector: React.FC = () => {
       <FormLabel id="color-label" sx={{ marginBottom: 1 }}>
         Select your sign colors
       </FormLabel>
-      <RadioGroup aria-labelledby="color-label" name="color">
+      <RadioGroup
+        aria-labelledby="color-label"
+        name="color"
+        sx={{ flexDirection: "row" }}
+      >
         {data.productOptionsMap.color.values.map(
           ({ label, entityId }) => {
             return (

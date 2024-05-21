@@ -9,6 +9,7 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import LinearProgress from "@mui/material/LinearProgress"
+import capitalize from "@mui/material/utils/capitalize"
 
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
@@ -55,7 +56,11 @@ export const SizeSelector: React.FC = () => {
         Select a size to see actual dimensions
       </FormHelperText>
 
-      <RadioGroup aria-labelledby="size-label" name="size">
+      <RadioGroup
+        aria-labelledby="size-label"
+        name="size"
+        // sx={{ flexDirection: "row" }}
+      >
         {data.productOptionsMap.size.values.map(
           ({ label, entityId }) => {
             return (
@@ -67,7 +72,7 @@ export const SizeSelector: React.FC = () => {
                     checked={selectedSize === label}
                   />
                 }
-                label={label}
+                label={capitalize(label)}
                 key={entityId}
                 {...register("size")}
               />

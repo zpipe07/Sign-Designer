@@ -42,7 +42,7 @@ export const Ellipse: React.FC<SvgProps> = ({
       font,
       textLine.value,
       fontSize,
-      false,
+      true,
       false,
       0,
       {},
@@ -79,7 +79,7 @@ export const Ellipse: React.FC<SvgProps> = ({
       },
       text: {
         fill: backgroundColor,
-        // stroke: "none",
+        stroke: backgroundColor,
       },
     },
   })

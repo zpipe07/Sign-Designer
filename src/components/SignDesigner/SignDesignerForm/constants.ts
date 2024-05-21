@@ -1,3 +1,5 @@
+import { FontFamily } from "@/src/components/SignDesigner/types"
+
 export const designOptions: any = {
   rectangle: {
     horizontal: {
@@ -335,4 +337,12 @@ const PRODUCT_INPUT_MAP = {
   svgFile: {
     entityId: 124,
   },
+}
+
+export const FONT_MAP: { [key in FontFamily]: string } = {
+  Albert: "/fonts/AlbertSans-BoldItalic.ttf",
+  Expletus: "/fonts/ExpletusSans-BoldItalic.ttf",
+  Playfair: "/fonts/PlayfairDisplay-BlackItalic.ttf",
+  Cormorant: "/fonts/Cormorant-BoldItalic.ttf",
+  // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
 }
