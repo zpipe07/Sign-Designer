@@ -62,6 +62,7 @@ export const SignDesignerVisualizer: React.FC = () => {
           width: "100%",
           // maxWidth: 400,
           // minHeight: 250,
+          maxHeight: 550,
 
           ...(inputs.orientation === "vertical" &&
             {

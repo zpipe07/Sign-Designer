@@ -1,6 +1,7 @@
 ///<reference path="../../../../node_modules/makerjs/dist/index.d.ts" />
 
 import makerjs from "makerjs"
+import Box from "@mui/material/Box"
 // import computeLayout from "opentype-layout"
 
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
@@ -98,18 +99,13 @@ export const Rectangle: React.FC<SvgProps> = ({
       },
       outer: {
         fill: backgroundColor,
-        // strokeWidth: 10,
-        // stroke: backgroundColor,
         stroke: foregroundColor,
-        // strokeWidth: 1,
       },
       text: {
         fill: backgroundColor,
-        // stroke: "none",
         stroke: backgroundColor,
       },
     },
-    // accuracy: -1,
     viewBox: true,
     svgAttrs: {
       xmlns: "http://www.w3.org/2000/svg",
@@ -118,11 +114,16 @@ export const Rectangle: React.FC<SvgProps> = ({
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    accuracy: 0.01,
-    // accuracy: 1,
+    accuracy: 0.1,
   })
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }}></div>
+  return (
+    <Box
+      component="div"
+      sx={{ height: "100%" }}
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  )
   // const Decoration: React.FC<FiligreeProps> | null =
   //   inputs?.decoration
   //     ? decorationIconMap[inputs.decoration as Decoration]
