@@ -26,8 +26,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   font,
   // productOptionsMap,
 }) => {
-  const borderWidth = 20
-
+  const borderWidth = 30
   const maxLinesOfText =
     SIZE_CONFIG_MAP[inputs.size as Size][
       inputs.orientation as Orientation
@@ -39,7 +38,6 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     })
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
-
   const { width, height } =
     SIZE_CONFIG_MAP[inputs.size as Size][
       inputs.orientation as Orientation

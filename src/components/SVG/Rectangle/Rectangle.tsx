@@ -67,9 +67,10 @@ export const Rectangle: React.FC<SvgProps> = ({
     const measure = makerjs.measure.modelExtents(textModel)
     const x = (width - measure.width) / 2
     const y =
-      (height - measure.height) / 2 -
+      height / 2 -
+      measure.height / 2 -
       250 * index +
-      (textLines.length - 1) * 100
+      (textLines.length - 1) * 125
 
     // makerjs.model.center(textModel)
 
