@@ -10,7 +10,7 @@ export default function Layout({
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: "rectangle",
-      size: 'extra large (14" x 15")',
+      size: "extra large",
       color: "black/white",
       textLines: [{ value: "Your" }, { value: "Text goes here" }],
       orientation: "horizontal",

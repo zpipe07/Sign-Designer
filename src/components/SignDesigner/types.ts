@@ -24,8 +24,18 @@ export type Shape =
   | "sideRound"
   | "bread"
 
-export type Size = "small" | "medium"
+export type Size =
+  | "extra small"
+  | "small"
+  | "medium"
+  | "large"
+  | "extra large"
 // | "large"
+
+export type Dimension = {
+  width: number
+  height: number
+}
 
 export type TextLine = { value: string }
 

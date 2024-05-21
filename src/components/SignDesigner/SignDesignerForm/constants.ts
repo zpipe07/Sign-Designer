@@ -1,4 +1,8 @@
-import { FontFamily } from "@/src/components/SignDesigner/types"
+import {
+  Dimension,
+  FontFamily,
+  Size,
+} from "@/src/components/SignDesigner/types"
 
 export const designOptions: any = {
   rectangle: {
@@ -345,4 +349,27 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Playfair: "/fonts/PlayfairDisplay-BlackItalic.ttf",
   Cormorant: "/fonts/Cormorant-BoldItalic.ttf",
   // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
+}
+
+export const SIZE_DIMENSIONS_MAP: { [key in Size]: Dimension } = {
+  "extra small": {
+    width: 1500,
+    height: 300,
+  },
+  small: {
+    width: 1500,
+    height: 700,
+  },
+  medium: {
+    width: 1500,
+    height: 1000,
+  },
+  large: {
+    width: 1200,
+    height: 1400,
+  },
+  "extra large": {
+    width: 1400,
+    height: 1500,
+  },
 }

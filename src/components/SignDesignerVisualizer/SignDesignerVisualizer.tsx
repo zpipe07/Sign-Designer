@@ -23,7 +23,6 @@ export const SignDesignerVisualizer: React.FC = () => {
 
   useEffect(() => {
     const fontUrl = FONT_MAP[inputs.fontFamily as FontFamily]
-    console.log({ fontUrl })
 
     if (!fontUrl) {
       return
@@ -61,12 +60,13 @@ export const SignDesignerVisualizer: React.FC = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 400,
-          minHeight: 250,
+          // maxWidth: 400,
+          // minHeight: 250,
 
-          ...(inputs.orientation === "vertical" && {
-            minHeight: 400,
-          }),
+          ...(inputs.orientation === "vertical" &&
+            {
+              // minHeight: 400,
+            }),
         }}
       >
         <SignDesignerVisualizerView
