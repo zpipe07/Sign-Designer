@@ -4,7 +4,14 @@ export type ColorCombo = `${Color}/${Color}`
 
 export type Decoration = "foo" | "bar"
 
-export type FontFamily = "times" | "verdana"
+export type FontFamily =
+  | "Albert"
+  | "Expletus"
+  | "Playfair"
+  | "Cormorant"
+// | "Tourney"
+// "times"
+// | "verdana"
 // | "lucida Console"
 // | "cursive"
 

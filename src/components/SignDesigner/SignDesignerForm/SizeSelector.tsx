@@ -9,6 +9,7 @@ import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import LinearProgress from "@mui/material/LinearProgress"
+import capitalize from "@mui/material/utils/capitalize"
 
 import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
@@ -21,6 +22,8 @@ import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()
+
+  const selectedSize = useWatch({ name: "size" })
 
   const { data, isLoading, error } = useGetProduct(112)
 
@@ -38,8 +41,6 @@ export const SizeSelector: React.FC = () => {
   //   ? (Object.keys(designOptions[shape][orientation]) as Size[])
   //   : []
 
-  // const selectedSize = useWatch({ name: "size" })
-
   // useEffect(() => {
   //   setValue("size", sizes[sizes.length - 1])
   // }, [shape, orientation, setValue])
@@ -55,7 +56,11 @@ export const SizeSelector: React.FC = () => {
         Select a size to see actual dimensions
       </FormHelperText>
 
-      <RadioGroup aria-labelledby="size-label" name="size">
+      <RadioGroup
+        aria-labelledby="size-label"
+        name="size"
+        // sx={{ flexDirection: "row" }}
+      >
         {data.productOptionsMap.size.values.map(
           ({ label, entityId }) => {
             return (
@@ -64,10 +69,10 @@ export const SizeSelector: React.FC = () => {
                 control={
                   <Radio
                     size="small"
-                    // checked={selectedSize === size}
+                    checked={selectedSize === label}
                   />
                 }
-                label={label}
+                label={capitalize(label)}
                 key={entityId}
                 {...register("size")}
               />

@@ -8,8 +8,8 @@ import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import FormHelperText from "@mui/material/FormHelperText"
 import LinearProgress from "@mui/material/LinearProgress"
+import capitalize from "@mui/material/utils/capitalize"
 
-// import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
 import { RectanglePreview } from "@/src/components/SVG/RectanglePreview"
 import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
@@ -29,14 +29,12 @@ export const shapeIconMap: {
   bread: BreadPreview,
 }
 
-// const shapes = Object.keys(designOptions) as Shape[]
-
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
 
   const selectedShape = useWatch({ name: "shape" })
 
-  const { data, isLoading, error } = useGetProduct(112)
+  const { data, isLoading } = useGetProduct(112)
 
   if (isLoading) {
     return <LinearProgress />
@@ -49,27 +47,13 @@ export const ShapeSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="shape-label">Select your sign shape</FormLabel>
-      <FormHelperText sx={{ marginLeft: 0, marginBottom: 1 }}>
-        Some sign shapes can fit more text than others
+      <FormHelperText sx={{ marginLeft: 0, marginBottom: 0 }}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Alias, dolores?
       </FormHelperText>
-
-      {/* <RadioGroup>
-        {shapeOption.values.map(({ label, entityId }) => {
-          return (
-            <FormControlLabel
-              label={label}
-              value={entityId}
-              control={<Radio size="small" />}
-              key={entityId}
-              {...register(shapeOption.id)}
-            />
-          )
-        })}
-      </RadioGroup> */}
 
       <RadioGroup
         aria-labelledby="shape-label"
-        // defaultValue="rectangle"
         name="shape"
         sx={{ flexDirection: "row" }}
       >
@@ -82,12 +66,12 @@ export const ShapeSelector: React.FC = () => {
               <FormControlLabel
                 value={label}
                 control={<Radio size="small" />}
-                label={label}
-                // checked={shape === selectedShape}
+                label={capitalize(label)}
+                checked={label === selectedShape}
                 key={entityId}
-                sx={{
-                  fontSize: 0,
-                }}
+                // sx={{
+                //   fontSize: 0,
+                // }}
                 {...register("shape")}
               />
             )

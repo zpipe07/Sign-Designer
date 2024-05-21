@@ -8,10 +8,10 @@ import Select from "@mui/material/Select"
 import { FontFamily } from "@/src/components/SignDesigner/types"
 
 const fontFamilies: FontFamily[] = [
-  "times",
-  "verdana",
-  // "Lucida Console",
-  // "Cursive",
+  "Albert",
+  "Expletus",
+  "Playfair",
+  "Cormorant",
 ]
 
 export const FontSelector: React.FC = () => {
