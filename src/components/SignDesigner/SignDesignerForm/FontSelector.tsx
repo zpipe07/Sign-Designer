@@ -12,13 +12,7 @@ const fontFamilies: FontFamily[] = [
   "Expletus",
   "Playfair",
   "Cormorant",
-  // "Tourney",
 ]
-// "times",
-// "verdana",
-// "Lucida Console",
-// "Cursive",
-// ]
 
 export const FontSelector: React.FC = () => {
   const { register } = useFormContext()
