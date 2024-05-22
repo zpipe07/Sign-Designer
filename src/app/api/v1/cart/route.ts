@@ -8,6 +8,8 @@ import { getBaseUrl } from "@/src/utils/vercel"
 
 export async function POST(request: Request) {
   // create cart and set cartID cookie
+  const url = `${getBaseUrl()}/api/v1/products/112`
+  console.log({ url })
   const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
   console.log({ res })
   const data = await res.json()
