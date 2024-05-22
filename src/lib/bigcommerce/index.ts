@@ -119,7 +119,7 @@ export async function bigCommerceFetch<T>({
       }),
       cache,
     })
-
+    console.log({ result })
     const body = await result.json()
 
     if (body.errors) {
