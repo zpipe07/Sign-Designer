@@ -12,14 +12,12 @@ import TextField from "@mui/material/TextField"
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   Orientation,
-  Shape,
   Size,
 } from "@/src/components/SignDesigner/types"
 
 export const TextInput: React.FC = () => {
   const { register } = useFormContext()
 
-  const shape: Shape = useWatch({ name: "shape" })
   const orientation: Orientation = useWatch({ name: "orientation" })
   const size: Size = useWatch({ name: "size" })
 
@@ -61,10 +59,26 @@ export const TextInput: React.FC = () => {
           return (
             <Grid item xs={12} key={field.id}>
               <TextField
-                {...register(`textLines.${index}.value`)}
-                placeholder={placeholder}
                 fullWidth
+                placeholder={placeholder}
+                {...register(`textLines.${index}.value`)}
               />
+              {/* <Controller
+                name={`textLines.${index}.value`}
+                render={({ field: { onChange, value } }) => {
+                  return (
+                    <TextField
+                      fullWidth
+                      value={value}
+                      // placeholder={placeholder}
+                      onChange={onChange}
+                      // onChange={debounce((e) => {
+                      //   onChange(e)
+                      // }, 500)}
+                    />
+                  )
+                }}
+              /> */}
             </Grid>
           )
         })}
