@@ -1,4 +1,8 @@
-import { FontFamily } from "@/src/components/SignDesigner/types"
+import {
+  SizeConfig,
+  FontFamily,
+  Size,
+} from "@/src/components/SignDesigner/types"
 
 export const designOptions: any = {
   rectangle: {
@@ -340,9 +344,72 @@ const PRODUCT_INPUT_MAP = {
 }
 
 export const FONT_MAP: { [key in FontFamily]: string } = {
-  Albert: "/fonts/AlbertSans-BoldItalic.ttf",
-  Expletus: "/fonts/ExpletusSans-BoldItalic.ttf",
-  Playfair: "/fonts/PlayfairDisplay-BlackItalic.ttf",
-  Cormorant: "/fonts/Cormorant-BoldItalic.ttf",
+  Albert: "AlbertSans-BoldItalic.ttf",
+  Expletus: "ExpletusSans-BoldItalic.ttf",
+  Playfair: "PlayfairDisplay-BlackItalic.ttf",
+  Cormorant: "Cormorant-BoldItalic.ttf",
   // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
+}
+
+export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
+  "extra small": {
+    horizontal: {
+      width: 1500,
+      height: 300,
+      maxLinesOfText: 1,
+    },
+    vertical: {
+      width: 300,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
+  },
+  small: {
+    horizontal: {
+      width: 1500,
+      height: 700,
+      maxLinesOfText: 1,
+    },
+    vertical: {
+      width: 700,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
+  },
+  medium: {
+    horizontal: {
+      width: 1500,
+      height: 1000,
+      maxLinesOfText: 2,
+    },
+    vertical: {
+      width: 1000,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
+  },
+  large: {
+    horizontal: {
+      width: 1400,
+      height: 1200,
+      maxLinesOfText: 2,
+    },
+    vertical: {
+      width: 1200,
+      height: 1400,
+      maxLinesOfText: 1,
+    },
+  },
+  "extra large": {
+    horizontal: {
+      width: 1500,
+      height: 1400,
+      maxLinesOfText: 3,
+    },
+    vertical: {
+      width: 1400,
+      height: 1500,
+      maxLinesOfText: 1,
+    },
+  },
 }

@@ -4,14 +4,16 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
-import { getBaseUrl } from "@/src/utils/vercel"
+import { getProduct } from "@/src/lib/bigcommerce"
 
 export async function GET(request: NextRequest) {
-  console.log("getBaseUrl()", getBaseUrl())
+  const product = await getProduct("112")
 
-  const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
-  const data = await res.json()
-  const productOptionsMap = createProductOptionsMap(data.product)
+  if (!product) {
+    throw new Error("Product not found")
+  }
+
+  const productOptionsMap = createProductOptionsMap(product)
 
   const searchParams = request.nextUrl.searchParams
   const shape = searchParams.get("shape")

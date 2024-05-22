@@ -22,14 +22,13 @@ export const SignDesignerVisualizer: React.FC = () => {
   const { data, isLoading } = useGetProduct(112)
 
   useEffect(() => {
-    const fontUrl = FONT_MAP[inputs.fontFamily as FontFamily]
-    console.log({ fontUrl })
+    const fontFile = FONT_MAP[inputs.fontFamily as FontFamily]
 
-    if (!fontUrl) {
+    if (!fontFile) {
       return
     }
 
-    opentype.load(fontUrl, (error, font) => {
+    opentype.load(`/fonts/${fontFile}`, (error, font) => {
       if (error) {
         console.error("font error", error)
         return
@@ -61,12 +60,7 @@ export const SignDesignerVisualizer: React.FC = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 400,
-          minHeight: 250,
-
-          ...(inputs.orientation === "vertical" && {
-            minHeight: 400,
-          }),
+          maxHeight: 550,
         }}
       >
         <SignDesignerVisualizerView

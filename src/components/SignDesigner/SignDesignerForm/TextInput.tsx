@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid"
 import InputLabel from "@mui/material/InputLabel"
 import TextField from "@mui/material/TextField"
 
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   Orientation,
   Shape,
@@ -24,7 +24,7 @@ export const TextInput: React.FC = () => {
   const size: Size = useWatch({ name: "size" })
 
   const maxLinesOfText =
-    designOptions[shape]?.[orientation]?.[size]?.maxLinesOfText
+    SIZE_CONFIG_MAP[size][orientation].maxLinesOfText
 
   const { fields } = useFieldArray({
     name: "textLines",

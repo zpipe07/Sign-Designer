@@ -3,6 +3,8 @@ import opentype from "opentype.js"
 import {
   Color,
   DesignFormInputs,
+  Orientation,
+  Size,
   TextLine,
 } from "@/src/components/SignDesigner/types"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
@@ -11,7 +13,7 @@ import { Ellipse } from "@/src/components/SVG/Ellipse"
 import { TopRound } from "@/src/components/SVG/TopRound"
 import { SideRound } from "@/src/components/SVG/SideRound"
 import { Bread } from "@/src/components/SVG/Bread"
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   inputs: DesignFormInputs
@@ -22,15 +24,13 @@ type Props = {
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
   font,
-  productOptionsMap,
+  // productOptionsMap,
 }) => {
-  const width = 400
-  const height = 250
-  const borderWidth = 20
-
+  const borderWidth = 30
   const maxLinesOfText =
-    designOptions[inputs.shape]?.[inputs.orientation]?.[inputs.size]
-      ?.maxLinesOfText
+    SIZE_CONFIG_MAP[inputs.size as Size][
+      inputs.orientation as Orientation
+    ].maxLinesOfText
   const textLines: TextLine[] = inputs?.textLines
     ?.slice(0, maxLinesOfText)
     .filter(({ value }: TextLine) => {
@@ -38,13 +38,10 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     })
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
-
-  const rectangleId = productOptionsMap.shape.values.find(
-    ({ label }) => label === "rectangle",
-  )?.entityId
-  const ellipseId = productOptionsMap.shape.values.find(
-    ({ label }) => label === "ellipse",
-  )?.entityId
+  const { width, height } =
+    SIZE_CONFIG_MAP[inputs.size as Size][
+      inputs.orientation as Orientation
+    ]
 
   return (
     <>

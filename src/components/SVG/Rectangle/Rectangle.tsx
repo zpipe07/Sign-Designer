@@ -12,52 +12,46 @@ import {
 const defaultColor = "#D9D9D9"
 
 export const Rectangle: React.FC<SvgProps> = ({
-  height = 315,
-  width = 400,
-  borderWidth = 0,
+  height,
+  width,
+  borderWidth,
   inputs,
   textLines,
   foregroundColor,
   backgroundColor,
   font,
 }) => {
-  const outer = new makerjs.models.RoundRectangle(400, 280, 8)
+  const container = new makerjs.models.Rectangle(width, height)
+  const containerOffset = 5
+  // @ts-ignore
+  container.layer = "container"
+
+  const outer = new makerjs.models.RoundRectangle(
+    width - containerOffset * 2,
+    height - containerOffset * 2,
+    100,
+  )
+
+  outer.origin = [containerOffset, containerOffset]
   // @ts-ignore
   outer.layer = "outer"
 
-  const inner = new makerjs.models.RoundRectangle(360, 240, 8)
-  inner.origin = [20, 20]
+  const inner = new makerjs.models.RoundRectangle(
+    width - borderWidth * 2,
+    height - borderWidth * 2,
+    100,
+  )
+
+  inner.origin = [borderWidth, borderWidth]
   // @ts-ignore
   inner.layer = "inner"
 
-  // const textModels = textLines.map(
-  //   ({ value }: TextLine, index: number) => {
-  //     const chars = value.length
-  //     const fontSize = 95 - chars * 3.5
-  //     const y = 70 * index + 145 - textLines.length * 30
-  //     const textModel = new makerjs.models.Text(
-  //       font,
-  //       value,
-  //       fontSize,
-  //       false,
-  //       false,
-  //       0,
-  //       {},
-  //     )
-  //     textModel.origin = [(width - borderWidth) / chars, y]
-  //     textModel.layer = "text"
-
-  //     return { [`textModel${index}`]: textModel }
-  //   },
-  // )
   const textModels = {}
 
   for (const textLine of textLines) {
     const index = Object.keys(textModels).length
     const chars = textLine.value.length
-    const fontSize = 95 - chars * 3.5
-    const x = 250 / chars + 30
-    const y = textLines.length * 30 - 70 * index + 100
+    const fontSize = 300 - chars * 10
     const textModel = new makerjs.models.Text(
       font,
       textLine.value,
@@ -67,6 +61,13 @@ export const Rectangle: React.FC<SvgProps> = ({
       0,
       {},
     )
+    const measure = makerjs.measure.modelExtents(textModel)
+    const x = (width - measure.width) / 2
+    const y =
+      height / 2 -
+      measure.height / 2 -
+      250 * index +
+      (textLines.length - 1) * 125
 
     // @ts-ignore
     textModel.origin = [x, y]
@@ -78,6 +79,7 @@ export const Rectangle: React.FC<SvgProps> = ({
 
   const tabletFaceMount = {
     models: {
+      container,
       outer: outer,
       inner: inner,
       ...textModels,
@@ -86,25 +88,37 @@ export const Rectangle: React.FC<SvgProps> = ({
 
   const svg = makerjs.exporter.toSVG(tabletFaceMount, {
     layerOptions: {
+      container: { stroke: "none" },
       inner: {
         fill: foregroundColor,
         stroke: foregroundColor,
       },
       outer: {
         fill: backgroundColor,
-        // stroke: backgroundColor,
+        stroke: foregroundColor,
       },
       text: {
         fill: backgroundColor,
-        // stroke: "none",
         stroke: backgroundColor,
       },
     },
-    // accuracy: -1,
-    accuracy: 0.01,
+    viewBox: true,
+    svgAttrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      height: "100%",
+      width: "100%",
+      viewBox: `0 0 ${width} ${height}`,
+    },
+    fillRule: "nonzero",
+    accuracy: 0.1,
   })
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }}></div>
+  return (
+    <div
+      style={{ height: "100%" }}
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  )
   // const Decoration: React.FC<FiligreeProps> | null =
   //   inputs?.decoration
   //     ? decorationIconMap[inputs.decoration as Decoration]

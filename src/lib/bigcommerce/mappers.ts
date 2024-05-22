@@ -3,6 +3,7 @@ import opentype from "opentype.js"
 import { promises as fs } from "fs"
 import { decode } from "base64-arraybuffer"
 import { randomUUID } from "crypto"
+import path from "path"
 
 import { createClient } from "@/src/utils/supabase/server"
 import {
@@ -29,9 +30,13 @@ import {
   VercelProductOption,
   VercelProductVariant,
 } from "./types"
-import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import {
+  DesignFormInputs,
+  FontFamily,
+} from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import {
+  FONT_MAP,
   product,
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
@@ -495,9 +500,10 @@ export const formDataToCartItem = async (
   productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
-  const font = opentype.loadSync(
-    "public/fonts/AlbertSans-VariableFont_wght.ttf",
-  )
+  const dirRelativeToPublicFolder = "fonts"
+  const dir = path.resolve("./public", dirRelativeToPublicFolder)
+  const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
+  const font = opentype.loadSync(`${fontUrl}`)
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
     font,
