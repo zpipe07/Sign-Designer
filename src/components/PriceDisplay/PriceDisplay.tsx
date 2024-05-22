@@ -30,17 +30,5 @@ export const PriceDisplay: React.FC = () => {
     return null
   }
 
-  return (
-    <Box display="flex" justifyContent="center">
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 400,
-          minHeight: 250,
-        }}
-      >
-        <PriceDisplayView variant={variant} />
-      </Box>
-    </Box>
-  )
+  return <PriceDisplayView variant={variant} />
 }

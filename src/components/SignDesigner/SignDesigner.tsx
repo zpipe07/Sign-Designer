@@ -3,6 +3,7 @@
 import { useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
+import CircularProgress from "@mui/material/CircularProgress"
 
 import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm"
 import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizer"
@@ -16,7 +17,21 @@ type Props = {
 export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
   const theme = useTheme()
 
-  const { data } = useGetProduct(112)
+  const { isLoading } = useGetProduct(112)
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: 10,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   return (
     <Grid container spacing={2}>
