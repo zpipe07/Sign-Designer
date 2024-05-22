@@ -2,7 +2,6 @@
 
 import makerjs from "makerjs"
 import Box from "@mui/material/Box"
-// import computeLayout from "opentype-layout"
 
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
