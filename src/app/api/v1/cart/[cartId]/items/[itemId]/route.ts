@@ -1,10 +1,13 @@
 import { cookies } from "next/headers"
 
-import { removeFromCart, updateCart } from "@/src/lib/bigcommerce"
+import {
+  getProduct,
+  removeFromCart,
+  updateCart,
+} from "@/src/lib/bigcommerce"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
-import { getBaseUrl } from "@/src/utils/vercel"
 
 export async function DELETE(
   _request: Request,
@@ -23,13 +26,17 @@ export async function PATCH(
   request: Request,
   { params }: { params: { cartId: string; itemId: string } },
 ) {
-  const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
-  const data = await res.json()
-  const productOptionsMap = createProductOptionsMap(data.product)
+  const product = await getProduct("112")
+
+  if (!product) {
+    throw new Error("Product not found")
+  }
+
+  const productOptionsMap = createProductOptionsMap(product)
   const formData: DesignFormInputs = await request.json()
   const lineItem = await formDataToCartItem(
     formData,
-    data.product,
+    product,
     productOptionsMap,
   )
   const cart = await updateCart(params.cartId, [

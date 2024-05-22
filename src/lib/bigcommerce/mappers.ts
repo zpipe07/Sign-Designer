@@ -3,6 +3,7 @@ import opentype from "opentype.js"
 import { promises as fs } from "fs"
 import { decode } from "base64-arraybuffer"
 import { randomUUID } from "crypto"
+import path from "path"
 
 import { createClient } from "@/src/utils/supabase/server"
 import {
@@ -41,8 +42,6 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProductVariant } from "@/src/lib/bigcommerce/utils"
-import { getBaseUrl } from "@/src/utils/vercel"
-import path from "path"
 
 type ProductsList = {
   productId: number
