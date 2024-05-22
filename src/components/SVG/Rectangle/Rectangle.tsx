@@ -31,7 +31,7 @@ export const Rectangle: React.FC<SvgProps> = ({
     height - containerOffset * 2,
     100,
   )
-  // makerjs.model.center(outer)
+
   outer.origin = [containerOffset, containerOffset]
   // @ts-ignore
   outer.layer = "outer"
@@ -43,7 +43,6 @@ export const Rectangle: React.FC<SvgProps> = ({
   )
 
   inner.origin = [borderWidth, borderWidth]
-  // makerjs.model.center(inner)
   // @ts-ignore
   inner.layer = "inner"
 
@@ -69,8 +68,6 @@ export const Rectangle: React.FC<SvgProps> = ({
       measure.height / 2 -
       250 * index +
       (textLines.length - 1) * 125
-
-    // makerjs.model.center(textModel)
 
     // @ts-ignore
     textModel.origin = [x, y]
