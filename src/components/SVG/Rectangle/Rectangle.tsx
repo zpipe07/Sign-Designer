@@ -1,7 +1,6 @@
 ///<reference path="../../../../node_modules/makerjs/dist/index.d.ts" />
 
 import makerjs from "makerjs"
-import Box from "@mui/material/Box"
 
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
@@ -118,9 +117,8 @@ export const Rectangle: React.FC<SvgProps> = ({
   })
 
   return (
-    <Box
-      component="div"
-      sx={{ height: "100%" }}
+    <div
+      style={{ height: "100%" }}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   )

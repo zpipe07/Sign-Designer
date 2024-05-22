@@ -1,5 +1,4 @@
 import makerjs from "makerjs"
-import Box from "@mui/material/Box"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
@@ -115,9 +114,8 @@ export const Ellipse: React.FC<SvgProps> = ({
   })
 
   return (
-    <Box
-      component="div"
-      sx={{ height: "100%" }}
+    <div
+      style={{ height: "100%" }}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   )

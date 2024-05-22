@@ -29,9 +29,13 @@ import {
   VercelProductOption,
   VercelProductVariant,
 } from "./types"
-import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import {
+  DesignFormInputs,
+  FontFamily,
+} from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import {
+  FONT_MAP,
   product,
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
@@ -495,9 +499,13 @@ export const formDataToCartItem = async (
   productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
-  const font = opentype.loadSync(
-    "public/fonts/AlbertSans-VariableFont_wght.ttf",
-  )
+  const fontUrl = FONT_MAP[data.fontFamily as FontFamily]
+
+  if (!fontUrl) {
+    throw new Error("Font not found")
+  }
+
+  const font = opentype.loadSync(`public${fontUrl}`)
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
     font,
