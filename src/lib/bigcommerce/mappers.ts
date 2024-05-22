@@ -41,6 +41,8 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProductVariant } from "@/src/lib/bigcommerce/utils"
+import { getBaseUrl } from "@/src/utils/vercel"
+import path from "path"
 
 type ProductsList = {
   productId: number
@@ -499,13 +501,19 @@ export const formDataToCartItem = async (
   productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
   const ReactDOMServer = (await import("react-dom/server")).default
-  const fontUrl = FONT_MAP[data.fontFamily as FontFamily]
 
-  if (!fontUrl) {
-    throw new Error("Font not found")
-  }
+  // const fontUrl = FONT_MAP[data.fontFamily as FontFamily]
 
-  const font = opentype.loadSync(`public${fontUrl}`)
+  // if (!fontUrl) {
+  //   throw new Error("Font not found")
+  // }
+
+  const dirRelativeToPublicFolder = "fonts"
+  const dir = path.resolve("./public", dirRelativeToPublicFolder)
+  const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
+  console.log({ fontUrl })
+
+  const font = opentype.loadSync(`${fontUrl}`)
   const component = React.createElement(SignDesignerVisualizerView, {
     inputs: data,
     font,

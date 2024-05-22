@@ -344,10 +344,10 @@ const PRODUCT_INPUT_MAP = {
 }
 
 export const FONT_MAP: { [key in FontFamily]: string } = {
-  Albert: "/fonts/AlbertSans-BoldItalic.ttf",
-  Expletus: "/fonts/ExpletusSans-BoldItalic.ttf",
-  Playfair: "/fonts/PlayfairDisplay-BlackItalic.ttf",
-  Cormorant: "/fonts/Cormorant-BoldItalic.ttf",
+  Albert: "AlbertSans-BoldItalic.ttf",
+  Expletus: "ExpletusSans-BoldItalic.ttf",
+  Playfair: "PlayfairDisplay-BlackItalic.ttf",
+  Cormorant: "Cormorant-BoldItalic.ttf",
   // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
 }
 
