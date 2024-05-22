@@ -9,13 +9,8 @@ import { getBaseUrl } from "@/src/utils/vercel"
 export async function POST(request: Request) {
   // create cart and set cartID cookie
   const res = await fetch(`${getBaseUrl()}/api/v1/products/112`)
-  let data
-  try {
-    data = await res.json()
-  } catch (error) {
-    throw new Error(JSON.stringify(res))
-  }
-
+  console.log({ res })
+  const data = await res.json()
   const productOptionsMap = createProductOptionsMap(data.product)
   const formData: DesignFormInputs = await request.json()
   const lineItem = await formDataToCartItem(
