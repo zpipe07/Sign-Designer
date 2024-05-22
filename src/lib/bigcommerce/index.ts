@@ -119,12 +119,7 @@ export async function bigCommerceFetch<T>({
       }),
       cache,
     })
-    let body
-    try {
-      body = await result.json()
-    } catch (error: any) {
-      throw new Error(result.statusText)
-    }
+    const body = await result.json()
 
     if (body.errors) {
       throw body.errors[0]

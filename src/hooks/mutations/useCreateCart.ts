@@ -14,6 +14,7 @@ export const useCreateCart = (options: UseMutationOptions) => {
       method: "POST",
       body: JSON.stringify(formData),
     })
+    console.log({ res })
     const { cart } = await res.json()
 
     return cart
