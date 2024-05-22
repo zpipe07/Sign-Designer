@@ -22,13 +22,13 @@ export const SignDesignerVisualizer: React.FC = () => {
   const { data, isLoading } = useGetProduct(112)
 
   useEffect(() => {
-    const fontUrl = FONT_MAP[inputs.fontFamily as FontFamily]
+    const fontFile = FONT_MAP[inputs.fontFamily as FontFamily]
 
-    if (!fontUrl) {
+    if (!fontFile) {
       return
     }
 
-    opentype.load(fontUrl, (error, font) => {
+    opentype.load(`/fonts/${fontFile}`, (error, font) => {
       if (error) {
         console.error("font error", error)
         return
