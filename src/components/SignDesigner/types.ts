@@ -17,12 +17,9 @@ export type FontFamily =
 
 export type Orientation = "horizontal" | "vertical"
 
-export type Shape =
-  | "rectangle"
-  | "ellipse"
-  | "topRound"
-  | "sideRound"
-  | "bread"
+export type Shape = "rectangle" | "ellipse" | "top round"
+// | "sideRound"
+// | "bread"
 
 export type Size =
   | "extra small"
@@ -30,7 +27,6 @@ export type Size =
   | "medium"
   | "large"
   | "extra large"
-// | "large"
 
 export type SizeConfig = {
   [key in Orientation]: {

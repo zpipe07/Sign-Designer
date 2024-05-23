@@ -71,7 +71,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         />
       )}
 
-      {inputs.shape === "topRound" && (
+      {inputs.shape === "top round" && (
         <TopRound
           width={width}
           height={height}

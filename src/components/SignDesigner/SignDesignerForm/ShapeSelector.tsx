@@ -24,9 +24,9 @@ export const shapeIconMap: {
 } = {
   rectangle: RectanglePreview,
   ellipse: EllipsePreview,
-  topRound: TopRoundPreview,
-  sideRound: SideRoundPreview,
-  bread: BreadPreview,
+  "top round": TopRoundPreview,
+  // sideRound: SideRoundPreview,
+  // bread: BreadPreview,
 }
 
 export const ShapeSelector: React.FC = () => {
