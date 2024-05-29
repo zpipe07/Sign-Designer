@@ -5,19 +5,32 @@ import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerFor
 import { Decoration } from "@/src/components/SignDesigner/types"
 
 export const TopRound: React.FC<SvgProps> = ({
-  height = 315,
-  width = 400,
-  borderWidth = 0,
+  height,
+  width,
+  borderWidth,
   inputs,
   textLines,
   foregroundColor,
   backgroundColor,
   font,
 }) => {
-  const outerRect = new makerjs.models.RoundRectangle(400, 200, 10)
+  // const container = new makerjs.models.Rectangle(width, height)
+  // const containerOffset = 5
+  // // @ts-ignore
+  // container.layer = "container"
+
+  const outerRect = new makerjs.models.RoundRectangle(
+    // width - containerOffset * 2,
+    width,
+    // height - containerOffset * 2,
+    height / 2,
+    100,
+  )
   const outerOval = makerjs.model.move(
-    new makerjs.models.Oval(200, 200),
-    [100, 50],
+    // new makerjs.models.Oval(200, 200),
+    new makerjs.models.Oval(width / 2, height / 2),
+    // [100, 50],
+    [width / 4, height / 6],
   )
   // @ts-ignore
   outerRect.layer = "outer"
@@ -26,15 +39,20 @@ export const TopRound: React.FC<SvgProps> = ({
   makerjs.model.combineUnion(outerRect, outerOval)
 
   const innerRect = makerjs.model.move(
-    new makerjs.models.RoundRectangle(380, 180, 10),
-    [10, 10],
+    new makerjs.models.RoundRectangle(
+      width - borderWidth * 2,
+      height / 2 - borderWidth * 2,
+      100,
+    ),
+    // [borderWidth - containerOffset, borderWidth - containerOffset],
+    [borderWidth, borderWidth],
   )
   const innerOval = makerjs.model.move(
-    makerjs.model.move(
-      makerjs.model.scale(new makerjs.models.Oval(200, 200), 0.9),
-      [100, 50],
+    makerjs.model.scale(
+      new makerjs.models.Oval(width / 2, height / 2),
+      0.9,
     ),
-    [110, 60],
+    [width / 4 + borderWidth, height / 6 + borderWidth],
   )
   innerRect.layer = "inner"
   innerOval.layer = "inner"
@@ -46,18 +64,24 @@ export const TopRound: React.FC<SvgProps> = ({
   for (const textLine of textLines) {
     const index = Object.keys(textModels).length
     const chars = textLine.value.length
-    const fontSize = 95 - chars * 3.5
-    const x = 250 / chars + 30
-    const y = textLines.length * 40 - 50 * index + 40
+    const fontSize = 300 - chars * 10
     const textModel = new makerjs.models.Text(
       font,
       textLine.value,
       fontSize,
-      false,
+      true,
       false,
       0,
       {},
     )
+    const measure = makerjs.measure.modelExtents(textModel)
+    const x = (width - measure.width) / 2
+    const y =
+      height / 2 -
+      measure.height / 2 -
+      250 * index +
+      (textLines.length - 1) * 100 -
+      250
 
     // @ts-ignore
     textModel.origin = [x, y]
@@ -69,6 +93,7 @@ export const TopRound: React.FC<SvgProps> = ({
 
   const topRound = {
     models: {
+      // container,
       outerRect,
       outerOval,
       innerRect,
@@ -78,6 +103,7 @@ export const TopRound: React.FC<SvgProps> = ({
   }
   const svg = makerjs.exporter.toSVG(topRound, {
     layerOptions: {
+      container: { stroke: "none" },
       inner: {
         fill: foregroundColor,
         stroke: foregroundColor,
@@ -85,16 +111,30 @@ export const TopRound: React.FC<SvgProps> = ({
       outer: {
         fill: backgroundColor,
         // stroke: backgroundColor,
+        stroke: "black",
       },
       text: {
         fill: backgroundColor,
         // stroke: "none",
       },
     },
-    accuracy: 0.01,
+    viewBox: true,
+    svgAttrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      height: "100%",
+      width: "100%",
+      viewBox: `0 0 ${width} ${height}`,
+    },
+    fillRule: "nonzero",
+    accuracy: 0.1,
   })
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }}></div>
+  return (
+    <div
+      style={{ height: "100%" }}
+      dangerouslySetInnerHTML={{ __html: svg }}
+    ></div>
+  )
   // const Decoration: React.FC<FiligreeProps> | null =
   //   inputs?.decoration
   //     ? decorationIconMap[inputs.decoration as Decoration]

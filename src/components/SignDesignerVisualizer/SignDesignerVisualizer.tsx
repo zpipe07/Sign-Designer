@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useWatch } from "react-hook-form"
+import { useTheme } from "@mui/material"
 import opentype from "opentype.js"
 import Box from "@mui/material/Box"
-import CircularProgress from "@mui/material/CircularProgress"
+import Skeleton from "@mui/material/Skeleton"
 
 import {
   DesignFormInputs,
@@ -20,6 +21,8 @@ export const SignDesignerVisualizer: React.FC = () => {
   const inputs = useWatch() as DesignFormInputs
 
   const { data, isLoading } = useGetProduct(112)
+
+  const theme = useTheme()
 
   useEffect(() => {
     const fontFile = FONT_MAP[inputs.fontFamily as FontFamily]
@@ -45,8 +48,24 @@ export const SignDesignerVisualizer: React.FC = () => {
 
   if (!font || isLoading) {
     return (
-      <Box display="flex" justifyContent="center" marginTop={10}>
-        <CircularProgress />
+      <Box>
+        <Skeleton
+          variant="rounded"
+          sx={{
+            height: 340,
+            borderRadius: 5,
+
+            [theme.breakpoints.up("sm")]: {
+              height: 550,
+            },
+            [theme.breakpoints.up("md")]: {
+              height: 400,
+            },
+            [theme.breakpoints.up("lg")]: {
+              height: 540,
+            },
+          }}
+        />
       </Box>
     )
   }
