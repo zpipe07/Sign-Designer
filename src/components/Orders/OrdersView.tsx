@@ -5,8 +5,8 @@ import TableCell from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+
+import { OrderRow } from "@/src/components/Orders/OrderRow"
 
 type Props = {
   orders: any[]
@@ -27,27 +27,8 @@ export const OrdersView: React.FC<Props> = ({ orders }) => {
         </TableHead>
 
         <TableBody>
-          {orders.map(({ id, date_created, status }) => {
-            return (
-              <TableRow key={id}>
-                <TableCell>{id}</TableCell>
-                <TableCell>{date_created}</TableCell>
-                <TableCell>{status}</TableCell>
-                <TableCell>
-                  <IconButton
-                    aria-label="expand row"
-                    // size="small"
-                    // onClick={() => setOpen(!open)}
-                  >
-                    {false ? (
-                      <KeyboardArrowUpIcon />
-                    ) : (
-                      <KeyboardArrowDownIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            )
+          {orders.map((order) => {
+            return <OrderRow key={order.id} order={order} />
           })}
         </TableBody>
       </Table>
