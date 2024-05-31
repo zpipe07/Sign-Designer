@@ -10,6 +10,7 @@ export const Bread: React.FC<SvgProps> = ({
   textLines,
   foregroundColor,
   backgroundColor,
+  font,
 }) => {
   const topRightCorner = new makerjs.models.ConnectTheDots(false, [
     [5495.36, 1305.76],
@@ -56,14 +57,10 @@ export const Bread: React.FC<SvgProps> = ({
     [5427.32, 1180.14],
     [5424.26, 1178.19],
   ])
-  // @ts-ignore
-  topRightCorner.layer = "line"
   const bottomLine = new makerjs.models.ConnectTheDots(false, [
     [5345.36, 3960.65],
     [1070.36, 3960.65],
   ])
-  // @ts-ignore
-  bottomLine.layer = "line"
   const bottomRightCorner = new makerjs.models.ConnectTheDots(false, [
     [5345.36, 3960.65],
     [5349.04, 3960.61],
@@ -131,14 +128,10 @@ export const Bread: React.FC<SvgProps> = ({
     [5495.31, 3814.33],
     [5495.36, 3810.65],
   ])
-  // @ts-ignore
-  bottomRightCorner.layer = "line"
   const rightLine = new makerjs.models.ConnectTheDots(false, [
     [5495.36, 1305.76],
     [5495.36, 3810.65],
   ])
-  // @ts-ignore
-  rightLine.layer = "line"
   const bottomLeftCorner = new makerjs.models.ConnectTheDots(false, [
     [920.357, 3810.65],
     [920.402, 3814.33],
@@ -206,14 +199,10 @@ export const Bread: React.FC<SvgProps> = ({
     [1066.68, 3960.61],
     [1070.36, 3960.65],
   ])
-  // @ts-ignore
-  bottomLeftCorner.layer = "line"
   const leftLine = new makerjs.models.ConnectTheDots(false, [
     [920.357, 1305.76],
     [920.357, 3810.65],
   ])
-  // @ts-ignore
-  leftLine.layer = "line"
   const topLeftCorner = new makerjs.models.ConnectTheDots(false, [
     [991.454, 1178.19],
     [988.389, 1180.14],
@@ -259,8 +248,6 @@ export const Bread: React.FC<SvgProps> = ({
     [920.401, 1302.13],
     [920.357, 1305.76],
   ])
-  // @ts-ignore
-  topLeftCorner.layer = "line"
   const topArc = new makerjs.models.ConnectTheDots(false, [
     [5424.26, 1178.19],
     [5337.32, 1125.86],
@@ -310,10 +297,8 @@ export const Bread: React.FC<SvgProps> = ({
     [1078.39, 1125.86],
     [991.454, 1178.19],
   ])
-  // @ts-ignore
-  topArc.layer = "line"
 
-  const modelToExport = {
+  const outer = {
     models: {
       topRightCorner: makerjs.model.mirror(
         topRightCorner,
@@ -336,10 +321,54 @@ export const Bread: React.FC<SvgProps> = ({
       topArc: makerjs.model.mirror(topArc, false, true),
       rightLine: makerjs.model.mirror(rightLine, false, true),
     },
+    layer: "outer",
+  }
+
+  const inner = makerjs.model.outline(outer, 100, undefined, true)
+  inner.layer = "inner"
+
+  const textModels = {}
+
+  for (const textLine of textLines) {
+    const index = Object.keys(textModels).length
+    const chars = textLine.value.length
+    const fontSize = 300 - chars * 10
+    const textModel = new makerjs.models.Text(
+      font,
+      textLine.value,
+      fontSize,
+      true,
+      false,
+      0,
+      {},
+    )
+    const measure = makerjs.measure.modelExtents(textModel)
+    const x = (width - measure.width) / 2
+    const y =
+      height / 2 -
+      measure.height / 2 -
+      250 * index +
+      (textLines.length - 1) * 125
+
+    // @ts-ignore
+    textModel.origin = [x, y]
+    // @ts-ignore
+    textModel.layer = "text"
+    // @ts-ignore
+    textModels[`textModel${index}`] = textModel
+  }
+
+  const modelToExport = {
+    models: { outer, inner, ...textModels },
   }
   const svg = makerjs.exporter.toSVG(modelToExport, {
     layerOptions: {
-      line: {
+      outer: {
+        fill: backgroundColor,
+        stroke: "black",
+      },
+      inner: {
+        fill: foregroundColor,
         stroke: "black",
       },
     },
