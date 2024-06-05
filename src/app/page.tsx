@@ -20,6 +20,7 @@ export default function Home() {
         backgroundColor: theme.palette.primary.light,
         paddingTop: 4,
         paddingBottom: 4,
+        boxShadow: `0px 3px 0 0px ${theme.palette.primary.main} inset, 0px -3px 0 0px ${theme.palette.primary.main} inset`,
 
         "&:before, &:after": {
           content: '""',
@@ -28,6 +29,7 @@ export default function Home() {
           bottom: 0,
           width: "calc(100vw - 100%)",
           backgroundColor: theme.palette.primary.light,
+          boxShadow: "inherit",
         },
 
         "&:before": {

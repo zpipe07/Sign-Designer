@@ -7,6 +7,7 @@ import Box from "@mui/material/Box"
 
 import { Header } from "@/src/components/Header"
 import { Providers } from "@/src/components/Providers/Providers"
+import { useTheme } from "@mui/material"
 
 // Create a single supabase client for interacting with your database
 const supabase = createClient(
@@ -26,16 +27,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // const theme = useTheme()
+
   return (
     <>
       <CssBaseline />
 
       <html lang="en">
-        <Box
-          component="body"
-          className={inter.className}
-          paddingBottom={4}
-        >
+        <Box component="body" className={inter.className}>
           <Providers>
             <Header />
 
