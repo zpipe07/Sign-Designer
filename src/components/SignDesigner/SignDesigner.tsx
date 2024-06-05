@@ -1,6 +1,6 @@
 "use client"
 
-import { useTheme } from "@mui/material"
+import { Card, useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
@@ -44,9 +44,11 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
             },
           }}
         >
-          <SignDesignerVisualizer />
+          <Card elevation={3} sx={{ padding: 2 }}>
+            <SignDesignerVisualizer />
+          </Card>
 
-          <PriceDisplay />
+          {/* <PriceDisplay /> */}
         </Box>
       </Grid>
 

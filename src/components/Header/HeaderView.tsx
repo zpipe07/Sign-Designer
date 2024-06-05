@@ -64,8 +64,9 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.default,
+        boxShadow: "0 4px 15px 6px rgba(165, 165, 165, 0.2)",
       }}
     >
       <Container maxWidth="lg">
