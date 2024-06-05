@@ -29,11 +29,11 @@ export type Size =
   | "extra large"
 
 export type SizeConfig = {
-  [key in Orientation]: {
-    width: number
-    height: number
-    maxLinesOfText: number
-  }
+  // [key in Orientation]: {
+  width: number
+  height: number
+  maxLinesOfText: number
+  // }
 }
 
 export type TextLine = { value: string }

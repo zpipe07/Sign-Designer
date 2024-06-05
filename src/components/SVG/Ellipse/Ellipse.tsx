@@ -83,8 +83,8 @@ export const Ellipse: React.FC<SvgProps> = ({
   const tabletFaceMount = {
     models: {
       outer: outer,
-      inner: inner,
-      ...textModels,
+      // inner: inner,
+      // ...textModels,
     },
   }
 

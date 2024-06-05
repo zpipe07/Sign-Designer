@@ -21,8 +21,8 @@ export const TextInput: React.FC = () => {
   const orientation: Orientation = useWatch({ name: "orientation" })
   const size: Size = useWatch({ name: "size" })
 
-  const maxLinesOfText =
-    SIZE_CONFIG_MAP[size][orientation].maxLinesOfText
+  const maxLinesOfText = SIZE_CONFIG_MAP[size].maxLinesOfText
+  // SIZE_CONFIG_MAP[size][orientation].maxLinesOfText
 
   const { fields } = useFieldArray({
     name: "textLines",

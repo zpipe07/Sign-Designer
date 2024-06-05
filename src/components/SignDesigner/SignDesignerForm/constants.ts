@@ -353,63 +353,78 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
   "extra small": {
-    horizontal: {
-      width: 1500,
-      height: 300,
-      maxLinesOfText: 1,
-    },
-    vertical: {
-      width: 300,
-      height: 1500,
-      maxLinesOfText: 1,
-    },
+    //   horizontal: {
+    //     width: 1500,
+    //     height: 300,
+    //     maxLinesOfText: 1,
+    //   },
+    //   vertical: {
+    //     width: 300,
+    //     height: 1500,
+    //     maxLinesOfText: 1,
+    //   },
+    width: 15,
+    height: 3.5,
+    maxLinesOfText: 1,
   },
   small: {
-    horizontal: {
-      width: 1500,
-      height: 700,
-      maxLinesOfText: 1,
-    },
-    vertical: {
-      width: 700,
-      height: 1500,
-      maxLinesOfText: 1,
-    },
+    //   horizontal: {
+    //     width: 1500,
+    //     height: 700,
+    //     maxLinesOfText: 1,
+    //   },
+    //   vertical: {
+    //     width: 700,
+    //     height: 1500,
+    //     maxLinesOfText: 1,
+    //   },
+    width: 15,
+    height: 7,
+    maxLinesOfText: 1,
   },
   medium: {
-    horizontal: {
-      width: 1500,
-      height: 1000,
-      maxLinesOfText: 2,
-    },
-    vertical: {
-      width: 1000,
-      height: 1500,
-      maxLinesOfText: 1,
-    },
+    // horizontal: {
+    //   width: 1500,
+    //   height: 1000,
+    //   maxLinesOfText: 2,
+    // },
+    // vertical: {
+    //   width: 1000,
+    //   height: 1500,
+    //   maxLinesOfText: 1,
+    // },
+    width: 15,
+    height: 16,
+    maxLinesOfText: 2,
   },
   large: {
-    horizontal: {
-      width: 1400,
-      height: 1200,
-      maxLinesOfText: 2,
-    },
-    vertical: {
-      width: 1200,
-      height: 1400,
-      maxLinesOfText: 1,
-    },
+    //   horizontal: {
+    //     width: 1400,
+    //     height: 1200,
+    //     maxLinesOfText: 2,
+    //   },
+    //   vertical: {
+    //     width: 1200,
+    //     height: 1400,
+    //     maxLinesOfText: 1,
+    //   },
+    width: 40,
+    height: 25,
+    maxLinesOfText: 3,
   },
   "extra large": {
-    horizontal: {
-      width: 1500,
-      height: 1400,
-      maxLinesOfText: 3,
-    },
-    vertical: {
-      width: 1400,
-      height: 1500,
-      maxLinesOfText: 1,
-    },
+    //   horizontal: {
+    //     width: 1500,
+    //     height: 1400,
+    //     maxLinesOfText: 3,
+    //   },
+    //   vertical: {
+    //     width: 1400,
+    //     height: 1500,
+    //     maxLinesOfText: 1,
+    //   },
+    width: 48,
+    height: 48,
+    maxLinesOfText: 3,
   },
 }

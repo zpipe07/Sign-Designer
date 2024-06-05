@@ -28,9 +28,10 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
 }) => {
   const borderWidth = 30
   const maxLinesOfText =
-    SIZE_CONFIG_MAP[inputs.size as Size][
-      inputs.orientation as Orientation
-    ].maxLinesOfText
+    SIZE_CONFIG_MAP[inputs.size as Size].maxLinesOfText
+  // SIZE_CONFIG_MAP[inputs.size as Size][
+  //   inputs.orientation as Orientation
+  // ].maxLinesOfText
   const textLines: TextLine[] = inputs?.textLines
     ?.slice(0, maxLinesOfText)
     .filter(({ value }: TextLine) => {
@@ -38,10 +39,10 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     })
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
-  const { width, height } =
-    SIZE_CONFIG_MAP[inputs.size as Size][
-      inputs.orientation as Orientation
-    ]
+  const { width, height } = SIZE_CONFIG_MAP[inputs.size as Size]
+  // SIZE_CONFIG_MAP[inputs.size as Size][
+  //   inputs.orientation as Orientation
+  // ]
 
   return (
     <>
