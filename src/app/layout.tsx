@@ -42,9 +42,7 @@ export default function RootLayout({
           <Providers>
             <Header />
 
-            <Container maxWidth="lg" sx={{ paddingTop: 2 }}>
-              {children}
-            </Container>
+            <Container maxWidth="lg">{children}</Container>
 
             <Footer />
           </Providers>
