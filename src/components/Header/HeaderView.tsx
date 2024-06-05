@@ -58,7 +58,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
   }
 
   return (
-    <AppBar position="static" sx={{ marginBottom: 4 }}>
+    <AppBar position="static">
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <AdbIcon
