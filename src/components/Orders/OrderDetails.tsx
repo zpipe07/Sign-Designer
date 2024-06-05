@@ -43,6 +43,17 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>
                     {product.product_options.map((option) => {
+                      if (option.display_name === "svgFile") {
+                        return (
+                          <Typography key={option.id}>
+                            {option.display_name}:{" "}
+                            <img
+                              src={option.display_value}
+                              alt="SVG file"
+                            />
+                          </Typography>
+                        )
+                      }
                       return (
                         <Typography key={option.id}>
                           {option.display_name}:{" "}
