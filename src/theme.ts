@@ -29,6 +29,15 @@ export const themeOptions: ThemeOptions = {
       default: "#F3F8EE",
     },
   },
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#FFFFFF",
+        },
+      },
+    },
+  },
 }
 const theme = createTheme(themeOptions)
 
