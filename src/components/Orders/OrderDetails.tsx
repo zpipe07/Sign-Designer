@@ -24,7 +24,7 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
     <>
       <Typography>Products</Typography>
 
-      {data.products.map((product) => {
+      {data.products.map((product: any) => {
         return (
           <TableContainer key={product.id}>
             <Table>
@@ -42,7 +42,7 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>
-                    {product.product_options.map((option) => {
+                    {product.product_options.map((option: any) => {
                       if (option.display_name === "svgFile") {
                         return (
                           <Typography key={option.id}>
