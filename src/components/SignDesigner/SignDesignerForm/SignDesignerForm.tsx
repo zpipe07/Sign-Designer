@@ -43,23 +43,19 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
         <Grid item xs={12}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <ShapeSelector />
-            </Grid>
-
-            <Grid item xs={12}>
-              <OrientationSelector />
-            </Grid>
-
-            <Grid item xs={12}>
-              <SizeSelector />
-            </Grid>
-
-            <Grid item xs={12}>
               <TextInput />
             </Grid>
 
             <Grid item xs={12}>
-              <FontSelector />
+              <ShapeSelector />
+            </Grid>
+
+            {/* <Grid item xs={12}>
+              <OrientationSelector />
+            </Grid> */}
+
+            <Grid item xs={12}>
+              <SizeSelector />
             </Grid>
 
             <Grid item xs={12}>
@@ -67,8 +63,12 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
             </Grid>
 
             <Grid item xs={12}>
-              <DecorationSelector />
+              <FontSelector />
             </Grid>
+
+            {/* <Grid item xs={12}>
+              <DecorationSelector />
+            </Grid> */}
           </Grid>
         </Grid>
 
