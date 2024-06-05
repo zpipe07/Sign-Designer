@@ -21,7 +21,7 @@ export default function Layout({
         { value: "" },
       ],
       orientation: "horizontal",
-      // fontFamily: "times",
+      fontFamily: "Albert",
       // decoration: "",
     },
   })

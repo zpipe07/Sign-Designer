@@ -84,10 +84,10 @@ export const ColorSelector: React.FC = () => {
                         borderTop: `1px solid ${theme.palette.common.white}`,
                       },
 
-                      "&.Mui-checked": {
-                        boxShadow: "0 0 0 3px black",
-                        color: "inherit",
-                      },
+                      // "&.Mui-checked": {
+                      //   boxShadow: "0 0 0 3px black",
+                      //   color: "inherit",
+                      // },
 
                       ...(selectedColor === label && {
                         boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
