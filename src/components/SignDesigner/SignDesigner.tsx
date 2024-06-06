@@ -1,6 +1,6 @@
 "use client"
 
-import { useTheme } from "@mui/material"
+import { Card, useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
@@ -34,25 +34,29 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
-        <Box
-          sx={{
-            [theme.breakpoints.up("md")]: {
-              position: "sticky",
-              top: theme.spacing(2),
-            },
-          }}
-        >
-          <SignDesignerVisualizer />
+    <Box paddingTop={4} paddingBottom={4}>
+      <Grid container spacing={{ xs: 3, lg: 4 }}>
+        <Grid item xs={12} md={6}>
+          <Box
+            sx={{
+              [theme.breakpoints.up("md")]: {
+                position: "sticky",
+                top: theme.spacing(2),
+              },
+            }}
+          >
+            <Card elevation={3} sx={{ padding: 2 }}>
+              <SignDesignerVisualizer />
+            </Card>
 
-          <PriceDisplay />
-        </Box>
-      </Grid>
+            {/* <PriceDisplay /> */}
+          </Box>
+        </Grid>
 
-      <Grid item xs={12} md={6}>
-        <SignDesignerForm isEditing={isEditing} />
+        <Grid item xs={12} md={6}>
+          <SignDesignerForm isEditing={isEditing} />
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   )
 }

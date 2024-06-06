@@ -30,8 +30,6 @@ export const TextInput: React.FC = () => {
 
   return (
     <>
-      <InputLabel>Text</InputLabel>
-
       <Grid container spacing={1}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {
           // if (size === "medium" && index > 1) {
@@ -43,24 +41,29 @@ export const TextInput: React.FC = () => {
           // }
 
           let placeholder
+          let label
 
           if (index === 0) {
             placeholder = "E.g. 123"
+            label = "House Number"
           }
 
           if (index === 1) {
             placeholder = "E.g. Main Street"
+            label = "Street Name"
           }
 
           if (index === 2) {
             placeholder = "E.g. The Smith's"
+            label = "Family Name"
           }
 
           return (
-            <Grid item xs={12} key={field.id}>
+            <Grid item xs={12} sm={4} md={6} lg={4} key={field.id}>
               <TextField
                 fullWidth
-                placeholder={placeholder}
+                // placeholder={placeholder}
+                label={label}
                 {...register(`textLines.${index}.value`)}
               />
               {/* <Controller

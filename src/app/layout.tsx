@@ -6,7 +6,8 @@ import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
 
 import { Header } from "@/src/components/Header"
-import { Providers } from "@/src/components/Providers/Providers"
+import { Providers } from "@/src/components/Providers"
+import { Footer } from "@/src/components/Footer"
 
 // Create a single supabase client for interacting with your database
 const supabase = createClient(
@@ -34,12 +35,16 @@ export default function RootLayout({
         <Box
           component="body"
           className={inter.className}
-          paddingBottom={4}
+          sx={{
+            backgroundColor: "#F3F8EE", // theme.palette.background.default,
+          }}
         >
           <Providers>
             <Header />
 
             <Container maxWidth="lg">{children}</Container>
+
+            <Footer />
           </Providers>
         </Box>
       </html>

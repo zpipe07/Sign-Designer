@@ -19,6 +19,7 @@ import Toolbar from "@mui/material/Toolbar"
 
 import { SignOut } from "@/src/components/Header/SignOut"
 import { Cart } from "@/src/components/Header/Cart"
+import { useTheme } from "@mui/material"
 
 const pages = [
   { label: "Design your sign", href: "/design" },
@@ -57,8 +58,17 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
     setAnchorElUser(null)
   }
 
+  const theme = useTheme()
+
   return (
-    <AppBar position="static" sx={{ marginBottom: 4 }}>
+    <AppBar
+      position="static"
+      sx={{
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.default,
+        boxShadow: "0 4px 15px 6px rgba(165, 165, 165, 0.2)",
+      }}
+    >
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <AdbIcon
@@ -156,7 +166,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
                 href={href}
                 key={label}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: "inherit", display: "block" }}
               >
                 {label}
               </Button>
