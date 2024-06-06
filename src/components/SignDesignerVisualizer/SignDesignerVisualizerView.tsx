@@ -26,7 +26,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
   font,
   // productOptionsMap,
 }) => {
-  const borderWidth = 30
+  const borderWidth = 0.5
   const maxLinesOfText =
     SIZE_CONFIG_MAP[inputs.size as Size].maxLinesOfText
   // SIZE_CONFIG_MAP[inputs.size as Size][
@@ -62,7 +62,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
       {inputs.shape === "ellipse" && (
         <Ellipse
           width={width}
-          height={height + 40}
+          height={height}
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}

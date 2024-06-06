@@ -1,4 +1,4 @@
-import makerjs from "makerjs"
+import makerjs, { models } from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
@@ -13,78 +13,72 @@ export const Ellipse: React.FC<SvgProps> = ({
   font,
 }) => {
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
-  // @ts-ignore
-  outer.layer = "outer"
-
-  const inner = new makerjs.models.Ellipse(
-    width / 2 - borderWidth,
-    height / 2 - borderWidth,
+  const inner = makerjs.model.outline(
+    outer,
+    borderWidth,
+    undefined,
+    true,
   )
-  // @ts-ignore
-  inner.layer = "inner"
-
-  const textModels = {}
+  const text: any = {
+    models: {},
+  }
 
   for (const textLine of textLines) {
-    if (inputs.orientation === "horizontal") {
-      const index = Object.keys(textModels).length
-      const chars = textLine.value.length
-      const fontSize = 300 - chars * 10
-      const textModel = new makerjs.models.Text(
-        font,
-        textLine.value,
-        fontSize,
-        true,
-        false,
-        0,
-        {},
-      )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y =
-        (textLines.length - 1) * 125 -
-        250 * index -
-        measure.height / 2
+    // if (inputs.orientation === "horizontal") {
+    const index = Object.keys(text.models).length
+    const chars = textLine.value.length
+    const fontSize = 5 - chars * 0.2
+    const textModel = new makerjs.models.Text(
+      font,
+      textLine.value,
+      fontSize,
+      true,
+      false,
+      0,
+      {},
+    )
+    const measure = makerjs.measure.modelExtents(textModel)
+    const x = measure.width / -2
+    const y =
+      (textLines.length - 1) * 1.15 - 2.5 * index - measure.height / 2
 
-      // @ts-ignore
-      textModel.origin = [x, y]
-      // @ts-ignore
-      textModel.layer = "text"
-      // @ts-ignore
-      textModels[`textModel${index}`] = textModel
-    } else if (inputs.orientation === "vertical") {
-      textLine.value.split("").forEach((char, index) => {
-        const chars = textLine.value.length
-        const fontSize = 300 - chars * 10
-        const textModel = new makerjs.models.Text(
-          font,
-          char,
-          fontSize,
-          true,
-          false,
-          0,
-          {},
-        )
-        const measure = makerjs.measure.modelExtents(textModel)
-        const x = measure?.width / -2
-        const y =
-          (chars - 1) * 125 - 250 * index - measure?.height / 2
-
-        // @ts-ignore
-        textModel.origin = [x, y]
-        // @ts-ignore
-        textModel.layer = "text"
-        // @ts-ignore
-        textModels[`textModel${index}`] = textModel
-      })
+    text.models[`textModel${index}`] = {
+      ...textModel,
+      origin: [x, y],
     }
+    // } else if (inputs.orientation === "vertical") {
+    //   textLine.value.split("").forEach((char, index) => {
+    //     const chars = textLine.value.length
+    //     const fontSize = 300 - chars * 10
+    //     const textModel = new makerjs.models.Text(
+    //       font,
+    //       char,
+    //       fontSize,
+    //       true,
+    //       false,
+    //       0,
+    //       {},
+    //     )
+    //     const measure = makerjs.measure.modelExtents(textModel)
+    //     const x = measure?.width / -2
+    //     const y =
+    //       (chars - 1) * 125 - 250 * index - measure?.height / 2
+
+    //     // @ts-ignore
+    //     textModel.origin = [x, y]
+    //     // @ts-ignore
+    //     textModel.layer = "text"
+    //     // @ts-ignore
+    //     textModels[`textModel${index}`] = textModel
+    //   })
+    // }
   }
 
   const tabletFaceMount = {
     models: {
-      outer: outer,
-      // inner: inner,
-      // ...textModels,
+      outer: { ...outer, layer: "outer" },
+      inner: { ...inner, layer: "inner" },
+      text: { ...text, layer: "text" },
     },
   }
 
@@ -93,6 +87,7 @@ export const Ellipse: React.FC<SvgProps> = ({
       inner: {
         fill: foregroundColor,
         stroke: foregroundColor,
+        // stroke: "red",
       },
       outer: {
         fill: backgroundColor,
@@ -110,7 +105,7 @@ export const Ellipse: React.FC<SvgProps> = ({
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    accuracy: 0.1,
+    // accuracy: 0.25,
   })
 
   return (

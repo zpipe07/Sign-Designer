@@ -379,7 +379,7 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     //     maxLinesOfText: 1,
     //   },
     width: 15,
-    height: 7,
+    height: 7.5,
     maxLinesOfText: 1,
   },
   medium: {
@@ -394,7 +394,7 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     //   maxLinesOfText: 1,
     // },
     width: 15,
-    height: 16,
+    height: 9,
     maxLinesOfText: 2,
   },
   large: {
@@ -408,8 +408,8 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     //     height: 1400,
     //     maxLinesOfText: 1,
     //   },
-    width: 40,
-    height: 25,
+    width: 15,
+    height: 11,
     maxLinesOfText: 3,
   },
   "extra large": {
@@ -423,8 +423,8 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     //     height: 1500,
     //     maxLinesOfText: 1,
     //   },
-    width: 48,
-    height: 48,
+    width: 23,
+    height: 9.5,
     maxLinesOfText: 3,
   },
 }
