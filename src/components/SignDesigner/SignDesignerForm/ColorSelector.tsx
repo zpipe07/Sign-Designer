@@ -55,6 +55,7 @@ export const ColorSelector: React.FC = () => {
                 label={
                   <Box
                     sx={{
+                      fontSize: 0,
                       borderRadius: "50%",
                       overflow: "hidden",
                       position: "relative",

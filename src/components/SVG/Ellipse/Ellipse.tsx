@@ -1,6 +1,22 @@
-import makerjs, { models } from "makerjs"
+import makerjs, { models, paths } from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import { Size } from "@/src/components/SignDesigner/types"
+
+const fontSizeMap: { [key in Size]: number } = {
+  "extra small": 3,
+  small: 3.5,
+  medium: 4,
+  large: 4.5,
+  "extra large": 4.5,
+}
+const topArcYMap: { [key in Size]: number } = {
+  "extra small": 0,
+  small: 0,
+  medium: 0,
+  large: 0,
+  "extra large": -20,
+}
 
 export const Ellipse: React.FC<SvgProps> = ({
   height,
@@ -19,6 +35,18 @@ export const Ellipse: React.FC<SvgProps> = ({
     undefined,
     true,
   )
+  const topArc = new makerjs.paths.Arc(
+    [0, topArcYMap[inputs.size as Size]],
+    width,
+    75,
+    105,
+  )
+  const bottomArc = new makerjs.paths.Arc(
+    [0, -1 * topArcYMap[inputs.size as Size]],
+    width,
+    255,
+    285,
+  )
   const text: any = {
     models: {},
   }
@@ -27,7 +55,7 @@ export const Ellipse: React.FC<SvgProps> = ({
     // if (inputs.orientation === "horizontal") {
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
-    const fontSize = 5 - chars * 0.2
+    const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
     const textModel = new makerjs.models.Text(
       font,
       textLine.value,
@@ -38,13 +66,49 @@ export const Ellipse: React.FC<SvgProps> = ({
       {},
     )
     const measure = makerjs.measure.modelExtents(textModel)
-    const x = measure.width / -2
-    const y =
-      (textLines.length - 1) * 1.15 - 2.5 * index - measure.height / 2
+
+    if (index === 0) {
+      // house number
+      const x = measure.width / -2
+      const y = measure.height / -2
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
 
     text.models[`textModel${index}`] = {
       ...textModel,
-      origin: [x, y],
+    }
+
+    if (index === 1) {
+      // street name
+
+      makerjs.layout.childrenOnPath(
+        textModel,
+        bottomArc,
+        0.5,
+        false,
+        false,
+        true,
+      )
+      continue
+    }
+
+    if (index === 2) {
+      // family name
+
+      makerjs.layout.childrenOnPath(
+        textModel,
+        topArc,
+        0.5,
+        true,
+        false,
+        true,
+      )
+      continue
     }
     // } else if (inputs.orientation === "vertical") {
     //   textLine.value.split("").forEach((char, index) => {
@@ -79,6 +143,12 @@ export const Ellipse: React.FC<SvgProps> = ({
       outer: { ...outer, layer: "outer" },
       inner: { ...inner, layer: "inner" },
       text: { ...text, layer: "text" },
+
+      // topArc: { ...topArc, layer: "topArc" },
+    },
+    paths: {
+      topArc: { ...topArc, layer: "topArc" },
+      bottomArc: { ...bottomArc, layer: "topArc" },
     },
   }
 
@@ -86,15 +156,21 @@ export const Ellipse: React.FC<SvgProps> = ({
     layerOptions: {
       inner: {
         fill: foregroundColor,
+        // fill: "transparent",
         stroke: foregroundColor,
         // stroke: "red",
       },
       outer: {
         fill: backgroundColor,
+        // fill: "transparent",
       },
       text: {
         fill: backgroundColor,
         stroke: backgroundColor,
+      },
+      topArc: {
+        stroke: "blue",
+        // strokeWidth: 0.5,
       },
     },
     viewBox: true,
