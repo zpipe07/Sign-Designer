@@ -35,7 +35,7 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
 
   return (
     <Box paddingTop={4} paddingBottom={4}>
-      <Grid container spacing={2}>
+      <Grid container spacing={{ xs: 3, lg: 4 }}>
         <Grid item xs={12} md={6}>
           <Box
             sx={{
