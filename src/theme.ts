@@ -37,6 +37,19 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 500,
+          fontWeight: 600,
+        },
+        sizeLarge: {
+          paddingLeft: "3rem",
+          paddingRight: "3rem",
+          fontSize: "1rem",
+        },
+      },
+    },
   },
 }
 const theme = createTheme(themeOptions)
