@@ -7,5 +7,9 @@ type Props = {
 }
 
 export const PriceDisplayView: React.FC<Props> = ({ variant }) => {
-  return <Typography variant="h4">${variant.price.amount}</Typography>
+  return (
+    <Typography variant="h5">
+      ${parseInt(variant.price.amount, 10).toFixed(2)}
+    </Typography>
+  )
 }
