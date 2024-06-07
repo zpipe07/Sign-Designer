@@ -8,7 +8,7 @@ const fontSizeMap: { [key in Size]: number } = {
   small: 4.5,
   medium: 4.25,
   large: 4.5,
-  "extra large": 4.5,
+  "extra large": 4.75,
 }
 const topArcYMap: { [key in Size]: number } = {
   "extra small": -14.5,
@@ -37,13 +37,15 @@ export const Ellipse: React.FC<SvgProps> = ({
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
   const borderOuter = makerjs.model.outline(
     outer,
-    borderWidth,
+    // borderWidth,
+    0.25,
     undefined,
     true,
   )
   const borderInner = makerjs.model.outline(
     outer,
-    borderWidth + 0.25,
+    // borderWidth + 0.25,
+    0.5,
     undefined,
     true,
   )
@@ -57,20 +59,31 @@ export const Ellipse: React.FC<SvgProps> = ({
     // if (inputs.orientation === "horizontal") {
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
-    const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
-    const textModel = new makerjs.models.Text(
-      font,
-      textLine.value,
-      fontSize,
-      true,
-      false,
-      0,
-      {},
-    )
-    const measure = makerjs.measure.modelExtents(textModel)
+    // const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
+    // const textModel = new makerjs.models.Text(
+    //   font,
+    //   textLine.value,
+    //   fontSize,
+    //   true,
+    //   false,
+    //   0,
+    //   {},
+    // )
+    // const measure = makerjs.measure.modelExtents(textModel)
 
     if (index === 0) {
       // house number
+      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
       const y = measure.height / -2
 
@@ -81,12 +94,21 @@ export const Ellipse: React.FC<SvgProps> = ({
       continue
     }
 
-    text.models[`textModel${index}`] = {
-      ...textModel,
-    }
-
     if (index === 1) {
       // street name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      // const fontSize = 3 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       bottomArc = new makerjs.paths.Arc(
         [0, -1 * topArcYMap[inputs.size as Size]],
@@ -102,11 +124,27 @@ export const Ellipse: React.FC<SvgProps> = ({
         false,
         true,
       )
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
       continue
     }
 
     if (index === 2) {
       // family name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      // const fontSize = 3 - chars * 0.05
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       topArc = new makerjs.paths.Arc(
         [0, topArcYMap[inputs.size as Size]],
@@ -125,6 +163,9 @@ export const Ellipse: React.FC<SvgProps> = ({
         false,
         true,
       )
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
       continue
     }
     // } else if (inputs.orientation === "vertical") {
