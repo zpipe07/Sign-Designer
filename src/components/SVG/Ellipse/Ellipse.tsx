@@ -18,6 +18,11 @@ const topArcYMap: { [key in Size]: number } = {
   "extra large": -20,
 }
 
+function calculateAngle(arcLength: number, radius: number) {
+  const angle = (arcLength / radius) * (180 / Math.PI)
+  return angle
+}
+
 export const Ellipse: React.FC<SvgProps> = ({
   height,
   width,
@@ -42,18 +47,8 @@ export const Ellipse: React.FC<SvgProps> = ({
     undefined,
     true,
   )
-  const topArc = new makerjs.paths.Arc(
-    [0, topArcYMap[inputs.size as Size]],
-    width,
-    75,
-    105,
-  )
-  const bottomArc = new makerjs.paths.Arc(
-    [0, -1 * topArcYMap[inputs.size as Size]],
-    width,
-    255,
-    285,
-  )
+  let topArc = {} as any
+  let bottomArc = {} as any
   const text: any = {
     models: {},
   }
@@ -92,7 +87,13 @@ export const Ellipse: React.FC<SvgProps> = ({
 
     if (index === 1) {
       // street name
-
+      const angle = calculateAngle(measure.width, width)
+      bottomArc = new makerjs.paths.Arc(
+        [0, -1 * topArcYMap[inputs.size as Size]],
+        width,
+        270 - angle / 2,
+        270 + angle / 2,
+      )
       makerjs.layout.childrenOnPath(
         textModel,
         bottomArc,
@@ -106,6 +107,15 @@ export const Ellipse: React.FC<SvgProps> = ({
 
     if (index === 2) {
       // family name
+      const angle = calculateAngle(measure.width, width)
+      topArc = new makerjs.paths.Arc(
+        [0, topArcYMap[inputs.size as Size]],
+        width,
+        // 75,
+        90 - angle / 2,
+        // 105,
+        90 + angle / 2,
+      )
 
       makerjs.layout.childrenOnPath(
         textModel,
@@ -151,12 +161,10 @@ export const Ellipse: React.FC<SvgProps> = ({
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
-
-      // topArc: { ...topArc, layer: "topArc" },
     },
     paths: {
-      topArc: { ...topArc, layer: "topArc" },
-      bottomArc: { ...bottomArc, layer: "topArc" },
+      topArc: { ...topArc, layer: "arc" },
+      bottomArc: { ...bottomArc, layer: "arc" },
     },
   }
 
@@ -184,7 +192,7 @@ export const Ellipse: React.FC<SvgProps> = ({
             fill: backgroundColor,
             stroke: backgroundColor,
           },
-      topArc: {
+      arc: {
         stroke: "blue",
       },
     },

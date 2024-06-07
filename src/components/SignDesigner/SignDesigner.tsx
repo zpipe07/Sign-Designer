@@ -26,6 +26,7 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
           display: "flex",
           justifyContent: "center",
           paddingTop: 10,
+          paddingBottom: 10,
         }}
       >
         <CircularProgress />
