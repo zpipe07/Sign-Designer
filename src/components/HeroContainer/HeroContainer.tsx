@@ -22,7 +22,7 @@ export const HeroContainer: React.FC<Props> = ({ children }) => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          width: "calc(100vw - 100%)",
+          width: "calc((100vw - 100%) / 2)",
           backgroundColor: theme.palette.primary.light,
           boxShadow: "inherit",
         },
