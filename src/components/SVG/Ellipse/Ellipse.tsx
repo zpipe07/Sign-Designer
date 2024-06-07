@@ -6,7 +6,7 @@ import { Size } from "@/src/components/SignDesigner/types"
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 3.5,
   small: 4.5,
-  medium: 4.25,
+  medium: 4.5,
   large: 4.5,
   "extra large": 4.75,
 }
@@ -38,14 +38,14 @@ export const Ellipse: React.FC<SvgProps> = ({
   const borderOuter = makerjs.model.outline(
     outer,
     // borderWidth,
-    0.25,
+    0.5,
     undefined,
     true,
   )
   const borderInner = makerjs.model.outline(
     outer,
     // borderWidth + 0.25,
-    0.5,
+    0.7,
     undefined,
     true,
   )
