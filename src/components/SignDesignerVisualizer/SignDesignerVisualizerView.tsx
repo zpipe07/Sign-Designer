@@ -69,6 +69,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           font={font}
+          // strokeOnly
         />
       )}
 

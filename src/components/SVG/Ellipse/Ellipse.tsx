@@ -1,20 +1,20 @@
-import makerjs, { models, paths } from "makerjs"
+import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 3,
-  small: 3.5,
-  medium: 4,
+  "extra small": 3.5,
+  small: 4.5,
+  medium: 4.25,
   large: 4.5,
   "extra large": 4.5,
 }
 const topArcYMap: { [key in Size]: number } = {
-  "extra small": 0,
-  small: 0,
-  medium: 0,
-  large: 0,
+  "extra small": -14.5,
+  small: -13,
+  medium: -12.25,
+  large: -11.75,
   "extra large": -20,
 }
 
@@ -27,11 +27,18 @@ export const Ellipse: React.FC<SvgProps> = ({
   foregroundColor,
   backgroundColor,
   font,
+  strokeOnly,
 }) => {
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
-  const inner = makerjs.model.outline(
+  const borderOuter = makerjs.model.outline(
     outer,
     borderWidth,
+    undefined,
+    true,
+  )
+  const borderInner = makerjs.model.outline(
+    outer,
+    borderWidth + 0.25,
     undefined,
     true,
   )
@@ -141,7 +148,8 @@ export const Ellipse: React.FC<SvgProps> = ({
   const tabletFaceMount = {
     models: {
       outer: { ...outer, layer: "outer" },
-      inner: { ...inner, layer: "inner" },
+      borderOuter: { ...borderOuter, layer: "borderOuter" },
+      borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
 
       // topArc: { ...topArc, layer: "topArc" },
@@ -152,25 +160,32 @@ export const Ellipse: React.FC<SvgProps> = ({
     },
   }
 
+  const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, {
     layerOptions: {
-      inner: {
-        fill: foregroundColor,
-        // fill: "transparent",
-        stroke: foregroundColor,
-        // stroke: "red",
-      },
-      outer: {
-        fill: backgroundColor,
-        // fill: "transparent",
-      },
-      text: {
-        fill: backgroundColor,
-        stroke: backgroundColor,
-      },
+      borderOuter: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+          },
+      borderInner: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      outer: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      text: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: backgroundColor,
+          },
       topArc: {
         stroke: "blue",
-        // strokeWidth: 0.5,
       },
     },
     viewBox: true,
