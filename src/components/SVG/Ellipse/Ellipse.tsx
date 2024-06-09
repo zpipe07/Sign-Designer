@@ -99,7 +99,6 @@ export function generateModel({
       // street name
       const fontSize =
         fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
-      // const fontSize = 3 - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -135,7 +134,6 @@ export function generateModel({
       // family name
       const fontSize =
         fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
-      // const fontSize = 3 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -252,7 +250,7 @@ export function generateModel({
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    units: "in",
+    units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
   // const dxf = makerjs.exporter.toDXF(tabletFaceMount, {
