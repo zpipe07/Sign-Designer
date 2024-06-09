@@ -4,11 +4,11 @@ import { SvgProps } from "@/src/components/SVG/types"
 import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 3.5,
-  small: 4.75,
-  medium: 4.5,
-  large: 4.5,
-  "extra large": 4.75,
+  "extra small": 3.0,
+  small: 4.0,
+  medium: 4.0,
+  large: 4.25,
+  "extra large": 4.5,
 }
 const topArcYMap: { [key in Size]: number } = {
   "extra small": -14.5,
@@ -86,7 +86,7 @@ export function generateBreadModel({
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
+      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -98,7 +98,7 @@ export function generateBreadModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = height / 4 - measure.height / 2
+      const y = height / 3 - (measure.height * 2) / 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -109,7 +109,8 @@ export function generateBreadModel({
 
     if (index === 1) {
       // street name
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -121,7 +122,7 @@ export function generateBreadModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = measure.height / -2
+      const y = measure.height / -3
 
       text.models[`textModel${index}`] = {
         ...textModel,
