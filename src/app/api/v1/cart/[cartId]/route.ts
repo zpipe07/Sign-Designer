@@ -18,7 +18,7 @@ export async function PUT(
   const lineItem = await formDataToCartItem(
     formData,
     product,
-    productOptionsMap,
+    // productOptionsMap,
   )
   const cart = await addToCart(params.cartId, [lineItem])
 

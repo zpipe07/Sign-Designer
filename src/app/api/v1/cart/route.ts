@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   const lineItem = await formDataToCartItem(
     formData,
     product,
-    productOptionsMap,
+    // productOptionsMap,
   )
   const cart = await addToCart(undefined, [lineItem])
 
