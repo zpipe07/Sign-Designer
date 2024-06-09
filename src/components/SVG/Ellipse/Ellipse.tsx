@@ -15,7 +15,7 @@ const topArcYMap: { [key in Size]: number } = {
   small: -13,
   medium: -12.25,
   large: -11.75,
-  "extra large": -20,
+  "extra large": -20.4,
 }
 
 function calculateAngle(arcLength: number, radius: number) {
@@ -38,14 +38,12 @@ export function generateEllipseModel({
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
   const borderOuter = makerjs.model.outline(
     outer,
-    // borderWidth,
     0.5,
     undefined,
     true,
   )
   const borderInner = makerjs.model.outline(
     outer,
-    // borderWidth + 0.25,
     0.7,
     undefined,
     true,
@@ -119,7 +117,7 @@ export function generateEllipseModel({
       makerjs.layout.childrenOnPath(
         textModel,
         bottomArc,
-        0.5,
+        0.4,
         false,
         false,
         true,
@@ -155,7 +153,7 @@ export function generateEllipseModel({
       makerjs.layout.childrenOnPath(
         textModel,
         topArc,
-        0.5,
+        0.3,
         true,
         false,
         true,
@@ -193,12 +191,47 @@ export function generateEllipseModel({
     // }
   }
 
+  const boltOffset = 1
+  const boldRadius = 0.15
+  const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltTop), [
+    0,
+    height / 2 - boltOffset,
+  ])
+  const boltBottom = new makerjs.models.Ellipse(
+    boldRadius,
+    boldRadius,
+  )
+  makerjs.model.move(makerjs.model.center(boltBottom), [
+    0,
+    (-1 * height) / 2 + boltOffset,
+  ])
+  const boltLeft = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltLeft), [
+    (-1 * width) / 2 + boltOffset,
+    0,
+  ])
+  const boltRight = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltRight), [
+    width / 2 - boltOffset,
+    0,
+  ])
+  const bolts = {
+    models: {
+      boltTop,
+      boltBottom,
+      boltLeft,
+      boltRight,
+    },
+  }
+
   const tabletFaceMount = {
     models: {
       outer: { ...outer, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
+      bolts: { ...bolts, layer: "bolts" },
     },
     paths: {
       // topArc: { ...topArc, layer: "arc" },
@@ -230,9 +263,14 @@ export function generateEllipseModel({
             fill: backgroundColor,
             stroke: backgroundColor,
           },
-      arc: {
-        stroke: "blue",
-      },
+      bolts: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+          },
+      // arc: {
+      //   stroke: "blue",
+      // },
     },
     viewBox: true,
     svgAttrs: {

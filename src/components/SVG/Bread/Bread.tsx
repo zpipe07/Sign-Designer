@@ -38,13 +38,17 @@ export function generateBreadModel({
   const arc = makerjs.model.move(
     makerjs.model.center(
       new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
-      true,
-      false,
     ),
     [0, height / 2],
   )
   const rect = makerjs.model.move(
-    new makerjs.models.RoundRectangle(width, (height * 3) / 4, 0.25),
+    makerjs.model.center(
+      new makerjs.models.RoundRectangle(
+        width,
+        (height * 3) / 4,
+        0.25,
+      ),
+    ),
     [(-1 * width) / 2, (-1 * height) / 4],
   )
 
@@ -71,7 +75,7 @@ export function generateBreadModel({
   )
   const borderInner = makerjs.model.outline(
     borderOuter,
-    0.3,
+    0.2,
     undefined,
     true,
   )
@@ -166,6 +170,39 @@ export function generateBreadModel({
       continue
     }
   }
+  const boltOffset = 1
+  const boldRadius = 0.15
+  const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltTop), [
+    0,
+    (height * 3) / 4 - boltOffset,
+  ])
+  const boltBottom = new makerjs.models.Ellipse(
+    boldRadius,
+    boldRadius,
+  )
+  makerjs.model.move(makerjs.model.center(boltBottom), [
+    0,
+    height / -4 + boltOffset,
+  ])
+  const boltLeft = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltLeft), [
+    (-1 * width) / 2 + boltOffset,
+    height / 4,
+  ])
+  const boltRight = new makerjs.models.Ellipse(boldRadius, boldRadius)
+  makerjs.model.move(makerjs.model.center(boltRight), [
+    width / 2 - boltOffset,
+    height / 4,
+  ])
+  const bolts = {
+    models: {
+      boltTop,
+      boltBottom,
+      boltLeft,
+      boltRight,
+    },
+  }
 
   const modelToExport = {
     models: {
@@ -173,6 +210,7 @@ export function generateBreadModel({
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
+      bolts: { ...bolts, layer: "bolts" },
     },
     paths: {},
   }
@@ -200,9 +238,14 @@ export function generateBreadModel({
             fill: backgroundColor,
             stroke: backgroundColor,
           },
-      arc: {
-        stroke: "blue",
-      },
+      bolts: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+          },
+      // arc: {
+      //   stroke: "blue",
+      // },
     },
     viewBox: true,
     svgAttrs: {
