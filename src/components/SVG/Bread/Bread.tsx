@@ -7,7 +7,7 @@ const fontSizeMap: { [key in Size]: number } = {
   "extra small": 3.0,
   small: 4.0,
   medium: 4.0,
-  large: 4.25,
+  large: 4.2,
   "extra large": 4.5,
 }
 const topArcYMap: { [key in Size]: number } = {
@@ -126,7 +126,7 @@ export function generateBreadModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = measure.height / -3
+      const y = measure.height / -2
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -159,7 +159,7 @@ export function generateBreadModel({
       makerjs.layout.childrenOnPath(
         textModel,
         topArc,
-        0.5,
+        0.65,
         true,
         false,
         true,
