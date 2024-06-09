@@ -23,7 +23,7 @@ function calculateAngle(arcLength: number, radius: number) {
   return angle
 }
 
-export function generateModel({
+export function generateEllipseModel({
   height,
   width,
   borderWidth,
@@ -99,7 +99,6 @@ export function generateModel({
       // street name
       const fontSize =
         fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
-      // const fontSize = 3 - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -135,7 +134,6 @@ export function generateModel({
       // family name
       const fontSize =
         fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
-      // const fontSize = 3 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -150,9 +148,7 @@ export function generateModel({
       topArc = new makerjs.paths.Arc(
         [0, topArcYMap[inputs.size as Size]],
         width,
-        // 75,
         90 - angle / 2,
-        // 105,
         90 + angle / 2,
       )
 
@@ -252,18 +248,15 @@ export function generateModel({
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    units: "in",
+    units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
-  // const dxf = makerjs.exporter.toDXF(tabletFaceMount, {
-  //   units: "in",
-  // })
 
   return { svg }
 }
 
 export const Ellipse: React.FC<SvgProps> = (props) => {
-  const { svg } = generateModel(props)
+  const { svg } = generateEllipseModel(props)
 
   return (
     <div

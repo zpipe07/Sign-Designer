@@ -1,8 +1,29 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import { Size } from "@/src/components/SignDesigner/types"
 
-export const Bread: React.FC<SvgProps> = ({
+const fontSizeMap: { [key in Size]: number } = {
+  "extra small": 3.0,
+  small: 4.0,
+  medium: 4.0,
+  large: 4.25,
+  "extra large": 4.5,
+}
+const topArcYMap: { [key in Size]: number } = {
+  "extra small": -14.5,
+  small: -13,
+  medium: -12.25,
+  large: -9,
+  "extra large": -17.5,
+}
+
+function calculateAngle(arcLength: number, radius: number) {
+  const angle = (arcLength / radius) * (180 / Math.PI)
+  return angle
+}
+
+export function generateBreadModel({
   height,
   width,
   borderWidth,
@@ -11,380 +32,201 @@ export const Bread: React.FC<SvgProps> = ({
   foregroundColor,
   backgroundColor,
   font,
-}) => {
-  const topRightCorner = new makerjs.models.ConnectTheDots(false, [
-    [5495.36, 1305.76],
-    [5495.31, 1302.13],
-    [5495.18, 1298.5],
-    [5494.96, 1294.88],
-    [5494.65, 1291.26],
-    [5494.26, 1287.65],
-    [5493.78, 1284.05],
-    [5493.21, 1280.46],
-    [5492.55, 1276.89],
-    [5491.81, 1273.34],
-    [5490.98, 1269.8],
-    [5490.07, 1266.29],
-    [5489.07, 1262.79],
-    [5487.99, 1259.33],
-    [5486.82, 1255.89],
-    [5485.57, 1252.48],
-    [5484.24, 1249.1],
-    [5482.83, 1245.75],
-    [5481.34, 1242.44],
-    [5479.76, 1239.17],
-    [5478.11, 1235.93],
-    [5476.38, 1232.74],
-    [5474.58, 1229.59],
-    [5472.69, 1226.48],
-    [5470.74, 1223.42],
-    [5468.71, 1220.41],
-    [5466.6, 1217.45],
-    [5464.43, 1214.54],
-    [5462.19, 1211.69],
-    [5459.88, 1208.89],
-    [5457.5, 1206.14],
-    [5455.05, 1203.46],
-    [5452.54, 1200.83],
-    [5449.97, 1198.27],
-    [5447.34, 1195.77],
-    [5444.65, 1193.33],
-    [5441.9, 1190.96],
-    [5439.09, 1188.65],
-    [5436.23, 1186.42],
-    [5433.31, 1184.26],
-    [5430.34, 1182.16],
-    [5427.32, 1180.14],
-    [5424.26, 1178.19],
-  ])
-  const bottomLine = new makerjs.models.ConnectTheDots(false, [
-    [5345.36, 3960.65],
-    [1070.36, 3960.65],
-  ])
-  const bottomRightCorner = new makerjs.models.ConnectTheDots(false, [
-    [5345.36, 3960.65],
-    [5349.04, 3960.61],
-    [5352.72, 3960.47],
-    [5356.39, 3960.25],
-    [5360.06, 3959.93],
-    [5363.72, 3959.53],
-    [5367.37, 3959.03],
-    [5371, 3958.45],
-    [5374.62, 3957.77],
-    [5378.22, 3957.01],
-    [5381.8, 3956.16],
-    [5385.36, 3955.22],
-    [5388.9, 3954.19],
-    [5392.41, 3953.08],
-    [5395.89, 3951.89],
-    [5399.34, 3950.6],
-    [5402.76, 3949.24],
-    [5406.14, 3947.79],
-    [5409.49, 3946.25],
-    [5412.8, 3944.64],
-    [5416.07, 3942.94],
-    [5419.29, 3941.17],
-    [5422.47, 3939.31],
-    [5425.61, 3937.38],
-    [5428.69, 3935.37],
-    [5431.73, 3933.29],
-    [5434.71, 3931.13],
-    [5437.64, 3928.91],
-    [5440.52, 3926.61],
-    [5443.33, 3924.24],
-    [5446.09, 3921.8],
-    [5448.79, 3919.29],
-    [5451.42, 3916.72],
-    [5453.99, 3914.08],
-    [5456.5, 3911.39],
-    [5458.94, 3908.63],
-    [5461.31, 3905.81],
-    [5463.61, 3902.94],
-    [5465.84, 3900.01],
-    [5467.99, 3897.02],
-    [5470.08, 3893.99],
-    [5472.08, 3890.9],
-    [5474.02, 3887.77],
-    [5475.87, 3884.59],
-    [5477.64, 3881.36],
-    [5479.34, 3878.1],
-    [5480.96, 3874.79],
-    [5482.49, 3871.44],
-    [5483.94, 3868.06],
-    [5485.31, 3864.64],
-    [5486.59, 3861.19],
-    [5487.79, 3857.71],
-    [5488.9, 3854.2],
-    [5489.92, 3850.66],
-    [5490.86, 3847.1],
-    [5491.71, 3843.52],
-    [5492.47, 3839.92],
-    [5493.15, 3836.3],
-    [5493.73, 3832.66],
-    [5494.23, 3829.02],
-    [5494.63, 3825.36],
-    [5494.95, 3821.69],
-    [5495.18, 3818.01],
-    [5495.31, 3814.33],
-    [5495.36, 3810.65],
-  ])
-  const rightLine = new makerjs.models.ConnectTheDots(false, [
-    [5495.36, 1305.76],
-    [5495.36, 3810.65],
-  ])
-  const bottomLeftCorner = new makerjs.models.ConnectTheDots(false, [
-    [920.357, 3810.65],
-    [920.402, 3814.33],
-    [920.537, 3818.01],
-    [920.763, 3821.69],
-    [921.079, 3825.36],
-    [921.485, 3829.02],
-    [921.98, 3832.66],
-    [922.565, 3836.3],
-    [923.239, 3839.92],
-    [924.001, 3843.52],
-    [924.852, 3847.1],
-    [925.79, 3850.66],
-    [926.816, 3854.2],
-    [927.927, 3857.71],
-    [929.125, 3861.19],
-    [930.408, 3864.64],
-    [931.775, 3868.06],
-    [933.225, 3871.44],
-    [934.758, 3874.79],
-    [936.373, 3878.1],
-    [938.068, 3881.36],
-    [939.844, 3884.59],
-    [941.697, 3887.77],
-    [943.629, 3890.9],
-    [945.636, 3893.99],
-    [947.719, 3897.02],
-    [949.875, 3900.01],
-    [952.105, 3902.94],
-    [954.405, 3905.81],
-    [956.775, 3908.63],
-    [959.214, 3911.39],
-    [961.72, 3914.08],
-    [964.291, 3916.72],
-    [966.926, 3919.29],
-    [969.623, 3921.8],
-    [972.381, 3924.24],
-    [975.198, 3926.61],
-    [978.072, 3928.91],
-    [981.002, 3931.13],
-    [983.985, 3933.29],
-    [987.021, 3935.37],
-    [990.107, 3937.38],
-    [993.241, 3939.31],
-    [996.422, 3941.17],
-    [999.647, 3942.94],
-    [1002.91, 3944.64],
-    [1006.22, 3946.25],
-    [1009.57, 3947.79],
-    [1012.95, 3949.24],
-    [1016.37, 3950.6],
-    [1019.82, 3951.89],
-    [1023.3, 3953.08],
-    [1026.81, 3954.19],
-    [1030.35, 3955.22],
-    [1033.91, 3956.16],
-    [1037.49, 3957.01],
-    [1041.09, 3957.77],
-    [1044.71, 3958.45],
-    [1048.35, 3959.03],
-    [1052, 3959.53],
-    [1055.65, 3959.93],
-    [1059.32, 3960.25],
-    [1063, 3960.47],
-    [1066.68, 3960.61],
-    [1070.36, 3960.65],
-  ])
-  const leftLine = new makerjs.models.ConnectTheDots(false, [
-    [920.357, 1305.76],
-    [920.357, 3810.65],
-  ])
-  const topLeftCorner = new makerjs.models.ConnectTheDots(false, [
-    [991.454, 1178.19],
-    [988.389, 1180.14],
-    [985.371, 1182.16],
-    [982.404, 1184.26],
-    [979.488, 1186.42],
-    [976.625, 1188.65],
-    [973.818, 1190.96],
-    [971.067, 1193.33],
-    [968.374, 1195.77],
-    [965.741, 1198.27],
-    [963.169, 1200.83],
-    [960.66, 1203.46],
-    [958.216, 1206.14],
-    [955.837, 1208.89],
-    [953.525, 1211.69],
-    [951.282, 1214.54],
-    [949.108, 1217.45],
-    [947.006, 1220.41],
-    [944.976, 1223.42],
-    [943.019, 1226.48],
-    [941.137, 1229.59],
-    [939.331, 1232.74],
-    [937.602, 1235.93],
-    [935.95, 1239.17],
-    [934.377, 1242.44],
-    [932.884, 1245.75],
-    [931.472, 1249.1],
-    [930.14, 1252.48],
-    [928.892, 1255.89],
-    [927.726, 1259.33],
-    [926.643, 1262.79],
-    [925.645, 1266.29],
-    [924.732, 1269.8],
-    [923.904, 1273.34],
-    [923.162, 1276.89],
-    [922.506, 1280.46],
-    [921.937, 1284.05],
-    [921.454, 1287.65],
-    [921.059, 1291.26],
-    [920.752, 1294.88],
-    [920.532, 1298.5],
-    [920.401, 1302.13],
-    [920.357, 1305.76],
-  ])
-  const topArc = new makerjs.models.ConnectTheDots(false, [
-    [5424.26, 1178.19],
-    [5337.32, 1125.86],
-    [5249.15, 1075.63],
-    [5159.8, 1027.55],
-    [5069.31, 981.625],
-    [4977.74, 937.896],
-    [4885.15, 896.385],
-    [4791.58, 857.115],
-    [4697.1, 820.11],
-    [4601.75, 785.391],
-    [4505.59, 752.978],
-    [4408.68, 722.89],
-    [4311.08, 695.144],
-    [4212.83, 669.757],
-    [4114, 646.743],
-    [4014.65, 626.115],
-    [3914.82, 607.886],
-    [3814.59, 592.066],
-    [3714.01, 578.665],
-    [3613.13, 567.689],
-    [3512.02, 559.146],
-    [3410.73, 553.04],
-    [3309.32, 549.376],
-    [3207.86, 548.154],
-    [3106.39, 549.376],
-    [3004.98, 553.04],
-    [2903.7, 559.146],
-    [2802.58, 567.689],
-    [2701.7, 578.665],
-    [2601.12, 592.066],
-    [2500.89, 607.886],
-    [2401.07, 626.115],
-    [2301.71, 646.743],
-    [2202.88, 669.757],
-    [2104.64, 695.144],
-    [2007.03, 722.89],
-    [1910.12, 752.978],
-    [1813.96, 785.391],
-    [1718.62, 820.11],
-    [1624.13, 857.115],
-    [1530.57, 896.385],
-    [1437.97, 937.896],
-    [1346.4, 981.625],
-    [1255.92, 1027.55],
-    [1166.56, 1075.63],
-    [1078.39, 1125.86],
-    [991.454, 1178.19],
-  ])
+  strokeOnly,
+  actualDimensions,
+}: SvgProps & { actualDimensions?: boolean }) {
+  const arc = makerjs.model.move(
+    makerjs.model.center(
+      new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
+      true,
+      false,
+    ),
+    [0, height / 2],
+  )
+  const rect = makerjs.model.move(
+    new makerjs.models.RoundRectangle(width, (height * 3) / 4, 0.25),
+    [(-1 * width) / 2, (-1 * height) / 4],
+  )
+
+  delete rect.paths?.Top
+  delete rect.paths?.TopLeft
+  delete rect.paths?.TopRight
+
+  // @ts-ignore
+  rect.paths.Left.origin = [0, (height * 3) / 4]
+  // @ts-ignore
+  rect.paths.Right.end = [width, (height * 3) / 4]
 
   const outer = {
     models: {
-      topRightCorner: makerjs.model.mirror(
-        topRightCorner,
-        false,
-        true,
-      ),
-      bottomLine: makerjs.model.mirror(bottomLine, false, true),
-      bottomRightCorner: makerjs.model.mirror(
-        bottomRightCorner,
-        false,
-        true,
-      ),
-      bottomLeftCorner: makerjs.model.mirror(
-        bottomLeftCorner,
-        false,
-        true,
-      ),
-      leftLine: makerjs.model.mirror(leftLine, false, true),
-      topLeftCorner: makerjs.model.mirror(topLeftCorner, false, true),
-      topArc: makerjs.model.mirror(topArc, false, true),
-      rightLine: makerjs.model.mirror(rightLine, false, true),
+      rect,
+      arc,
     },
-    layer: "outer",
+  }
+  const borderOuter = makerjs.model.outline(
+    outer,
+    0.5,
+    undefined,
+    true,
+  )
+  const borderInner = makerjs.model.outline(
+    borderOuter,
+    0.3,
+    undefined,
+    true,
+  )
+  let topArc = {} as any
+  const text: any = {
+    models: {},
   }
 
-  const inner = makerjs.model.outline(outer, 100, undefined, true)
-  inner.layer = "inner"
-
-  const textModels = {}
-
   for (const textLine of textLines) {
-    const index = Object.keys(textModels).length
+    const index = Object.keys(text.models).length
     const chars = textLine.value.length
-    const fontSize = 300 - chars * 10
-    const textModel = new makerjs.models.Text(
-      font,
-      textLine.value,
-      fontSize,
-      true,
-      false,
-      0,
-      {},
-    )
-    const measure = makerjs.measure.modelExtents(textModel)
-    const x = (width - measure.width) / 2
-    const y =
-      height / 2 -
-      measure.height / 2 -
-      250 * index +
-      (textLines.length - 1) * 125
 
-    // @ts-ignore
-    textModel.origin = [x, y]
-    // @ts-ignore
-    textModel.layer = "text"
-    // @ts-ignore
-    textModels[`textModel${index}`] = textModel
+    if (index === 0) {
+      // house number
+      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = height / 3 - (measure.height * 2) / 3
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 1) {
+      // street name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = measure.height / -3
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 2) {
+      // family name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const angle = calculateAngle(measure.width, width)
+      topArc = new makerjs.paths.Arc(
+        [0, topArcYMap[inputs.size as Size]],
+        width,
+        90 - angle / 2,
+        90 + angle / 2,
+      )
+      makerjs.layout.childrenOnPath(
+        textModel,
+        topArc,
+        0.5,
+        true,
+        false,
+        true,
+      )
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
+      continue
+    }
   }
 
   const modelToExport = {
-    models: { outer, inner, ...textModels },
+    models: {
+      outer: { ...outer, layer: "outer" },
+      borderOuter: { ...borderOuter, layer: "borderOuter" },
+      borderInner: { ...borderInner, layer: "borderInner" },
+      text: { ...text, layer: "text" },
+    },
+    paths: {},
   }
-  const svg = makerjs.exporter.toSVG(modelToExport, {
+  const strokeOnlyStyle = { fill: "none", stroke: "black" }
+  const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
-      outer: {
-        fill: backgroundColor,
-        stroke: "black",
-      },
-      inner: {
-        fill: foregroundColor,
-        stroke: "black",
+      borderOuter: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+          },
+      borderInner: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      outer: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      text: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: backgroundColor,
+          },
+      arc: {
+        stroke: "blue",
       },
     },
     viewBox: true,
     svgAttrs: {
       xmlns: "http://www.w3.org/2000/svg",
-      height: "100%",
-      width: "100%",
-      // width: "558.8mm",
-      // height: "431.8mm",
-      // viewBox: `0 0 ${width} ${height}`,
-      viewBox: "0 0 6600 5100",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
+      id: "svg2",
+      version: "1.1",
+      height: actualDimensions ? `${height}in` : "100%",
+      width: actualDimensions ? `${width}in` : "100%",
+      // height: `${height}in`,
+      // width: `${width}in`,
+      viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    accuracy: 0.1,
-  })
+    units: makerjs.unitType.Inch,
+  }
+  const svg = makerjs.exporter.toSVG(modelToExport, options)
+
+  return { svg }
+}
+
+export const Bread: React.FC<SvgProps> = (props) => {
+  const { svg } = generateBreadModel(props)
 
   return (
     <div

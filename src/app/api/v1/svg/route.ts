@@ -7,7 +7,7 @@ import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
 import { FONT_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { FontFamily } from "@/src/components/SignDesigner/types"
-import { generateModel } from "@/src/components/SVG/Ellipse"
+import { generateModel } from "@/src/utils/makerjs"
 
 export async function GET(request: NextRequest) {
   const product = await getProduct("112")
