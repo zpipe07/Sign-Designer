@@ -37,7 +37,7 @@ export async function PATCH(
   const lineItem = await formDataToCartItem(
     formData,
     product,
-    productOptionsMap,
+    // productOptionsMap,
   )
   const cart = await updateCart(params.cartId, [
     { ...lineItem, id: params.itemId },
