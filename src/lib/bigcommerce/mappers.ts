@@ -31,17 +31,21 @@ import {
   VercelProductVariant,
 } from "./types"
 import {
+  Color,
   DesignFormInputs,
   FontFamily,
+  TextLine,
 } from "@/src/components/SignDesigner/types"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import {
   FONT_MAP,
+  SIZE_CONFIG_MAP,
   product,
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProductVariant } from "@/src/lib/bigcommerce/utils"
+import { generateModel } from "@/src/components/SVG/Ellipse"
 
 type ProductsList = {
   productId: number
@@ -497,38 +501,73 @@ export const getProductFormMapping = (product: VercelProduct) => {
 export const formDataToCartItem = async (
   data: DesignFormInputs,
   product: VercelProduct,
-  productOptionsMap: ProductOptionsMap,
+  // productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
-  const ReactDOMServer = (await import("react-dom/server")).default
   const dirRelativeToPublicFolder = "fonts"
   const dir = path.resolve("./public", dirRelativeToPublicFolder)
   const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
   const font = opentype.loadSync(`${fontUrl}`)
-  const component = React.createElement(SignDesignerVisualizerView, {
+  const maxLinesOfText =
+    // @ts-ignore
+    SIZE_CONFIG_MAP[data.size as Size].maxLinesOfText
+  const textLines: TextLine[] = data.textLines
+    ?.slice(0, maxLinesOfText)
+    .filter(({ value }: TextLine) => {
+      return !!value
+    })
+  // @ts-ignore
+  const { height, width } = SIZE_CONFIG_MAP[data.size as Size]
+  const [foregroundColor, backgroundColor] = data.color.split(
+    "/",
+  ) as Color[]
+  const { svg } = generateModel({
+    height,
+    width,
+    borderWidth: 0.5,
+    textLines,
+    foregroundColor,
+    backgroundColor,
     inputs: data,
     font,
-    productOptionsMap,
+    // productOptionsMap,
+    strokeOnly: true,
+    actualDimensions: true,
   })
-  const svg = ReactDOMServer.renderToString(component)
   const id = randomUUID()
 
   // generate SVG file
   await fs.writeFile(`/tmp/${id}.svg`, svg)
-  const file = await fs.readFile(`/tmp/${id}.svg`, {
+  const svgFile = await fs.readFile(`/tmp/${id}.svg`, {
     encoding: "base64",
   })
 
+  // // generate DXF file
+  // await fs.writeFile(`/tmp/${id}.dxf`, dxf)
+  // const dxfFile = await fs.readFile(`/tmp/${id}.dxf`, {
+  //   encoding: "base64",
+  // })
+
   // save file to supabase
   const supabase = createClient()
-  const { error } = await supabase.storage
+  const { error: svgFileError } = await supabase.storage
     .from("signs")
-    .upload(`${id}.svg`, decode(file), {
+    .upload(`${id}.svg`, decode(svgFile), {
       contentType: "image/svg+xml",
     })
 
-  if (error) {
-    throw error
+  if (svgFileError) {
+    throw svgFileError
   }
+
+  // const { error: dxfFileError } = await supabase.storage
+  //   .from("signs")
+  //   .upload(`${id}.dxf`, decode(dxfFile), {
+  //     contentType: "application/dxf",
+  //   })
+
+  // if (dxfFileError) {
+  //   throw dxfFileError
+  // }
 
   const {
     data: { publicUrl },

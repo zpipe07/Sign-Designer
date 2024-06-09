@@ -9,6 +9,7 @@ export type FontFamily =
   | "Expletus"
   | "Playfair"
   | "Cormorant"
+  | "Arbutus"
 // | "Tourney"
 // "times"
 // | "verdana"
@@ -29,11 +30,11 @@ export type Size =
   | "extra large"
 
 export type SizeConfig = {
-  [key in Orientation]: {
-    width: number
-    height: number
-    maxLinesOfText: number
-  }
+  // [key in Orientation]: {
+  width: number
+  height: number
+  maxLinesOfText: number
+  // }
 }
 
 export type TextLine = { value: string }

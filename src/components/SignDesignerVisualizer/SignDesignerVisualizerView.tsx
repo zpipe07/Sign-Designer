@@ -19,18 +19,21 @@ type Props = {
   inputs: DesignFormInputs
   font: opentype.Font
   productOptionsMap: ProductOptionsMap
+  strokeOnly?: boolean
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
   font,
   // productOptionsMap,
+  strokeOnly,
 }) => {
-  const borderWidth = 30
+  const borderWidth = 0.5
   const maxLinesOfText =
-    SIZE_CONFIG_MAP[inputs.size as Size][
-      inputs.orientation as Orientation
-    ].maxLinesOfText
+    SIZE_CONFIG_MAP[inputs.size as Size].maxLinesOfText
+  // SIZE_CONFIG_MAP[inputs.size as Size][
+  //   inputs.orientation as Orientation
+  // ].maxLinesOfText
   const textLines: TextLine[] = inputs?.textLines
     ?.slice(0, maxLinesOfText)
     .filter(({ value }: TextLine) => {
@@ -38,10 +41,10 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
     })
   const [foregroundColor, backgroundColor] =
     (inputs?.color?.split("/") as Color[]) || []
-  const { width, height } =
-    SIZE_CONFIG_MAP[inputs.size as Size][
-      inputs.orientation as Orientation
-    ]
+  const { width, height } = SIZE_CONFIG_MAP[inputs.size as Size]
+  // SIZE_CONFIG_MAP[inputs.size as Size][
+  //   inputs.orientation as Orientation
+  // ]
 
   return (
     <>
@@ -61,13 +64,14 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
       {inputs.shape === "ellipse" && (
         <Ellipse
           width={width}
-          height={height + 40}
+          height={height}
           borderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           font={font}
+          strokeOnly={strokeOnly}
         />
       )}
 

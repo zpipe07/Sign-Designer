@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import Typography from "@mui/material/Typography"
 import Table from "@mui/material/Table"
@@ -40,32 +41,43 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                   <TableCell>
                     <Typography>{merchandise.title}</Typography>
 
-                    <Typography variant="body2">
+                    {/* <Typography variant="body2">
                       <strong>Shape: </strong>
                       {
                         merchandise.selectedOptions.find(
                           ({ name }) => name === "shape_modifier",
                         )?.value
                       }
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="body2">
                       <strong>Size: </strong>
                       {
                         merchandise.selectedOptions.find(
-                          ({ name }) => name === "size_modifier",
+                          ({ name }) => name === "size",
                         )?.value
                       }
                     </Typography>
 
-                    <Typography variant="body2">
+                    <Image
+                      src={
+                        merchandise.selectedOptions.find(
+                          ({ name }) => name === "svgFile",
+                        )?.value!
+                      }
+                      alt=""
+                      width={100}
+                      height={100}
+                    />
+
+                    {/* <Typography variant="body2">
                       <strong>Color: </strong>
                       {
                         merchandise.selectedOptions.find(
                           ({ name }) => name === "color",
                         )?.value
                       }
-                    </Typography>
+                    </Typography> */}
                   </TableCell>
                   <TableCell>
                     <Button

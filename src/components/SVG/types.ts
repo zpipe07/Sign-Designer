@@ -15,6 +15,7 @@ export type SvgProps = {
   foregroundColor: Color
   backgroundColor: Color
   font: opentype.Font
+  strokeOnly?: boolean
 }
 
 export type PreviewSvgProps = {
