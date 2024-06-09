@@ -348,6 +348,7 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Expletus: "ExpletusSans-BoldItalic.ttf",
   Playfair: "PlayfairDisplay-BlackItalic.ttf",
   Cormorant: "Cormorant-BoldItalic.ttf",
+  Arbutus: "ArbutusSlab-Regular.ttf",
   // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
 }
 

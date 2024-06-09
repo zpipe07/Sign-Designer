@@ -14,13 +14,20 @@ import {
 } from "@mui/material"
 
 import { FontFamily } from "@/src/components/SignDesigner/types"
-import { Albert, Cormorant, Expletus, Playfair } from "@/src/fonts"
+import {
+  Albert,
+  Arbutus,
+  Cormorant,
+  Expletus,
+  Playfair,
+} from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
   "Albert",
   "Expletus",
   "Playfair",
   "Cormorant",
+  "Arbutus",
 ]
 
 const fontMap = {
@@ -28,6 +35,7 @@ const fontMap = {
   Expletus,
   Playfair,
   Cormorant,
+  Arbutus,
 }
 
 export const FontSelector: React.FC = () => {

@@ -9,6 +9,7 @@ export type FontFamily =
   | "Expletus"
   | "Playfair"
   | "Cormorant"
+  | "Arbutus"
 // | "Tourney"
 // "times"
 // | "verdana"

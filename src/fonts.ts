@@ -12,3 +12,6 @@ export const Playfair = localFont({
 export const Cormorant = localFont({
   src: "../public/fonts/Cormorant-BoldItalic.ttf",
 })
+export const Arbutus = localFont({
+  src: "../public/fonts/ArbutusSlab-Regular.ttf",
+})

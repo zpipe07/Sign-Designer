@@ -1,10 +1,13 @@
-import React from "react"
+import path from "path"
 import opentype from "opentype.js"
 import { NextResponse, type NextRequest } from "next/server"
 
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
+import { FONT_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { FontFamily } from "@/src/components/SignDesigner/types"
+import { generateModel } from "@/src/components/SVG/Ellipse"
 
 export async function GET(request: NextRequest) {
   const product = await getProduct("112")
@@ -22,25 +25,62 @@ export async function GET(request: NextRequest) {
   const textLines = searchParams.get("textLines")
   console.log({ shape, orientation, size })
 
-  const font = opentype.loadSync(
-    "public/fonts/AlbertSans-VariableFont_wght.ttf",
-  )
-  const ReactDOMServer = (await import("react-dom/server")).default
-  const component = React.createElement(SignDesignerVisualizerView, {
+  const fontFamily: FontFamily = "Arbutus"
+  const dirRelativeToPublicFolder = "fonts"
+  const dir = path.resolve("./public", dirRelativeToPublicFolder)
+  const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
+  const font = opentype.loadSync(`${fontUrl}`)
+  // const ReactDOMServer = (await import("react-dom/server")).default
+  // const component = React.createElement(SignDesignerVisualizerView, {
+  //   inputs: {
+  //     shape: "ellipse",
+  //     orientation: "horizontal",
+  //     size: "large",
+  //     textLines: [
+  //       { value: "654321" },
+  //       { value: "Abcdefghijk" },
+  //       { value: "Lmnopqrstuvwxyz" },
+  //     ],
+  //     // color: { foregroundColor: "black", backgroundColor: "green" },
+  //     color: "black/white",
+  //     fontFamily,
+  //     // decoration: "",
+  //   },
+  //   font,
+  //   productOptionsMap,
+  //   strokeOnly: true,
+  // })
+  // const svg = ReactDOMServer.renderToString(component)
+  // console.log({ svg })
+  const { svg } = generateModel({
+    height: 10,
+    width: 15,
+    borderWidth: 0.5,
+    textLines: [
+      { value: "654321" },
+      { value: "Abcdefghijk" },
+      { value: "Lmnopqrstuvwxyz" },
+    ],
+    foregroundColor: "black",
+    backgroundColor: "white",
     inputs: {
-      shape: "rectangle",
+      shape: "ellipse",
       orientation: "horizontal",
-      size: "medium",
-      textLines: [{ value: "Hello world" }],
+      size: "large",
+      textLines: [
+        { value: "654321" },
+        { value: "Abcdefghijk" },
+        { value: "Lmnopqrstuvwxyz" },
+      ],
       // color: { foregroundColor: "black", backgroundColor: "green" },
-      color: "black/green",
-      fontFamily: "times",
-      decoration: "",
+      color: "black/white",
+      fontFamily,
+      // decoration: "",
     },
     font,
-    productOptionsMap,
+    // productOptionsMap,
+    strokeOnly: true,
   })
-  const svg = ReactDOMServer.renderToString(component)
 
   return new NextResponse(svg, {
     headers: { "Content-Type": "image/svg+xml" },

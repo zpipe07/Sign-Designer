@@ -5,7 +5,7 @@ import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 3.5,
-  small: 4.5,
+  small: 4.75,
   medium: 4.5,
   large: 4.5,
   "extra large": 4.75,
@@ -23,7 +23,7 @@ function calculateAngle(arcLength: number, radius: number) {
   return angle
 }
 
-export const Ellipse: React.FC<SvgProps> = ({
+export function generateModel({
   height,
   width,
   borderWidth,
@@ -33,7 +33,8 @@ export const Ellipse: React.FC<SvgProps> = ({
   backgroundColor,
   font,
   strokeOnly,
-}) => {
+  actualDimensions,
+}: SvgProps & { actualDimensions?: boolean }) {
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
   const borderOuter = makerjs.model.outline(
     outer,
@@ -73,7 +74,7 @@ export const Ellipse: React.FC<SvgProps> = ({
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
+      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -204,13 +205,13 @@ export const Ellipse: React.FC<SvgProps> = ({
       text: { ...text, layer: "text" },
     },
     paths: {
-      topArc: { ...topArc, layer: "arc" },
-      bottomArc: { ...bottomArc, layer: "arc" },
+      // topArc: { ...topArc, layer: "arc" },
+      // bottomArc: { ...bottomArc, layer: "arc" },
     },
   }
 
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, {
+  const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
       borderOuter: strokeOnly
         ? strokeOnlyStyle
@@ -240,190 +241,36 @@ export const Ellipse: React.FC<SvgProps> = ({
     viewBox: true,
     svgAttrs: {
       xmlns: "http://www.w3.org/2000/svg",
-      height: "100%",
-      width: "100%",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
+      id: "svg2",
+      version: "1.1",
+      height: actualDimensions ? `${height}in` : "100%",
+      width: actualDimensions ? `${width}in` : "100%",
+      // height: `${height}in`,
+      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    // accuracy: 0.25,
-  })
+    units: "in",
+  }
+  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+  // const dxf = makerjs.exporter.toDXF(tabletFaceMount, {
+  //   units: "in",
+  // })
+
+  return { svg }
+}
+
+export const Ellipse: React.FC<SvgProps> = (props) => {
+  const { svg } = generateModel(props)
 
   return (
     <div
-      style={{ height: "100%" }}
+      style={{
+        height: "100%",
+      }}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   )
-  // const Decoration: React.FC<FiligreeProps> | null =
-  //   inputs?.decoration
-  //     ? decorationIconMap[inputs.decoration as Decoration]
-  //     : null
-
-  // return (
-  //   <svg
-  //     viewBox={`0 0 ${width} ${height}`}
-  //     fill="none"
-  //     xmlns="http://www.w3.org/2000/svg"
-  //     transform={
-  //       inputs.orientation === "vertical"
-  //         ? `rotate(90) translate(75 0)`
-  //         : ""
-  //     }
-  //   >
-  //     <g
-  //       transform={`translate(${borderWidth / 2},${borderWidth / 2})`}
-  //     >
-  //       <ellipse
-  //         cx={width / 2 - borderWidth / 2}
-  //         cy={height / 2 - borderWidth / 2}
-  //         rx={width / 2 - borderWidth / 2}
-  //         ry={height / 2 - borderWidth / 2}
-  //         fill={backgroundColor}
-  //         stroke={foregroundColor}
-  //         strokeWidth={borderWidth}
-  //       />
-
-  //       {inputs.orientation === "horizontal" &&
-  //         textLines?.map(({ value }, index) => {
-  //           const chars = value.length
-  //           const fontSize = 95 - chars * 3.5
-  //           const y = 70 * index + 170 - textLines.length * 30
-  //           const textModel = new makerjs.models.Text(
-  //             font,
-  //             value,
-  //             fontSize,
-  //             false,
-  //             false,
-  //             0,
-  //             {},
-  //           )
-  //           const svg = makerjs.exporter.toSVG(textModel, {
-  //             fill: foregroundColor,
-  //             stroke: "none",
-  //           })
-
-  //           return (
-  //             <g
-  //               dangerouslySetInnerHTML={{ __html: svg }}
-  //               transform={`translate(${(width - borderWidth) / chars}, ${y})`}
-  //               key={value}
-  //             ></g>
-  //           )
-
-  //           // return (
-  //           //   <text
-  //           //     y={y}
-  //           //     x={(width - borderWidth) / 2}
-  //           //     fontSize={fontSize}
-  //           //     fontWeight={800}
-  //           //     alignmentBaseline="middle"
-  //           //     textAnchor="middle"
-  //           //     fill={foregroundColor}
-  //           //     fontFamily={inputs?.fontFamily}
-  //           //     key={index}
-  //           //   >
-  //           //     {value}
-  //           //   </text>
-  //           // )
-  //         })}
-
-  //       {inputs.orientation === "vertical" &&
-  //         textLines[0]?.value.split("").map((char, index) => {
-  //           const chars = textLines[0]?.value.length
-  //           const fontSize = 100 - chars * 8
-  //           const x = 200 + index * 60 - chars * 25
-  //           const y = 135
-
-  //           const textModel = new makerjs.models.Text(
-  //             font,
-  //             char,
-  //             fontSize,
-  //             true,
-  //             true,
-  //             0,
-  //             {},
-  //           )
-  //           const svg = makerjs.exporter.toSVG(textModel, {
-  //             fill: foregroundColor,
-  //             stroke: "none",
-  //           })
-
-  //           return (
-  //             <g
-  //               dangerouslySetInnerHTML={{ __html: svg }}
-  //               transform={`rotate(-90, ${x}, ${y}) translate(${x}, ${y})`}
-  //               key={char}
-  //             ></g>
-  //           )
-  //           // return (
-  //           //   <text
-  //           //     y={y}
-  //           //     x={x}
-  //           //     transform={`rotate(-90, ${x}, ${y})`}
-  //           //     fontSize={fontSize}
-  //           //     fontWeight={800}
-  //           //     alignmentBaseline="middle"
-  //           //     textAnchor="middle"
-  //           //     fill={foregroundColor}
-  //           //     fontFamily={inputs?.fontFamily}
-  //           //     key={index}
-  //           //   >
-  //           //     {char}
-  //           //   </text>
-  //           // )
-  //         })}
-
-  //       {/* {streetNumber && (
-  //         <text
-  //           y={height / 2 - 30}
-  //           x={(width - borderWidth) / 2}
-  //           fontSize={50}
-  //           fontWeight={800}
-  //           alignmentBaseline="middle"
-  //           textAnchor="middle"
-  //           fill={foregroundColor}
-  //           fontFamily={fontFamily}
-  //         >
-  //           {streetNumber}
-  //         </text>
-  //       )} */}
-
-  //       {/* {streetName && (
-  //         <text
-  //           y={height / 2 + 20}
-  //           x={(width - borderWidth) / 2}
-  //           fontSize={40}
-  //           fontWeight={600}
-  //           alignmentBaseline="middle"
-  //           textAnchor="middle"
-  //           fill={foregroundColor}
-  //           fontFamily={fontFamily}
-  //         >
-  //           {streetName}
-  //         </text>
-  //       )} */}
-
-  //       {Decoration && (
-  //         <>
-  //           <Decoration
-  //             height={50}
-  //             width={50}
-  //             x={75}
-  //             y={40}
-  //             color={foregroundColor}
-  //           />
-
-  //           <Decoration
-  //             height={50}
-  //             width={50}
-  //             x={255}
-  //             y={40}
-  //             transform="scale(-1 1)"
-  //             color={foregroundColor}
-  //           />
-  //         </>
-  //       )}
-  //     </g>
-  //   </svg>
-  // )
 }

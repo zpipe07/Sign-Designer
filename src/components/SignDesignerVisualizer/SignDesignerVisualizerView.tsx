@@ -19,12 +19,14 @@ type Props = {
   inputs: DesignFormInputs
   font: opentype.Font
   productOptionsMap: ProductOptionsMap
+  strokeOnly?: boolean
 }
 
 export const SignDesignerVisualizerView: React.FC<Props> = ({
   inputs,
   font,
   // productOptionsMap,
+  strokeOnly,
 }) => {
   const borderWidth = 0.5
   const maxLinesOfText =
@@ -69,7 +71,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           font={font}
-          // strokeOnly
+          strokeOnly={strokeOnly}
         />
       )}
 
