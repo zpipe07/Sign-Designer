@@ -23,7 +23,7 @@ function calculateAngle(arcLength: number, radius: number) {
   return angle
 }
 
-export function generateModel({
+export function generateEllipseModel({
   height,
   width,
   borderWidth,
@@ -148,9 +148,7 @@ export function generateModel({
       topArc = new makerjs.paths.Arc(
         [0, topArcYMap[inputs.size as Size]],
         width,
-        // 75,
         90 - angle / 2,
-        // 105,
         90 + angle / 2,
       )
 
@@ -261,7 +259,7 @@ export function generateModel({
 }
 
 export const Ellipse: React.FC<SvgProps> = (props) => {
-  const { svg } = generateModel(props)
+  const { svg } = generateEllipseModel(props)
 
   return (
     <div

@@ -23,7 +23,7 @@ function calculateAngle(arcLength: number, radius: number) {
   return angle
 }
 
-function generateModel({
+export function generateBreadModel({
   height,
   width,
   borderWidth,
@@ -225,7 +225,7 @@ function generateModel({
 }
 
 export const Bread: React.FC<SvgProps> = (props) => {
-  const { svg } = generateModel(props)
+  const { svg } = generateBreadModel(props)
 
   return (
     <div

@@ -45,7 +45,7 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProductVariant } from "@/src/lib/bigcommerce/utils"
-import { generateModel } from "@/src/components/SVG/Ellipse"
+import { generateModel } from "@/src/utils/makerjs"
 
 type ProductsList = {
   productId: number
