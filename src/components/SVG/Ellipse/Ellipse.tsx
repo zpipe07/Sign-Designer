@@ -251,9 +251,6 @@ export function generateEllipseModel({
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
-  // const dxf = makerjs.exporter.toDXF(tabletFaceMount, {
-  //   units: "in",
-  // })
 
   return { svg }
 }
