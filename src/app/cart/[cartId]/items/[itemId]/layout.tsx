@@ -10,12 +10,12 @@ export default function Layout({
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: undefined,
-      orientation: undefined,
+      // orientation: undefined,
       size: undefined,
       textLines: undefined,
       color: undefined,
       fontFamily: undefined,
-      decoration: undefined,
+      // decoration: undefined,
     },
   })
 
