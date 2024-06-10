@@ -18,6 +18,7 @@ import { PreviewSvgProps } from "@/src/components/SVG/types"
 import { BreadPreview } from "@/src/components/SVG/BreadPreview"
 import { Shape } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
+import { ShapeRadioLabel } from "@/src/components/ShapeRadioLabel"
 
 // export const shapeIconMap: {
 //   [key in Shape]: React.FC<PreviewSvgProps>
@@ -66,12 +67,17 @@ export const ShapeSelector: React.FC = () => {
               <FormControlLabel
                 value={label}
                 control={<Radio size="small" />}
-                label={capitalize(label)}
+                label={
+                  <ShapeRadioLabel
+                    shape={label as Shape}
+                    checked={label === selectedShape}
+                  />
+                }
                 checked={label === selectedShape}
                 key={entityId}
-                // sx={{
-                //   fontSize: 0,
-                // }}
+                sx={{
+                  maxWidth: 125,
+                }}
                 {...register("shape")}
               />
             )
