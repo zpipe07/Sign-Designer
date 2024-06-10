@@ -9,6 +9,7 @@ import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm
 import { SignDesignerVisualizer } from "@/src/components/SignDesignerVisualizer/SignDesignerVisualizer"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { PriceDisplay } from "@/src/components/PriceDisplay"
+import { SignVisualizer } from "@/src/components/SignVisualizer"
 
 type Props = {
   isEditing?: boolean
@@ -47,7 +48,8 @@ export const SignDesigner: React.FC<Props> = ({ isEditing }) => {
             }}
           >
             <Card elevation={3} sx={{ padding: 2 }}>
-              <SignDesignerVisualizer />
+              {/* <SignDesignerVisualizer /> */}
+              <SignVisualizer />
             </Card>
 
             {/* <PriceDisplay /> */}

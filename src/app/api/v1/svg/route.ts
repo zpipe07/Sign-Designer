@@ -6,7 +6,11 @@ import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisuali
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
 import { FONT_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import { FontFamily } from "@/src/components/SignDesigner/types"
+import {
+  FontFamily,
+  Shape,
+  Size,
+} from "@/src/components/SignDesigner/types"
 import { generateModel } from "@/src/utils/makerjs"
 
 export async function GET(request: NextRequest) {
@@ -19,63 +23,56 @@ export async function GET(request: NextRequest) {
   const productOptionsMap = createProductOptionsMap(product)
 
   const searchParams = request.nextUrl.searchParams
-  const shape = searchParams.get("shape")
-  const orientation = searchParams.get("orientation")
-  const size = searchParams.get("size")
+  const shape = searchParams.get("shape") as Shape
+  const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
-  console.log({ shape, orientation, size })
 
-  const fontFamily: FontFamily = "Arbutus"
+  if (!shape) {
+    return new NextResponse(
+      "Missing required query parameter: shape",
+      { status: 400 },
+    )
+  }
+
+  if (!size) {
+    return new NextResponse(
+      "Missing required query parameter: size",
+      { status: 400 },
+    )
+  }
+
+  let parsedTextLines = []
+  if (textLines) {
+    parsedTextLines = JSON.parse(textLines)
+      .filter(Boolean)
+      .map((text: string) => ({
+        value: text,
+      }))
+  }
+
+  const fontFamily: FontFamily = "Albert"
   const dirRelativeToPublicFolder = "fonts"
   const dir = path.resolve("./public", dirRelativeToPublicFolder)
   const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
   const font = opentype.loadSync(`${fontUrl}`)
-  // const ReactDOMServer = (await import("react-dom/server")).default
-  // const component = React.createElement(SignDesignerVisualizerView, {
-  //   inputs: {
-  //     shape: "ellipse",
-  //     orientation: "horizontal",
-  //     size: "large",
-  //     textLines: [
-  //       { value: "654321" },
-  //       { value: "Abcdefghijk" },
-  //       { value: "Lmnopqrstuvwxyz" },
-  //     ],
-  //     // color: { foregroundColor: "black", backgroundColor: "green" },
-  //     color: "black/white",
-  //     fontFamily,
-  //     // decoration: "",
-  //   },
-  //   font,
-  //   productOptionsMap,
-  //   strokeOnly: true,
-  // })
-  // const svg = ReactDOMServer.renderToString(component)
-  // console.log({ svg })
   const { svg } = generateModel({
     height: 10,
     width: 15,
     borderWidth: 0.5,
-    textLines: [
-      { value: "654321" },
-      { value: "Abcdefghijk" },
-      { value: "Lmnopqrstuvwxyz" },
-    ],
+    textLines: parsedTextLines,
     foregroundColor: "black",
     backgroundColor: "white",
     inputs: {
-      shape: "ellipse",
-      orientation: "horizontal",
-      size: "large",
+      shape,
+      size,
       textLines: [
         { value: "654321" },
         { value: "Abcdefghijk" },
         { value: "Lmnopqrstuvwxyz" },
       ],
-      // color: { foregroundColor: "black", backgroundColor: "green" },
       color: "black/white",
       fontFamily,
-      // decoration: "",
+      mountingStyle: "wall mounted",
     },
     font,
     // productOptionsMap,

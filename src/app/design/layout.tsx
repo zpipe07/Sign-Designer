@@ -20,7 +20,7 @@ export default function Layout({
         // { value: "The Smith's" },
         { value: "" },
       ],
-      orientation: "horizontal",
+      // orientation: "horizontal",
       fontFamily: "Albert",
       // decoration: "",
       mountingStyle: "wall mounted",

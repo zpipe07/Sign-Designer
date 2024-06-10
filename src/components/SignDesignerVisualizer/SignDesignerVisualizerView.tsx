@@ -89,7 +89,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         />
       )}
 
-      {inputs.shape === "sideRound" && (
+      {/* {inputs.shape === "sideRound" && (
         <SideRound
           width={width}
           height={height}
@@ -100,7 +100,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
           backgroundColor={backgroundColor}
           font={font}
         />
-      )}
+      )} */}
 
       {inputs.shape === "bread" && (
         <Bread

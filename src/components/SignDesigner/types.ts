@@ -18,9 +18,12 @@ export type FontFamily =
 
 export type Orientation = "horizontal" | "vertical"
 
-export type Shape = "rectangle" | "ellipse" | "top round"
-// | "sideRound"
-// | "bread"
+export type Shape =
+  | "rectangle"
+  | "ellipse"
+  | "top round"
+  // | "sideRound"
+  | "bread"
 
 export type Size =
   | "extra small"
@@ -42,12 +45,13 @@ export type TextLine = { value: string }
 export type MountingStyle = "hanging" | "wall mounted"
 
 export type DesignFormInputs = {
-  [key: string]: any
-  // shape: Shape
+  // [key: string]: any
+  shape: Shape
+  size: Size
+  color: ColorCombo
+  textLines: TextLine[]
+  fontFamily: FontFamily
+  mountingStyle: MountingStyle
   // orientation: Orientation
-  // size: Size
-  // textLines: TextLine[]
-  // color: ColorCombo
-  // fontFamily: FontFamily
   // decoration: Decoration | ""
 }
