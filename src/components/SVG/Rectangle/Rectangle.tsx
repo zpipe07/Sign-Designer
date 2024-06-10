@@ -2,16 +2,18 @@
 
 import makerjs from "makerjs"
 
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
-// import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
-// import {
-//   Decoration,
-//   TextLine,
-// } from "@/src/components/SignDesigner/types"
+import { SvgProps } from "@/src/components/SVG/types"
+import { Size } from "@/src/components/SignDesigner/types"
 
-// const defaultColor = "#D9D9D9"
+const fontSizeMap: { [key in Size]: number } = {
+  "extra small": 3.0,
+  small: 4.0,
+  medium: 4.0,
+  large: 4.2,
+  "extra large": 4.5,
+}
 
-export const Rectangle: React.FC<SvgProps> = ({
+export function generateRectangleModel({
   height,
   width,
   borderWidth,
@@ -20,102 +22,216 @@ export const Rectangle: React.FC<SvgProps> = ({
   foregroundColor,
   backgroundColor,
   font,
-}) => {
-  // const container = new makerjs.models.Rectangle(width, height)
-  // const containerOffset = 5
-  // // @ts-ignore
-  // container.layer = "container"
-
-  const outer = new makerjs.models.RoundRectangle(
-    // width - containerOffset * 2,
-    width,
-    // height - containerOffset * 2,
-    height,
-    // 100,
-    0,
+  strokeOnly,
+  actualDimensions,
+}: SvgProps & { actualDimensions?: boolean }) {
+  const outer = new makerjs.models.RoundRectangle(width, height, 0.25)
+  makerjs.model.center(outer)
+  const borderInner = makerjs.model.outline(
+    outer,
+    0.7,
+    undefined,
+    true,
   )
+  makerjs.model.center(borderInner)
+  const borderOuter = makerjs.model.outline(
+    borderInner,
+    0.2,
+    undefined,
+  )
+  makerjs.model.center(borderOuter)
 
-  // outer.origin = [containerOffset, containerOffset]
-  // @ts-ignore
-  outer.layer = "outer"
-
-  // const inner = new makerjs.models.RoundRectangle(
-  //   width - borderWidth * 2,
-  //   height - borderWidth * 2,
-  //   // 100,
-  //   0,
-  // )
-
-  // inner.origin = [borderWidth, borderWidth]
-  // @ts-ignore
-  // inner.layer = "inner"
-
-  const textModels = {}
+  const text: any = {
+    models: {},
+  }
 
   for (const textLine of textLines) {
-    const index = Object.keys(textModels).length
+    const index = Object.keys(text.models).length
     const chars = textLine.value.length
-    const fontSize = 300 - chars * 10
-    const textModel = new makerjs.models.Text(
-      font,
-      textLine.value,
-      fontSize,
-      true,
-      false,
-      0,
-      {},
-    )
-    const measure = makerjs.measure.modelExtents(textModel)
-    const x = (width - measure.width) / 2
-    const y =
-      height / 2 -
-      measure.height / 2 -
-      250 * index +
-      (textLines.length - 1) * 125
 
-    // @ts-ignore
-    textModel.origin = [x, y]
-    // @ts-ignore
-    textModel.layer = "text"
-    // @ts-ignore
-    textModels[`textModel${index}`] = textModel
+    if (index === 0) {
+      // house number
+      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      makerjs.model.center(textModel)
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = measure.height / -2
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 1) {
+      // street name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = (height * -1) / 2 + measure.height
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 2) {
+      // family name
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+        false,
+        0,
+        {},
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = height / 2 - measure.height * 2
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+  }
+
+  let bolts = {} as any
+  if (inputs.mountingStyle === "wall mounted") {
+    const boltOffset = 1
+    const boldRadius = 0.125
+    const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
+    makerjs.model.move(makerjs.model.center(boltTop), [
+      0,
+      height / 2 - boltOffset,
+    ])
+    const boltBottom = new makerjs.models.Ellipse(
+      boldRadius,
+      boldRadius,
+    )
+    makerjs.model.move(makerjs.model.center(boltBottom), [
+      0,
+      height / -2 + boltOffset,
+    ])
+    const boltLeft = new makerjs.models.Ellipse(
+      boldRadius,
+      boldRadius,
+    )
+    makerjs.model.move(makerjs.model.center(boltLeft), [
+      (-1 * width) / 2 + boltOffset,
+      0,
+    ])
+    const boltRight = new makerjs.models.Ellipse(
+      boldRadius,
+      boldRadius,
+    )
+    makerjs.model.move(makerjs.model.center(boltRight), [
+      width / 2 - boltOffset,
+      0,
+    ])
+    bolts = {
+      models: {
+        boltTop,
+        boltBottom,
+        boltLeft,
+        boltRight,
+      },
+    }
   }
 
   const tabletFaceMount = {
     models: {
-      // container,
-      outer: outer,
+      outer: { ...outer, layer: "outer" },
+      borderOuter: { ...borderOuter, layer: "borderOuter" },
+      borderInner: { ...borderInner, layer: "borderInner" },
+      text: { ...text, layer: "text" },
+      bolts: { ...bolts, layer: "bolts" },
       // inner: inner,
       // ...textModels,
     },
   }
-
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, {
+  const strokeOnlyStyle = { fill: "none", stroke: "black" }
+  const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
-      container: { stroke: "none" },
-      inner: {
-        fill: foregroundColor,
-        stroke: foregroundColor,
-      },
-      outer: {
-        fill: backgroundColor,
-        stroke: foregroundColor,
-      },
-      text: {
-        fill: backgroundColor,
-        stroke: backgroundColor,
-      },
+      borderOuter: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+          },
+      borderInner: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      outer: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+          },
+      text: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: backgroundColor,
+          },
+      bolts: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: "white",
+          },
+      // arc: {
+      //   stroke: "blue",
+      // },
     },
     viewBox: true,
     svgAttrs: {
       xmlns: "http://www.w3.org/2000/svg",
-      height: "100%",
-      width: "100%",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
+      id: "svg2",
+      version: "1.1",
+      height: actualDimensions ? `${height}in` : "100%",
+      width: actualDimensions ? `${width}in` : "100%",
+      // height: `${height}in`,
+      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
     fillRule: "nonzero",
-    accuracy: 0.1,
-  })
+    units: makerjs.unitType.Inch,
+  }
+  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+
+  return { svg }
+}
+
+export const Rectangle: React.FC<SvgProps> = (props) => {
+  const { svg } = generateRectangleModel(props)
 
   return (
     <div
@@ -123,179 +239,4 @@ export const Rectangle: React.FC<SvgProps> = ({
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   )
-  // const Decoration: React.FC<FiligreeProps> | null =
-  //   inputs?.decoration
-  //     ? decorationIconMap[inputs.decoration as Decoration]
-  //     : null
-
-  // return (
-  //   <svg
-  //     viewBox={`0 0 ${width} ${height}`}
-  //     fill="none"
-  //     xmlns="http://www.w3.org/2000/svg"
-  //     transform={
-  //       inputs.orientation === "vertical"
-  //         ? `rotate(90) translate(75 0)`
-  //         : ""
-  //     }
-  //   >
-  //     <g
-  //       transform={`translate(${borderWidth / 2},${borderWidth / 2})`}
-  //     >
-  //       <rect
-  //         width={width - borderWidth}
-  //         height={height - borderWidth}
-  //         rx="10"
-  //         fill={backgroundColor || defaultColor}
-  //         stroke={foregroundColor}
-  //         strokeWidth={borderWidth}
-  //       />
-
-  //       {inputs.orientation === "horizontal" &&
-  //         textLines?.map(({ value }: TextLine, index: number) => {
-  //           const chars = value.length
-  //           const fontSize = 95 - chars * 3.5
-  //           const y = 70 * index + 145 - textLines.length * 30
-  //           const textModel = new makerjs.models.Text(
-  //             font,
-  //             value,
-  //             fontSize,
-  //             false,
-  //             false,
-  //             0,
-  //             {},
-  //           )
-  //           const svg = makerjs.exporter.toSVG(textModel, {
-  //             fill: foregroundColor,
-  //             stroke: "none",
-  //           })
-
-  //           return (
-  //             <g
-  //               dangerouslySetInnerHTML={{ __html: svg }}
-  //               transform={`translate(${(width - borderWidth) / chars}, ${y})`}
-  //               key={value}
-  //             ></g>
-  //           )
-
-  //           // return (
-  //           //   <text
-  //           //     y={y}
-  //           //     x={(width - borderWidth) / 2}
-  //           //     fontSize={fontSize}
-  //           //     fontWeight={800}
-  //           //     alignmentBaseline="middle"
-  //           //     textAnchor="middle"
-  //           //     fill={foregroundColor}
-  //           //     fontFamily={inputs?.fontFamily}
-  //           //     letterSpacing={1}
-  //           //     key={index}
-  //           //   >
-  //           //     {value}
-  //           //   </text>
-  //           // )
-  //         })}
-
-  //       {inputs.orientation === "vertical" &&
-  //         textLines[0]?.value
-  //           .split("")
-  //           .map((char: string, index: number) => {
-  //             const chars = textLines[0]?.value.length
-  //             const fontSize = 100 - chars * 8
-  //             // const x = 200 + index * 70 - chars * 28
-  //             // const y = 110
-  //             const x = 70 * index + 130 - chars * 20
-  //             const y = 130
-  //             const textModel = new makerjs.models.Text(
-  //               font,
-  //               char,
-  //               fontSize,
-  //               true,
-  //               true,
-  //               0,
-  //               {},
-  //             )
-  //             const svg = makerjs.exporter.toSVG(textModel, {
-  //               fill: foregroundColor,
-  //               stroke: "none",
-  //             })
-
-  //             return (
-  //               <g
-  //                 dangerouslySetInnerHTML={{ __html: svg }}
-  //                 transform={`rotate(-90, ${x}, ${y}) translate(${x}, ${y})`}
-  //                 key={char}
-  //               ></g>
-  //             )
-  //             // return (
-  //             //   <text
-  //             //     y={y}
-  //             //     x={x}
-  //             //     transform={`rotate(-90, ${x}, ${y})`}
-  //             //     fontSize={fontSize}
-  //             //     fontWeight={800}
-  //             //     alignmentBaseline="middle"
-  //             //     textAnchor="middle"
-  //             //     fill={foregroundColor}
-  //             //     fontFamily={inputs?.fontFamily}
-  //             //     key={index}
-  //             //   >
-  //             //     {char}
-  //             //   </text>
-  //             // )
-  //           })}
-
-  //       {/* {streetNumber && (
-  //         <text
-  //           y={height / 2 - 30}
-  //           x={(width - borderWidth) / 2}
-  //           fontSize={50}
-  //           fontWeight={800}
-  //           alignmentBaseline="middle"
-  //           textAnchor="middle"
-  //           fill={foregroundColor}
-  //           fontFamily={fontFamily}
-  //         >
-  //           {streetNumber}
-  //         </text>
-  //       )} */}
-
-  //       {/* {streetName && (
-  //         <text
-  //           y={height / 2 + 20}
-  //           x={(width - borderWidth) / 2}
-  //           fontSize={40}
-  //           fontWeight={600}
-  //           alignmentBaseline="middle"
-  //           textAnchor="middle"
-  //           fill={foregroundColor}
-  //           fontFamily={fontFamily}
-  //         >
-  //           {streetName}
-  //         </text>
-  //       )} */}
-
-  //       {Decoration && (
-  //         <>
-  //           <Decoration
-  //             height={50}
-  //             width={50}
-  //             x={30}
-  //             y={30}
-  //             color={foregroundColor}
-  //           />
-
-  //           <Decoration
-  //             height={50}
-  //             width={50}
-  //             x={300}
-  //             y={30}
-  //             transform="scale(-1 1)"
-  //             color={foregroundColor}
-  //           />
-  //         </>
-  //       )}
-  //     </g>
-  //   </svg>
-  // )
 }
