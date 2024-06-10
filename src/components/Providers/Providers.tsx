@@ -9,7 +9,13 @@ import { ThemeProvider } from "@mui/material/styles"
 
 import theme from "@/src/theme"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 type Props = { children: React.ReactNode }
 

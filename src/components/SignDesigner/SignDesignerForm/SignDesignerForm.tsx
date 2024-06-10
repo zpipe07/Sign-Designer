@@ -22,6 +22,7 @@ import { useAddCartItem } from "@/src/hooks/mutations/useAddCartItem"
 import { useUpdateCartItem } from "@/src/hooks/mutations/useUpdateCartItem"
 import { PriceDisplay } from "@/src/components/PriceDisplay"
 import { MountingSelector } from "@/src/components/SignConfigurer"
+import { useGetCart } from "@/src/hooks/queries/useGetCart"
 
 type Props = {
   isEditing?: boolean
@@ -34,7 +35,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
 
   const params = useParams<{ cartId: string; itemId: string }>()
 
-  const { handleSubmit } = useFormContext()
+  const { handleSubmit } = useFormContext<DesignFormInputs>()
 
   const onSuccess = () => {
     router.push("/cart")
@@ -45,6 +46,8 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
 
   const { mutate: addCartItem, isPending: isPendingAddCartItem } =
     useAddCartItem({ onSuccess })
+
+  const { data: cartData } = useGetCart()
 
   const {
     mutate: updateCartItem,
@@ -71,9 +74,9 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
       return
     }
 
-    if (data?.cart) {
+    if (cartData?.cart) {
       // update cart
-      addCartItem({ cartId: data.cart.id, formData: data })
+      addCartItem({ cartId: cartData.cart.id, formData: data })
     } else {
       // create new cart
       createCart(data)

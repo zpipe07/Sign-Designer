@@ -19,15 +19,15 @@ import { BreadPreview } from "@/src/components/SVG/BreadPreview"
 import { Shape } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 
-export const shapeIconMap: {
-  [key in Shape]: React.FC<PreviewSvgProps>
-} = {
-  rectangle: RectanglePreview,
-  ellipse: EllipsePreview,
-  "top round": TopRoundPreview,
-  // sideRound: SideRoundPreview,
-  // bread: BreadPreview,
-}
+// export const shapeIconMap: {
+//   [key in Shape]: React.FC<PreviewSvgProps>
+// } = {
+//   rectangle: RectanglePreview,
+//   ellipse: EllipsePreview,
+//   "top round": TopRoundPreview,
+//   // sideRound: SideRoundPreview,
+//   // bread: BreadPreview,
+// }
 
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
