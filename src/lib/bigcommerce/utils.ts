@@ -7,6 +7,7 @@ export const getProductVariant = (
 ) => {
   return product.variants.find((variant) => {
     return variant.selectedOptions.every((option) => {
+      // @ts-ignore
       return data[option.name] === option.value
     })
   })
