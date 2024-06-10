@@ -23,6 +23,7 @@ export default function Layout({
       orientation: "horizontal",
       fontFamily: "Albert",
       // decoration: "",
+      mountingStyle: "wall mounted",
     },
   })
 

@@ -39,6 +39,8 @@ export type SizeConfig = {
 
 export type TextLine = { value: string }
 
+export type MountingStyle = "hanging" | "wall mounted"
+
 export type DesignFormInputs = {
   [key: string]: any
   // shape: Shape
