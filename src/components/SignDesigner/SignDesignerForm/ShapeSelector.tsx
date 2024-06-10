@@ -75,9 +75,9 @@ export const ShapeSelector: React.FC = () => {
                 }
                 checked={label === selectedShape}
                 key={entityId}
-                sx={{
-                  maxWidth: 125,
-                }}
+                // sx={{
+                //   maxWidth: 125,
+                // }}
                 {...register("shape")}
               />
             )

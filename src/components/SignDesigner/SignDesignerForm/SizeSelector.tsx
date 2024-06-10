@@ -19,6 +19,7 @@ import {
 } from "@/src/components/SignDesigner/types"
 import FormHelperText from "@mui/material/FormHelperText"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
+import { SizeRadioLabel } from "@/src/components/SizeRadioLabel"
 
 export const SizeSelector: React.FC = () => {
   const { register, setValue } = useFormContext()
@@ -59,7 +60,7 @@ export const SizeSelector: React.FC = () => {
       <RadioGroup
         aria-labelledby="size-label"
         name="size"
-        // sx={{ flexDirection: "row" }}
+        sx={{ flexDirection: "row" }}
       >
         {data.productOptionsMap.size.values.map(
           ({ label, entityId }) => {
@@ -72,7 +73,13 @@ export const SizeSelector: React.FC = () => {
                     checked={selectedSize === label}
                   />
                 }
-                label={capitalize(label)}
+                // label={capitalize(label)}
+                label={
+                  <SizeRadioLabel
+                    size={label as Size}
+                    checked={selectedSize === label}
+                  />
+                }
                 key={entityId}
                 {...register("size")}
               />
