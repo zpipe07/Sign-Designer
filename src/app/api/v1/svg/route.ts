@@ -5,8 +5,13 @@ import { NextResponse, type NextRequest } from "next/server"
 import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
-import { FONT_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
+  FONT_MAP,
+  SIZE_CONFIG_MAP,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import {
+  Color,
+  ColorCombo,
   FontFamily,
   Shape,
   Size,
@@ -26,6 +31,7 @@ export async function GET(request: NextRequest) {
   const shape = searchParams.get("shape") as Shape
   const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
+  const color = searchParams.get("color") as ColorCombo
 
   if (!shape) {
     return new NextResponse(
@@ -37,6 +43,13 @@ export async function GET(request: NextRequest) {
   if (!size) {
     return new NextResponse(
       "Missing required query parameter: size",
+      { status: 400 },
+    )
+  }
+
+  if (!color) {
+    return new NextResponse(
+      "Missing required query parameter: color",
       { status: 400 },
     )
   }
@@ -55,28 +68,30 @@ export async function GET(request: NextRequest) {
   const dir = path.resolve("./public", dirRelativeToPublicFolder)
   const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
   const font = opentype.loadSync(`${fontUrl}`)
+  const { height, width } = SIZE_CONFIG_MAP[size]
+  const [foregroundColor, backgroundColor] = color.split("/") as [
+    Color,
+    Color,
+  ]
+
   const { svg } = generateModel({
-    height: 10,
-    width: 15,
+    height,
+    width,
     borderWidth: 0.5,
     textLines: parsedTextLines,
-    foregroundColor: "black",
-    backgroundColor: "white",
+    foregroundColor,
+    backgroundColor,
     inputs: {
       shape,
       size,
-      textLines: [
-        { value: "654321" },
-        { value: "Abcdefghijk" },
-        { value: "Lmnopqrstuvwxyz" },
-      ],
-      color: "black/white",
+      textLines: parsedTextLines,
+      color,
       fontFamily,
       mountingStyle: "wall mounted",
     },
     font,
     // productOptionsMap,
-    strokeOnly: true,
+    // strokeOnly: true,
   })
 
   return new NextResponse(svg, {

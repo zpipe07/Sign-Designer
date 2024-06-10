@@ -1,4 +1,5 @@
 import { useWatch } from "react-hook-form"
+import { Box, LinearProgress } from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
@@ -6,11 +7,22 @@ import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
 export const SignVisualizer: React.FC = () => {
   const inputs = useWatch<DesignFormInputs>()
 
-  const { data: svg, isLoading } = useGetSignSvg(inputs)
+  const { data: svg, isFetching } = useGetSignSvg(inputs)
 
-  if (!svg) {
-    return null
-  }
+  return (
+    <Box position="relative">
+      {isFetching && (
+        <LinearProgress
+          sx={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            width: "100%",
+          }}
+        />
+      )}
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }} />
+      <div dangerouslySetInnerHTML={{ __html: svg }} />
+    </Box>
+  )
 }
