@@ -7,7 +7,9 @@ import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
 export const SignVisualizer: React.FC = () => {
   const inputs = useWatch<DesignFormInputs>()
 
-  const { data: svg, isFetching } = useGetSignSvg(inputs)
+  const { data: svg, isFetching } = useGetSignSvg(
+    inputs as DesignFormInputs,
+  )
 
   return (
     <Box position="relative">
