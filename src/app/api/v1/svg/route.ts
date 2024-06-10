@@ -13,6 +13,7 @@ import {
   Color,
   ColorCombo,
   FontFamily,
+  MountingStyle,
   Shape,
   Size,
 } from "@/src/components/SignDesigner/types"
@@ -32,6 +33,10 @@ export async function GET(request: NextRequest) {
   const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
   const color = searchParams.get("color") as ColorCombo
+  const mountingStyle = searchParams.get(
+    "mountingStyle",
+  ) as MountingStyle
+  const fontFamily = searchParams.get("fontFamily") as FontFamily
 
   if (!shape) {
     return new NextResponse(
@@ -63,7 +68,6 @@ export async function GET(request: NextRequest) {
       }))
   }
 
-  const fontFamily: FontFamily = "Albert"
   const dirRelativeToPublicFolder = "fonts"
   const dir = path.resolve("./public", dirRelativeToPublicFolder)
   const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
@@ -87,7 +91,7 @@ export async function GET(request: NextRequest) {
       textLines: parsedTextLines,
       color,
       fontFamily,
-      mountingStyle: "wall mounted",
+      mountingStyle,
     },
     font,
     // productOptionsMap,

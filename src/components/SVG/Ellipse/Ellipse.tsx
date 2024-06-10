@@ -194,7 +194,7 @@ export function generateEllipseModel({
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
     const boltOffset = 1
-    const boldRadius = 0.15
+    const boldRadius = 0.125
     const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
     makerjs.model.move(makerjs.model.center(boltTop), [
       0,
@@ -275,7 +275,7 @@ export function generateEllipseModel({
       bolts: strokeOnly
         ? strokeOnlyStyle
         : {
-            fill: backgroundColor,
+            fill: "white",
           },
       // arc: {
       //   stroke: "blue",
