@@ -52,8 +52,6 @@ export const ShapeSelector: React.FC = () => {
                 value={label}
                 control={
                   <Radio
-                    size="small"
-                    checked={label === selectedShape}
                     sx={{
                       position: "fixed",
                       opacity: 0,
@@ -70,7 +68,8 @@ export const ShapeSelector: React.FC = () => {
                 key={entityId}
                 sx={{
                   margin: 0,
-                  padding: 2.25,
+                  padding: 2,
+                  flex: "1 0  25%",
                 }}
                 {...register("shape")}
               />

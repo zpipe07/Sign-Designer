@@ -14,15 +14,18 @@ export const ShapeRadioLabel: React.FC<Props> = ({
 }) => {
   const theme = useTheme()
 
-  const { data: svg } = useGetSignSvg({
-    shape,
-    size: "large",
-    // @ts-ignore
-    color: "#D6DAD2/#D6DAD2",
-    textLines: [],
-    fontFamily: "Albert",
-    mountingStyle: "hanging",
-  })
+  const { data: svg } = useGetSignSvg(
+    {
+      shape,
+      size: "large",
+      // @ts-ignore
+      color: "#D6DAD2/#D6DAD2",
+      textLines: [],
+      fontFamily: "Albert",
+      mountingStyle: "hanging",
+    },
+    true,
+  )
 
   return (
     <Box
@@ -31,7 +34,6 @@ export const ShapeRadioLabel: React.FC<Props> = ({
         fontSize: 0,
         borderRadius: 0.5,
         padding: 0.5,
-        maxWidth: 125,
         transition: "box-shadow 0.15s ease-in-out 0s",
 
         ...(checked && {

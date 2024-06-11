@@ -24,15 +24,18 @@ export const SizeRadioLabel: React.FC<Props> = ({
 
   const ratioOfMaxWidth = width / maxWidth
 
-  const { data: svg } = useGetSignSvg({
-    shape: selectedShape,
-    size,
-    // @ts-ignore
-    color: "#D6DAD2/#D6DAD2",
-    textLines: [],
-    fontFamily: "Albert",
-    mountingStyle: "hanging",
-  })
+  const { data: svg } = useGetSignSvg(
+    {
+      shape: selectedShape,
+      size,
+      // @ts-ignore
+      color: "#D6DAD2/#D6DAD2",
+      textLines: [],
+      fontFamily: "Albert",
+      mountingStyle: "hanging",
+    },
+    true,
+  )
 
   return (
     <Box
