@@ -54,10 +54,21 @@ export const FontSelector: React.FC = () => {
           <FormControlLabel
             key={fontFamily}
             value={fontFamily}
-            control={<Radio />}
+            control={
+              <Radio
+                sx={{
+                  position: "fixed",
+                  opacity: 0,
+                  pointerEvents: "none",
+                }}
+              />
+            }
             checked={fontFamily === selectedFontFamily}
             {...register("fontFamily")}
-            // label={fontFamily}
+            sx={{
+              marginRight: 2,
+              marginLeft: 0,
+            }}
             label={
               <Box
                 sx={{

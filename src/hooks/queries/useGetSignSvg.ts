@@ -3,7 +3,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
-export const useGetSignSvg = (inputs: DesignFormInputs) => {
+export const useGetSignSvg = (
+  inputs: DesignFormInputs,
+  isThumbnail?: boolean,
+) => {
   const queryClient = useQueryClient()
 
   const getSignSvg = async () => {
@@ -23,12 +26,15 @@ export const useGetSignSvg = (inputs: DesignFormInputs) => {
   }
 
   return useQuery<string>({
-    queryKey: ["/api/v1/svg", inputs],
+    queryKey: [
+      `/api/v1/svg${isThumbnail ? "-thumbnail" : ""}`,
+      inputs,
+    ],
     queryFn: getSignSvg,
     initialData: () => {
       const cache = queryClient.getQueryCache()
       const queries = cache.findAll({
-        queryKey: ["/api/v1/svg"],
+        queryKey: [`/api/v1/svg${isThumbnail ? "-thumbnail" : ""}`],
       })
       const previousQuery = queries[queries.length - 1]
 

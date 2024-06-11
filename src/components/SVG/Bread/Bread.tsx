@@ -231,16 +231,19 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
+            stroke: "none",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: foregroundColor,
+            stroke: "none",
           },
       outer: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: foregroundColor,
+            stroke: "none",
           },
       text: strokeOnly
         ? strokeOnlyStyle
@@ -252,6 +255,7 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: "white",
+            stroke: "none",
           },
       // arc: {
       //   stroke: "blue",
