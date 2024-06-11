@@ -183,27 +183,32 @@ export function generateRectangleModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
+            stroke: "none",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: foregroundColor,
+            stroke: "none",
           },
       outer: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: foregroundColor,
+            stroke: "none",
           },
       text: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
             stroke: backgroundColor,
+            // stroke: "none",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: "white",
+            stroke: "none",
           },
       // arc: {
       //   stroke: "blue",
