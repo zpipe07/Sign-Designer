@@ -60,7 +60,7 @@ export const SizeSelector: React.FC = () => {
       <RadioGroup
         aria-labelledby="size-label"
         name="size"
-        sx={{ flexDirection: "row" }}
+        sx={{ justifyContent: "space-evenly", flexDirection: "row" }}
       >
         {data.productOptionsMap.size.values.map(
           ({ label, entityId }) => {
@@ -78,7 +78,6 @@ export const SizeSelector: React.FC = () => {
                     }}
                   />
                 }
-                // label={capitalize(label)}
                 label={
                   <SizeRadioLabel
                     size={label as Size}
@@ -87,60 +86,14 @@ export const SizeSelector: React.FC = () => {
                 }
                 key={entityId}
                 sx={{
-                  marginRight: 2,
-                  marginLeft: 0,
+                  margin: 0,
+                  padding: 2.25,
                 }}
                 {...register("size")}
               />
             )
           },
         )}
-
-        {/* {sizes.map((size) => {
-            return (
-              <FormControlLabel
-                value={size}
-                control={
-                  <Radio
-                    size="small"
-                    checked={selectedSize === size}
-                  />
-                }
-                label={size}
-                // label={
-                //   <>
-                //     {size === "large" && <ShapeIcon height={60} width={75} />}
-                //     {size === "medium" && <ShapeIcon height={45} width={60} />}
-                //     {size === "small" && <ShapeIcon height={35} width={50} />}
-                //   </>
-                // }
-                key={size}
-                {...register("size", {
-                  // onChange: (event) => {
-                  //   const { value } = event.target;
-                  //   if (value === "small") {
-                  //     return setValue("textLines", [
-                  //       { value: textLines[0].value },
-                  //     ]);
-                  //   }
-                  //   if (value === "medium") {
-                  //     return setValue("textLines", [
-                  //       { value: textLines[0].value },
-                  //       { value: textLines[1]?.value || "" },
-                  //     ]);
-                  //   }
-                  //   if (value === "large") {
-                  //     return setValue("textLines", [
-                  //       { value: textLines[0].value },
-                  //       { value: textLines[1]?.value || "" },
-                  //       { value: textLines[2]?.value || "" },
-                  //     ]);
-                  //   }
-                  // },
-                })}
-              />
-            )
-          })} */}
       </RadioGroup>
     </FormControl>
   )

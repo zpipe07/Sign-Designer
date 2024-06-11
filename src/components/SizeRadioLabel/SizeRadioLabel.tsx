@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material"
+import { Box, Typography, useTheme } from "@mui/material"
 
 import { Size } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
@@ -20,11 +20,9 @@ export const SizeRadioLabel: React.FC<Props> = ({
 
   const selectedShape = useWatch({ name: "shape" })
 
-  const { width } = SIZE_CONFIG_MAP[size]
-  // console.log({ width, height })
+  const { width, height } = SIZE_CONFIG_MAP[size]
 
   const ratioOfMaxWidth = width / maxWidth
-  console.log({ ratioOfMaxWidth })
 
   const { data: svg } = useGetSignSvg({
     shape: selectedShape,
@@ -38,18 +36,62 @@ export const SizeRadioLabel: React.FC<Props> = ({
 
   return (
     <Box
-      dangerouslySetInnerHTML={{ __html: svg }}
       sx={{
-        fontSize: 0,
-        borderRadius: 0.5,
-        padding: 0.5,
-        maxWidth: 125 * ratioOfMaxWidth,
-        transition: "box-shadow 0.15s ease-in-out 0s",
+        position: "relative",
 
-        ...(checked && {
-          boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
-        }),
+        "&:before, &:after": {
+          content: '""',
+          position: "absolute",
+          backgroundColor: theme.palette.primary.main,
+        },
+        "&:before": {
+          top: "100%",
+          left: 4,
+          right: 4,
+          height: 2,
+        },
+        "&:after": {
+          left: "100%",
+          top: 4,
+          bottom: 4,
+          width: 2,
+        },
       }}
-    />
+    >
+      <Box
+        dangerouslySetInnerHTML={{ __html: svg }}
+        sx={{
+          fontSize: 0,
+          borderRadius: 0.5,
+          padding: 0.5,
+          maxWidth: 150 * ratioOfMaxWidth,
+          transition: "box-shadow 0.15s ease-in-out 0s",
+
+          ...(checked && {
+            boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
+          }),
+        }}
+      />
+      <Typography
+        sx={{
+          position: "absolute",
+          top: "100%",
+          left: "50%",
+          transform: "translate(-50%, 0)",
+        }}
+      >
+        {width}&quot;
+      </Typography>
+      <Typography
+        sx={{
+          position: "absolute",
+          left: "100%",
+          top: "50%",
+          transform: "translate(5px, -50%)",
+        }}
+      >
+        {height}&quot;
+      </Typography>
+    </Box>
   )
 }

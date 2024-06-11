@@ -56,12 +56,13 @@ export const ShapeSelector: React.FC = () => {
       <RadioGroup
         aria-labelledby="shape-label"
         name="shape"
-        sx={{ flexDirection: "row" }}
+        sx={{ justifyContent: "space-evenly", flexDirection: "row" }}
       >
         {data.productOptionsMap.shape.values.map(
           ({ label, entityId }) => {
-            // const ShapeIcon: React.FC<PreviewSvgProps> =
-            //   shapeIconMap[shape]
+            if (label === "top round") {
+              return null
+            }
 
             return (
               <FormControlLabel
@@ -85,8 +86,8 @@ export const ShapeSelector: React.FC = () => {
                 }
                 key={entityId}
                 sx={{
-                  marginRight: 2,
-                  marginLeft: 0,
+                  margin: 0,
+                  padding: 2.25,
                 }}
                 {...register("shape")}
               />
