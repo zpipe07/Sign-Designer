@@ -43,6 +43,7 @@ export const SizeRadioLabel: React.FC<Props> = ({
           content: '""',
           position: "absolute",
           backgroundColor: theme.palette.primary.main,
+          zIndex: -1,
         },
         "&:before": {
           top: "100%",

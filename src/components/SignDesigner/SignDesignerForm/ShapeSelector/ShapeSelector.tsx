@@ -8,27 +8,10 @@ import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import FormHelperText from "@mui/material/FormHelperText"
 import LinearProgress from "@mui/material/LinearProgress"
-import capitalize from "@mui/material/utils/capitalize"
 
-import { TopRoundPreview } from "@/src/components/SVG/TopRoundPreview"
-import { RectanglePreview } from "@/src/components/SVG/RectanglePreview"
-import { EllipsePreview } from "@/src/components/SVG/EllipsePreview"
-import { SideRoundPreview } from "@/src/components/SVG/SideRoundPreview"
-import { PreviewSvgProps } from "@/src/components/SVG/types"
-import { BreadPreview } from "@/src/components/SVG/BreadPreview"
 import { Shape } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
-import { ShapeRadioLabel } from "@/src/components/ShapeRadioLabel"
-
-// export const shapeIconMap: {
-//   [key in Shape]: React.FC<PreviewSvgProps>
-// } = {
-//   rectangle: RectanglePreview,
-//   ellipse: EllipsePreview,
-//   "top round": TopRoundPreview,
-//   // sideRound: SideRoundPreview,
-//   // bread: BreadPreview,
-// }
+import { ShapeRadioLabel } from "@/src/components/SignDesigner/SignDesignerForm/ShapeSelector/ShapeRadioLabel"
 
 export const ShapeSelector: React.FC = () => {
   const { register } = useFormContext()
@@ -47,11 +30,11 @@ export const ShapeSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="shape-label">Select your sign shape</FormLabel>
-      <FormHelperText sx={{ marginLeft: 0, marginBottom: 0 }}>
+      <FormLabel id="shape-label">Shape</FormLabel>
+      {/* <FormHelperText sx={{ marginLeft: 0, marginBottom: 0 }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Alias, dolores?
-      </FormHelperText>
+      </FormHelperText> */}
 
       <RadioGroup
         aria-labelledby="shape-label"

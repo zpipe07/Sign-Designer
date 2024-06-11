@@ -1,6 +1,7 @@
+import { Box, useTheme } from "@mui/material"
+
 import { Shape } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
-import { Box, useTheme } from "@mui/material"
 
 type Props = {
   shape: Shape

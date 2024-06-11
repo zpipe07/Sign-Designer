@@ -1,32 +1,24 @@
 "use client"
 
-import { useEffect } from "react"
 import { useFormContext, useWatch } from "react-hook-form"
-import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import LinearProgress from "@mui/material/LinearProgress"
-import capitalize from "@mui/material/utils/capitalize"
-
-import { designOptions } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import {
-  Orientation,
-  Shape,
-  Size,
-} from "@/src/components/SignDesigner/types"
 import FormHelperText from "@mui/material/FormHelperText"
+
+import { Size } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
-import { SizeRadioLabel } from "@/src/components/SizeRadioLabel"
+import { SizeRadioLabel } from "@/src/components/SignDesigner/SignDesignerForm/SizeSelector/SizeRadioLabel"
 
 export const SizeSelector: React.FC = () => {
-  const { register, setValue } = useFormContext()
+  const { register } = useFormContext()
 
   const selectedSize = useWatch({ name: "size" })
 
-  const { data, isLoading, error } = useGetProduct(112)
+  const { data, isLoading } = useGetProduct(112)
 
   if (isLoading) {
     return <LinearProgress />
@@ -36,26 +28,16 @@ export const SizeSelector: React.FC = () => {
     return null
   }
 
-  // const shape: Shape = useWatch({ name: "shape" })
-  // const orientation: Orientation = useWatch({ name: "orientation" })
-  // const sizes = designOptions[shape]?.[orientation]
-  //   ? (Object.keys(designOptions[shape][orientation]) as Size[])
-  //   : []
-
-  // useEffect(() => {
-  //   setValue("size", sizes[sizes.length - 1])
-  // }, [shape, orientation, setValue])
-
   return (
     <FormControl fullWidth>
-      <FormLabel id="size-label">Select your sign size</FormLabel>
-      <FormHelperText
+      <FormLabel id="size-label">Size</FormLabel>
+      {/* <FormHelperText
         sx={{
           marginLeft: 0,
         }}
       >
         Select a size to see actual dimensions
-      </FormHelperText>
+      </FormHelperText> */}
 
       <RadioGroup
         aria-labelledby="size-label"
