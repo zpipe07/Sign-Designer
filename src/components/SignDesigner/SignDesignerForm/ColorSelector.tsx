@@ -103,9 +103,18 @@ export const ColorSelector: React.FC = () => {
                   <Radio
                     size="small"
                     checked={selectedColor === label}
+                    sx={{
+                      position: "fixed",
+                      opacity: 0,
+                      pointerEvents: "none",
+                    }}
                   />
                 }
                 key={entityId}
+                sx={{
+                  marginRight: 2,
+                  marginLeft: 0,
+                }}
                 {...register("color")}
               />
             )

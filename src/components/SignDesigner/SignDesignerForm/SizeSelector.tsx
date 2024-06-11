@@ -71,6 +71,11 @@ export const SizeSelector: React.FC = () => {
                   <Radio
                     size="small"
                     checked={selectedSize === label}
+                    sx={{
+                      position: "fixed",
+                      opacity: 0,
+                      pointerEvents: "none",
+                    }}
                   />
                 }
                 // label={capitalize(label)}
@@ -81,6 +86,10 @@ export const SizeSelector: React.FC = () => {
                   />
                 }
                 key={entityId}
+                sx={{
+                  marginRight: 2,
+                  marginLeft: 0,
+                }}
                 {...register("size")}
               />
             )

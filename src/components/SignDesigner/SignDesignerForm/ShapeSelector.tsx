@@ -66,18 +66,28 @@ export const ShapeSelector: React.FC = () => {
             return (
               <FormControlLabel
                 value={label}
-                control={<Radio size="small" />}
+                control={
+                  <Radio
+                    size="small"
+                    checked={label === selectedShape}
+                    sx={{
+                      position: "fixed",
+                      opacity: 0,
+                      pointerEvents: "none",
+                    }}
+                  />
+                }
                 label={
                   <ShapeRadioLabel
                     shape={label as Shape}
                     checked={label === selectedShape}
                   />
                 }
-                checked={label === selectedShape}
                 key={entityId}
-                // sx={{
-                //   maxWidth: 125,
-                // }}
+                sx={{
+                  marginRight: 2,
+                  marginLeft: 0,
+                }}
                 {...register("shape")}
               />
             )
