@@ -1,11 +1,17 @@
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { Button, Grid, TextField } from "@mui/material"
 
 export const TextInputForm: React.FC = () => {
   const { handleSubmit, register } = useForm()
 
+  const router = useRouter()
+
   const onSubmit = (data: any) => {
-    console.log(data)
+    const values: string[] = Object.values(data)
+    const qs = `textLines=${JSON.stringify(values)}&shape=bread`
+
+    router.push(`/design?${qs}`)
   }
 
   return (

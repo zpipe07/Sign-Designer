@@ -2,22 +2,14 @@ import path from "path"
 import opentype from "opentype.js"
 import { NextResponse, type NextRequest } from "next/server"
 
-import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
-import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
 import {
   FONT_MAP,
   SIZE_CONFIG_MAP,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import {
-  Color,
-  ColorCombo,
-  FontFamily,
-  MountingStyle,
-  Shape,
-  Size,
-} from "@/src/components/SignDesigner/types"
+import { Color } from "@/src/components/SignDesigner/types"
 import { generateModel } from "@/src/utils/makerjs"
+import { parseSearchParams } from "@/src/utils"
 
 export async function GET(request: NextRequest) {
   const product = await getProduct("112")
@@ -26,17 +18,9 @@ export async function GET(request: NextRequest) {
     throw new Error("Product not found")
   }
 
-  const productOptionsMap = createProductOptionsMap(product)
-
   const searchParams = request.nextUrl.searchParams
-  const shape = searchParams.get("shape") as Shape
-  const size = searchParams.get("size") as Size
-  const textLines = searchParams.get("textLines")
-  const color = searchParams.get("color") as ColorCombo
-  const mountingStyle = searchParams.get(
-    "mountingStyle",
-  ) as MountingStyle
-  const fontFamily = searchParams.get("fontFamily") as FontFamily
+  const { shape, size, textLines, color, fontFamily, mountingStyle } =
+    parseSearchParams(searchParams)
 
   if (!shape) {
     return new NextResponse(
@@ -59,15 +43,6 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  let parsedTextLines = []
-  if (textLines) {
-    parsedTextLines = JSON.parse(textLines)
-      .filter(Boolean)
-      .map((text: string) => ({
-        value: text,
-      }))
-  }
-
   const dirRelativeToPublicFolder = "fonts"
   const dir = path.resolve("./public", dirRelativeToPublicFolder)
   const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
@@ -82,13 +57,13 @@ export async function GET(request: NextRequest) {
     height,
     width,
     borderWidth: 0.5,
-    textLines: parsedTextLines,
+    textLines,
     foregroundColor,
     backgroundColor,
     inputs: {
       shape,
       size,
-      textLines: parsedTextLines,
+      textLines,
       color,
       fontFamily,
       mountingStyle,

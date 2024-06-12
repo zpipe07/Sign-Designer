@@ -6,7 +6,6 @@ import {
   useWatch,
 } from "react-hook-form"
 import Grid from "@mui/material/Grid"
-import InputLabel from "@mui/material/InputLabel"
 import TextField from "@mui/material/TextField"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
@@ -30,7 +29,7 @@ export const TextInput: React.FC = () => {
 
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {
           // if (size === "medium" && index > 1) {
           //   return null
