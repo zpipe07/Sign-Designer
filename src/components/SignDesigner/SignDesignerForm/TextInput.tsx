@@ -6,7 +6,6 @@ import {
   useWatch,
 } from "react-hook-form"
 import Grid from "@mui/material/Grid"
-import InputLabel from "@mui/material/InputLabel"
 import TextField from "@mui/material/TextField"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"

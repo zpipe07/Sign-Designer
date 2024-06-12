@@ -10,6 +10,7 @@ import { SignDesignerForm } from "@/src/components/SignDesigner/SignDesignerForm
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { SignVisualizer } from "@/src/components/SignVisualizer"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { AddressBarUpdater } from "@/src/components/SignDesigner/AddressBarUpdater"
 
 type Props = {
   isEditing?: boolean
@@ -70,11 +71,8 @@ export const SignDesigner: React.FC<Props> = ({
               }}
             >
               <Card elevation={3} sx={{ padding: 2 }}>
-                {/* <SignDesignerVisualizer /> */}
                 <SignVisualizer />
               </Card>
-
-              {/* <PriceDisplay /> */}
             </Box>
           </Grid>
 
@@ -83,6 +81,8 @@ export const SignDesigner: React.FC<Props> = ({
           </Grid>
         </Grid>
       </Box>
+
+      <AddressBarUpdater />
     </FormProvider>
   )
 }

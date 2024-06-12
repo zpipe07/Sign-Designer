@@ -3,7 +3,6 @@
 import { useFormContext } from "react-hook-form"
 import { useParams, useRouter } from "next/navigation"
 import Grid from "@mui/material/Grid"
-import Button from "@mui/material/Button"
 import { LoadingButton } from "@mui/lab"
 import { Box, Divider, useTheme } from "@mui/material"
 
@@ -41,13 +40,13 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     router.push("/cart")
   }
 
+  const { data: cartData } = useGetCart()
+
   const { mutate: createCart, isPending: isPendingCreateCart } =
     useCreateCart({ onSuccess })
 
   const { mutate: addCartItem, isPending: isPendingAddCartItem } =
     useAddCartItem({ onSuccess })
-
-  const { data: cartData } = useGetCart()
 
   const {
     mutate: updateCartItem,
@@ -55,14 +54,6 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
   } = useUpdateCartItem({ onSuccess })
 
   const onSubmit = (data: DesignFormInputs) => {
-    // if (isEditing) {
-    //   router.push(
-    //     `/cart/${params.cartId}/items/${params.itemId}/configure`,
-    //   )
-    //   return
-    // }
-
-    // router.push("/design/configure")
     if (isEditing) {
       // update cart item
       updateCartItem({
