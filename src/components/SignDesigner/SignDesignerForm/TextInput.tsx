@@ -30,7 +30,7 @@ export const TextInput: React.FC = () => {
 
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {
           // if (size === "medium" && index > 1) {
           //   return null
