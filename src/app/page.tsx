@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <HeroContainer>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h3" component="h1" marginBottom={2}>
               REFRESH YOUR HOME TODAY
             </Typography>

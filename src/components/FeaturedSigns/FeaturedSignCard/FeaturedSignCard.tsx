@@ -2,11 +2,13 @@ import Link from "next/link"
 import queryString from "query-string"
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Skeleton,
   Typography,
 } from "@mui/material"
 
@@ -17,7 +19,7 @@ export const FeaturedSignCard: React.FC<{
   title: string
   inputs: DesignFormInputs
 }> = ({ title, inputs }) => {
-  const { data: svg, isFetching } = useGetSignSvg(inputs)
+  const { data: svg, isLoading } = useGetSignSvg(inputs)
 
   const textLines = JSON.stringify(
     Object.values(inputs.textLines).map((line) => line.value),
@@ -30,17 +32,31 @@ export const FeaturedSignCard: React.FC<{
       {/* @ts-ignore */}
       <CardActionArea component={Link} href={url}>
         <CardMedia>
-          <Box
-            sx={{ padding: 2 }}
-            dangerouslySetInnerHTML={{ __html: svg }}
-          />
+          {isLoading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{
+                height: 0,
+                paddingTop: "78.5%",
+              }}
+            />
+          ) : (
+            <Box
+              sx={{ padding: 2 }}
+              dangerouslySetInnerHTML={{ __html: svg }}
+            />
+          )}
         </CardMedia>
 
         <CardContent>
           <Typography variant="h5">{title}</Typography>
         </CardContent>
 
-        <CardActions></CardActions>
+        <CardActions>
+          <Button type="button" variant="contained">
+            Customize this sign
+          </Button>
+        </CardActions>
       </CardActionArea>
     </Card>
   )
