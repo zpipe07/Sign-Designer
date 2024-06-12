@@ -2,8 +2,6 @@ import path from "path"
 import opentype from "opentype.js"
 import { NextResponse, type NextRequest } from "next/server"
 
-// import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
-import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProduct } from "@/src/lib/bigcommerce"
 import {
   FONT_MAP,
@@ -19,8 +17,6 @@ export async function GET(request: NextRequest) {
   if (!product) {
     throw new Error("Product not found")
   }
-
-  const productOptionsMap = createProductOptionsMap(product)
 
   const searchParams = request.nextUrl.searchParams
   const { shape, size, textLines, color, fontFamily, mountingStyle } =
