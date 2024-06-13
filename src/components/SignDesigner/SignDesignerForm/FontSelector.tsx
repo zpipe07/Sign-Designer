@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl"
 import {
   Box,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -54,9 +55,10 @@ export const FontSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="font-label" sx={{ marginBottom: 1 }}>
-        Font
-      </FormLabel>
+      <FormLabel id="font-label">Font</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0 }}>
+        Selected: {selectedFontFamily}
+      </FormHelperText>
 
       <RadioGroup name="fontFamily" sx={{ flexDirection: "row" }}>
         {fontFamilies.map((fontFamily) => (
@@ -75,8 +77,7 @@ export const FontSelector: React.FC = () => {
             checked={fontFamily === selectedFontFamily}
             {...register("fontFamily")}
             sx={{
-              marginRight: 2,
-              marginLeft: 0,
+              padding: 0.5,
             }}
             label={
               <Box
