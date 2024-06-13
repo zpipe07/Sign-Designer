@@ -5,16 +5,17 @@ import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 3.0,
-  small: 4.0,
+  small: 5.0,
   medium: 4.0,
   large: 4.2,
   "extra large": 4.5,
 }
+
 const topArcYMap: { [key in Size]: number } = {
   "extra small": -14.5,
   small: -13,
   medium: -12.25,
-  large: -9,
+  large: -8.5,
   "extra large": -17.5,
 }
 
@@ -102,7 +103,14 @@ export function generateBreadModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = height / 3 - (measure.height * 2) / 3
+      let y
+      if (inputs.size === "large") {
+        y = height / 2 - measure.height * 1.3
+      } else if (inputs.size === "small") {
+        y = 0.3
+      } else {
+        y = height / 2 - measure.height * 1.0
+      }
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -126,7 +134,7 @@ export function generateBreadModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = measure.height / -2
+      const y = -0.4
 
       text.models[`textModel${index}`] = {
         ...textModel,
