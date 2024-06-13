@@ -18,6 +18,9 @@ import {
   Cormorant,
   Expletus,
   Playfair,
+  Comfortaa,
+  Danfo,
+  Sansita,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -26,6 +29,9 @@ const fontFamilies: FontFamily[] = [
   "Playfair",
   "Cormorant",
   "Arbutus",
+  "Comfortaa",
+  "Danfo",
+  "Sansita",
 ]
 
 const fontMap = {
@@ -34,6 +40,9 @@ const fontMap = {
   Playfair,
   Cormorant,
   Arbutus,
+  Comfortaa,
+  Danfo,
+  Sansita,
 }
 
 export const FontSelector: React.FC = () => {

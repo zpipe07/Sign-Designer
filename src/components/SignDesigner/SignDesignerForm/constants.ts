@@ -349,7 +349,9 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Playfair: "PlayfairDisplay-BlackItalic.ttf",
   Cormorant: "Cormorant-BoldItalic.ttf",
   Arbutus: "ArbutusSlab-Regular.ttf",
-  // Tourney: "/fonts/Tourney_SemiExpanded-ExtraLight.ttf",
+  Comfortaa: "Comfortaa-Bold.ttf",
+  Danfo: "Danfo-Regular.ttf",
+  Sansita: "SansitaSwashed-SemiBold.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

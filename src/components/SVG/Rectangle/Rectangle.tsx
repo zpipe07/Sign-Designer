@@ -257,7 +257,7 @@ export function generateRectangleModel({
       // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    fillRule: "nonzero",
+    fillRule: "evenodd",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)

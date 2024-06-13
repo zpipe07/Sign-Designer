@@ -10,11 +10,9 @@ export type FontFamily =
   | "Playfair"
   | "Cormorant"
   | "Arbutus"
-// | "Tourney"
-// "times"
-// | "verdana"
-// | "lucida Console"
-// | "cursive"
+  | "Comfortaa"
+  | "Danfo"
+  | "Sansita"
 
 export type Orientation = "horizontal" | "vertical"
 
