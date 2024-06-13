@@ -6,16 +6,15 @@ import { SvgProps } from "@/src/components/SVG/types"
 import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 2.8,
-  // "extra small": 3.25,
-  small: 5,
+  "extra small": 2.5,
+  small: 3.0,
   medium: 4.0,
-  large: 4.2,
-  "extra large": 4.25,
+  large: 4.0,
+  "extra large": 4.0,
 }
 
 const textOffsetMap: { [key in Size]: number } = {
-  "extra small": 0.2,
+  "extra small": 0,
   small: 0,
   medium: 1.125,
   large: 0,
