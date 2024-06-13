@@ -2,8 +2,6 @@
 
 import { useFormContext, useWatch } from "react-hook-form"
 import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
-import Select from "@mui/material/Select"
 import {
   Box,
   FormControlLabel,
@@ -47,7 +45,9 @@ export const FontSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="font-label">Font</FormLabel>
+      <FormLabel id="font-label" sx={{ marginBottom: 1 }}>
+        Font
+      </FormLabel>
 
       <RadioGroup name="fontFamily" sx={{ flexDirection: "row" }}>
         {fontFamilies.map((fontFamily) => (
@@ -97,19 +97,6 @@ export const FontSelector: React.FC = () => {
           />
         ))}
       </RadioGroup>
-
-      {/* <Select
-        labelId="font-label"
-        label="Font"
-        native
-        {...register("fontFamily")}
-      >
-        {fontFamilies.map((fontFamily) => (
-          <option value={fontFamily} key={fontFamily}>
-            {fontFamily}
-          </option>
-        ))}
-      </Select> */}
     </FormControl>
   )
 }
