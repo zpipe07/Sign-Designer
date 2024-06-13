@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useWatch } from "react-hook-form"
 import { Box, LinearProgress } from "@mui/material"
 
@@ -15,10 +16,23 @@ export const SignVisualizer: React.FC = () => {
     .filter(({ value }) => {
       return !!value
     })
-  const { data: svg, isFetching } = useGetSignSvg({
-    ...inputs,
-    textLines,
-  } as DesignFormInputs)
+
+  const {
+    data: svg,
+    isFetching,
+    refetch,
+  } = useGetSignSvg(
+    {
+      ...inputs,
+      textLines,
+    } as DesignFormInputs,
+    undefined,
+    false,
+  )
+
+  useEffect(() => {
+    refetch()
+  }, [inputs])
 
   return (
     <Box position="relative">

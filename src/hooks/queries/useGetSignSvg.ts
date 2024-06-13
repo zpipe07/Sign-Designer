@@ -6,10 +6,11 @@ import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 export const useGetSignSvg = (
   inputs: DesignFormInputs,
   isThumbnail?: boolean,
+  enabled = true,
 ) => {
   const queryClient = useQueryClient()
 
-  const getSignSvg = async () => {
+  const getSignSvg = async ({ signal }: any) => {
     const formattedInputs = {
       ...inputs,
       textLines: JSON.stringify(
@@ -19,7 +20,8 @@ export const useGetSignSvg = (
     const qs = queryString.stringify(formattedInputs, {
       arrayFormat: "bracket",
     })
-    const res = await fetch(`/api/v1/svg?${qs}`)
+
+    const res = await fetch(`/api/v1/svg?${qs}`, { signal })
     const svg = await res.text()
 
     return svg
@@ -40,5 +42,6 @@ export const useGetSignSvg = (
 
       return previousQuery?.state.data as string
     },
+    enabled,
   })
 }
