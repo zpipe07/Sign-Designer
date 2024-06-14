@@ -25,7 +25,7 @@ export const Sansita = localFont({
   src: "../public/fonts/SansitaSwashed-SemiBold.ttf",
 })
 export const AdventPro = localFont({
-  src: "../public/fonts/AdventPro-Black.ttf",
+  src: "../public/fonts/AdventPro-Bold.ttf",
 })
 export const JosefinSlab = localFont({
   src: "../public/fonts/JosefinSlab-Bold.ttf",

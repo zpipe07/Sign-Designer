@@ -282,7 +282,8 @@ export function generateBreadModel({
       // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    fillRule: "nonzero",
+    // fillRule: "nonzero",
+    fillRule: "evenodd",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(modelToExport, options)

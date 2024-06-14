@@ -352,7 +352,7 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Comfortaa: "Comfortaa-Bold.ttf",
   Danfo: "Danfo-Regular.ttf",
   Sansita: "SansitaSwashed-SemiBold.ttf",
-  AdventPro: "AdventPro-Black.ttf",
+  AdventPro: "AdventPro-Bold.ttf",
   JosefinSlab: "JosefinSlab-Bold.ttf",
   Tourney: "Tourney-Light.ttf",
 }
