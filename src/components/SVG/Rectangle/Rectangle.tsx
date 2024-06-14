@@ -7,7 +7,7 @@ import { Size } from "@/src/components/SignDesigner/types"
 
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 2.5,
-  small: 3.0,
+  small: 4.5,
   medium: 4.0,
   large: 4.0,
   "extra large": 4.0,
