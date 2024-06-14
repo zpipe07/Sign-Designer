@@ -43,7 +43,7 @@ export const FeaturedSignCard: React.FC<{
           ) : (
             <Box
               sx={{ padding: 2 }}
-              dangerouslySetInnerHTML={{ __html: svg }}
+              dangerouslySetInnerHTML={{ __html: svg! }}
             />
           )}
         </CardMedia>
