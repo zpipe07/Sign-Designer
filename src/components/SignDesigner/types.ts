@@ -13,6 +13,9 @@ export type FontFamily =
   | "Comfortaa"
   | "Danfo"
   | "Sansita"
+  | "AdventPro"
+  | "JosefinSlab"
+  | "Tourney"
 
 export type Orientation = "horizontal" | "vertical"
 

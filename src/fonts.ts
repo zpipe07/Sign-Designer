@@ -24,3 +24,12 @@ export const Danfo = localFont({
 export const Sansita = localFont({
   src: "../public/fonts/SansitaSwashed-SemiBold.ttf",
 })
+export const AdventPro = localFont({
+  src: "../public/fonts/AdventPro-Black.ttf",
+})
+export const JosefinSlab = localFont({
+  src: "../public/fonts/JosefinSlab-Bold.ttf",
+})
+export const Tourney = localFont({
+  src: "../public/fonts/Tourney-Light.ttf",
+})

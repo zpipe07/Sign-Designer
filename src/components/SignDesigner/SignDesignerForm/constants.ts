@@ -352,6 +352,9 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Comfortaa: "Comfortaa-Bold.ttf",
   Danfo: "Danfo-Regular.ttf",
   Sansita: "SansitaSwashed-SemiBold.ttf",
+  AdventPro: "AdventPro-Black.ttf",
+  JosefinSlab: "JosefinSlab-Bold.ttf",
+  Tourney: "Tourney-Light.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

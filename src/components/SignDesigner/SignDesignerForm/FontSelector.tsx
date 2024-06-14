@@ -22,6 +22,9 @@ import {
   Comfortaa,
   Danfo,
   Sansita,
+  AdventPro,
+  JosefinSlab,
+  Tourney,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -33,6 +36,9 @@ const fontFamilies: FontFamily[] = [
   "Comfortaa",
   "Danfo",
   "Sansita",
+  "AdventPro",
+  "JosefinSlab",
+  "Tourney",
 ]
 
 const fontMap = {
@@ -44,6 +50,9 @@ const fontMap = {
   Comfortaa,
   Danfo,
   Sansita,
+  AdventPro,
+  JosefinSlab,
+  Tourney,
 }
 
 export const FontSelector: React.FC = () => {
