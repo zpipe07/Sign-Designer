@@ -30,7 +30,7 @@ export const SignDesigner: React.FC<Props> = ({
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
       shape: shape || "rectangle",
-      size: size || "extra large",
+      size: size || "large",
       color: color || "black/white",
       fontFamily: fontFamily || "Albert",
       mountingStyle: mountingStyle || "wall mounted",
