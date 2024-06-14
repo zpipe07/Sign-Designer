@@ -53,33 +53,20 @@ export function generateRectangleModel({
     models: {},
   }
 
-  console.log({ length: textLines.length })
-
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
 
     if (index === 0) {
       // house number
-      // const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
-
-      // const fontSize =
-      //   fontSizeMap[inputs.size as Size] - Math.log(4) * chars
-
-      // const fontSize =
-      //   fontSizeMap[inputs.size as Size] - Math.log(chars)
-
       const fontSize =
         fontSizeMap[inputs.size as Size] - Math.log10(chars)
-      console.log({ fontSize })
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
-        true,
         false,
-        0,
-        {},
+        false,
       )
       makerjs.model.center(textModel)
       const measure = makerjs.measure.modelExtents(textModel)
@@ -101,17 +88,10 @@ export function generateRectangleModel({
         font,
         textLine.value,
         fontSize,
-        true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
       const y = (height * -1) / 2 + 1.5 + textOffsetMap[inputs.size]
-      // + (measure.height * 3) / 4
-
-      // const y = (height * -1) / 2
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -128,10 +108,6 @@ export function generateRectangleModel({
         font,
         textLine.value,
         fontSize,
-        true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
@@ -140,9 +116,6 @@ export function generateRectangleModel({
         measure.height * 1 -
         1.5 +
         textOffsetMap[inputs.size]
-      // - (measure.height * 3) / 4
-
-      // const y = height / 2 - (measure.height * 4) / 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -257,7 +230,8 @@ export function generateRectangleModel({
       // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    fillRule: "evenodd",
+    // nonzero | evenodd
+    fillRule: "nonzero",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)

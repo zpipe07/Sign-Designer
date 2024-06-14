@@ -16,9 +16,9 @@ import { FontFamily } from "@/src/components/SignDesigner/types"
 import {
   Albert,
   Arbutus,
-  Cormorant,
+  // Cormorant,
   Expletus,
-  Playfair,
+  // Playfair,
   Comfortaa,
   Danfo,
   Sansita,
@@ -30,8 +30,8 @@ import {
 const fontFamilies: FontFamily[] = [
   "Albert",
   "Expletus",
-  "Playfair",
-  "Cormorant",
+  // "Playfair",
+  // "Cormorant",
   "Arbutus",
   "Comfortaa",
   "Danfo",
@@ -44,8 +44,8 @@ const fontFamilies: FontFamily[] = [
 const fontMap = {
   Albert,
   Expletus,
-  Playfair,
-  Cormorant,
+  // Playfair,
+  // Cormorant,
   Arbutus,
   Comfortaa,
   Danfo,
@@ -102,6 +102,7 @@ export const FontSelector: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontSize: 26,
 
                   ...(selectedFontFamily === fontFamily && {
                     boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
