@@ -7,7 +7,6 @@ export async function GET(
 ) {
   // get a product by ID
   const product = await getProduct(params.productId)
-  console.log({ product })
 
   if (!product) {
     return Response.json({ product: undefined })
