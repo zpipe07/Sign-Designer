@@ -117,7 +117,8 @@ export async function bigCommerceFetch<T>({
         ...(query && { query }),
         ...(variables && { variables }),
       }),
-      cache,
+      // TODO set this correctly
+      cache: "no-store",
     })
     const body = await result.json()
 
