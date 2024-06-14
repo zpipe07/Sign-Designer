@@ -1,6 +1,7 @@
 "use client"
 
 import { useFormContext, useWatch } from "react-hook-form"
+import { useTheme } from "@mui/material"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
@@ -14,6 +15,8 @@ import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { ShapeRadioLabel } from "@/src/components/SignDesigner/SignDesignerForm/ShapeSelector/ShapeRadioLabel"
 
 export const ShapeSelector: React.FC = () => {
+  const theme = useTheme()
+
   const { register } = useFormContext()
 
   const selectedShape = useWatch({ name: "shape" })
@@ -31,15 +34,18 @@ export const ShapeSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="shape-label">Shape</FormLabel>
-      {/* <FormHelperText sx={{ marginLeft: 0, marginBottom: 0 }}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Alias, dolores?
-      </FormHelperText> */}
 
       <RadioGroup
         aria-labelledby="shape-label"
         name="shape"
-        sx={{ justifyContent: "space-evenly", flexDirection: "row" }}
+        sx={{
+          justifyContent: "space-evenly",
+          flexDirection: "row",
+
+          [theme.breakpoints.up("md")]: {
+            justifyContent: "flex-start",
+          },
+        }}
       >
         {data.productOptionsMap.shape.values.map(
           ({ label, entityId }) => {

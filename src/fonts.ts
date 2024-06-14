@@ -15,3 +15,21 @@ export const Cormorant = localFont({
 export const Arbutus = localFont({
   src: "../public/fonts/ArbutusSlab-Regular.ttf",
 })
+export const Comfortaa = localFont({
+  src: "../public/fonts/Comfortaa-Bold.ttf",
+})
+export const Danfo = localFont({
+  src: "../public/fonts/Danfo-Regular.ttf",
+})
+export const Sansita = localFont({
+  src: "../public/fonts/SansitaSwashed-SemiBold.ttf",
+})
+export const AdventPro = localFont({
+  src: "../public/fonts/AdventPro-Bold.ttf",
+})
+export const JosefinSlab = localFont({
+  src: "../public/fonts/JosefinSlab-Bold.ttf",
+})
+export const Tourney = localFont({
+  src: "../public/fonts/Tourney-Light.ttf",
+})

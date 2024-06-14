@@ -13,12 +13,15 @@ import {
   Orientation,
   Size,
 } from "@/src/components/SignDesigner/types"
+import { useEffect } from "react"
 
 export const TextInput: React.FC = () => {
   const { register } = useFormContext()
 
-  const orientation: Orientation = useWatch({ name: "orientation" })
+  // const orientation: Orientation = useWatch({ name: "orientation" })
   const size: Size = useWatch({ name: "size" })
+
+  const textLines = useWatch({ name: "textLines" })
 
   const maxLinesOfText = SIZE_CONFIG_MAP[size].maxLinesOfText
   // SIZE_CONFIG_MAP[size][orientation].maxLinesOfText
@@ -26,6 +29,10 @@ export const TextInput: React.FC = () => {
   const { fields } = useFieldArray({
     name: "textLines",
   })
+
+  useEffect(() => {
+    console.log({ textLines })
+  }, [textLines])
 
   return (
     <>

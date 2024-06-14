@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormContext, useWatch } from "react-hook-form"
-import { Box, useTheme } from "@mui/material"
+import { Box, FormHelperText, useTheme } from "@mui/material"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
@@ -10,12 +10,6 @@ import RadioGroup from "@mui/material/RadioGroup"
 import LinearProgress from "@mui/material/LinearProgress"
 
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
-
-// export const colorCombos: ColorCombo[] = [
-//   "black/white",
-//   "tan/green",
-//   "yellow/black",
-// ]
 
 export const ColorSelector: React.FC = () => {
   const theme = useTheme()
@@ -36,9 +30,10 @@ export const ColorSelector: React.FC = () => {
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="color-label" sx={{ marginBottom: 1 }}>
-        Color
-      </FormLabel>
+      <FormLabel id="color-label">Color</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0 }}>
+        Selected: {selectedColor}
+      </FormHelperText>
 
       <RadioGroup
         aria-labelledby="color-label"
@@ -112,8 +107,7 @@ export const ColorSelector: React.FC = () => {
                 }
                 key={entityId}
                 sx={{
-                  marginRight: 2,
-                  marginLeft: 0,
+                  padding: 0.5,
                 }}
                 {...register("color")}
               />

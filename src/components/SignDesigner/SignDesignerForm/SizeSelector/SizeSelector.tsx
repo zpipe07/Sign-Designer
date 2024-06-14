@@ -1,19 +1,21 @@
 "use client"
 
 import { useFormContext, useWatch } from "react-hook-form"
+import { useTheme } from "@mui/material"
 import FormControl from "@mui/material/FormControl"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import LinearProgress from "@mui/material/LinearProgress"
-import FormHelperText from "@mui/material/FormHelperText"
 
 import { Size } from "@/src/components/SignDesigner/types"
 import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { SizeRadioLabel } from "@/src/components/SignDesigner/SignDesignerForm/SizeSelector/SizeRadioLabel"
 
 export const SizeSelector: React.FC = () => {
+  const theme = useTheme()
+
   const { register } = useFormContext()
 
   const selectedSize = useWatch({ name: "size" })
@@ -31,18 +33,18 @@ export const SizeSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="size-label">Size</FormLabel>
-      {/* <FormHelperText
-        sx={{
-          marginLeft: 0,
-        }}
-      >
-        Select a size to see actual dimensions
-      </FormHelperText> */}
 
       <RadioGroup
         aria-labelledby="size-label"
         name="size"
-        sx={{ justifyContent: "space-evenly", flexDirection: "row" }}
+        sx={{
+          justifyContent: "space-evenly",
+          flexDirection: "row",
+
+          [theme.breakpoints.up("md")]: {
+            justifyContent: "flex-start",
+          },
+        }}
       >
         {data.productOptionsMap.size.values.map(
           ({ label, entityId }) => {

@@ -10,12 +10,21 @@ const fontSizeMap: { [key in Size]: number } = {
   large: 4.5,
   "extra large": 4.75,
 }
+
 const topArcYMap: { [key in Size]: number } = {
   "extra small": -14.5,
   small: -13,
-  medium: -12.25,
-  large: -11.75,
+  medium: -12.9,
+  large: -12.0,
   "extra large": -20.4,
+}
+
+const textOffsetMap: { [key in Size]: number } = {
+  "extra small": 0,
+  small: 0,
+  medium: 0.75,
+  large: 0,
+  "extra large": 0,
 }
 
 function calculateAngle(arcLength: number, radius: number) {
@@ -58,17 +67,6 @@ export function generateEllipseModel({
     // if (inputs.orientation === "horizontal") {
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
-    // const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.25
-    // const textModel = new makerjs.models.Text(
-    //   font,
-    //   textLine.value,
-    //   fontSize,
-    //   true,
-    //   false,
-    //   0,
-    //   {},
-    // )
-    // const measure = makerjs.measure.modelExtents(textModel)
 
     if (index === 0) {
       // house number
@@ -84,7 +82,7 @@ export function generateEllipseModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = measure.height / -2
+      const y = measure.height / -2 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -298,7 +296,7 @@ export function generateEllipseModel({
       // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    fillRule: "nonzero",
+    // fillRule: "nonzero",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)

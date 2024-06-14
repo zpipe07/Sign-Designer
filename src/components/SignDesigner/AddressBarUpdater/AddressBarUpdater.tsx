@@ -22,8 +22,11 @@ export const AddressBarUpdater: React.FC = () => {
       })
       const url = `${pathname}?${qs}`
 
-      // @ts-ignore
-      router.replace(url)
+      window.history.replaceState(
+        { ...window.history.state, as: url, url },
+        "",
+        url,
+      )
     }
   }, [inputs, pathname, router])
 

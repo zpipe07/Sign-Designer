@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material"
+import { Box, Skeleton, Typography, useTheme } from "@mui/material"
 
 import { Size } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
@@ -24,7 +24,7 @@ export const SizeRadioLabel: React.FC<Props> = ({
 
   const ratioOfMaxWidth = width / maxWidth
 
-  const { data: svg } = useGetSignSvg(
+  const { data: svg, isLoading } = useGetSignSvg(
     {
       shape: selectedShape,
       size,
@@ -34,8 +34,20 @@ export const SizeRadioLabel: React.FC<Props> = ({
       fontFamily: "Albert",
       mountingStyle: "hanging",
     },
-    true,
+    "size",
   )
+
+  if (isLoading) {
+    const ratio = height / width
+
+    return (
+      <Skeleton
+        variant="rectangular"
+        width={100}
+        height={100 * ratio}
+      />
+    )
+  }
 
   return (
     <Box
@@ -63,7 +75,7 @@ export const SizeRadioLabel: React.FC<Props> = ({
       }}
     >
       <Box
-        dangerouslySetInnerHTML={{ __html: svg }}
+        dangerouslySetInnerHTML={{ __html: svg! }}
         sx={{
           fontSize: 0,
           borderRadius: 0.5,

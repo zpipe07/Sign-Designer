@@ -2,11 +2,10 @@
 
 import { useFormContext, useWatch } from "react-hook-form"
 import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
-import Select from "@mui/material/Select"
 import {
   Box,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -17,25 +16,43 @@ import { FontFamily } from "@/src/components/SignDesigner/types"
 import {
   Albert,
   Arbutus,
-  Cormorant,
+  // Cormorant,
   Expletus,
-  Playfair,
+  // Playfair,
+  Comfortaa,
+  Danfo,
+  Sansita,
+  AdventPro,
+  JosefinSlab,
+  Tourney,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
   "Albert",
   "Expletus",
-  "Playfair",
-  "Cormorant",
+  // "Playfair",
+  // "Cormorant",
   "Arbutus",
+  "Comfortaa",
+  "Danfo",
+  "Sansita",
+  "AdventPro",
+  "JosefinSlab",
+  "Tourney",
 ]
 
 const fontMap = {
   Albert,
   Expletus,
-  Playfair,
-  Cormorant,
+  // Playfair,
+  // Cormorant,
   Arbutus,
+  Comfortaa,
+  Danfo,
+  Sansita,
+  AdventPro,
+  JosefinSlab,
+  Tourney,
 }
 
 export const FontSelector: React.FC = () => {
@@ -48,6 +65,9 @@ export const FontSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="font-label">Font</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0 }}>
+        Selected: {selectedFontFamily}
+      </FormHelperText>
 
       <RadioGroup name="fontFamily" sx={{ flexDirection: "row" }}>
         {fontFamilies.map((fontFamily) => (
@@ -66,8 +86,7 @@ export const FontSelector: React.FC = () => {
             checked={fontFamily === selectedFontFamily}
             {...register("fontFamily")}
             sx={{
-              marginRight: 2,
-              marginLeft: 0,
+              padding: 0.5,
             }}
             label={
               <Box
@@ -83,6 +102,7 @@ export const FontSelector: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontSize: 26,
 
                   ...(selectedFontFamily === fontFamily && {
                     boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
@@ -97,19 +117,6 @@ export const FontSelector: React.FC = () => {
           />
         ))}
       </RadioGroup>
-
-      {/* <Select
-        labelId="font-label"
-        label="Font"
-        native
-        {...register("fontFamily")}
-      >
-        {fontFamilies.map((fontFamily) => (
-          <option value={fontFamily} key={fontFamily}>
-            {fontFamily}
-          </option>
-        ))}
-      </Select> */}
     </FormControl>
   )
 }
