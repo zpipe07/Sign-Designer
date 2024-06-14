@@ -111,14 +111,13 @@ export async function bigCommerceFetch<T>({
         Accept: "application/json",
         Authorization: `Bearer ${process.env.BIGCOMMERCE_CUSTOMER_IMPERSONATION_TOKEN}`,
         "Content-Type": "application/json",
-        // cache: "no-store",
         ...headers,
       },
       body: JSON.stringify({
         ...(query && { query }),
         ...(variables && { variables }),
       }),
-      cache: "no-store",
+      cache,
     })
     const body = await result.json()
 

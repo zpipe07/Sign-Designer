@@ -9,7 +9,7 @@ export const TextInputForm: React.FC = () => {
 
   const onSubmit = (data: any) => {
     const values: string[] = Object.values(data)
-    const qs = `textLines=${JSON.stringify(values)}&shape=bread`
+    const qs = `textLines=${JSON.stringify(values)}&shape=bread&size=large`
 
     router.push(`/design?${qs}`)
   }
