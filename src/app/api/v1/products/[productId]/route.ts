@@ -1,5 +1,5 @@
 import { getProduct } from "@/src/lib/bigcommerce"
-import { getProductFormMapping } from "@/src/lib/bigcommerce/mappers"
+// import { getProductFormMapping } from "@/src/lib/bigcommerce/mappers"
 
 export async function GET(
   _request: Request,
@@ -7,6 +7,7 @@ export async function GET(
 ) {
   // get a product by ID
   const product = await getProduct(params.productId)
+  console.log({ product })
 
   if (!product) {
     return Response.json({ product: undefined })
