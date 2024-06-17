@@ -1,10 +1,18 @@
-import makerjs from "makerjs"
+import makerjs, { IPathArc } from "makerjs"
 
 import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
-import { Decoration } from "@/src/components/SignDesigner/types"
+import { Decoration, Size } from "@/src/components/SignDesigner/types"
 
-export const TopRound: React.FC<SvgProps> = ({
+const fontSizeMap: { [key in Size]: number } = {
+  "extra small": 2.5,
+  small: 4.5,
+  medium: 4.0,
+  large: 4.0,
+  "extra large": 4.0,
+}
+
+export function generateTopRoundModel({
   height,
   width,
   borderWidth,
@@ -13,121 +21,221 @@ export const TopRound: React.FC<SvgProps> = ({
   foregroundColor,
   backgroundColor,
   font,
-}) => {
-  // const container = new makerjs.models.Rectangle(width, height)
-  // const containerOffset = 5
-  // // @ts-ignore
-  // container.layer = "container"
-
+  strokeOnly,
+  actualDimensions,
+}: SvgProps & { actualDimensions?: boolean }) {
   const outerRect = new makerjs.models.RoundRectangle(
-    // width - containerOffset * 2,
     width,
-    // height - containerOffset * 2,
-    height / 2,
-    100,
+    (height * 2) / 3,
+    0.25,
   )
-  const outerOval = makerjs.model.move(
-    // new makerjs.models.Oval(200, 200),
-    new makerjs.models.Oval(width / 2, height / 2),
-    // [100, 50],
-    [width / 4, height / 6],
+  const outerOval = new makerjs.models.Oval(height, height)
+  const measureOuterOval = makerjs.measure.modelExtents(outerOval)
+
+  makerjs.model.move(outerOval, [
+    (width - measureOuterOval.width) / 2,
+    0,
+  ])
+
+  const outer = makerjs.model.combineUnion(outerRect, outerOval)
+  const chain = makerjs.model.findSingleChain(outer)
+  const filletsModel = makerjs.chain.fillet(chain, 0.25)
+
+  const outerModel = { models: { outer, filletsModel } }
+
+  const borderOuter = makerjs.model.outline(
+    // outer,
+    outerModel,
+    0.5,
+    undefined,
+    true,
   )
-  // @ts-ignore
-  outerRect.layer = "outer"
-  outerOval.layer = "outer"
-
-  makerjs.model.combineUnion(outerRect, outerOval)
-
-  const innerRect = makerjs.model.move(
-    new makerjs.models.RoundRectangle(
-      width - borderWidth * 2,
-      height / 2 - borderWidth * 2,
-      100,
-    ),
-    // [borderWidth - containerOffset, borderWidth - containerOffset],
-    [borderWidth, borderWidth],
+  const borderInner = makerjs.model.outline(
+    borderOuter,
+    0.2,
+    undefined,
+    true,
   )
-  const innerOval = makerjs.model.move(
-    makerjs.model.scale(
-      new makerjs.models.Oval(width / 2, height / 2),
-      0.9,
-    ),
-    [width / 4 + borderWidth, height / 6 + borderWidth],
-  )
-  innerRect.layer = "inner"
-  innerOval.layer = "inner"
 
-  makerjs.model.combineUnion(innerRect, innerOval)
-
-  const textModels = {}
+  const text: any = {
+    models: {},
+  }
 
   for (const textLine of textLines) {
-    const index = Object.keys(textModels).length
-    const chars = textLine.value.length
-    const fontSize = 300 - chars * 10
-    const textModel = new makerjs.models.Text(
-      font,
-      textLine.value,
-      fontSize,
-      true,
-      false,
-      0,
-      {},
-    )
-    const measure = makerjs.measure.modelExtents(textModel)
-    const x = (width - measure.width) / 2
-    const y =
-      height / 2 -
-      measure.height / 2 -
-      250 * index +
-      (textLines.length - 1) * 100 -
-      250
+    // const index = Object.keys(textModels).length
+    // const chars = textLine.value.length
+    // const fontSize = 300 - chars * 10
+    // const textModel = new makerjs.models.Text(
+    //   font,
+    //   textLine.value,
+    //   fontSize,
+    //   true,
+    //   false,
+    //   0,
+    //   {},
+    // )
+    // const measure = makerjs.measure.modelExtents(textModel)
+    // const x = (width - measure.width) / 2
+    // const y =
+    //   height / 2 -
+    //   measure.height / 2 -
+    //   250 * index +
+    //   (textLines.length - 1) * 100 -
+    //   250
 
-    // @ts-ignore
-    textModel.origin = [x, y]
-    // @ts-ignore
-    textModel.layer = "text"
-    // @ts-ignore
-    textModels[`textModel${index}`] = textModel
+    // // @ts-ignore
+    // textModel.origin = [x, y]
+    // // @ts-ignore
+    // textModel.layer = "text"
+    // // @ts-ignore
+    // textModels[`textModel${index}`] = textModel
+
+    const index = Object.keys(text.models).length
+    const chars = textLine.value.length
+
+    if (index === 0) {
+      // house number
+      const fontSize = fontSizeMap[inputs.size] - Math.log10(chars)
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        false,
+        false,
+      )
+      makerjs.model.center(textModel)
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = measure.height / -2
+      // + textOffsetMap[inputs.size]
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 1) {
+      // street name
+      const fontSize = fontSizeMap[inputs.size] - 1 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = (height * -1) / 2 + 1.5
+      // + textOffsetMap[inputs.size]
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
+
+    if (index === 2) {
+      // family name
+      const fontSize = fontSizeMap[inputs.size] - 1 - chars * 0.1
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const x = measure.width / -2
+      const y = height / 2 - measure.height * 1 - 1.5
+      // +
+      // textOffsetMap[inputs.size]
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+        origin: [x, y],
+      }
+      continue
+    }
   }
 
   const topRound = {
     models: {
+      outer: {
+        ...outerModel,
+        layer: "outer",
+        // models: { outer, filletsModel },
+      },
+      // filletsModel: { ...filletsModel, layer: "outer" },
+      borderOuter: { ...borderOuter, layer: "borderOuter" },
+      borderInner: { ...borderInner, layer: "borderInner" },
       // container,
-      outerRect,
-      outerOval,
-      innerRect,
-      innerOval,
-      ...textModels,
+      // outerRect,
+      // outerOval,
+      // innerRect,
+      // innerOval,
+      // ...textModels,
     },
   }
-  const svg = makerjs.exporter.toSVG(topRound, {
+  const strokeOnlyStyle = { fill: "none", stroke: "black" }
+  const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
-      container: { stroke: "none" },
-      inner: {
-        fill: foregroundColor,
-        stroke: foregroundColor,
-      },
-      outer: {
-        fill: backgroundColor,
-        // stroke: backgroundColor,
-        stroke: "black",
-      },
-      text: {
-        fill: backgroundColor,
-        // stroke: "none",
-      },
+      borderOuter: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "none",
+          },
+      borderInner: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+            stroke: "none",
+          },
+      outer: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+            stroke: "none",
+          },
+      text: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: backgroundColor,
+          },
+      bolts: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: "white",
+            stroke: "none",
+          },
+      // arc: {
+      //   stroke: "blue",
+      // },
     },
     viewBox: true,
     svgAttrs: {
       xmlns: "http://www.w3.org/2000/svg",
-      height: "100%",
-      width: "100%",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
+      id: "svg2",
+      version: "1.1",
+      height: actualDimensions ? `${height}in` : "100%",
+      width: actualDimensions ? `${width}in` : "100%",
+      // height: `${height}in`,
+      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    fillRule: "nonzero",
-    accuracy: 0.1,
-  })
+    // fillRule: "nonzero",
+    units: makerjs.unitType.Inch,
+  }
+  const svg = makerjs.exporter.toSVG(topRound, options)
+
+  return { svg }
+}
+
+export const TopRound: React.FC<SvgProps> = (props) => {
+  const { svg } = generateTopRoundModel(props)
 
   return (
     <div

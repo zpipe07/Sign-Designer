@@ -1,6 +1,7 @@
 import { generateBreadModel } from "@/src/components/SVG/Bread"
 import { generateEllipseModel } from "@/src/components/SVG/Ellipse"
 import { generateRectangleModel } from "@/src/components/SVG/Rectangle"
+import { generateTopRoundModel } from "@/src/components/SVG/TopRound"
 import { SvgProps } from "@/src/components/SVG/types"
 
 export function generateModel(
@@ -16,6 +17,10 @@ export function generateModel(
 
   if (props.inputs.shape === "rectangle") {
     return generateRectangleModel(props)
+  }
+
+  if (props.inputs.shape === "top round") {
+    return generateTopRoundModel(props)
   }
 
   throw new Error("Invalid shape")
