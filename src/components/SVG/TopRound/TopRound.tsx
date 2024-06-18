@@ -7,9 +7,17 @@ import { Decoration, Size } from "@/src/components/SignDesigner/types"
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 2.5,
   small: 4.5,
-  medium: 4.0,
-  large: 4.0,
+  medium: 3.5,
+  large: 3.6,
   "extra large": 4.0,
+}
+
+const textOffsetMap: { [key in Size]: number } = {
+  "extra small": 0,
+  small: -1,
+  medium: 0.5,
+  large: -0.5,
+  "extra large": 0,
 }
 
 export function generateTopRoundModel({
@@ -29,22 +37,30 @@ export function generateTopRoundModel({
     (height * 2) / 3,
     0.25,
   )
-  const outerOval = new makerjs.models.Oval(height, height)
-  const measureOuterOval = makerjs.measure.modelExtents(outerOval)
+  const outerEllipse = new makerjs.models.Ellipse(
+    width / 3,
+    height / 2,
+  )
+  const measureOuterEllipse =
+    makerjs.measure.modelExtents(outerEllipse)
 
-  makerjs.model.move(outerOval, [
-    (width - measureOuterOval.width) / 2,
-    0,
+  makerjs.model.move(outerEllipse, [
+    width / 2,
+    measureOuterEllipse.height / 2,
   ])
 
-  const outer = makerjs.model.combineUnion(outerRect, outerOval)
+  const outer = makerjs.model.combineUnion(outerRect, outerEllipse)
   const chain = makerjs.model.findSingleChain(outer)
   const filletsModel = makerjs.chain.fillet(chain, 0.25)
 
-  const outerModel = { models: { outer, filletsModel } }
+  const outerModel = {
+    models: {
+      outer,
+      filletsModel,
+    },
+  }
 
   const borderOuter = makerjs.model.outline(
-    // outer,
     outerModel,
     0.5,
     undefined,
@@ -62,40 +78,12 @@ export function generateTopRoundModel({
   }
 
   for (const textLine of textLines) {
-    // const index = Object.keys(textModels).length
-    // const chars = textLine.value.length
-    // const fontSize = 300 - chars * 10
-    // const textModel = new makerjs.models.Text(
-    //   font,
-    //   textLine.value,
-    //   fontSize,
-    //   true,
-    //   false,
-    //   0,
-    //   {},
-    // )
-    // const measure = makerjs.measure.modelExtents(textModel)
-    // const x = (width - measure.width) / 2
-    // const y =
-    //   height / 2 -
-    //   measure.height / 2 -
-    //   250 * index +
-    //   (textLines.length - 1) * 100 -
-    //   250
-
-    // // @ts-ignore
-    // textModel.origin = [x, y]
-    // // @ts-ignore
-    // textModel.layer = "text"
-    // // @ts-ignore
-    // textModels[`textModel${index}`] = textModel
-
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size] - Math.log10(chars)
+      const fontSize = fontSizeMap[inputs.size] - chars * 0.2
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -105,9 +93,9 @@ export function generateTopRoundModel({
       )
       makerjs.model.center(textModel)
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = measure.height / -2
-      // + textOffsetMap[inputs.size]
+      const x = width / 2 - measure.width / 2
+      const y =
+        height / 2 - measure.height / 2 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -118,16 +106,15 @@ export function generateTopRoundModel({
 
     if (index === 1) {
       // street name
-      const fontSize = fontSizeMap[inputs.size] - 1 - chars * 0.1
+      const fontSize = fontSizeMap[inputs.size] - chars * 0.125
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
       )
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = (height * -1) / 2 + 1.5
-      // + textOffsetMap[inputs.size]
+      const x = width / 2 - measure.width / 2
+      const y = 2
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -138,17 +125,15 @@ export function generateTopRoundModel({
 
     if (index === 2) {
       // family name
-      const fontSize = fontSizeMap[inputs.size] - 1 - chars * 0.1
+      const fontSize = fontSizeMap[inputs.size] - chars * 0.125 - 1
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
       )
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = height / 2 - measure.height * 1 - 1.5
-      // +
-      // textOffsetMap[inputs.size]
+      const x = width / 2 - measure.width / 2
+      const y = height - 4
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -160,20 +145,10 @@ export function generateTopRoundModel({
 
   const topRound = {
     models: {
-      outer: {
-        ...outerModel,
-        layer: "outer",
-        // models: { outer, filletsModel },
-      },
-      // filletsModel: { ...filletsModel, layer: "outer" },
+      outer: { ...outerModel, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
-      // container,
-      // outerRect,
-      // outerOval,
-      // innerRect,
-      // innerOval,
-      // ...textModels,
+      text: { ...text, layer: "text" },
     },
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
