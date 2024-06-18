@@ -66,43 +66,41 @@ export function generateEllipseModel({
   for (const textLine of textLines) {
     // if (inputs.orientation === "horizontal") {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    // const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
+      // const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = measure.height / -2 + textOffsetMap[inputs.size]
+      makerjs.model.center(textModel)
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = measure.width / -2
+      // const y = measure.height / -2 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -120,6 +118,8 @@ export function generateEllipseModel({
         false,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -128,16 +128,14 @@ export function generateEllipseModel({
 
     if (index === 2) {
       // family name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -156,6 +154,8 @@ export function generateEllipseModel({
         false,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -188,6 +188,8 @@ export function generateEllipseModel({
     //   })
     // }
   }
+
+  makerjs.model.center(text)
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {

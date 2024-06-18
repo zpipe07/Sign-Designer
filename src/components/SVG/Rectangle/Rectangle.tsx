@@ -72,7 +72,7 @@ export function generateRectangleModel({
       )
 
       makerjs.model.center(textModel)
-      const measure = makerjs.measure.modelExtents(textModel)
+      // const measure = makerjs.measure.modelExtents(textModel)
       // const x = measure.width / -2
       // const y = measure.height / -2 + textOffsetMap[inputs.size]
       // const y = 0
