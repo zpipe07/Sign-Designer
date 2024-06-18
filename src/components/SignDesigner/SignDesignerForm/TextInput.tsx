@@ -7,6 +7,7 @@ import {
 } from "react-hook-form"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
+import Box from "@mui/material/Box"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
@@ -66,12 +67,22 @@ export const TextInput: React.FC = () => {
 
           return (
             <Grid item xs={12} sm={4} md={6} lg={4} key={field.id}>
-              <TextField
-                fullWidth
-                // placeholder={placeholder}
-                label={label}
-                {...register(`textLines.${index}.value`)}
-              />
+              <Box display="flex">
+                <TextField
+                  fullWidth
+                  // placeholder={placeholder}
+                  label={label}
+                  sx={{ flexGrow: 1, marginRight: 1 }}
+                  {...register(`textLines.${index}.value`)}
+                />
+                <TextField
+                  type="number"
+                  label="Size"
+                  inputProps={{ step: "0.1", min: "0.1", max: "10" }}
+                  sx={{ flex: "0 0 65px" }}
+                  {...register(`textLines.${index}.fontSize`)}
+                />
+              </Box>
               {/* <Controller
                 name={`textLines.${index}.value`}
                 render={({ field: { onChange, value } }) => {

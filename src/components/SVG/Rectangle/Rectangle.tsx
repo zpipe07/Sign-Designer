@@ -56,13 +56,15 @@ export function generateRectangleModel({
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
     const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.25
+      // const fontSize = fontSizeMap[inputs.size] - chars * 0.25
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
       )
@@ -81,11 +83,12 @@ export function generateRectangleModel({
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
       )
@@ -105,11 +108,12 @@ export function generateRectangleModel({
       // family name
       // const fontSize =
       //   fontSizeMap[inputs.size as Size] - 1.5 - chars * 0.1
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
       )

@@ -36,7 +36,11 @@ export const SignDesigner: React.FC<Props> = ({
       mountingStyle: mountingStyle || "wall mounted",
       textLines: textLines?.length
         ? textLines
-        : [{ value: "" }, { value: "" }, { value: "" }],
+        : [
+            { value: "", fontSize: 2 },
+            { value: "", fontSize: 2 },
+            { value: "", fontSize: 2 },
+          ],
     },
   })
 

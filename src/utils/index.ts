@@ -19,10 +19,10 @@ export function parseSearchParams(searchParams: URLSearchParams) {
   let parsedTextLines = []
   if (textLines) {
     parsedTextLines = JSON.parse(textLines)
-      .filter(Boolean)
-      .map((text: string) => ({
-        value: text,
-      }))
+    // .filter(Boolean)
+    // .map((text: string) => ({
+    //   value: text,
+    // }))
   }
 
   return {
