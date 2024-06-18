@@ -49,9 +49,9 @@ export const ShapeSelector: React.FC = () => {
       >
         {data.productOptionsMap.shape.values.map(
           ({ label, entityId }) => {
-            if (label === "top round") {
-              return null
-            }
+            // if (label === "top round") {
+            //   return null
+            // }
 
             return (
               <FormControlLabel

@@ -8,15 +8,15 @@ import { Size } from "@/src/components/SignDesigner/types"
 const fontSizeMap: { [key in Size]: number } = {
   "extra small": 2.5,
   small: 4.5,
-  medium: 4.0,
-  large: 4.0,
+  medium: 5.15,
+  large: 5.15,
   "extra large": 4.0,
 }
 
 const textOffsetMap: { [key in Size]: number } = {
   "extra small": 0,
   small: 0,
-  medium: 1.125,
+  medium: 1.0,
   large: 0,
   "extra large": 0,
 }
@@ -59,15 +59,14 @@ export function generateRectangleModel({
 
     if (index === 0) {
       // house number
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars)
+      const fontSize = fontSizeMap[inputs.size] - chars * 0.25
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
-        false,
-        false,
+        true,
       )
+
       makerjs.model.center(textModel)
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
@@ -83,15 +82,17 @@ export function generateRectangleModel({
     if (index === 1) {
       // street name
       const fontSize =
-        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
+        true,
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y = (height * -1) / 2 + 1.5 + textOffsetMap[inputs.size]
+      const y =
+        measure.height / -2 - 2.75 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -102,20 +103,20 @@ export function generateRectangleModel({
 
     if (index === 2) {
       // family name
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - 1.5 - chars * 0.1
       const fontSize =
-        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
+        true,
       )
+
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2
-      const y =
-        height / 2 -
-        measure.height * 1 -
-        1.5 +
-        textOffsetMap[inputs.size]
+      const y = measure.height / -2 + 3.0
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -231,7 +232,7 @@ export function generateRectangleModel({
       viewBox: `0 0 ${width} ${height}`,
     },
     // nonzero | evenodd
-    fillRule: "nonzero",
+    fillRule: "evenodd",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
