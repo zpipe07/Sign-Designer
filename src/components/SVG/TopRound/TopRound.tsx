@@ -8,7 +8,7 @@ const fontSizeMap: { [key in Size]: number } = {
   "extra small": 2.5,
   small: 4.5,
   medium: 3.5,
-  large: 3.6,
+  large: 4.25,
   "extra large": 4.0,
 }
 
@@ -83,7 +83,7 @@ export function generateTopRoundModel({
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.2
+      const fontSize = fontSizeMap[inputs.size] - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -106,7 +106,8 @@ export function generateTopRoundModel({
 
     if (index === 1) {
       // street name
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.125
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.5
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
@@ -125,7 +126,8 @@ export function generateTopRoundModel({
 
     if (index === 2) {
       // family name
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.125 - 1
+      const fontSize =
+        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.75
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
