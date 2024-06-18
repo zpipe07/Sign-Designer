@@ -59,6 +59,7 @@ export function generateTopRoundModel({
       filletsModel,
     },
   }
+  makerjs.model.center(outerModel)
 
   const borderOuter = makerjs.model.outline(
     outerModel,
@@ -79,71 +80,81 @@ export function generateTopRoundModel({
 
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    // const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.1
+      // const fontSize = fontSizeMap[inputs.size] - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
-        false,
-        false,
+        true,
       )
       makerjs.model.center(textModel)
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y =
-        height / 2 - measure.height / 2 + textOffsetMap[inputs.size]
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = width / 2 - measure.width / 2
+      // const y =
+      //   height / 2 - measure.height / 2 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.5
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.5
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
+        true,
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y = 2
-
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = width / 2 - measure.width / 2
+      // const y = 2
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
 
     if (index === 2) {
       // family name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.75
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.75
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
+        true,
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y = height - 4
-
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = width / 2 - measure.width / 2
+      // const y = height - 4
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
   }
+
+  makerjs.model.center(text)
+  makerjs.model.moveRelative(text, [0, -0.75])
 
   const topRound = {
     models: {
