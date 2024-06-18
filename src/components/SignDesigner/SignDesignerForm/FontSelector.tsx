@@ -33,6 +33,13 @@ import {
   Shrikhand,
   BreeSerif,
   Cinzel,
+  Codystar,
+  BungeeShade,
+  Limelight,
+  Monoton,
+  Audiowide,
+  PaytoneOne,
+  Lobster,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -55,6 +62,13 @@ const fontFamilies: FontFamily[] = [
   "Shrikhand",
   "BreeSerif",
   "Cinzel",
+  "Codystar",
+  "BungeeShade",
+  "Limelight",
+  "Monoton",
+  "Audiowide",
+  "PaytoneOne",
+  "Lobster",
 ]
 
 const fontMap = {
@@ -77,6 +91,13 @@ const fontMap = {
   Shrikhand,
   BreeSerif,
   Cinzel,
+  Codystar,
+  BungeeShade,
+  Limelight,
+  Monoton,
+  Audiowide,
+  PaytoneOne,
+  Lobster,
 }
 
 export const FontSelector: React.FC = () => {

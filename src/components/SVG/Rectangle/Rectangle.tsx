@@ -64,6 +64,7 @@ export function generateRectangleModel({
         font,
         textLine.value,
         fontSize,
+        true,
       )
 
       makerjs.model.center(textModel)
@@ -86,6 +87,7 @@ export function generateRectangleModel({
         font,
         textLine.value,
         fontSize,
+        true,
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const x = measure.width / -2

@@ -364,6 +364,13 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Shrikhand: "Shrikhand-Regular.ttf",
   BreeSerif: "BreeSerif-Regular.ttf",
   Cinzel: "Cinzel-Bold.ttf",
+  Codystar: "Codystar-Regular.ttf",
+  BungeeShade: "BungeeShade-Regular.ttf",
+  Limelight: "Limelight-Regular.ttf",
+  Monoton: "Monoton-Regular.ttf",
+  Audiowide: "Audiowide-Regular.ttf",
+  PaytoneOne: "PaytoneOne-Regular.ttf",
+  Lobster: "Lobster-Regular.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

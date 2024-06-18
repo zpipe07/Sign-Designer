@@ -24,6 +24,13 @@ export type FontFamily =
   | "Shrikhand"
   | "BreeSerif"
   | "Cinzel"
+  | "Codystar"
+  | "BungeeShade"
+  | "Limelight"
+  | "Monoton"
+  | "Audiowide"
+  | "PaytoneOne"
+  | "Lobster"
 
 export type Orientation = "horizontal" | "vertical"
 

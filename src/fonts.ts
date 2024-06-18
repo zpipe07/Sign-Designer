@@ -57,3 +57,24 @@ export const BreeSerif = localFont({
 export const Cinzel = localFont({
   src: "../public/fonts/Cinzel-Bold.ttf",
 })
+export const Codystar = localFont({
+  src: "../public/fonts/Codystar-Regular.ttf",
+})
+export const BungeeShade = localFont({
+  src: "../public/fonts/BungeeShade-Regular.ttf",
+})
+export const Limelight = localFont({
+  src: "../public/fonts/Limelight-Regular.ttf",
+})
+export const Monoton = localFont({
+  src: "../public/fonts/Monoton-Regular.ttf",
+})
+export const Audiowide = localFont({
+  src: "../public/fonts/Audiowide-Regular.ttf",
+})
+export const PaytoneOne = localFont({
+  src: "../public/fonts/PaytoneOne-Regular.ttf",
+})
+export const Lobster = localFont({
+  src: "../public/fonts/Lobster-Regular.ttf",
+})
