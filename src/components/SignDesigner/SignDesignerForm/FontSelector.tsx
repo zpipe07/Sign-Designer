@@ -25,6 +25,14 @@ import {
   AdventPro,
   JosefinSlab,
   Tourney,
+  DMSerif,
+  Sancreek,
+  Rye,
+  SpicyRice,
+  Ultra,
+  Shrikhand,
+  BreeSerif,
+  Cinzel,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -39,6 +47,14 @@ const fontFamilies: FontFamily[] = [
   "AdventPro",
   "JosefinSlab",
   "Tourney",
+  "DMSerif",
+  "Sancreek",
+  "Rye",
+  "SpicyRice",
+  "Ultra",
+  "Shrikhand",
+  "BreeSerif",
+  "Cinzel",
 ]
 
 const fontMap = {
@@ -53,6 +69,14 @@ const fontMap = {
   AdventPro,
   JosefinSlab,
   Tourney,
+  DMSerif,
+  Sancreek,
+  Rye,
+  SpicyRice,
+  Ultra,
+  Shrikhand,
+  BreeSerif,
+  Cinzel,
 }
 
 export const FontSelector: React.FC = () => {

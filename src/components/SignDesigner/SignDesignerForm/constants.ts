@@ -352,9 +352,18 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Comfortaa: "Comfortaa-Bold.ttf",
   Danfo: "Danfo-Regular.ttf",
   Sansita: "SansitaSwashed-SemiBold.ttf",
+  // AdventPro: "AdventPro-VariableFont_wdth,wght.ttf",
   AdventPro: "AdventPro-Bold.ttf",
   JosefinSlab: "JosefinSlab-Bold.ttf",
   Tourney: "Tourney-Light.ttf",
+  DMSerif: "DMSerifDisplay-Regular.ttf",
+  Sancreek: "Sancreek-Regular.ttf",
+  Rye: "Rye-Regular.ttf",
+  SpicyRice: "SpicyRice-Regular.ttf",
+  Ultra: "Ultra-Regular.ttf",
+  Shrikhand: "Shrikhand-Regular.ttf",
+  BreeSerif: "BreeSerif-Regular.ttf",
+  Cinzel: "Cinzel-Bold.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

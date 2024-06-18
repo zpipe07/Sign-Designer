@@ -16,6 +16,14 @@ export type FontFamily =
   | "AdventPro"
   | "JosefinSlab"
   | "Tourney"
+  | "DMSerif"
+  | "Sancreek"
+  | "Rye"
+  | "SpicyRice"
+  | "Ultra"
+  | "Shrikhand"
+  | "BreeSerif"
+  | "Cinzel"
 
 export type Orientation = "horizontal" | "vertical"
 
