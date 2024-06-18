@@ -35,6 +35,8 @@ export function generateRectangleModel({
 }: SvgProps & { actualDimensions?: boolean }) {
   const outer = new makerjs.models.RoundRectangle(width, height, 0.25)
   makerjs.model.center(outer)
+  // makerjs.model.zero(outer)
+
   const borderInner = makerjs.model.outline(
     outer,
     0.7,
@@ -55,7 +57,7 @@ export function generateRectangleModel({
 
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    // const chars = textLine.value.length
     const { value, fontSize } = textLine
 
     if (index === 0) {
@@ -71,12 +73,13 @@ export function generateRectangleModel({
 
       makerjs.model.center(textModel)
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = measure.height / -2 + textOffsetMap[inputs.size]
+      // const x = measure.width / -2
+      // const y = measure.height / -2 + textOffsetMap[inputs.size]
+      // const y = 0
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
@@ -92,14 +95,17 @@ export function generateRectangleModel({
         fontSize,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 2.75])
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y =
-        measure.height / -2 - 2.75 + textOffsetMap[inputs.size]
+      // const x = measure.width / -2
+      // const y =
+      //   measure.height / -2 - 2.75 + textOffsetMap[inputs.size]
+      // const y = measure.height / 2 + 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
@@ -117,18 +123,22 @@ export function generateRectangleModel({
         fontSize,
         true,
       )
-
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -2.75])
       const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = measure.height / -2 + 3.0
+      // const x = measure.width / -2
+      // const y = measure.height / -2 + 3.0
+      // const y = measure.height / 2 - 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
   }
+
+  makerjs.model.center(text)
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {

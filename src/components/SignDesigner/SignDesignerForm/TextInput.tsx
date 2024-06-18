@@ -31,9 +31,9 @@ export const TextInput: React.FC = () => {
     name: "textLines",
   })
 
-  useEffect(() => {
-    console.log({ textLines })
-  }, [textLines])
+  // useEffect(() => {
+  //   console.log({ textLines })
+  // }, [textLines])
 
   return (
     <>
