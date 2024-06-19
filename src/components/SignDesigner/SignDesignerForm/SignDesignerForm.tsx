@@ -22,6 +22,7 @@ import { useUpdateCartItem } from "@/src/hooks/mutations/useUpdateCartItem"
 import { PriceDisplay } from "@/src/components/PriceDisplay"
 import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
+import { EdgeSelector } from "@/src/components/EdgeSelector"
 
 type Props = {
   isEditing?: boolean
@@ -109,6 +110,10 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
 
             <Grid item xs={12}>
               <MountingSelector />
+            </Grid>
+
+            <Grid item xs={12}>
+              <EdgeSelector />
             </Grid>
           </Grid>
         </Grid>

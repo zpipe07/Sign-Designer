@@ -23,7 +23,18 @@ export function generateEllipseModel({
   strokeOnly,
   actualDimensions,
 }: SvgProps & { actualDimensions?: boolean }) {
-  const outer = new makerjs.models.Ellipse(width / 2, height / 2)
+  let edge
+  let outer
+
+  if (inputs.edgeStyle === "round") {
+    edge = new makerjs.models.Ellipse(width / 2, height / 2)
+    makerjs.model.center(edge)
+
+    outer = makerjs.model.outline(edge, 0.2, undefined, true)
+  } else {
+    outer = new makerjs.models.Ellipse(width / 2, height / 2)
+  }
+
   const borderOuter = makerjs.model.outline(
     outer,
     outerBorderWidth,
@@ -176,6 +187,7 @@ export function generateEllipseModel({
 
   const tabletFaceMount = {
     models: {
+      edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
@@ -187,6 +199,12 @@ export function generateEllipseModel({
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
+      edge: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "none",
+          },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
@@ -228,6 +246,7 @@ export function generateEllipseModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
     },
     units: makerjs.unitType.Inch,
   }

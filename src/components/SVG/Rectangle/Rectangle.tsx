@@ -19,7 +19,18 @@ export function generateRectangleModel({
   strokeOnly,
   actualDimensions,
 }: SvgProps & { actualDimensions?: boolean }) {
-  const outer = new makerjs.models.RoundRectangle(width, height, 0.25)
+  let edge
+  let outer
+
+  if (inputs.edgeStyle === "round") {
+    edge = new makerjs.models.RoundRectangle(width, height, 0.25)
+    makerjs.model.center(edge)
+
+    outer = makerjs.model.outline(edge, 0.2, undefined, true)
+  } else {
+    outer = new makerjs.models.RoundRectangle(width, height, 0.25)
+  }
+
   makerjs.model.center(outer)
 
   const borderOuter = makerjs.model.outline(
@@ -146,6 +157,7 @@ export function generateRectangleModel({
 
   const tabletFaceMount = {
     models: {
+      edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
@@ -156,6 +168,12 @@ export function generateRectangleModel({
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
+      edge: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "none",
+          },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
@@ -197,6 +215,7 @@ export function generateRectangleModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
     },
     units: makerjs.unitType.Inch,
   }

@@ -37,12 +37,26 @@ export function generateTopRoundModel({
   const outer = makerjs.model.combineUnion(outerRect, outerEllipse)
   const chain = makerjs.model.findSingleChain(outer)
   const filletsModel = makerjs.chain.fillet(chain, 0.25)
+  let edge
+  let outerModel
 
-  const outerModel = {
-    models: {
-      outer,
-      filletsModel,
-    },
+  if (inputs.edgeStyle === "round") {
+    edge = {
+      models: {
+        outer,
+        filletsModel,
+      },
+    }
+    makerjs.model.center(edge)
+
+    outerModel = makerjs.model.outline(edge, 0.2, undefined, true)
+  } else {
+    outerModel = {
+      models: {
+        outer,
+        filletsModel,
+      },
+    }
   }
   makerjs.model.center(outerModel)
 
@@ -124,6 +138,7 @@ export function generateTopRoundModel({
 
   const topRound = {
     models: {
+      edge: { ...edge, layer: "edge" },
       outer: { ...outerModel, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
@@ -133,6 +148,12 @@ export function generateTopRoundModel({
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
+      edge: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "none",
+          },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
@@ -174,6 +195,7 @@ export function generateTopRoundModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
     },
     units: makerjs.unitType.Inch,
   }

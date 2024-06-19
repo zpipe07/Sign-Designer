@@ -15,6 +15,7 @@ const FEATURED_SIGNS: {
       color: "black/white",
       fontFamily: "Albert",
       mountingStyle: "hanging",
+      edgeStyle: "square",
       textLines: [
         { value: "1234", fontSize: 3 },
         { value: "Main St", fontSize: 2 },
@@ -30,6 +31,7 @@ const FEATURED_SIGNS: {
       color: "green/tan",
       fontFamily: "Expletus",
       mountingStyle: "hanging",
+      edgeStyle: "square",
       textLines: [
         { value: "Par 4", fontSize: 3 },
         { value: "Hole 9", fontSize: 2.5 },
@@ -45,6 +47,7 @@ const FEATURED_SIGNS: {
       color: "black/yellow",
       fontFamily: "Arbutus",
       mountingStyle: "hanging",
+      edgeStyle: "square",
       textLines: [
         { value: "420", fontSize: 4 },
         { value: "High Street", fontSize: 1.8 },

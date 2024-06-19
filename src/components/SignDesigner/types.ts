@@ -60,14 +60,16 @@ export type TextLine = { value: string; fontSize: number }
 
 export type MountingStyle = "hanging" | "wall mounted"
 
+export type EdgeStyle = "square" | "round"
+
 export type DesignFormInputs = {
-  // [key: string]: any
   shape: Shape
   size: Size
   color: ColorCombo
   textLines: TextLine[]
   fontFamily: FontFamily
   mountingStyle: MountingStyle
+  edgeStyle: EdgeStyle
   // orientation: Orientation
   // decoration: Decoration | ""
 }
