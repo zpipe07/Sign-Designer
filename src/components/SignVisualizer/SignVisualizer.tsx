@@ -1,6 +1,6 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useWatch } from "react-hook-form"
-import { Box, Skeleton } from "@mui/material"
+import { Box, Skeleton, debounce } from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
@@ -32,8 +32,14 @@ export const SignVisualizer: React.FC = () => {
   )
 
   useEffect(() => {
-    refetch()
+    fetchData()
   }, [inputs])
+
+  const fetchData = useMemo(() => {
+    return debounce(() => {
+      return refetch()
+    }, 500)
+  }, [refetch])
 
   return (
     <Box position="relative">

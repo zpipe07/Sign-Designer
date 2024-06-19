@@ -1,8 +1,8 @@
-import makerjs, { IPathArc } from "makerjs"
+import makerjs from "makerjs"
 
-import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
-import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
-import { Decoration, Size } from "@/src/components/SignDesigner/types"
+import { SvgProps } from "@/src/components/SVG/types"
+
+const TEXT_OFFSET = 2.9
 
 export function generateTopRoundModel({
   height,
@@ -68,7 +68,7 @@ export function generateTopRoundModel({
     const { value, fontSize } = textLine
 
     if (index === 0) {
-      // house number
+      // primary
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -84,7 +84,7 @@ export function generateTopRoundModel({
     }
 
     if (index === 1) {
-      // street name
+      // upper
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -93,7 +93,7 @@ export function generateTopRoundModel({
       )
 
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -2.75])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -101,7 +101,7 @@ export function generateTopRoundModel({
     }
 
     if (index === 2) {
-      // family name
+      // lower
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -109,7 +109,7 @@ export function generateTopRoundModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, 2.75])
+      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }

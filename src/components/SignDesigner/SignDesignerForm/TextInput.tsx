@@ -10,59 +10,39 @@ import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import {
-  Orientation,
-  Size,
-} from "@/src/components/SignDesigner/types"
-import { useEffect } from "react"
+import { Size } from "@/src/components/SignDesigner/types"
 
 export const TextInput: React.FC = () => {
   const { register } = useFormContext()
 
-  // const orientation: Orientation = useWatch({ name: "orientation" })
   const size: Size = useWatch({ name: "size" })
 
-  const textLines = useWatch({ name: "textLines" })
-
   const maxLinesOfText = SIZE_CONFIG_MAP[size].maxLinesOfText
-  // SIZE_CONFIG_MAP[size][orientation].maxLinesOfText
 
   const { fields } = useFieldArray({
     name: "textLines",
   })
 
-  // useEffect(() => {
-  //   console.log({ textLines })
-  // }, [textLines])
-
   return (
     <>
       <Grid container spacing={2}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {
-          // if (size === "medium" && index > 1) {
-          //   return null
-          // }
-
-          // if (size === "small" && index > 0) {
-          //   return null
-          // }
-
           let placeholder
           let label
 
           if (index === 0) {
             placeholder = "E.g. 123"
-            label = "House Number"
+            label = "Primary"
           }
 
           if (index === 1) {
             placeholder = "E.g. Main Street"
-            label = "Street Name"
+            label = "Upper"
           }
 
           if (index === 2) {
             placeholder = "E.g. The Smith's"
-            label = "Family Name"
+            label = "Lower"
           }
 
           return (
@@ -72,6 +52,7 @@ export const TextInput: React.FC = () => {
               // sm={4}
               // md={6}
               // lg={4}
+              order={index === 1 ? 1 : 2}
               key={field.id}
             >
               <Box display="flex">
@@ -80,32 +61,24 @@ export const TextInput: React.FC = () => {
                   // placeholder={placeholder}
                   label={label}
                   sx={{ flexGrow: 1, marginRight: 1 }}
+                  inputProps={{
+                    tabIndex: index === 1 ? 1 : 2,
+                  }}
                   {...register(`textLines.${index}.value`)}
                 />
                 <TextField
                   type="number"
                   label="Size"
-                  inputProps={{ step: "0.1", min: "0.1", max: "10" }}
+                  inputProps={{
+                    step: "0.1",
+                    min: "0.1",
+                    max: "10",
+                    tabIndex: index === 1 ? 1 : 2,
+                  }}
                   sx={{ flex: "0 0 100px" }}
                   {...register(`textLines.${index}.fontSize`)}
                 />
               </Box>
-              {/* <Controller
-                name={`textLines.${index}.value`}
-                render={({ field: { onChange, value } }) => {
-                  return (
-                    <TextField
-                      fullWidth
-                      value={value}
-                      // placeholder={placeholder}
-                      onChange={onChange}
-                      // onChange={debounce((e) => {
-                      //   onChange(e)
-                      // }, 500)}
-                    />
-                  )
-                }}
-              /> */}
             </Grid>
           )
         })}

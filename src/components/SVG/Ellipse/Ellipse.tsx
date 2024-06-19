@@ -8,6 +8,8 @@ function calculateAngle(arcLength: number, radius: number) {
   return angle
 }
 
+const TEXT_OFFSET = 2.95
+
 export function generateEllipseModel({
   height,
   width,
@@ -34,8 +36,7 @@ export function generateEllipseModel({
     undefined,
     true,
   )
-  let topArc = {} as any
-  let bottomArc = {} as any
+
   const text: any = {
     models: {},
   }
@@ -45,7 +46,7 @@ export function generateEllipseModel({
     const { value, fontSize } = textLine
 
     if (index === 0) {
-      // house number
+      // primary
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -61,7 +62,7 @@ export function generateEllipseModel({
     }
 
     if (index === 1) {
-      // street name
+      // upper
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -70,39 +71,7 @@ export function generateEllipseModel({
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
-      bottomArc = new makerjs.paths.Arc(
-        [0, 0],
-        width,
-        270 - angle / 2,
-        270 + angle / 2,
-      )
-      makerjs.layout.childrenOnPath(
-        textModel,
-        bottomArc,
-        0.4,
-        false,
-        false,
-        true,
-      )
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -2.95])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
-      continue
-    }
-
-    if (index === 2) {
-      // family name
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const angle = calculateAngle(measure.width, width)
-      topArc = new makerjs.paths.Arc(
+      const topArc = new makerjs.paths.Arc(
         [0, 0],
         width,
         90 - angle / 2,
@@ -114,11 +83,43 @@ export function generateEllipseModel({
         topArc,
         0.3,
         true,
-        false,
+        true,
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, 2.95])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
+      continue
+    }
+
+    if (index === 2) {
+      // lower
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        fontSize,
+        true,
+      )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const angle = calculateAngle(measure.width, width)
+      const bottomArc = new makerjs.paths.Arc(
+        [0, 0],
+        width,
+        270 - angle / 2,
+        270 + angle / 2,
+      )
+      makerjs.layout.childrenOnPath(
+        textModel,
+        bottomArc,
+        0.4,
+        false,
+        true,
+        true,
+      )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }

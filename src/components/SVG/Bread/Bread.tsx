@@ -1,12 +1,13 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
-import { Size } from "@/src/components/SignDesigner/types"
 
 function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
   return angle
 }
+
+const TEXT_OFFSET = 3.0
 
 export function generateBreadModel({
   height,
@@ -68,7 +69,7 @@ export function generateBreadModel({
     const { value, fontSize } = textLine
 
     if (index === 0) {
-      // house number
+      // primary
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -83,33 +84,16 @@ export function generateBreadModel({
     }
 
     if (index === 1) {
-      // street name
+      // upper
       const textModel = new makerjs.models.Text(
         font,
         value,
         fontSize,
         true,
       )
-
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -3.0])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
-      continue
-    }
-
-    if (index === 2) {
-      // family name
-      const textModel = new makerjs.models.Text(
-        font,
-        textLine.value,
-        fontSize,
-        true,
-      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
-      topArc = new makerjs.paths.Arc(
+      const topArc = new makerjs.paths.Arc(
         [0, 0],
         width,
         90 - angle / 2,
@@ -120,11 +104,29 @@ export function generateBreadModel({
         topArc,
         0.65,
         true,
-        false,
+        true,
         true,
       )
+
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, 3.0])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
+      continue
+    }
+
+    if (index === 2) {
+      // lower
+      const textModel = new makerjs.models.Text(
+        font,
+        textLine.value,
+        fontSize,
+        true,
+      )
+
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
