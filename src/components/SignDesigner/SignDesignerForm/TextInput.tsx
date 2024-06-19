@@ -52,6 +52,7 @@ export const TextInput: React.FC = () => {
               // sm={4}
               // md={6}
               // lg={4}
+              order={index === 1 ? 1 : 2}
               key={field.id}
             >
               <Box display="flex">

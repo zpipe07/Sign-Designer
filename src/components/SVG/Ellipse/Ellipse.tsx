@@ -83,7 +83,7 @@ export function generateEllipseModel({
         topArc,
         0.3,
         true,
-        false,
+        true,
         true,
       )
       makerjs.model.center(textModel)
@@ -115,7 +115,7 @@ export function generateEllipseModel({
         bottomArc,
         0.4,
         false,
-        false,
+        true,
         true,
       )
       makerjs.model.center(textModel)

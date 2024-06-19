@@ -104,7 +104,7 @@ export function generateBreadModel({
         topArc,
         0.65,
         true,
-        false,
+        true,
         true,
       )
 
