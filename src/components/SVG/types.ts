@@ -9,7 +9,8 @@ import {
 export type SvgProps = {
   height: number
   width: number
-  borderWidth: number
+  outerBorderWidth: number
+  innerBorderWidth: number
   inputs: DesignFormInputs
   textLines: TextLine[]
   foregroundColor: Color
