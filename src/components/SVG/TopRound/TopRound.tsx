@@ -153,8 +153,10 @@ export function generateTopRoundModel({
     }
   }
 
-  makerjs.model.center(text)
-  makerjs.model.moveRelative(text, [0, -0.75])
+  if (textLines.length > 0) {
+    makerjs.model.center(text)
+    makerjs.model.moveRelative(text, [0, -0.75])
+  }
 
   const topRound = {
     models: {

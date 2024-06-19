@@ -37,19 +37,15 @@ export function generateBreadModel({
   actualDimensions,
 }: SvgProps & { actualDimensions?: boolean }) {
   const arc = makerjs.model.move(
-    makerjs.model.center(
-      new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
-    ),
+    // makerjs.model.center(
+    new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
+    // ),
     [0, height / 2],
   )
   const rect = makerjs.model.move(
-    makerjs.model.center(
-      new makerjs.models.RoundRectangle(
-        width,
-        (height * 3) / 4,
-        0.25,
-      ),
-    ),
+    // makerjs.model.center(
+    new makerjs.models.RoundRectangle(width, (height * 3) / 4, 0.25),
+    // ),
     [(-1 * width) / 2, (-1 * height) / 4],
   )
 
@@ -68,6 +64,7 @@ export function generateBreadModel({
       arc,
     },
   }
+  makerjs.model.center(outer)
   const borderOuter = makerjs.model.outline(
     outer,
     0.5,
@@ -87,74 +84,70 @@ export function generateBreadModel({
 
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    // const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
+      // const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.2
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      let y
-      if (inputs.size === "large") {
-        y = height / 2 - measure.height * 1.3
-      } else if (inputs.size === "small") {
-        y = 0.3
-      } else {
-        y = height / 2 - measure.height * 1.0
-      }
+      makerjs.model.center(textModel)
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = measure.width / -2
+      // let y
+      // if (inputs.size === "large") {
+      //   y = height / 2 - measure.height * 1.3
+      // } else if (inputs.size === "small") {
+      //   y = 0.3
+      // } else {
+      //   y = height / 2 - measure.height * 1.0
+      // }
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - 1 - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        // textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = -0.4
-
+      // const measure = makerjs.measure.modelExtents(textModel)
+      // const x = measure.width / -2
+      // const y = -0.4
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -3.0])
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
+        // origin: [x, y],
       }
       continue
     }
 
     if (index === 2) {
       // family name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
+      // const fontSize =
+      //   fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -172,11 +165,17 @@ export function generateBreadModel({
         false,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 3.0])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
       continue
     }
+  }
+
+  if (textLines.length > 0) {
+    makerjs.model.center(text)
   }
 
   let bolts = {} as any
@@ -186,7 +185,7 @@ export function generateBreadModel({
     const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
     makerjs.model.move(makerjs.model.center(boltTop), [
       0,
-      (height * 3) / 4 - boltOffset,
+      height / 2 - boltOffset,
     ])
     const boltBottom = new makerjs.models.Ellipse(
       boldRadius,
@@ -194,15 +193,15 @@ export function generateBreadModel({
     )
     makerjs.model.move(makerjs.model.center(boltBottom), [
       0,
-      height / -4 + boltOffset,
+      height / -2 + boltOffset,
     ])
     const boltLeft = new makerjs.models.Ellipse(
       boldRadius,
       boldRadius,
     )
     makerjs.model.move(makerjs.model.center(boltLeft), [
-      (-1 * width) / 2 + boltOffset,
-      height / 4,
+      width / -2 + boltOffset,
+      0,
     ])
     const boltRight = new makerjs.models.Ellipse(
       boldRadius,
@@ -210,7 +209,7 @@ export function generateBreadModel({
     )
     makerjs.model.move(makerjs.model.center(boltRight), [
       width / 2 - boltOffset,
-      height / 4,
+      0,
     ])
     bolts = {
       models: {

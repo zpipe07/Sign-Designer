@@ -138,7 +138,9 @@ export function generateRectangleModel({
     }
   }
 
-  makerjs.model.center(text)
+  if (textLines.length > 0) {
+    makerjs.model.center(text)
+  }
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
