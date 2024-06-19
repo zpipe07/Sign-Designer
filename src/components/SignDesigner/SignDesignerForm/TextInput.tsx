@@ -61,12 +61,20 @@ export const TextInput: React.FC = () => {
                   // placeholder={placeholder}
                   label={label}
                   sx={{ flexGrow: 1, marginRight: 1 }}
+                  inputProps={{
+                    tabIndex: index === 1 ? 1 : 2,
+                  }}
                   {...register(`textLines.${index}.value`)}
                 />
                 <TextField
                   type="number"
                   label="Size"
-                  inputProps={{ step: "0.1", min: "0.1", max: "10" }}
+                  inputProps={{
+                    step: "0.1",
+                    min: "0.1",
+                    max: "10",
+                    tabIndex: index === 1 ? 1 : 2,
+                  }}
                   sx={{ flex: "0 0 100px" }}
                   {...register(`textLines.${index}.fontSize`)}
                 />

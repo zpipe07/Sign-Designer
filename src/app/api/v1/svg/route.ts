@@ -2,7 +2,6 @@ import path from "path"
 import opentype from "opentype.js"
 import { NextResponse, type NextRequest } from "next/server"
 
-import { getProduct } from "@/src/lib/bigcommerce"
 import {
   FONT_MAP,
   SIZE_CONFIG_MAP,
@@ -12,12 +11,6 @@ import { generateModel } from "@/src/utils/makerjs"
 import { parseSearchParams } from "@/src/utils"
 
 export async function GET(request: NextRequest) {
-  const product = await getProduct("112")
-
-  if (!product) {
-    throw new Error("Product not found")
-  }
-
   const searchParams = request.nextUrl.searchParams
   const { shape, size, textLines, color, fontFamily, mountingStyle } =
     parseSearchParams(searchParams)
