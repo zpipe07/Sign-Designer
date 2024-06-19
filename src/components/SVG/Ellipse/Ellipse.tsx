@@ -246,6 +246,7 @@ export function generateEllipseModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
     },
     units: makerjs.unitType.Inch,
   }
