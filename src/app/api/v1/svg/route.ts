@@ -56,8 +56,8 @@ export async function GET(request: NextRequest) {
   const { svg } = generateModel({
     height,
     width,
-    outerBorderWidth: 0.2,
-    innerBorderWidth: 0.2,
+    outerBorderWidth: 0.25,
+    innerBorderWidth: 0.15,
     textLines,
     foregroundColor,
     backgroundColor,
