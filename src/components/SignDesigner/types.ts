@@ -56,7 +56,7 @@ export type SizeConfig = {
   // }
 }
 
-export type TextLine = { value: string }
+export type TextLine = { value: string; fontSize: number }
 
 export type MountingStyle = "hanging" | "wall mounted"
 

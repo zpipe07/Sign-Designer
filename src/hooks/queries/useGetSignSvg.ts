@@ -14,7 +14,8 @@ export const useGetSignSvg = (
     const formattedInputs = {
       ...inputs,
       textLines: JSON.stringify(
-        inputs.textLines.map((line) => line.value),
+        // inputs.textLines.map((line) => line.value),
+        inputs.textLines,
       ),
     }
     const qs = queryString.stringify(formattedInputs, {

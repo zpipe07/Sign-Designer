@@ -4,22 +4,6 @@ import { FiligreeProps, SvgProps } from "@/src/components/SVG/types"
 import { decorationIconMap } from "@/src/components/SignDesigner/SignDesignerForm"
 import { Decoration, Size } from "@/src/components/SignDesigner/types"
 
-const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 2.5,
-  small: 4.5,
-  medium: 3.5,
-  large: 4.25,
-  "extra large": 4.0,
-}
-
-const textOffsetMap: { [key in Size]: number } = {
-  "extra small": 0,
-  small: -1,
-  medium: 0.5,
-  large: -0.5,
-  "extra large": 0,
-}
-
 export function generateTopRoundModel({
   height,
   width,
@@ -59,6 +43,7 @@ export function generateTopRoundModel({
       filletsModel,
     },
   }
+  makerjs.model.center(outerModel)
 
   const borderOuter = makerjs.model.outline(
     outerModel,
@@ -79,70 +64,61 @@ export function generateTopRoundModel({
 
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size] - chars * 0.1
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
-        false,
-        false,
+        true,
       )
       makerjs.model.center(textModel)
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y =
-        height / 2 - measure.height / 2 + textOffsetMap[inputs.size]
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.5
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
+        true,
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y = 2
 
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
       }
       continue
     }
 
     if (index === 2) {
       // family name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - Math.log10(chars) - 1.75
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
+        true,
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = width / 2 - measure.width / 2
-      const y = height - 4
-
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
       }
       continue
     }
+  }
+
+  if (textLines.length > 0) {
+    makerjs.model.center(text)
+    makerjs.model.moveRelative(text, [0, -0.75])
   }
 
   const topRound = {
@@ -186,9 +162,6 @@ export function generateTopRoundModel({
             fill: "white",
             stroke: "none",
           },
-      // arc: {
-      //   stroke: "blue",
-      // },
     },
     viewBox: true,
     svgAttrs: {
@@ -199,11 +172,8 @@ export function generateTopRoundModel({
       version: "1.1",
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
-      // height: `${height}in`,
-      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    // fillRule: "nonzero",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(topRound, options)
@@ -220,122 +190,4 @@ export const TopRound: React.FC<SvgProps> = (props) => {
       dangerouslySetInnerHTML={{ __html: svg }}
     ></div>
   )
-  // const Decoration: React.FC<FiligreeProps> | null =
-  //   inputs?.decoration
-  //     ? decorationIconMap[inputs.decoration as Decoration]
-  //     : null
-
-  // return (
-  //   <svg
-  //     // viewBox={`0 0 ${width} ${height}`}
-  //     viewBox="0 0 400 315"
-  //     fill="none"
-  //     xmlns="http://www.w3.org/2000/svg"
-  //   >
-  //     <path
-  //       d={`
-  //         m90.3147
-  //         75h5.9221l2.8468-5.1931c19.5504-35.6637
-  //         57.4214-59.8069
-  //         100.9164-59.8069
-  //         43.495
-  //         0
-  //         81.366
-  //         24.1432
-  //         100.916
-  //         59.8069l2.847
-  //         5.1931h5.922
-  //         70.315c5.523
-  //         0
-  //         10
-  //         4.4771
-  //         10
-  //         10v${height - 105}c0
-  //         5.523-4.477
-  //         10-10
-  //         10h-360c-5.5228
-  //         0-10-4.477-10-10v-${height - 105}c0-5.5229
-  //         4.4772-10
-  //         10-10h70.3147z
-  //       `}
-  //       fill={backgroundColor}
-  //       stroke={foregroundColor}
-  //       strokeWidth={borderWidth}
-  //     />
-
-  //     {textLines?.map(({ value }, index) => {
-  //       const chars = value.length
-  //       const fontSize = 100 - chars * 4
-  //       const y = 50 * index + 190 - textLines.length * 40
-
-  //       return (
-  //         <text
-  //           y={y}
-  //           x={width / 2}
-  //           fontSize={fontSize}
-  //           fontWeight={800}
-  //           alignmentBaseline="middle"
-  //           textAnchor="middle"
-  //           fill={foregroundColor}
-  //           fontFamily={inputs?.fontFamily}
-  //           letterSpacing={1}
-  //           key={index}
-  //         >
-  //           {value}
-  //         </text>
-  //       )
-  //     })}
-
-  //     {/* {streetNumber && (
-  //       <text
-  //         y={height / 2 - 20}
-  //         x={width / 2}
-  //         fontSize={50}
-  //         fontWeight={800}
-  //         alignmentBaseline="middle"
-  //         textAnchor="middle"
-  //         fill={foregroundColor}
-  //         fontFamily={fontFamily}
-  //       >
-  //         {streetNumber}
-  //       </text>
-  //     )} */}
-
-  //     {/* {streetName && (
-  //       <text
-  //         y={height / 2 + 30}
-  //         x={width / 2}
-  //         fontSize={40}
-  //         fontWeight={600}
-  //         alignmentBaseline="middle"
-  //         textAnchor="middle"
-  //         fill={foregroundColor}
-  //         fontFamily={fontFamily}
-  //       >
-  //         {streetName}
-  //       </text>
-  //     )} */}
-
-  //     {Decoration && (
-  //       <>
-  //         <Decoration
-  //           height={50}
-  //           width={50}
-  //           x={30}
-  //           y={105}
-  //           color={foregroundColor}
-  //         />
-
-  //         <Decoration
-  //           height={50}
-  //           width={50}
-  //           x={320}
-  //           y={105}
-  //           transform="scale(-1 1)"
-  //           color={foregroundColor}
-  //         />
-  //       </>
-  //     )}
-  //   </svg>
-  // )
 }

@@ -3,30 +3,6 @@ import makerjs from "makerjs"
 import { SvgProps } from "@/src/components/SVG/types"
 import { Size } from "@/src/components/SignDesigner/types"
 
-const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 3.5,
-  small: 4.75,
-  medium: 4.5,
-  large: 4.5,
-  "extra large": 4.75,
-}
-
-const topArcYMap: { [key in Size]: number } = {
-  "extra small": -14.5,
-  small: -13,
-  medium: -12.9,
-  large: -12.0,
-  "extra large": -20.4,
-}
-
-const textOffsetMap: { [key in Size]: number } = {
-  "extra small": 0,
-  small: 0,
-  medium: 0.75,
-  large: 0,
-  "extra large": 0,
-}
-
 function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
   return angle
@@ -64,50 +40,37 @@ export function generateEllipseModel({
   }
 
   for (const textLine of textLines) {
-    // if (inputs.orientation === "horizontal") {
     const index = Object.keys(text.models).length
-    const chars = textLine.value.length
+    const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      const fontSize = fontSizeMap[inputs.size as Size] - chars * 0.3
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
-      const measure = makerjs.measure.modelExtents(textModel)
-      const x = measure.width / -2
-      const y = measure.height / -2 + textOffsetMap[inputs.size]
+      makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       bottomArc = new makerjs.paths.Arc(
-        [0, -1 * topArcYMap[inputs.size as Size]],
+        [0, 0],
         width,
         270 - angle / 2,
         270 + angle / 2,
@@ -120,6 +83,8 @@ export function generateEllipseModel({
         false,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, -2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -128,21 +93,16 @@ export function generateEllipseModel({
 
     if (index === 2) {
       // family name
-      const fontSize =
-        fontSizeMap[inputs.size as Size] - 2.5 - chars * 0.05
       const textModel = new makerjs.models.Text(
         font,
-        textLine.value,
+        value,
         fontSize,
         true,
-        false,
-        0,
-        {},
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       topArc = new makerjs.paths.Arc(
-        [0, topArcYMap[inputs.size as Size]],
+        [0, 0],
         width,
         90 - angle / 2,
         90 + angle / 2,
@@ -156,37 +116,17 @@ export function generateEllipseModel({
         false,
         true,
       )
+      makerjs.model.center(textModel)
+      makerjs.model.moveRelative(textModel, [0, 2.75])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
       continue
     }
-    // } else if (inputs.orientation === "vertical") {
-    //   textLine.value.split("").forEach((char, index) => {
-    //     const chars = textLine.value.length
-    //     const fontSize = 300 - chars * 10
-    //     const textModel = new makerjs.models.Text(
-    //       font,
-    //       char,
-    //       fontSize,
-    //       true,
-    //       false,
-    //       0,
-    //       {},
-    //     )
-    //     const measure = makerjs.measure.modelExtents(textModel)
-    //     const x = measure?.width / -2
-    //     const y =
-    //       (chars - 1) * 125 - 250 * index - measure?.height / 2
+  }
 
-    //     // @ts-ignore
-    //     textModel.origin = [x, y]
-    //     // @ts-ignore
-    //     textModel.layer = "text"
-    //     // @ts-ignore
-    //     textModels[`textModel${index}`] = textModel
-    //   })
-    // }
+  if (textLines.length > 0) {
+    makerjs.model.center(text)
   }
 
   let bolts = {} as any
@@ -240,10 +180,6 @@ export function generateEllipseModel({
       text: { ...text, layer: "text" },
       bolts: { ...bolts, layer: "bolts" },
     },
-    paths: {
-      // topArc: { ...topArc, layer: "arc" },
-      // bottomArc: { ...bottomArc, layer: "arc" },
-    },
   }
 
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
@@ -279,9 +215,6 @@ export function generateEllipseModel({
             fill: "white",
             stroke: "none",
           },
-      // arc: {
-      //   stroke: "blue",
-      // },
     },
     viewBox: true,
     svgAttrs: {
@@ -292,11 +225,8 @@ export function generateEllipseModel({
       version: "1.1",
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
-      // height: `${height}in`,
-      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    // fillRule: "nonzero",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)

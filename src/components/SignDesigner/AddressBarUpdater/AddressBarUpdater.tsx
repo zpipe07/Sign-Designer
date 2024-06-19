@@ -17,7 +17,8 @@ export const AddressBarUpdater: React.FC = () => {
       const qs = queryString.stringify({
         ...inputs,
         textLines: JSON.stringify(
-          inputs.textLines?.map(({ value }) => value),
+          // inputs.textLines?.map(({ value }) => value),
+          inputs.textLines,
         ),
       })
       const url = `${pathname}?${qs}`
