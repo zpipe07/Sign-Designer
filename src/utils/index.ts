@@ -1,12 +1,16 @@
 import {
   ColorCombo,
+  DesignFormInputs,
+  EdgeStyle,
   FontFamily,
   MountingStyle,
   Shape,
   Size,
 } from "@/src/components/SignDesigner/types"
 
-export function parseSearchParams(searchParams: URLSearchParams) {
+export function parseSearchParams(
+  searchParams: URLSearchParams,
+): DesignFormInputs {
   const shape = searchParams.get("shape") as Shape
   const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
@@ -15,6 +19,7 @@ export function parseSearchParams(searchParams: URLSearchParams) {
     "mountingStyle",
   ) as MountingStyle
   const fontFamily = searchParams.get("fontFamily") as FontFamily
+  const edgeStyle = searchParams.get("edgeStyle") as EdgeStyle
 
   let parsedTextLines = []
   if (textLines) {
@@ -32,5 +37,6 @@ export function parseSearchParams(searchParams: URLSearchParams) {
     color,
     fontFamily,
     mountingStyle,
+    edgeStyle,
   }
 }

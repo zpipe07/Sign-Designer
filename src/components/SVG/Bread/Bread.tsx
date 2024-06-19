@@ -40,26 +40,43 @@ export function generateBreadModel({
   // @ts-ignore
   rect.paths.Right.end = [width, (height * 3) / 4]
 
-  const outer = {
-    models: {
-      rect,
-      arc,
-    },
+  let edge
+  let outer
+
+  if (inputs.edgeStyle === "round") {
+    edge = {
+      models: {
+        rect,
+        arc,
+      },
+    }
+    makerjs.model.center(edge)
+    outer = makerjs.model.outline(edge, 0.2, undefined, true)
+  } else {
+    outer = {
+      models: {
+        rect,
+        arc,
+      },
+    }
   }
+
   makerjs.model.center(outer)
+
   const borderOuter = makerjs.model.outline(
     outer,
     outerBorderWidth,
     undefined,
     true,
   )
+
   const borderInner = makerjs.model.outline(
     borderOuter,
     innerBorderWidth,
     undefined,
     true,
   )
-  let topArc = {} as any
+
   const text: any = {
     models: {},
   }
@@ -183,17 +200,23 @@ export function generateBreadModel({
 
   const modelToExport = {
     models: {
+      edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
       bolts: { ...bolts, layer: "bolts" },
     },
-    paths: {},
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const options: makerjs.exporter.ISVGRenderOptions = {
     layerOptions: {
+      edge: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "none",
+          },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {

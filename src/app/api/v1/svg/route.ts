@@ -12,8 +12,15 @@ import { parseSearchParams } from "@/src/utils"
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const { shape, size, textLines, color, fontFamily, mountingStyle } =
-    parseSearchParams(searchParams)
+  const {
+    shape,
+    size,
+    textLines,
+    color,
+    fontFamily,
+    mountingStyle,
+    edgeStyle,
+  } = parseSearchParams(searchParams)
 
   if (!shape) {
     return new NextResponse(
@@ -49,8 +56,8 @@ export async function GET(request: NextRequest) {
   const { svg } = generateModel({
     height,
     width,
-    outerBorderWidth: 0.25,
-    innerBorderWidth: 0.15,
+    outerBorderWidth: 0.3,
+    innerBorderWidth: 0.2,
     textLines,
     foregroundColor,
     backgroundColor,
@@ -61,6 +68,7 @@ export async function GET(request: NextRequest) {
       color,
       fontFamily,
       mountingStyle,
+      edgeStyle,
     },
     font,
     // productOptionsMap,
