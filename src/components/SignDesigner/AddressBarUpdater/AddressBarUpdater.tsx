@@ -38,24 +38,5 @@ export const AddressBarUpdater: React.FC = () => {
     updateAddressBar(inputs, pathname)
   }, [inputs, pathname, updateAddressBar])
 
-  // const updateAddressBar = () => {
-  //   if (inputs) {
-  //     const qs = queryString.stringify({
-  //       ...inputs,
-  //       textLines: JSON.stringify(
-  //         // inputs.textLines?.map(({ value }) => value),
-  //         inputs.textLines,
-  //       ),
-  //     })
-  //     const url = `${pathname}?${qs}`
-
-  //     window.history.replaceState(
-  //       { ...window.history.state, as: url, url },
-  //       "",
-  //       url,
-  //     )
-  //   }
-  // }
-
   return null
 }
