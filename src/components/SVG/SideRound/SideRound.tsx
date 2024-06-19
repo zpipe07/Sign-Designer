@@ -3,7 +3,7 @@ import { SvgProps } from "@/src/components/SVG/types"
 export const SideRound: React.FC<SvgProps> = ({
   height,
   width,
-  borderWidth,
+  // borderWidth,
   inputs,
   textLines,
   foregroundColor,

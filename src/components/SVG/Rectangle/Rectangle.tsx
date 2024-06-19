@@ -8,7 +8,8 @@ import { Size } from "@/src/components/SignDesigner/types"
 export function generateRectangleModel({
   height,
   width,
-  borderWidth,
+  outerBorderWidth,
+  innerBorderWidth,
   inputs,
   textLines,
   foregroundColor,
@@ -20,19 +21,20 @@ export function generateRectangleModel({
   const outer = new makerjs.models.RoundRectangle(width, height, 0.25)
   makerjs.model.center(outer)
 
-  const borderInner = makerjs.model.outline(
+  const borderOuter = makerjs.model.outline(
     outer,
-    0.7,
+    outerBorderWidth,
+    undefined,
+    true,
+  )
+  makerjs.model.center(borderOuter)
+  const borderInner = makerjs.model.outline(
+    borderOuter,
+    innerBorderWidth,
     undefined,
     true,
   )
   makerjs.model.center(borderInner)
-  const borderOuter = makerjs.model.outline(
-    borderInner,
-    0.2,
-    undefined,
-  )
-  makerjs.model.center(borderOuter)
 
   const text: any = {
     models: {},

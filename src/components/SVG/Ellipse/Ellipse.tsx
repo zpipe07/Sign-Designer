@@ -11,7 +11,8 @@ function calculateAngle(arcLength: number, radius: number) {
 export function generateEllipseModel({
   height,
   width,
-  borderWidth,
+  outerBorderWidth,
+  innerBorderWidth,
   inputs,
   textLines,
   foregroundColor,
@@ -23,13 +24,13 @@ export function generateEllipseModel({
   const outer = new makerjs.models.Ellipse(width / 2, height / 2)
   const borderOuter = makerjs.model.outline(
     outer,
-    0.5,
+    outerBorderWidth,
     undefined,
     true,
   )
   const borderInner = makerjs.model.outline(
-    outer,
-    0.7,
+    borderOuter,
+    innerBorderWidth,
     undefined,
     true,
   )
@@ -84,7 +85,7 @@ export function generateEllipseModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -2.75])
+      makerjs.model.moveRelative(textModel, [0, -2.95])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -117,7 +118,7 @@ export function generateEllipseModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, 2.75])
+      makerjs.model.moveRelative(textModel, [0, 2.95])
       text.models[`textModel${index}`] = {
         ...textModel,
       }

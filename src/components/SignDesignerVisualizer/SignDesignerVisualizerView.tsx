@@ -52,7 +52,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         <Rectangle
           width={width}
           height={height}
-          borderWidth={borderWidth}
+          outerBorderWidth={borderWidth}
+          innerBorderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
           foregroundColor={foregroundColor}
@@ -65,7 +66,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         <Ellipse
           width={width}
           height={height}
-          borderWidth={borderWidth}
+          outerBorderWidth={borderWidth}
+          innerBorderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
           foregroundColor={foregroundColor}
@@ -80,7 +82,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         <TopRound
           width={width}
           height={height}
-          borderWidth={borderWidth}
+          outerBorderWidth={borderWidth}
+          innerBorderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
           foregroundColor={foregroundColor}
@@ -106,7 +109,8 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
         <Bread
           width={width}
           height={height}
-          borderWidth={borderWidth}
+          outerBorderWidth={borderWidth}
+          innerBorderWidth={borderWidth}
           inputs={inputs}
           textLines={textLines}
           foregroundColor={foregroundColor}

@@ -7,7 +7,8 @@ import { Decoration, Size } from "@/src/components/SignDesigner/types"
 export function generateTopRoundModel({
   height,
   width,
-  borderWidth,
+  outerBorderWidth,
+  innerBorderWidth,
   inputs,
   textLines,
   foregroundColor,
@@ -47,13 +48,13 @@ export function generateTopRoundModel({
 
   const borderOuter = makerjs.model.outline(
     outerModel,
-    0.5,
+    outerBorderWidth,
     undefined,
     true,
   )
   const borderInner = makerjs.model.outline(
     borderOuter,
-    0.2,
+    innerBorderWidth,
     undefined,
     true,
   )

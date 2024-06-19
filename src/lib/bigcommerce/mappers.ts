@@ -523,7 +523,8 @@ export const formDataToCartItem = async (
   const { svg } = generateModel({
     height,
     width,
-    borderWidth: 0.5,
+    outerBorderWidth: 0.25,
+    innerBorderWidth: 0.15,
     textLines,
     foregroundColor,
     backgroundColor,
