@@ -5,22 +5,6 @@ import makerjs from "makerjs"
 import { SvgProps } from "@/src/components/SVG/types"
 import { Size } from "@/src/components/SignDesigner/types"
 
-const fontSizeMap: { [key in Size]: number } = {
-  "extra small": 2.5,
-  small: 4.5,
-  medium: 5.15,
-  large: 5.15,
-  "extra large": 4.0,
-}
-
-const textOffsetMap: { [key in Size]: number } = {
-  "extra small": 0,
-  small: 0,
-  medium: 1.0,
-  large: 0,
-  "extra large": 0,
-}
-
 export function generateRectangleModel({
   height,
   width,
@@ -35,7 +19,6 @@ export function generateRectangleModel({
 }: SvgProps & { actualDimensions?: boolean }) {
   const outer = new makerjs.models.RoundRectangle(width, height, 0.25)
   makerjs.model.center(outer)
-  // makerjs.model.zero(outer)
 
   const borderInner = makerjs.model.outline(
     outer,
@@ -57,82 +40,55 @@ export function generateRectangleModel({
 
   for (const textLine of textLines) {
     const index = Object.keys(text.models).length
-    // const chars = textLine.value.length
     const { value, fontSize } = textLine
 
     if (index === 0) {
       // house number
-      // const fontSize = fontSizeMap[inputs.size] - chars * 0.25
       const textModel = new makerjs.models.Text(
         font,
-        // textLine.value,
         value,
         fontSize,
         true,
       )
 
       makerjs.model.center(textModel)
-      // const measure = makerjs.measure.modelExtents(textModel)
-      // const x = measure.width / -2
-      // const y = measure.height / -2 + textOffsetMap[inputs.size]
-      // const y = 0
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        // origin: [x, y],
       }
       continue
     }
 
     if (index === 1) {
       // street name
-      // const fontSize =
-      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
-        // textLine.value,
         value,
         fontSize,
         true,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, 2.75])
-      const measure = makerjs.measure.modelExtents(textModel)
-      // const x = measure.width / -2
-      // const y =
-      //   measure.height / -2 - 2.75 + textOffsetMap[inputs.size]
-      // const y = measure.height / 2 + 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        // origin: [x, y],
       }
       continue
     }
 
     if (index === 2) {
       // family name
-      // const fontSize =
-      //   fontSizeMap[inputs.size as Size] - 1.5 - chars * 0.1
-      // const fontSize =
-      //   fontSizeMap[inputs.size as Size] - Math.log10(chars) - 2.4
       const textModel = new makerjs.models.Text(
         font,
-        // textLine.value,
         value,
         fontSize,
         true,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -2.75])
-      const measure = makerjs.measure.modelExtents(textModel)
-      // const x = measure.width / -2
-      // const y = measure.height / -2 + 3.0
-      // const y = measure.height / 2 - 3
 
       text.models[`textModel${index}`] = {
         ...textModel,
-        // origin: [x, y],
       }
       continue
     }
@@ -192,8 +148,6 @@ export function generateRectangleModel({
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
       bolts: { ...bolts, layer: "bolts" },
-      // inner: inner,
-      // ...textModels,
     },
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
@@ -222,7 +176,6 @@ export function generateRectangleModel({
         : {
             fill: backgroundColor,
             stroke: backgroundColor,
-            // stroke: "none",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -230,9 +183,6 @@ export function generateRectangleModel({
             fill: "white",
             stroke: "none",
           },
-      // arc: {
-      //   stroke: "blue",
-      // },
     },
     viewBox: true,
     svgAttrs: {
@@ -243,12 +193,8 @@ export function generateRectangleModel({
       version: "1.1",
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
-      // height: `${height}in`,
-      // width: `${width}in`,
       viewBox: `0 0 ${width} ${height}`,
     },
-    // nonzero | evenodd
-    fillRule: "evenodd",
     units: makerjs.unitType.Inch,
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
