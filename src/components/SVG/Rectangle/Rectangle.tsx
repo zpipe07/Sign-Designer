@@ -3,7 +3,8 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
-import { Size } from "@/src/components/SignDesigner/types"
+
+const TEXT_OFFSET = 2.75
 
 export function generateRectangleModel({
   height,
@@ -45,7 +46,7 @@ export function generateRectangleModel({
     const { value, fontSize } = textLine
 
     if (index === 0) {
-      // house number
+      // primary
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -62,7 +63,7 @@ export function generateRectangleModel({
     }
 
     if (index === 1) {
-      // street name
+      // upper
       const textModel = new makerjs.models.Text(
         font,
         value,
@@ -70,7 +71,7 @@ export function generateRectangleModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, 2.75])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -87,7 +88,7 @@ export function generateRectangleModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -2.75])
+      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
 
       text.models[`textModel${index}`] = {
         ...textModel,
