@@ -66,7 +66,14 @@ export const TextInput: React.FC = () => {
           }
 
           return (
-            <Grid item xs={12} sm={4} md={6} lg={4} key={field.id}>
+            <Grid
+              item
+              xs={12}
+              // sm={4}
+              // md={6}
+              // lg={4}
+              key={field.id}
+            >
               <Box display="flex">
                 <TextField
                   fullWidth
@@ -79,7 +86,7 @@ export const TextInput: React.FC = () => {
                   type="number"
                   label="Size"
                   inputProps={{ step: "0.1", min: "0.1", max: "10" }}
-                  sx={{ flex: "0 0 65px" }}
+                  sx={{ flex: "0 0 100px" }}
                   {...register(`textLines.${index}.fontSize`)}
                 />
               </Box>
