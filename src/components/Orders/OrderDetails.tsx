@@ -26,20 +26,20 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
     <>
       <Typography variant="h6">Products</Typography>
 
-      {data.products.map((product: any) => {
-        return (
-          <TableContainer key={product.id}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Product ID</TableCell>
-                  <TableCell>Product Name</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Options</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Product ID</TableCell>
+              <TableCell>Product Name</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Options</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.products.map((product: any) => {
+              return (
+                <TableRow key={product.id}>
                   <TableCell>{product.id}</TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
@@ -86,11 +86,11 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
                     })}
                   </TableCell>
                 </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )
-      })}
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   )
 }
