@@ -8,11 +8,11 @@ import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
 import TableBody from "@mui/material/TableBody"
 import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
 import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
-import Box from "@mui/material/Box"
 
 type Props = {
   cart: VercelCart
@@ -37,6 +37,12 @@ export const CartView: React.FC<Props> = ({ cart }) => {
 
           <TableBody>
             {cart.lines.map(({ id, merchandise, cost, quantity }) => {
+              const fileId = merchandise.selectedOptions.find(
+                ({ name }) => name === "file_id",
+              )?.value!
+              // https://cqcucouosyiruvzdbhzq.supabase.co/storage/v1/object/public/signs/30632c05-a9aa-4d60-86e3-3aa028d5d702.svg
+              const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
+
               return (
                 <TableRow key={id}>
                   <TableCell>
@@ -61,11 +67,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                     </Typography>
 
                     <Image
-                      src={
-                        merchandise.selectedOptions.find(
-                          ({ name }) => name === "svgFile",
-                        )?.value!
-                      }
+                      src={imgSrc}
                       alt=""
                       width={100}
                       height={100}

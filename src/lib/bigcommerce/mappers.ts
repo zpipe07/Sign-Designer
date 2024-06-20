@@ -520,7 +520,7 @@ export const formDataToCartItem = async (
   const [foregroundColor, backgroundColor] = data.color.split(
     "/",
   ) as Color[]
-  const { svg } = generateModel({
+  const { svg: svgPathOnly } = generateModel({
     height,
     width,
     outerBorderWidth: 0.25,
@@ -534,30 +534,62 @@ export const formDataToCartItem = async (
     strokeOnly: true,
     actualDimensions: true,
   })
-  const id = randomUUID()
+  const { svg: svgWithFill } = generateModel({
+    height,
+    width,
+    outerBorderWidth: 0.25,
+    innerBorderWidth: 0.15,
+    textLines,
+    foregroundColor,
+    backgroundColor,
+    inputs: data,
+    font,
+    // productOptionsMap,
+    strokeOnly: false,
+    actualDimensions: false,
+    showShadow: true,
+  })
+  const fileId = randomUUID()
 
   // generate SVG file
-  await fs.writeFile(`/tmp/${id}.svg`, svg)
-  const svgFile = await fs.readFile(`/tmp/${id}.svg`, {
-    encoding: "base64",
-  })
+  const pathOnlyFileName = `${fileId}--path-only.svg`
+  await fs.writeFile(`/tmp/${pathOnlyFileName}`, svgPathOnly)
+  const svgPathOnlyFile = await fs.readFile(
+    `/tmp/${pathOnlyFileName}`,
+    {
+      encoding: "base64",
+    },
+  )
 
-  // // generate DXF file
-  // await fs.writeFile(`/tmp/${id}.dxf`, dxf)
-  // const dxfFile = await fs.readFile(`/tmp/${id}.dxf`, {
-  //   encoding: "base64",
-  // })
+  const withFillFileName = `${fileId}--with-fill.svg`
+  await fs.writeFile(`/tmp/${withFillFileName}`, svgWithFill)
+  const svgWithFillFile = await fs.readFile(
+    `/tmp/${withFillFileName}`,
+    {
+      encoding: "base64",
+    },
+  )
 
   // save file to supabase
   const supabase = createClient()
-  const { error: svgFileError } = await supabase.storage
+  const { error: svgPathOnlyFileError } = await supabase.storage
     .from("signs")
-    .upload(`${id}.svg`, decode(svgFile), {
+    .upload(pathOnlyFileName, decode(svgPathOnlyFile), {
       contentType: "image/svg+xml",
     })
 
-  if (svgFileError) {
-    throw svgFileError
+  if (svgPathOnlyFileError) {
+    throw svgPathOnlyFileError
+  }
+
+  const { error: svgWithFillFileError } = await supabase.storage
+    .from("signs")
+    .upload(withFillFileName, decode(svgWithFillFile), {
+      contentType: "image/svg+xml",
+    })
+
+  if (svgWithFillFileError) {
+    throw svgWithFillFileError
   }
 
   // const { error: dxfFileError } = await supabase.storage
@@ -570,11 +602,12 @@ export const formDataToCartItem = async (
   //   throw dxfFileError
   // }
 
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("signs").getPublicUrl(`${id}.svg`, {
-    // download: true
-  })
+  // const {
+  //   data: { publicUrl: publicUrlPathOnly },
+  // } = supabase.storage.from("signs").getPublicUrl(pathOnlyFileName)
+  // const {
+  //   data: { publicUrl },
+  // } = supabase.storage.from("signs").getPublicUrl(withFillFileName)
 
   const variant = getProductVariant(data, product)
 
@@ -620,14 +653,31 @@ export const formDataToCartItem = async (
         //   optionEntityId: formToCartMap.svgRaw.entityId,
         //   text: svg,
         // },
+        // {
+        //   optionEntityId: parseInt(
+        //     product.options.find(
+        //       ({ name }) => name === "filePathOnly",
+        //     )?.id as string,
+        //     10,
+        //   ),
+        //   text: publicUrlPathOnly,
+        // },
+        // {
+        //   optionEntityId: parseInt(
+        //     product.options.find(
+        //       ({ name }) => name === "fileWithFill",
+        //     )?.id as string,
+        //     10,
+        //   ),
+        //   text: publicUrlPathOnly,
+        // },
         {
-          // optionEntityId: formToCartMap.svgFile.entityId,
           optionEntityId: parseInt(
-            product.options.find(({ name }) => name === "svgFile")
+            product.options.find(({ name }) => name === "file_id")
               ?.id as string,
             10,
           ),
-          text: publicUrl,
+          text: fileId,
         },
       ],
       multiLineTextFields: [
