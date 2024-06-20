@@ -26,7 +26,11 @@ export const Cart: React.FC = () => {
   }
 
   if (!data?.cart) {
-    return <Typography variant="body1">Your cart is empty</Typography>
+    return (
+      <Typography variant="h6" marginBottom={2}>
+        Your cart is empty
+      </Typography>
+    )
   }
 
   return <CartView cart={data.cart} />

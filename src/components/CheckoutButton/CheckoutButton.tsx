@@ -21,8 +21,9 @@ export const CheckoutButton: React.FC = () => {
   return (
     <Button
       variant="contained"
+      size="large"
+      color="secondary"
       href={data.cart.checkoutUrl}
-      fullWidth
     >
       Checkout now
     </Button>

@@ -12,6 +12,7 @@ import Button from "@mui/material/Button"
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
 import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
+import Box from "@mui/material/Box"
 
 type Props = {
   cart: VercelCart
@@ -108,11 +109,15 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         </Table>
       </TableContainer>
 
-      <Typography variant="h4">Subtotal</Typography>
-      <Typography>${cart.cost.subtotalAmount.amount}</Typography>
-      <Typography>Shipping & taxes calculated at checkout</Typography>
+      <Box marginTop={2} marginBottom={2} textAlign="right">
+        <Typography variant="h5">Subtotal</Typography>
+        <Typography>${cart.cost.subtotalAmount.amount}</Typography>
+        <Typography marginBottom={1} variant="body2">
+          Shipping & taxes calculated at checkout
+        </Typography>
 
-      <CheckoutButton />
+        <CheckoutButton />
+      </Box>
     </>
   )
 }

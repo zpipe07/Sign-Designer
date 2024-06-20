@@ -16,7 +16,7 @@ export const Orders: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h3" component="h1">
+      <Typography variant="h4" component="h2">
         Orders
       </Typography>
 
