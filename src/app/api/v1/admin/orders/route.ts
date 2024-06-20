@@ -1,6 +1,11 @@
+import queryString from "query-string"
+
 export async function GET() {
+  const qs = queryString.stringify({
+    sort: "date_created:desc",
+  })
   const res = await fetch(
-    `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders`,
+    `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders?${qs}`,
     {
       method: "GET",
       headers: {

@@ -17,7 +17,6 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
   orderId,
 }) => {
   const { data, isLoading, isError } = useGetProducts(orderId)
-  console.log({ data, isLoading, isError })
 
   if (isLoading) {
     return <Typography>Loading...</Typography>
@@ -25,7 +24,7 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
 
   return (
     <>
-      <Typography>Products</Typography>
+      <Typography variant="h6">Products</Typography>
 
       {data.products.map((product: any) => {
         return (

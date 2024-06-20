@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
 import Typography from "@mui/material/Typography"
+
 import { OrderDetails } from "@/src/components/Orders/OrderDetails"
 
 export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
@@ -33,12 +34,16 @@ export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
 
       <TableRow>
         <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0 }}
+          style={{
+            paddingBottom: 0,
+            paddingTop: 0,
+            backgroundColor: "#f9f9f9",
+            boxShadow:
+              "rgba(0, 0, 0, 0.1) 0px 10px 10px -6px inset, rgba(0, 0, 0, 0.1) 0px -10px 10px -6px inset",
+          }}
           colSpan={6}
         >
           <Collapse in={open} mountOnEnter>
-            <Typography>Details</Typography>
-
             <OrderDetails orderId={order.id} />
           </Collapse>
         </TableCell>
