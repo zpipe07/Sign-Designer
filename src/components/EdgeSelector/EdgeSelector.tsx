@@ -6,7 +6,7 @@ import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import Box from "@mui/material/Box"
 import capitalize from "@mui/material/utils/capitalize"
-import { useTheme } from "@mui/material"
+import { FormHelperText, useTheme } from "@mui/material"
 
 import { EdgeStyle } from "@/src/components/SignDesigner/types"
 
@@ -22,6 +22,10 @@ export const EdgeSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="edge-label">Edge style</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0 }}>
+        Selected: {capitalize(selectedEdgeStyle)}
+      </FormHelperText>
+
       <RadioGroup
         aria-labelledby="edge-label"
         name="edgeStyle"
