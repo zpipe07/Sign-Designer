@@ -16,7 +16,8 @@ export function generateTopRoundModel({
   font,
   strokeOnly,
   actualDimensions,
-}: SvgProps & { actualDimensions?: boolean }) {
+  showShadow,
+}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
   const outerRect = new makerjs.models.RoundRectangle(
     width,
     (height * 2) / 3,
@@ -195,7 +196,9 @@ export function generateTopRoundModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
-      filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
+      ...(showShadow && {
+        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
+      }),
     },
     units: makerjs.unitType.Inch,
   }

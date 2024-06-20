@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
     fontFamily,
     mountingStyle,
     edgeStyle,
+    showShadow,
   } = parseSearchParams(searchParams)
 
   if (!shape) {
@@ -71,6 +72,7 @@ export async function GET(request: NextRequest) {
       edgeStyle,
     },
     font,
+    showShadow,
     // productOptionsMap,
     // strokeOnly: true,
   })

@@ -22,7 +22,8 @@ export const FeaturedSignCard: React.FC<{
   const { data: svg, isLoading } = useGetSignSvg(inputs, "featured")
 
   const textLines = JSON.stringify(
-    Object.values(inputs.textLines).map((line) => line.value),
+    // Object.values(inputs.textLines).map((line) => line.value),
+    inputs.textLines,
   )
   const qs = queryString.stringify({ ...inputs, textLines })
   const url = `/design?${qs}`

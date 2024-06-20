@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
 import TableBody from "@mui/material/TableBody"
 import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
@@ -36,6 +37,11 @@ export const CartView: React.FC<Props> = ({ cart }) => {
 
           <TableBody>
             {cart.lines.map(({ id, merchandise, cost, quantity }) => {
+              const fileId = merchandise.selectedOptions.find(
+                ({ name }) => name === "file_id",
+              )?.value!
+              const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
+
               return (
                 <TableRow key={id}>
                   <TableCell>
@@ -60,11 +66,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                     </Typography>
 
                     <Image
-                      src={
-                        merchandise.selectedOptions.find(
-                          ({ name }) => name === "svgFile",
-                        )?.value!
-                      }
+                      src={imgSrc}
                       alt=""
                       width={100}
                       height={100}
@@ -108,11 +110,15 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         </Table>
       </TableContainer>
 
-      <Typography variant="h4">Subtotal</Typography>
-      <Typography>${cart.cost.subtotalAmount.amount}</Typography>
-      <Typography>Shipping & taxes calculated at checkout</Typography>
+      <Box marginTop={2} marginBottom={2} textAlign="right">
+        <Typography variant="h5">Subtotal</Typography>
+        <Typography>${cart.cost.subtotalAmount.amount}</Typography>
+        <Typography marginBottom={1} variant="body2">
+          Shipping & taxes calculated at checkout
+        </Typography>
 
-      <CheckoutButton />
+        <CheckoutButton />
+      </Box>
     </>
   )
 }

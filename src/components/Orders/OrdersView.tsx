@@ -1,4 +1,3 @@
-import IconButton from "@mui/material/IconButton"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -13,7 +12,6 @@ type Props = {
 }
 
 export const OrdersView: React.FC<Props> = ({ orders }) => {
-  console.log({ orders })
   return (
     <TableContainer>
       <Table>
