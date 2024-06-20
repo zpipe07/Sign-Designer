@@ -4,7 +4,9 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormLabel from "@mui/material/FormLabel"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
+import Box from "@mui/material/Box"
 import capitalize from "@mui/material/utils/capitalize"
+import { FormHelperText, useTheme } from "@mui/material"
 
 import { EdgeStyle } from "@/src/components/SignDesigner/types"
 
@@ -15,26 +17,66 @@ export const EdgeSelector: React.FC = () => {
 
   const selectedEdgeStyle = useWatch({ name: "edgeStyle" })
 
+  const theme = useTheme()
+
   return (
     <FormControl fullWidth>
       <FormLabel id="edge-label">Edge style</FormLabel>
+      <FormHelperText sx={{ marginLeft: 0 }}>
+        Selected: {capitalize(selectedEdgeStyle)}
+      </FormHelperText>
+
       <RadioGroup
         aria-labelledby="edge-label"
         name="edgeStyle"
         sx={{ flexDirection: "row" }}
       >
-        {edgeStyleOptions.map((option) => {
+        {edgeStyleOptions.map((edgeStyle) => {
+          const src = `/images/edge-styles/${edgeStyle}.svg`
+
           return (
             <FormControlLabel
-              value={option}
-              label={capitalize(option)}
+              value={edgeStyle}
               control={
                 <Radio
-                  size="small"
-                  checked={selectedEdgeStyle === option}
+                  sx={{
+                    position: "fixed",
+                    opacity: 0,
+                    pointerEvents: "none",
+                  }}
                 />
               }
-              key={option}
+              sx={{
+                padding: 0.5,
+              }}
+              label={
+                <Box
+                  sx={{
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    position: "relative",
+                    border: `2px solid ${theme.palette.common.white}`,
+                    height: 60,
+                    width: 60,
+                    transition: "box-shadow 0.15s ease-in-out 0s",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+
+                    ...(selectedEdgeStyle === edgeStyle && {
+                      boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
+                    }),
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={src}
+                    sx={{ maxWidth: "70%" }}
+                  />
+                </Box>
+              }
+              key={edgeStyle}
               {...register("edgeStyle")}
             />
           )
