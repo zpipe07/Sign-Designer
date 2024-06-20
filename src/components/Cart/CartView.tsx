@@ -40,7 +40,6 @@ export const CartView: React.FC<Props> = ({ cart }) => {
               const fileId = merchandise.selectedOptions.find(
                 ({ name }) => name === "file_id",
               )?.value!
-              // https://cqcucouosyiruvzdbhzq.supabase.co/storage/v1/object/public/signs/30632c05-a9aa-4d60-86e3-3aa028d5d702.svg
               const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
 
               return (

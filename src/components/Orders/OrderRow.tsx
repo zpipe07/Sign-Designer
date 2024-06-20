@@ -36,7 +36,7 @@ export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
           style={{ paddingBottom: 0, paddingTop: 0 }}
           colSpan={6}
         >
-          <Collapse in={open} timeout="auto">
+          <Collapse in={open} mountOnEnter>
             <Typography>Details</Typography>
 
             <OrderDetails orderId={order.id} />

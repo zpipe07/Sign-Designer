@@ -1,7 +1,8 @@
+import Image from "next/image"
 import Typography from "@mui/material/Typography"
-
-import { useGetProducts } from "@/src/hooks/queries/useGetProducts"
 import {
+  Box,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +10,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
+
+import { useGetProducts } from "@/src/hooks/queries/useGetProducts"
 
 export const OrderDetails: React.FC<{ orderId: number }> = ({
   orderId,
@@ -43,23 +46,44 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>
                     {product.product_options.map((option: any) => {
-                      if (option.display_name === "svgFile") {
+                      if (option.display_name === "file_id") {
+                        const fileId = option.display_value
+                        const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
+                        const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--path-only.svg?download=`
+
                         return (
-                          <Typography key={option.id}>
-                            {option.display_name}:{" "}
-                            <img
-                              src={option.display_value}
-                              alt="SVG file"
+                          <Box
+                            key={option.id}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              src={imgSrc}
+                              alt=""
+                              width={150}
+                              height={150}
                             />
-                          </Typography>
+
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="small"
+                              href={downloadHref}
+                              sx={{ marginLeft: 1 }}
+                              download
+                            >
+                              Download file
+                            </Button>
+                          </Box>
                         )
                       }
-                      return (
-                        <Typography key={option.id}>
-                          {option.display_name}:{" "}
-                          {option.display_value}
-                        </Typography>
-                      )
+                      return null
+                      // <Typography key={option.id}>
+                      //   {option.display_name}:{" "}
+                      //   {option.display_value}
+                      // </Typography>
                     })}
                   </TableCell>
                 </TableRow>
