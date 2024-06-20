@@ -7,12 +7,14 @@ export const useGetSignSvg = (
   inputs: DesignFormInputs,
   queryKeySuffix?: string,
   enabled = true,
+  showShadow?: boolean,
 ) => {
   const queryClient = useQueryClient()
 
   const getSignSvg = async ({ signal }: any) => {
     const formattedInputs = {
       ...inputs,
+      ...(showShadow && { showShadow }),
       textLines: JSON.stringify(
         // inputs.textLines.map((line) => line.value),
         inputs.textLines,

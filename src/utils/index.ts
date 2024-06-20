@@ -10,7 +10,7 @@ import {
 
 export function parseSearchParams(
   searchParams: URLSearchParams,
-): DesignFormInputs {
+): DesignFormInputs & { showShadow?: boolean } {
   const shape = searchParams.get("shape") as Shape
   const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
@@ -20,6 +20,7 @@ export function parseSearchParams(
   ) as MountingStyle
   const fontFamily = searchParams.get("fontFamily") as FontFamily
   const edgeStyle = searchParams.get("edgeStyle") as EdgeStyle
+  const showShadow = searchParams.get("showShadow") === "true"
 
   let parsedTextLines = []
   if (textLines) {
@@ -38,5 +39,6 @@ export function parseSearchParams(
     fontFamily,
     mountingStyle,
     edgeStyle,
+    showShadow,
   }
 }

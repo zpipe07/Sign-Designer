@@ -29,6 +29,7 @@ export const SignVisualizer: React.FC = () => {
     } as DesignFormInputs,
     undefined,
     false,
+    true,
   )
 
   useEffect(() => {

@@ -5,7 +5,10 @@ import { generateTopRoundModel } from "@/src/components/SVG/TopRound"
 import { SvgProps } from "@/src/components/SVG/types"
 
 export function generateModel(
-  props: SvgProps & { actualDimensions?: boolean },
+  props: SvgProps & {
+    actualDimensions?: boolean
+    showShadow?: boolean
+  },
 ) {
   if (props.inputs.shape === "ellipse") {
     return generateEllipseModel(props)
