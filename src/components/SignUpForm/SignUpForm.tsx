@@ -8,6 +8,7 @@ export const SignUpForm = () => {
   const onSubmit = async (formData: FormData) => {
     "use server"
     const origin = headers().get("origin")
+    console.log({ origin })
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     const supabase = createClient()
@@ -15,7 +16,7 @@ export const SignUpForm = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${origin}/auth/callback`,
+        emailRedirectTo: origin || undefined,
       },
     })
 
@@ -28,5 +29,5 @@ export const SignUpForm = () => {
     )
   }
 
-  return <SignUpFormView onSubmit={onSubmit} />
+  return <SignUpFormView onSubmit={onSubmit} buttonText="Sign up" />
 }
