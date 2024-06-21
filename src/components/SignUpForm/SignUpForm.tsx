@@ -8,6 +8,7 @@ export const SignUpForm = () => {
   const onSubmit = async (formData: FormData) => {
     "use server"
     const origin = headers().get("origin")
+    console.log({ origin })
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     const supabase = createClient()
