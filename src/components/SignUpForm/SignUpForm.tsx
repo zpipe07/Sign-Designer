@@ -28,5 +28,5 @@ export const SignUpForm = () => {
     )
   }
 
-  return <SignUpFormView onSubmit={onSubmit} />
+  return <SignUpFormView onSubmit={onSubmit} buttonText="Sign up" />
 }

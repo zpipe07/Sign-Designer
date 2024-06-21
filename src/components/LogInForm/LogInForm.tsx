@@ -17,11 +17,11 @@ export const LogInForm = () => {
     })
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user")
+      return redirect("/log-in?message=Could not authenticate user")
     }
 
-    return redirect("/protected")
+    return redirect("/admin")
   }
 
-  return <SignUpFormView onSubmit={onSubmit} />
+  return <SignUpFormView onSubmit={onSubmit} buttonText="Log in" />
 }

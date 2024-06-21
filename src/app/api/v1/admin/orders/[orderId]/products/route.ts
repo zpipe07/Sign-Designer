@@ -1,7 +1,24 @@
+import { createClient } from "@/src/utils/supabase/server"
+
 export async function GET(
   _request: Request,
   { params }: { params: { orderId: string } },
 ) {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error) {
+    return new Response(error.message, { status: 500 })
+  }
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 })
+  }
+
   const res = await fetch(
     `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders/${params.orderId}/products`,
     {
