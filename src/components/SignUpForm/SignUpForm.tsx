@@ -16,7 +16,7 @@ export const SignUpForm = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${origin}/auth/confirm`,
+        emailRedirectTo: origin || undefined,
       },
     })
 
