@@ -15,9 +15,6 @@ export const Cormorant = localFont({
 export const Arbutus = localFont({
   src: "../public/fonts/ArbutusSlab-Regular.ttf",
 })
-export const Comfortaa = localFont({
-  src: "../public/fonts/Comfortaa-Bold.ttf",
-})
 export const Danfo = localFont({
   src: "../public/fonts/Danfo-Regular.ttf",
 })

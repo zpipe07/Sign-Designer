@@ -16,10 +16,7 @@ import { FontFamily } from "@/src/components/SignDesigner/types"
 import {
   Albert,
   Arbutus,
-  // Cormorant,
   Expletus,
-  // Playfair,
-  Comfortaa,
   Danfo,
   Sansita,
   AdventPro,
@@ -45,10 +42,7 @@ import {
 const fontFamilies: FontFamily[] = [
   "Albert",
   "Expletus",
-  // "Playfair",
-  // "Cormorant",
   "Arbutus",
-  "Comfortaa",
   "Danfo",
   "Sansita",
   "AdventPro",
@@ -74,10 +68,7 @@ const fontFamilies: FontFamily[] = [
 const fontMap = {
   Albert,
   Expletus,
-  // Playfair,
-  // Cormorant,
   Arbutus,
-  Comfortaa,
   Danfo,
   Sansita,
   AdventPro,
