@@ -348,7 +348,6 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Expletus: "ExpletusSans-BoldItalic.ttf",
   Arbutus: "ArbutusSlab-Regular.ttf",
   Danfo: "Danfo-Regular.ttf",
-  Sansita: "SansitaSwashed-SemiBold.ttf",
   AdventPro: "AdventPro-Bold.ttf",
   JosefinSlab: "JosefinSlab-Bold.ttf",
   Tourney: "Tourney-Light.ttf",

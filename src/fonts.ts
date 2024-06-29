@@ -18,9 +18,6 @@ export const Arbutus = localFont({
 export const Danfo = localFont({
   src: "../public/fonts/Danfo-Regular.ttf",
 })
-export const Sansita = localFont({
-  src: "../public/fonts/SansitaSwashed-SemiBold.ttf",
-})
 export const AdventPro = localFont({
   src: "../public/fonts/AdventPro-Bold.ttf",
 })

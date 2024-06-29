@@ -9,7 +9,6 @@ export type FontFamily =
   | "Expletus"
   | "Arbutus"
   | "Danfo"
-  | "Sansita"
   | "AdventPro"
   | "JosefinSlab"
   | "Tourney"
