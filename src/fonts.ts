@@ -48,9 +48,6 @@ export const Shrikhand = localFont({
 export const BreeSerif = localFont({
   src: "../public/fonts/BreeSerif-Regular.ttf",
 })
-export const Cinzel = localFont({
-  src: "../public/fonts/Cinzel-Bold.ttf",
-})
 export const Codystar = localFont({
   src: "../public/fonts/Codystar-Regular.ttf",
 })

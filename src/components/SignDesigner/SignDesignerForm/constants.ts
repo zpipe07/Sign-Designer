@@ -358,7 +358,6 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Ultra: "Ultra-Regular.ttf",
   Shrikhand: "Shrikhand-Regular.ttf",
   BreeSerif: "BreeSerif-Regular.ttf",
-  Cinzel: "Cinzel-Bold.ttf",
   Codystar: "Codystar-Regular.ttf",
   BungeeShade: "BungeeShade-Regular.ttf",
   Limelight: "Limelight-Regular.ttf",

@@ -19,7 +19,6 @@ export type FontFamily =
   | "Ultra"
   | "Shrikhand"
   | "BreeSerif"
-  | "Cinzel"
   | "Codystar"
   | "BungeeShade"
   | "Limelight"
