@@ -81,18 +81,25 @@ export const SignDesigner: React.FC<Props> = ({
               },
             }}
           >
-            <Box
+            <Card
+              elevation={3}
               sx={{
-                [theme.breakpoints.down("sm")]: {
-                  maxWidth: 500,
-                  margin: "0 auto",
-                },
+                padding: 2,
               }}
             >
-              <Card elevation={3} sx={{ padding: 2 }}>
+              <Box
+                sx={{
+                  maxWidth: 500,
+                  margin: "0 auto",
+
+                  [theme.breakpoints.up("md")]: {
+                    maxWidth: "none",
+                  },
+                }}
+              >
                 <SignVisualizer />
-              </Card>
-            </Box>
+              </Box>
+            </Card>
           </Grid>
 
           <Grid item xs={12} md={6}>
