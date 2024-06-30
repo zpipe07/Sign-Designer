@@ -221,6 +221,7 @@ export function generateRectangleModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

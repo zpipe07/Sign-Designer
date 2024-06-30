@@ -72,9 +72,9 @@ export async function GET(request: NextRequest) {
       edgeStyle,
     },
     font,
-    showShadow,
+    showShadow: false,
     // productOptionsMap,
-    // strokeOnly: true,
+    strokeOnly: true,
   })
 
   return new NextResponse(svg, {

@@ -201,6 +201,7 @@ export function generateTopRoundModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(topRound, options)
 

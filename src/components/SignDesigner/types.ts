@@ -25,7 +25,6 @@ export type FontFamily =
   | "Monoton"
   | "Audiowide"
   | "PaytoneOne"
-  | "Lobster"
 
 export type Orientation = "horizontal" | "vertical"
 

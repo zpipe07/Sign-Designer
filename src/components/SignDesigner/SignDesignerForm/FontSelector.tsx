@@ -34,7 +34,6 @@ import {
   Monoton,
   Audiowide,
   PaytoneOne,
-  Lobster,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -58,7 +57,6 @@ const fontFamilies: FontFamily[] = [
   "Monoton",
   "Audiowide",
   "PaytoneOne",
-  "Lobster",
 ]
 
 const fontMap = {
@@ -82,7 +80,6 @@ const fontMap = {
   Monoton,
   Audiowide,
   PaytoneOne,
-  Lobster,
 }
 
 export const FontSelector: React.FC = () => {

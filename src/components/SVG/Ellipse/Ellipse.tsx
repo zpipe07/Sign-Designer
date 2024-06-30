@@ -1,7 +1,6 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
-import { Size } from "@/src/components/SignDesigner/types"
 
 function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
@@ -79,7 +78,8 @@ export function generateEllipseModel({
         font,
         value,
         fontSize,
-        true,
+        // true,
+        false,
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -112,7 +112,7 @@ export function generateEllipseModel({
         font,
         value,
         fontSize,
-        true,
+        // true,
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -252,6 +252,7 @@ export function generateEllipseModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

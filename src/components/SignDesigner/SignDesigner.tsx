@@ -66,12 +66,26 @@ export const SignDesigner: React.FC<Props> = ({
     <FormProvider {...formMethods}>
       <Box paddingTop={4} paddingBottom={4}>
         <Grid container spacing={{ xs: 3, lg: 4 }}>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              alignSelf: "flex-start",
+              position: "sticky",
+              top: theme.spacing(0),
+              zIndex: 9999,
+
+              [theme.breakpoints.up("md")]: {
+                top: theme.spacing(2),
+              },
+            }}
+          >
             <Box
               sx={{
-                [theme.breakpoints.up("md")]: {
-                  position: "sticky",
-                  top: theme.spacing(2),
+                [theme.breakpoints.down("sm")]: {
+                  maxWidth: 500,
+                  margin: "0 auto",
                 },
               }}
             >

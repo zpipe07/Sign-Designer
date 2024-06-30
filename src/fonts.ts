@@ -66,6 +66,3 @@ export const Audiowide = localFont({
 export const PaytoneOne = localFont({
   src: "../public/fonts/PaytoneOne-Regular.ttf",
 })
-export const Lobster = localFont({
-  src: "../public/fonts/Lobster-Regular.ttf",
-})

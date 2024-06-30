@@ -83,7 +83,7 @@ export function generateBreadModel({
   }
 
   for (const textLine of textLines) {
-    const index = Object.keys(text.models).length
+    const index = Object.keys(text.models)?.length
     const { value, fontSize } = textLine
 
     if (index === 0) {
@@ -107,7 +107,7 @@ export function generateBreadModel({
         font,
         value,
         fontSize,
-        true,
+        // true,
       )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
@@ -120,9 +120,11 @@ export function generateBreadModel({
       makerjs.layout.childrenOnPath(
         textModel,
         topArc,
-        0.65,
+        // 0.65,
+        // 0.5,
+        0.5,
         true,
-        true,
+        false,
         true,
       )
 
@@ -140,7 +142,7 @@ export function generateBreadModel({
         font,
         textLine.value,
         fontSize,
-        true,
+        // true,
       )
 
       makerjs.model.center(textModel)
@@ -152,7 +154,7 @@ export function generateBreadModel({
     }
   }
 
-  if (textLines.length > 0) {
+  if (textLines && textLines.length > 0) {
     makerjs.model.center(text)
   }
 
@@ -264,6 +266,7 @@ export function generateBreadModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(modelToExport, options)
 
