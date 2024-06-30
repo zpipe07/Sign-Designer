@@ -69,16 +69,13 @@ export const SignDesigner: React.FC<Props> = ({
           <Grid
             item
             xs={12}
-            md={6}
+            md={7}
+            lg={8}
             sx={{
               alignSelf: "flex-start",
               position: "sticky",
               top: theme.spacing(0),
               zIndex: 9999,
-
-              [theme.breakpoints.up("md")]: {
-                top: theme.spacing(2),
-              },
             }}
           >
             <Card
@@ -102,7 +99,7 @@ export const SignDesigner: React.FC<Props> = ({
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5} lg={4}>
             <SignDesignerForm isEditing={isEditing} />
           </Grid>
         </Grid>
