@@ -25,6 +25,11 @@ export type FontFamily =
   | "Monoton"
   | "Audiowide"
   | "PaytoneOne"
+  | "TacOne"
+  | "Cinzel"
+  | "Train"
+  | "VastShadow"
+  | "Rampart"
 
 export type Orientation = "horizontal" | "vertical"
 

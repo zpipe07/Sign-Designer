@@ -66,3 +66,18 @@ export const Audiowide = localFont({
 export const PaytoneOne = localFont({
   src: "../public/fonts/PaytoneOne-Regular.ttf",
 })
+export const TacOne = localFont({
+  src: "../public/fonts/TacOne-Regular.ttf",
+})
+export const Cinzel = localFont({
+  src: "../public/fonts/CinzelDecorative-Bold.ttf",
+})
+export const Train = localFont({
+  src: "../public/fonts/TrainOne-Regular.ttf",
+})
+export const VastShadow = localFont({
+  src: "../public/fonts/VastShadow-Regular.ttf",
+})
+export const Rampart = localFont({
+  src: "../public/fonts/RampartOne-Regular.ttf",
+})

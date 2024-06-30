@@ -34,6 +34,11 @@ import {
   Monoton,
   Audiowide,
   PaytoneOne,
+  TacOne,
+  Cinzel,
+  Train,
+  VastShadow,
+  Rampart,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -57,6 +62,11 @@ const fontFamilies: FontFamily[] = [
   "Monoton",
   "Audiowide",
   "PaytoneOne",
+  "TacOne",
+  "Cinzel",
+  "Train",
+  "VastShadow",
+  "Rampart",
 ]
 
 const fontMap = {
@@ -80,6 +90,11 @@ const fontMap = {
   Monoton,
   Audiowide,
   PaytoneOne,
+  TacOne,
+  Cinzel,
+  Train,
+  VastShadow,
+  Rampart,
 }
 
 export const FontSelector: React.FC = () => {

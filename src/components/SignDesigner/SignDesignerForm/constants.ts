@@ -364,6 +364,11 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Monoton: "Monoton-Regular.ttf",
   Audiowide: "Audiowide-Regular.ttf",
   PaytoneOne: "PaytoneOne-Regular.ttf",
+  TacOne: "TacOne-Regular.ttf",
+  Cinzel: "CinzelDecorative-Bold.ttf",
+  Train: "TrainOne-Regular.ttf",
+  VastShadow: "VastShadow-Regular.ttf",
+  Rampart: "RampartOne-Regular.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
