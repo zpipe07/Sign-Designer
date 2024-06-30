@@ -58,12 +58,7 @@ export function generateEllipseModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
@@ -74,13 +69,7 @@ export function generateEllipseModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        // true,
-        false,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -108,12 +97,7 @@ export function generateEllipseModel({
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        // true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const bottomArc = new makerjs.paths.Arc(

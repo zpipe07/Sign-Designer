@@ -88,12 +88,7 @@ export function generateBreadModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -103,12 +98,7 @@ export function generateBreadModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        // true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -120,8 +110,6 @@ export function generateBreadModel({
       makerjs.layout.childrenOnPath(
         textModel,
         topArc,
-        // 0.65,
-        // 0.5,
         0.5,
         true,
         false,
@@ -142,7 +130,6 @@ export function generateBreadModel({
         font,
         textLine.value,
         fontSize,
-        // true,
       )
 
       makerjs.model.center(textModel)
