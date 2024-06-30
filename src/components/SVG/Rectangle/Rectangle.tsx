@@ -59,12 +59,7 @@ export function generateRectangleModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
 
       makerjs.model.center(textModel)
 
@@ -76,12 +71,7 @@ export function generateRectangleModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 
@@ -93,12 +83,7 @@ export function generateRectangleModel({
 
     if (index === 2) {
       // family name
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
 
@@ -221,6 +206,7 @@ export function generateRectangleModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

@@ -66,22 +66,40 @@ export const SignDesigner: React.FC<Props> = ({
     <FormProvider {...formMethods}>
       <Box paddingTop={4} paddingBottom={4}>
         <Grid container spacing={{ xs: 3, lg: 4 }}>
-          <Grid item xs={12} md={6}>
-            <Box
+          <Grid
+            item
+            xs={12}
+            md={7}
+            lg={8}
+            sx={{
+              alignSelf: "flex-start",
+              position: "sticky",
+              top: theme.spacing(0),
+              zIndex: 9999,
+            }}
+          >
+            <Card
+              elevation={3}
               sx={{
-                [theme.breakpoints.up("md")]: {
-                  position: "sticky",
-                  top: theme.spacing(2),
-                },
+                padding: 2,
               }}
             >
-              <Card elevation={3} sx={{ padding: 2 }}>
+              <Box
+                sx={{
+                  maxWidth: 500,
+                  margin: "0 auto",
+
+                  [theme.breakpoints.up("md")]: {
+                    maxWidth: "none",
+                  },
+                }}
+              >
                 <SignVisualizer />
-              </Card>
-            </Box>
+              </Box>
+            </Card>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5} lg={4}>
             <SignDesignerForm isEditing={isEditing} />
           </Grid>
         </Grid>

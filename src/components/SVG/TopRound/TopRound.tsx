@@ -84,12 +84,7 @@ export function generateTopRoundModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
@@ -100,12 +95,7 @@ export function generateTopRoundModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
 
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
@@ -117,12 +107,7 @@ export function generateTopRoundModel({
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
       text.models[`textModel${index}`] = {
@@ -201,6 +186,7 @@ export function generateTopRoundModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(topRound, options)
 

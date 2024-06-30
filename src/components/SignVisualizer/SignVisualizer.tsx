@@ -44,7 +44,7 @@ export const SignVisualizer: React.FC = () => {
 
   return (
     <Box position="relative">
-      {isFetching ? (
+      {isFetching || !svg ? (
         <Skeleton
           variant="rounded"
           sx={{
@@ -54,7 +54,10 @@ export const SignVisualizer: React.FC = () => {
           }}
         />
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: svg! }} />
+        <Box
+          dangerouslySetInnerHTML={{ __html: svg }}
+          sx={{ fontSize: 0 }}
+        />
       )}
     </Box>
   )

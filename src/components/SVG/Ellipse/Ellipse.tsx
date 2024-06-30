@@ -1,7 +1,6 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
-import { Size } from "@/src/components/SignDesigner/types"
 
 function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
@@ -59,12 +58,7 @@ export function generateEllipseModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
@@ -75,12 +69,7 @@ export function generateEllipseModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -108,12 +97,7 @@ export function generateEllipseModel({
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        fontSize,
-        true,
-      )
+      const textModel = new makerjs.models.Text(font, value, fontSize)
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const bottomArc = new makerjs.paths.Arc(
@@ -252,6 +236,7 @@ export function generateEllipseModel({
       }),
     },
     units: makerjs.unitType.Inch,
+    fillRule: "nonzero",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

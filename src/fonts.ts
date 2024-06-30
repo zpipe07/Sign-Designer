@@ -15,14 +15,8 @@ export const Cormorant = localFont({
 export const Arbutus = localFont({
   src: "../public/fonts/ArbutusSlab-Regular.ttf",
 })
-export const Comfortaa = localFont({
-  src: "../public/fonts/Comfortaa-Bold.ttf",
-})
 export const Danfo = localFont({
   src: "../public/fonts/Danfo-Regular.ttf",
-})
-export const Sansita = localFont({
-  src: "../public/fonts/SansitaSwashed-SemiBold.ttf",
 })
 export const AdventPro = localFont({
   src: "../public/fonts/AdventPro-Bold.ttf",
@@ -54,9 +48,6 @@ export const Shrikhand = localFont({
 export const BreeSerif = localFont({
   src: "../public/fonts/BreeSerif-Regular.ttf",
 })
-export const Cinzel = localFont({
-  src: "../public/fonts/Cinzel-Bold.ttf",
-})
 export const Codystar = localFont({
   src: "../public/fonts/Codystar-Regular.ttf",
 })
@@ -75,6 +66,18 @@ export const Audiowide = localFont({
 export const PaytoneOne = localFont({
   src: "../public/fonts/PaytoneOne-Regular.ttf",
 })
-export const Lobster = localFont({
-  src: "../public/fonts/Lobster-Regular.ttf",
+export const TacOne = localFont({
+  src: "../public/fonts/TacOne-Regular.ttf",
+})
+export const Cinzel = localFont({
+  src: "../public/fonts/CinzelDecorative-Bold.ttf",
+})
+export const Train = localFont({
+  src: "../public/fonts/TrainOne-Regular.ttf",
+})
+export const VastShadow = localFont({
+  src: "../public/fonts/VastShadow-Regular.ttf",
+})
+export const Rampart = localFont({
+  src: "../public/fonts/RampartOne-Regular.ttf",
 })

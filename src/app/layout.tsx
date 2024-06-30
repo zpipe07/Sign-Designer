@@ -42,7 +42,7 @@ export default function RootLayout({
           <Providers>
             <Header />
 
-            <Container maxWidth="lg">{children}</Container>
+            <Container maxWidth="xl">{children}</Container>
 
             <Footer />
           </Providers>
