@@ -62,6 +62,15 @@ export function generateRectangleModel({
       const textModel = new makerjs.models.Text(font, value, fontSize)
 
       makerjs.model.center(textModel)
+      // const textMeasure = makerjs.measure.modelExtents(textModel)
+      // const innerMeasure = makerjs.measure.modelExtents(borderInner)
+
+      // const isOverlapping = makerjs.measure.isMeasurementOverlapping(
+      //   textMeasure,
+      //   innerMeasure,
+      // )
+      // console.log("isOverlapping", isOverlapping)
+      // console.log({ ...textModel })
 
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -138,6 +147,31 @@ export function generateRectangleModel({
         boltLeft,
         boltRight,
       },
+    }
+  }
+
+  for (const key in text.models) {
+    const { models } = text.models[key]
+
+    for (const key in models) {
+      const { paths } = models[key]
+
+      for (const key in paths) {
+        const path = paths[key]
+
+        const keyPoints = makerjs.path.toKeyPoints(path)
+        const isInside = keyPoints.every(
+          (point) =>
+            makerjs.measure.isPointInsideModel(point, borderInner),
+          // makerjs.measure.isPointInsideModel(point, outer),
+          // makerjs.measure.isPointInsideModel(point, borderOuter),
+        )
+
+        console.log({
+          // path,
+          isInside,
+        })
+      }
     }
   }
 
