@@ -5,8 +5,6 @@ export type ColorCombo = `${Color}/${Color}`
 export type Decoration = "foo" | "bar"
 
 export type FontFamily =
-  | "Albert"
-  | "Expletus"
   | "Arbutus"
   | "Danfo"
   | "AdventPro"

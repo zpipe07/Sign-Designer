@@ -32,7 +32,7 @@ export const SignDesigner: React.FC<Props> = ({
       shape: shape || "rectangle",
       size: size || "large",
       color: color || "black/white",
-      fontFamily: fontFamily || "Albert",
+      fontFamily: fontFamily || "BreeSerif",
       mountingStyle: mountingStyle || "wall mounted",
       edgeStyle: "square",
       borderWidth: "0.2",
