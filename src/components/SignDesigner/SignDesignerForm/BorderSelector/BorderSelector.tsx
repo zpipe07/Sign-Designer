@@ -37,7 +37,7 @@ export const BorderSelector: React.FC = () => {
     // <Slider aria-label="border width" {...register("borderWidth")} />
     <FormControl fullWidth>
       <FormLabel id="borderWidth" htmlFor="borderWidth">
-        Border width: {selectedBorderWidth}"
+        Border width: {selectedBorderWidth}&quot;
       </FormLabel>
       <Controller
         control={control}
