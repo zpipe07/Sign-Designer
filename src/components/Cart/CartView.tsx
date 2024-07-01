@@ -12,15 +12,13 @@ import Box from "@mui/material/Box"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
-import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
+import { RemoveFromCartButton } from "@/src/components/RemoveFromCartButton"
 
 type Props = {
   cart: VercelCart
 }
 
 export const CartView: React.FC<Props> = ({ cart }) => {
-  const { mutate: removeFromCart } = useRemoveFromCart()
-
   return (
     <>
       <TableContainer>
@@ -89,16 +87,10 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                       Edit
                     </Button>
 
-                    <Button
-                      onClick={() => {
-                        removeFromCart({
-                          cartId: cart.id,
-                          lineItemId: id,
-                        })
-                      }}
-                    >
-                      Remove from cart
-                    </Button>
+                    <RemoveFromCartButton
+                      cartId={cart.id}
+                      lineItemId={id}
+                    />
                   </TableCell>
                   <TableCell>${cost.totalAmount.amount}</TableCell>
                   <TableCell>{quantity}</TableCell>
