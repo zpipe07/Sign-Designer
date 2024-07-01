@@ -14,7 +14,7 @@ export const BorderSelector: React.FC = () => {
       type="number"
       label="Border width"
       inputProps={{
-        step: "0.25",
+        step: "0.2",
         min: "0",
         max: "5",
       }}

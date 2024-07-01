@@ -61,18 +61,23 @@ export function generateTopRoundModel({
   }
   makerjs.model.center(outerModel)
 
-  const borderOuter = makerjs.model.outline(
-    outerModel,
-    outerBorderWidth,
-    undefined,
-    true,
-  )
-  const borderInner = makerjs.model.outline(
-    borderOuter,
-    innerBorderWidth,
-    undefined,
-    true,
-  )
+  let borderOuter
+  let borderInner
+
+  if (innerBorderWidth) {
+    borderOuter = makerjs.model.outline(
+      outerModel,
+      outerBorderWidth,
+      undefined,
+      true,
+    )
+    borderInner = makerjs.model.outline(
+      borderOuter,
+      innerBorderWidth,
+      undefined,
+      true,
+    )
+  }
 
   const text: any = {
     models: {},
@@ -84,7 +89,11 @@ export function generateTopRoundModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
@@ -95,7 +104,11 @@ export function generateTopRoundModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
 
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
@@ -107,7 +120,11 @@ export function generateTopRoundModel({
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
       text.models[`textModel${index}`] = {

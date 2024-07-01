@@ -55,7 +55,7 @@ export type SizeConfig = {
   // }
 }
 
-export type TextLine = { value: string; fontSize: number }
+export type TextLine = { value: string; fontSize: string }
 
 export type MountingStyle = "hanging" | "wall mounted"
 
@@ -69,7 +69,7 @@ export type DesignFormInputs = {
   fontFamily: FontFamily
   mountingStyle: MountingStyle
   edgeStyle: EdgeStyle
-  borderWidth: number
+  borderWidth: string
   // orientation: Orientation
   // decoration: Decoration | ""
 }
