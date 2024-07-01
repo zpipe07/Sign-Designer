@@ -34,20 +34,25 @@ export function generateRectangleModel({
 
   makerjs.model.center(outer)
 
-  const borderOuter = makerjs.model.outline(
-    outer,
-    outerBorderWidth,
-    undefined,
-    true,
-  )
-  makerjs.model.center(borderOuter)
-  const borderInner = makerjs.model.outline(
-    borderOuter,
-    innerBorderWidth,
-    undefined,
-    true,
-  )
-  makerjs.model.center(borderInner)
+  let borderOuter
+  let borderInner
+
+  if (innerBorderWidth) {
+    borderOuter = makerjs.model.outline(
+      outer,
+      outerBorderWidth,
+      undefined,
+      true,
+    )
+    makerjs.model.center(borderOuter)
+    borderInner = makerjs.model.outline(
+      borderOuter,
+      innerBorderWidth,
+      undefined,
+      true,
+    )
+    makerjs.model.center(borderInner)
+  }
 
   const text: any = {
     models: {},
@@ -59,7 +64,11 @@ export function generateRectangleModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
 
       makerjs.model.center(textModel)
 
@@ -71,7 +80,11 @@ export function generateRectangleModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 
@@ -83,7 +96,11 @@ export function generateRectangleModel({
 
     if (index === 2) {
       // family name
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
 
@@ -158,13 +175,15 @@ export function generateRectangleModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
@@ -182,7 +201,8 @@ export function generateRectangleModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -206,7 +226,7 @@ export function generateRectangleModel({
       }),
     },
     units: makerjs.unitType.Inch,
-    fillRule: "nonzero",
+    fillRule: "evenodd",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

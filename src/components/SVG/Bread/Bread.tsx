@@ -64,19 +64,24 @@ export function generateBreadModel({
 
   makerjs.model.center(outer)
 
-  const borderOuter = makerjs.model.outline(
-    outer,
-    outerBorderWidth,
-    undefined,
-    true,
-  )
+  let borderOuter
+  let borderInner
 
-  const borderInner = makerjs.model.outline(
-    borderOuter,
-    innerBorderWidth,
-    undefined,
-    true,
-  )
+  if (innerBorderWidth) {
+    borderOuter = makerjs.model.outline(
+      outer,
+      outerBorderWidth,
+      undefined,
+      true,
+    )
+
+    borderInner = makerjs.model.outline(
+      borderOuter,
+      innerBorderWidth,
+      undefined,
+      true,
+    )
+  }
 
   const text: any = {
     models: {},
@@ -88,7 +93,11 @@ export function generateBreadModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
       text.models[`textModel${index}`] = {
         ...textModel,
@@ -98,7 +107,11 @@ export function generateBreadModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -129,7 +142,7 @@ export function generateBreadModel({
       const textModel = new makerjs.models.Text(
         font,
         textLine.value,
-        fontSize,
+        parseFloat(fontSize),
       )
 
       makerjs.model.center(textModel)
@@ -205,13 +218,15 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
@@ -229,7 +244,8 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -253,7 +269,7 @@ export function generateBreadModel({
       }),
     },
     units: makerjs.unitType.Inch,
-    fillRule: "nonzero",
+    fillRule: "evenodd",
   }
   const svg = makerjs.exporter.toSVG(modelToExport, options)
 

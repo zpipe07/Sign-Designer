@@ -35,18 +35,23 @@ export function generateEllipseModel({
     outer = new makerjs.models.Ellipse(width / 2, height / 2)
   }
 
-  const borderOuter = makerjs.model.outline(
-    outer,
-    outerBorderWidth,
-    undefined,
-    true,
-  )
-  const borderInner = makerjs.model.outline(
-    borderOuter,
-    innerBorderWidth,
-    undefined,
-    true,
-  )
+  let borderOuter
+  let borderInner
+
+  if (innerBorderWidth) {
+    borderOuter = makerjs.model.outline(
+      outer,
+      outerBorderWidth,
+      undefined,
+      true,
+    )
+    borderInner = makerjs.model.outline(
+      borderOuter,
+      innerBorderWidth,
+      undefined,
+      true,
+    )
+  }
 
   const text: any = {
     models: {},
@@ -58,7 +63,11 @@ export function generateEllipseModel({
 
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       makerjs.model.center(textModel)
 
       text.models[`textModel${index}`] = {
@@ -69,7 +78,11 @@ export function generateEllipseModel({
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -97,7 +110,11 @@ export function generateEllipseModel({
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(font, value, fontSize)
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const bottomArc = new makerjs.paths.Arc(
@@ -188,13 +205,15 @@ export function generateEllipseModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
@@ -212,7 +231,8 @@ export function generateEllipseModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -236,7 +256,7 @@ export function generateEllipseModel({
       }),
     },
     units: makerjs.unitType.Inch,
-    fillRule: "nonzero",
+    fillRule: "evenodd",
   }
   const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
 

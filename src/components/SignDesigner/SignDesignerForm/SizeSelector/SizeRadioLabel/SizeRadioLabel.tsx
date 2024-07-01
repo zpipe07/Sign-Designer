@@ -31,7 +31,7 @@ export const SizeRadioLabel: React.FC<Props> = ({
       // @ts-ignore
       color: "#D6DAD2/#D6DAD2",
       textLines: [],
-      fontFamily: "Albert",
+      fontFamily: "BreeSerif",
       mountingStyle: "hanging",
     },
     "size",
