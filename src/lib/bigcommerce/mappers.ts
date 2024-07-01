@@ -681,16 +681,16 @@ export const formDataToCartItem = async (
         },
       ],
       multiLineTextFields: [
-        // {
-        //   optionEntityId: parseInt(
-        //     product.options.find(({ name }) => name === "textLines")
-        //       ?.id as string,
-        //     10,
-        //   ),
-        //   text: data.textLines
-        //     .map(({ value }: { value: string }) => value)
-        //     .join("\n"),
-        // },
+        {
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "textLines")
+              ?.id as string,
+            10,
+          ),
+          text: data.textLines
+            .map(({ value }: { value: string }) => value)
+            .join("\n"),
+        },
       ],
     },
   }
