@@ -69,6 +69,7 @@ export type DesignFormInputs = {
   fontFamily: FontFamily
   mountingStyle: MountingStyle
   edgeStyle: EdgeStyle
+  borderWidth: number
   // orientation: Orientation
   // decoration: Decoration | ""
 }

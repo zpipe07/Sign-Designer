@@ -35,6 +35,7 @@ export const SignDesigner: React.FC<Props> = ({
       fontFamily: fontFamily || "Albert",
       mountingStyle: mountingStyle || "wall mounted",
       edgeStyle: "square",
+      borderWidth: 0.25,
       textLines: textLines?.length
         ? textLines
         : [

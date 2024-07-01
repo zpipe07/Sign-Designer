@@ -21,6 +21,9 @@ export function parseSearchParams(
   const fontFamily = searchParams.get("fontFamily") as FontFamily
   const edgeStyle = searchParams.get("edgeStyle") as EdgeStyle
   const showShadow = searchParams.get("showShadow") === "true"
+  const borderWidth = searchParams.get("borderWidth")
+    ? parseFloat(searchParams.get("borderWidth") as string)
+    : 0
 
   let parsedTextLines = []
   if (textLines) {
@@ -40,5 +43,6 @@ export function parseSearchParams(
     mountingStyle,
     edgeStyle,
     showShadow,
+    borderWidth,
   }
 }

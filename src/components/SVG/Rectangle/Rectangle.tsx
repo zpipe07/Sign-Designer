@@ -34,20 +34,25 @@ export function generateRectangleModel({
 
   makerjs.model.center(outer)
 
-  const borderOuter = makerjs.model.outline(
-    outer,
-    outerBorderWidth,
-    undefined,
-    true,
-  )
-  makerjs.model.center(borderOuter)
-  const borderInner = makerjs.model.outline(
-    borderOuter,
-    innerBorderWidth,
-    undefined,
-    true,
-  )
-  makerjs.model.center(borderInner)
+  let borderOuter
+  let borderInner
+
+  if (innerBorderWidth) {
+    borderOuter = makerjs.model.outline(
+      outer,
+      outerBorderWidth,
+      undefined,
+      true,
+    )
+    makerjs.model.center(borderOuter)
+    borderInner = makerjs.model.outline(
+      borderOuter,
+      innerBorderWidth,
+      undefined,
+      true,
+    )
+    makerjs.model.center(borderInner)
+  }
 
   const text: any = {
     models: {},

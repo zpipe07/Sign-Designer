@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
     mountingStyle,
     edgeStyle,
     showShadow,
+    borderWidth,
   } = parseSearchParams(searchParams)
 
   if (!shape) {
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
     height,
     width,
     outerBorderWidth: 0.3,
-    innerBorderWidth: 0.2,
+    innerBorderWidth: borderWidth,
     textLines,
     foregroundColor,
     backgroundColor,
@@ -70,6 +71,7 @@ export async function GET(request: NextRequest) {
       fontFamily,
       mountingStyle,
       edgeStyle,
+      borderWidth,
     },
     font,
     showShadow,
