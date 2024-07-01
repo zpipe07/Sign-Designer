@@ -218,13 +218,15 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderOuter: strokeOnly
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: "none",
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       borderInner: strokeOnly
         ? strokeOnlyStyle
@@ -242,7 +244,8 @@ export function generateBreadModel({
         ? strokeOnlyStyle
         : {
             fill: backgroundColor,
-            stroke: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -266,7 +269,7 @@ export function generateBreadModel({
       }),
     },
     units: makerjs.unitType.Inch,
-    fillRule: "nonzero",
+    fillRule: "evenodd",
   }
   const svg = makerjs.exporter.toSVG(modelToExport, options)
 

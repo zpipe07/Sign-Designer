@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
     height,
     width,
     outerBorderWidth: 0.3,
-    innerBorderWidth: borderWidth,
+    innerBorderWidth: parseFloat(borderWidth),
     textLines,
     foregroundColor,
     backgroundColor,
