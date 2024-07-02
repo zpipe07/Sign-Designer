@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
     font,
     showShadow,
     // productOptionsMap,
-    // strokeOnly: true,
+    strokeOnly: true,
   })
 
   return new NextResponse(svg, {

@@ -37,6 +37,7 @@ export type Shape =
   | "top round"
   // | "sideRound"
   | "bread"
+  | "donnelly"
 
 export type Size =
   | "extra small"
