@@ -159,7 +159,7 @@ export function generateRectangleModel({
     }
   }
 
-  let doesTextFit
+  let doesTextFit = true
 
   if (validate) {
     const outerMeasure = borderInner
@@ -167,9 +167,11 @@ export function generateRectangleModel({
       : makerjs.measure.modelExtents(outer)
     const textMeasure = makerjs.measure.modelExtents(text)
 
-    doesTextFit =
-      outerMeasure.width > textMeasure.width &&
-      outerMeasure.height > textMeasure.height
+    if (textMeasure) {
+      doesTextFit =
+        outerMeasure.width > textMeasure.width &&
+        outerMeasure.height > textMeasure.height
+    }
   }
 
   const tabletFaceMount = {

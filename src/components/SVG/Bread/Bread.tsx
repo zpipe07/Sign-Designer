@@ -198,7 +198,7 @@ export function generateBreadModel({
     }
   }
 
-  let doesTextFit
+  let doesTextFit = true
 
   if (validate) {
     const outerMeasure = borderInner
@@ -206,9 +206,11 @@ export function generateBreadModel({
       : makerjs.measure.modelExtents(outer)
     const textMeasure = makerjs.measure.modelExtents(text)
 
-    doesTextFit =
-      outerMeasure.width > textMeasure.width &&
-      outerMeasure.height > textMeasure.height
+    if (textMeasure) {
+      doesTextFit =
+        outerMeasure.width > textMeasure.width &&
+        outerMeasure.height > textMeasure.height
+    }
   }
 
   const modelToExport = {
