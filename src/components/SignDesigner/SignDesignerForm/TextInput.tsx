@@ -70,9 +70,9 @@ export const TextInput: React.FC = () => {
                   type="number"
                   label="Size"
                   inputProps={{
-                    step: "0.1",
-                    min: "0.1",
-                    max: "10",
+                    step: "0.2",
+                    min: "1",
+                    max: "5",
                     tabIndex: index === 1 ? 1 : 2,
                   }}
                   sx={{ flex: "0 0 100px" }}
