@@ -8,6 +8,7 @@ export const useGetSignSvg = (
   queryKeySuffix?: string,
   enabled = true,
   showShadow?: boolean,
+  validate?: boolean,
 ) => {
   const queryClient = useQueryClient()
 
@@ -15,6 +16,7 @@ export const useGetSignSvg = (
     const formattedInputs = {
       ...inputs,
       ...(showShadow && { showShadow }),
+      ...(validate && { validate }),
       textLines: JSON.stringify(
         // inputs.textLines.map((line) => line.value),
         inputs.textLines,

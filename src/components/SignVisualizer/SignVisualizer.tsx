@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useWatch } from "react-hook-form"
-import { Box, Skeleton, debounce } from "@mui/material"
+import { Alert, Box, Skeleton, debounce } from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
@@ -8,6 +8,10 @@ import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/
 
 export const SignVisualizer: React.FC = () => {
   const inputs = useWatch<DesignFormInputs>()
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  const [doesTextFit, setDoesTextFit] = useState<boolean>(true)
 
   const { width, height, maxLinesOfText } =
     SIZE_CONFIG_MAP[inputs.size!]
@@ -30,11 +34,24 @@ export const SignVisualizer: React.FC = () => {
     undefined,
     false,
     true,
+    true,
   )
 
   useEffect(() => {
     fetchData()
   }, [inputs])
+
+  useEffect(() => {
+    if (isFetching || !svg || !ref.current) {
+      return
+    }
+
+    const svgElement = ref.current.querySelector("svg")
+    const doesTextFit =
+      svgElement?.getAttribute("data-does-text-fit") === "true"
+
+    setDoesTextFit(doesTextFit)
+  }, [isFetching, svg])
 
   const fetchData = useMemo(() => {
     return debounce(() => {
@@ -54,10 +71,20 @@ export const SignVisualizer: React.FC = () => {
           }}
         />
       ) : (
-        <Box
-          dangerouslySetInnerHTML={{ __html: svg }}
-          sx={{ fontSize: 0 }}
-        />
+        <>
+          <Box
+            dangerouslySetInnerHTML={{ __html: svg }}
+            sx={{ fontSize: 0 }}
+            ref={ref}
+          />
+
+          {!doesTextFit && (
+            <Alert severity="error" sx={{ marginTop: 2 }}>
+              The text does not fit. Please shorten the text or reduce
+              the font size.
+            </Alert>
+          )}
+        </>
       )}
     </Box>
   )

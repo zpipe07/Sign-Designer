@@ -19,7 +19,12 @@ export function generateRectangleModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+  validate,
+}: SvgProps & {
+  actualDimensions?: boolean
+  showShadow?: boolean
+  validate?: boolean
+}) {
   let edge
   let outer
 
@@ -167,28 +172,52 @@ export function generateRectangleModel({
     }
   }
 
-  for (const key in text.models) {
-    const { models } = text.models[key]
+  // for (const key in text.models) {
+  //   const { models } = text.models[key]
+  //   console.log({ ...models })
 
-    for (const key in models) {
-      const { paths } = models[key]
+  //   for (const key in models) {
+  //     const { paths } = models[key]
 
-      for (const key in paths) {
-        const path = paths[key]
+  //     for (const key in paths) {
+  //       const path = paths[key]
+  //       const points = makerjs.path.toPoints(path, 100)
+  //       const isInside = points.every(
+  //         (point) => {
+  //           const isPointInside = makerjs.measure.isPointInsideModel(
+  //             point,
+  //             borderInner,
+  //           )
+  //           if (!isPointInside) {
+  //             console.log({ point, isPointInside })
+  //           }
+  //           return isPointInside
+  //         },
 
-        const keyPoints = makerjs.path.toKeyPoints(path)
-        const isInside = keyPoints.every(
-          (point) =>
-            makerjs.measure.isPointInsideModel(point, borderInner),
-          // makerjs.measure.isPointInsideModel(point, outer),
-          // makerjs.measure.isPointInsideModel(point, borderOuter),
-        )
+  //         // makerjs.measure.isPointInsideModel(point, outer),
+  //         // makerjs.measure.isPointInsideModel(point, borderOuter),
+  //       )
+  //     }
+  //   }
+  // }
+  let doesTextFit
 
-        console.log({
-          // path,
-          isInside,
-        })
-      }
+  if (validate) {
+    if (borderInner) {
+      const borderInnerMeasure =
+        makerjs.measure.modelExtents(borderInner)
+      const textMeasure = makerjs.measure.modelExtents(text)
+
+      doesTextFit =
+        borderInnerMeasure.width > textMeasure.width &&
+        borderInnerMeasure.height > textMeasure.height
+    } else {
+      const outerMeasure = makerjs.measure.modelExtents(outer)
+      const textMeasure = makerjs.measure.modelExtents(text)
+
+      doesTextFit =
+        outerMeasure.width > textMeasure.width &&
+        outerMeasure.height > textMeasure.height
     }
   }
 
@@ -255,6 +284,7 @@ export function generateRectangleModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),

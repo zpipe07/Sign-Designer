@@ -9,6 +9,7 @@ export function generateModel(
   props: SvgProps & {
     actualDimensions?: boolean
     showShadow?: boolean
+    validate?: boolean
   },
 ) {
   if (props.inputs.shape === "ellipse") {
