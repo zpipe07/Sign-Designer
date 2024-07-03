@@ -2,7 +2,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-const TEXT_OFFSET = 2.9
+const TEXT_OFFSET = 2.75
 
 export function generateDonnellyModel({
   height,
@@ -19,17 +19,19 @@ export function generateDonnellyModel({
   showShadow,
 }: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
   const leftEllipse = new makerjs.models.Ellipse(
-    width / 6,
-    (height * 9) / 20,
+    height / 3,
+    height / 2,
   )
   const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
   makerjs.model.center(leftEllipse)
-  makerjs.model.move(leftEllipse, [width / -2 + width / 6, 0])
+  makerjs.model.move(leftEllipse, [
+    width / -2 + leftEllipseMeasure.width / 2,
+    0,
+  ])
 
   const rightEllipse = makerjs.model.mirror(leftEllipse, true, false)
-
   const outerRect = new makerjs.models.RoundRectangle(
-    width - leftEllipseMeasure.width / 2,
+    width - leftEllipseMeasure.width / 3,
     height,
     0.25,
   )
@@ -43,6 +45,8 @@ export function generateDonnellyModel({
     combinedTemp,
     rightEllipse,
   )
+  const chain = makerjs.model.findSingleChain(combined)
+  const filletsModel = makerjs.chain.fillet(chain, 0.25)
 
   let edge
   let outer
@@ -51,6 +55,7 @@ export function generateDonnellyModel({
     edge = {
       models: {
         combined,
+        filletsModel,
       },
     }
     makerjs.model.center(edge)
@@ -60,6 +65,7 @@ export function generateDonnellyModel({
     outer = {
       models: {
         combined,
+        filletsModel,
       },
     }
   }
@@ -139,7 +145,6 @@ export function generateDonnellyModel({
 
   if (textLines.length > 0) {
     makerjs.model.center(text)
-    makerjs.model.moveRelative(text, [0, -0.75])
   }
 
   const topRound = {
