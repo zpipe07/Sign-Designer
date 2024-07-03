@@ -72,15 +72,6 @@ export function generateRectangleModel({
       )
 
       makerjs.model.center(textModel)
-      // const textMeasure = makerjs.measure.modelExtents(textModel)
-      // const innerMeasure = makerjs.measure.modelExtents(borderInner)
-
-      // const isOverlapping = makerjs.measure.isMeasurementOverlapping(
-      //   textMeasure,
-      //   innerMeasure,
-      // )
-      // console.log("isOverlapping", isOverlapping)
-      // console.log({ ...textModel })
 
       text.models[`textModel${index}`] = {
         ...textModel,
