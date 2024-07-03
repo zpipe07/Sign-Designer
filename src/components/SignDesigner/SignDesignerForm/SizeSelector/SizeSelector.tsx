@@ -20,8 +20,9 @@ export const SizeSelector: React.FC = () => {
 
   const selectedSize = useWatch({ name: "size" })
 
-  const { data, isLoading } = useGetProduct(112)
+  const selectedShape = useWatch({ name: "shape" })
 
+  const { data, isLoading } = useGetProduct(112)
   if (isLoading) {
     return <LinearProgress />
   }
@@ -29,6 +30,21 @@ export const SizeSelector: React.FC = () => {
   if (!data) {
     return null
   }
+
+  const purchasableVariants = data.product.variants.filter(
+    ({ availableForSale }) => availableForSale,
+  )
+  const selectedVariants = purchasableVariants.filter(
+    ({ selectedOptions }) => {
+      return selectedOptions.some(({ name, value }) => {
+        return name === "shape" && value === selectedShape
+      })
+    },
+  )
+  const options = selectedVariants.map(
+    ({ selectedOptions }) =>
+      selectedOptions.find(({ name }) => name === "size")?.value,
+  )
 
   return (
     <FormControl fullWidth>
@@ -46,36 +62,34 @@ export const SizeSelector: React.FC = () => {
           },
         }}
       >
-        {data.productOptionsMap.size.values.map(
-          ({ label, entityId }) => {
-            return (
-              <FormControlLabel
-                value={label}
-                control={
-                  <Radio
-                    sx={{
-                      position: "fixed",
-                      opacity: 0,
-                      pointerEvents: "none",
-                    }}
-                  />
-                }
-                label={
-                  <SizeRadioLabel
-                    size={label as Size}
-                    checked={selectedSize === label}
-                  />
-                }
-                key={entityId}
-                sx={{
-                  margin: 0,
-                  padding: 2.25,
-                }}
-                {...register("size")}
-              />
-            )
-          },
-        )}
+        {options.map((value) => {
+          return (
+            <FormControlLabel
+              value={value}
+              control={
+                <Radio
+                  sx={{
+                    position: "fixed",
+                    opacity: 0,
+                    pointerEvents: "none",
+                  }}
+                />
+              }
+              label={
+                <SizeRadioLabel
+                  size={value as Size}
+                  checked={selectedSize === value}
+                />
+              }
+              key={value}
+              sx={{
+                margin: 0,
+                padding: 2.25,
+              }}
+              {...register("size")}
+            />
+          )
+        })}
       </RadioGroup>
     </FormControl>
   )
