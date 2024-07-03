@@ -4,7 +4,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-const TEXT_OFFSET = 2.75
+const TEXT_OFFSET = 3
 
 export function generateRectangleModel({
   height,
