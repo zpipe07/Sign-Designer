@@ -2,7 +2,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-const TEXT_OFFSET = 2.75
+const TEXT_OFFSET = 3
 
 export function generateDonnellyModel({
   height,
@@ -17,6 +17,7 @@ export function generateDonnellyModel({
   strokeOnly,
   actualDimensions,
   showShadow,
+  validate,
 }: SvgProps) {
   const leftEllipse = new makerjs.models.Ellipse(
     height / 3,
@@ -88,6 +89,7 @@ export function generateDonnellyModel({
     )
   }
 
+  let doesTextFit = true
   const text: any = {
     models: {},
   }
@@ -108,6 +110,18 @@ export function generateDonnellyModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 0.25 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
 
@@ -124,6 +138,18 @@ export function generateDonnellyModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 1.125 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
 
@@ -139,6 +165,18 @@ export function generateDonnellyModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 1.125 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
   }
@@ -209,6 +247,7 @@ export function generateDonnellyModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),
