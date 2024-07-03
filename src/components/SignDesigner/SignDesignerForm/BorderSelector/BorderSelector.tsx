@@ -2,9 +2,9 @@ import { Controller, useFormContext, useWatch } from "react-hook-form"
 import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
 import { Slider, TextField } from "@mui/material"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Radio from "@mui/material/Radio"
-import RadioGroup from "@mui/material/RadioGroup"
+// import FormControlLabel from "@mui/material/FormControlLabel"
+// import Radio from "@mui/material/Radio"
+// import RadioGroup from "@mui/material/RadioGroup"
 
 const marks = [
   {
@@ -12,8 +12,8 @@ const marks = [
     label: "None",
   },
   {
-    value: 1,
-    label: '1"',
+    value: 0.5,
+    label: '0.5"',
   },
 ]
 
@@ -39,6 +39,7 @@ export const BorderSelector: React.FC = () => {
       <FormLabel id="borderWidth" htmlFor="borderWidth">
         Border width: {selectedBorderWidth}&quot;
       </FormLabel>
+
       <Controller
         control={control}
         render={(props) => {

@@ -53,8 +53,6 @@ export const SizeSelector: React.FC = () => {
                 value={label}
                 control={
                   <Radio
-                    size="small"
-                    checked={selectedSize === label}
                     sx={{
                       position: "fixed",
                       opacity: 0,
