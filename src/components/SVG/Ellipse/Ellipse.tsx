@@ -2,7 +2,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-function calculateAngle(arcLength: number, radius: number) {
+export function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
   return angle
 }

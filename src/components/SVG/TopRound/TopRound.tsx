@@ -1,6 +1,7 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import { calculateAngle } from "@/src/components/SVG/Ellipse"
 
 const TEXT_OFFSET = 2.9
 
@@ -109,12 +110,40 @@ export function generateTopRoundModel({
         value,
         parseFloat(fontSize),
       )
+      const measure = makerjs.measure.modelExtents(textModel)
+      const arcWidth = width / 2
+      const angle = calculateAngle(measure.width, arcWidth)
+      const topArc = new makerjs.paths.Arc(
+        [0, 0],
+        arcWidth,
+        90 - angle / 2,
+        90 + angle / 2,
+      )
 
+      makerjs.layout.childrenOnPath(
+        textModel,
+        topArc,
+        0.3,
+        true,
+        true,
+        true,
+      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+      // const textModel = new makerjs.models.Text(
+      //   font,
+      //   value,
+      //   parseFloat(fontSize),
+      // )
+
+      // makerjs.model.center(textModel)
+      // makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      // text.models[`textModel${index}`] = {
+      //   ...textModel,
+      // }
       continue
     }
 

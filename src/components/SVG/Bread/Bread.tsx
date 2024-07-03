@@ -1,11 +1,7 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
-
-function calculateAngle(arcLength: number, radius: number) {
-  const angle = (arcLength / radius) * (180 / Math.PI)
-  return angle
-}
+import { calculateAngle } from "@/src/components/SVG/Ellipse"
 
 const TEXT_OFFSET = 3.0
 
