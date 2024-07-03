@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form"
 import { useParams, useRouter } from "next/navigation"
 import Grid from "@mui/material/Grid"
 import { LoadingButton } from "@mui/lab"
-import { Box, Divider, useTheme } from "@mui/material"
+import { Alert, Box, Divider, useTheme } from "@mui/material"
 
 import {
   ColorSelector,
@@ -23,6 +23,7 @@ import { PriceDisplay } from "@/src/components/PriceDisplay"
 import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { EdgeSelector } from "@/src/components/EdgeSelector"
+import { BorderSelector } from "@/src/components/SignDesigner/SignDesignerForm/BorderSelector"
 
 type Props = {
   isEditing?: boolean
@@ -43,15 +44,22 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
 
   const { data: cartData } = useGetCart()
 
-  const { mutate: createCart, isPending: isPendingCreateCart } =
-    useCreateCart({ onSuccess })
+  const {
+    mutate: createCart,
+    isPending: isPendingCreateCart,
+    error: createCartError,
+  } = useCreateCart({ onSuccess })
 
-  const { mutate: addCartItem, isPending: isPendingAddCartItem } =
-    useAddCartItem({ onSuccess })
+  const {
+    mutate: addCartItem,
+    isPending: isPendingAddCartItem,
+    error: addCartItemError,
+  } = useAddCartItem({ onSuccess })
 
   const {
     mutate: updateCartItem,
     isPending: isPendingUpdateCartItem,
+    error: updateCartItemError,
   } = useUpdateCartItem({ onSuccess })
 
   const onSubmit = (data: DesignFormInputs) => {
@@ -75,90 +83,109 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     }
   }
 
+  console.log({
+    createCartError,
+    addCartItemError,
+    updateCartItemError,
+  })
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextInput />
-            </Grid>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextInput />
+              </Grid>
 
-            <Grid item xs={12}>
-              <ShapeSelector />
-            </Grid>
+              <Grid item xs={12}>
+                <ShapeSelector />
+              </Grid>
 
-            {/* <Grid item xs={12}>
+              {/* <Grid item xs={12}>
               <OrientationSelector />
             </Grid> */}
 
-            <Grid item xs={12}>
-              <SizeSelector />
-            </Grid>
+              <Grid item xs={12}>
+                <SizeSelector />
+              </Grid>
 
-            <Grid item xs={12}>
-              <ColorSelector />
-            </Grid>
+              <Grid item xs={12}>
+                <ColorSelector />
+              </Grid>
 
-            <Grid item xs={12}>
-              <FontSelector />
-            </Grid>
+              <Grid item xs={12}>
+                <FontSelector />
+              </Grid>
 
-            {/* <Grid item xs={12}>
+              {/* <Grid item xs={12}>
               <DecorationSelector />
             </Grid> */}
 
-            <Grid item xs={12}>
-              <MountingSelector />
-            </Grid>
+              <Grid item xs={12}>
+                <MountingSelector />
+              </Grid>
 
-            <Grid item xs={12}>
-              <EdgeSelector />
+              <Grid item xs={12}>
+                <BorderSelector />
+              </Grid>
+
+              <Grid item xs={12}>
+                <EdgeSelector />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={12}>
-          <Divider
-            aria-hidden="true"
-            sx={{
-              borderColor: theme.palette.primary.main,
-              width: "100%",
-              marginTop: 2,
-              marginBottom: 2,
-            }}
-          />
-        </Grid>
+          <Grid item xs={12}>
+            <Divider
+              aria-hidden="true"
+              sx={{
+                borderColor: theme.palette.primary.main,
+                width: "100%",
+                marginTop: 2,
+                marginBottom: 2,
+              }}
+            />
+          </Grid>
 
-        <Grid item xs={12}>
-          {/* <Button variant="outlined" size="large">
+          <Grid item xs={12}>
+            {/* <Button variant="outlined" size="large">
             Save
           </Button> */}
 
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-            <PriceDisplay />
-
-            <LoadingButton
-              variant="contained"
-              size="large"
-              type="submit"
-              color="secondary"
-              loading={
-                isPendingCreateCart ||
-                isPendingAddCartItem ||
-                isPendingUpdateCartItem
-              }
-              sx={{ marginLeft: 2 }}
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
             >
-              Add to cart
-            </LoadingButton>
-          </Box>
+              <PriceDisplay />
+
+              <LoadingButton
+                variant="contained"
+                size="large"
+                type="submit"
+                color="secondary"
+                loading={
+                  isPendingCreateCart ||
+                  isPendingAddCartItem ||
+                  isPendingUpdateCartItem
+                }
+                sx={{ marginLeft: 2 }}
+              >
+                {isEditing ? "Update" : "Add to cart"}
+              </LoadingButton>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </form>
+      </form>
+
+      {createCartError || addCartItemError || updateCartItemError ? (
+        <Alert severity="error" sx={{ marginTop: 3 }}>
+          There was an error adding the item to the cart. Please try
+          again.
+        </Alert>
+      ) : null}
+    </>
   )
 }

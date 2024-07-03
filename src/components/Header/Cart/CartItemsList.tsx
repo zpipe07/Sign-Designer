@@ -1,11 +1,11 @@
 import ListItem from "@mui/material/ListItem"
 import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"
-import IconButton from "@mui/material/IconButton"
-import DeleteIcon from "@mui/icons-material/Delete"
+import { Box } from "@mui/material"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
+import { RemoveFromCartButton } from "@/src/components/RemoveFromCartButton"
 
 type Props = {
   cart: VercelCart
@@ -31,14 +31,12 @@ export const CartItemsList: React.FC<Props> = ({ cart }) => {
             )}
             <Typography>{merchandise.title}</Typography>&nbsp;
             <Typography>${cost.totalAmount.amount}</Typography>
-            <IconButton
-              sx={{ marginLeft: "auto" }}
-              onClick={() => {
-                removeFromCart({ cartId: cart.id, lineItemId: id })
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Box sx={{ marginLeft: "auto" }}>
+              <RemoveFromCartButton
+                cartId={cart.id}
+                lineItemId={id}
+              />
+            </Box>
           </ListItem>
         )
       })}

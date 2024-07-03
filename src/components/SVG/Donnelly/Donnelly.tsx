@@ -2,9 +2,9 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-const TEXT_OFFSET = 2.9
+const TEXT_OFFSET = 2.75
 
-export function generateTopRoundModel({
+export function generateDonnellyModel({
   height,
   width,
   outerBorderWidth,
@@ -18,55 +18,64 @@ export function generateTopRoundModel({
   actualDimensions,
   showShadow,
 }: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
-  const outerRect = new makerjs.models.RoundRectangle(
-    width,
-    (height * 2) / 3,
-    0.25,
-  )
-  const outerEllipse = new makerjs.models.Ellipse(
-    width / 3,
+  const leftEllipse = new makerjs.models.Ellipse(
+    height / 3,
     height / 2,
   )
-  const measureOuterEllipse =
-    makerjs.measure.modelExtents(outerEllipse)
-
-  makerjs.model.move(outerEllipse, [
-    width / 2,
-    measureOuterEllipse.height / 2,
+  const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
+  makerjs.model.center(leftEllipse)
+  makerjs.model.move(leftEllipse, [
+    width / -2 + leftEllipseMeasure.width / 2,
+    0,
   ])
 
-  const outer = makerjs.model.combineUnion(outerRect, outerEllipse)
-  const chain = makerjs.model.findSingleChain(outer)
+  const rightEllipse = makerjs.model.mirror(leftEllipse, true, false)
+  const outerRect = new makerjs.models.RoundRectangle(
+    width - leftEllipseMeasure.width / 3,
+    height,
+    0.25,
+  )
+  makerjs.model.center(outerRect)
+
+  const combinedTemp = makerjs.model.combineUnion(
+    outerRect,
+    leftEllipse,
+  )
+  const combined = makerjs.model.combineUnion(
+    combinedTemp,
+    rightEllipse,
+  )
+  const chain = makerjs.model.findSingleChain(combined)
   const filletsModel = makerjs.chain.fillet(chain, 0.25)
+
   let edge
-  let outerModel
+  let outer
 
   if (inputs.edgeStyle === "round") {
     edge = {
       models: {
-        outer,
+        combined,
         filletsModel,
       },
     }
     makerjs.model.center(edge)
 
-    outerModel = makerjs.model.outline(edge, 0.2, undefined, true)
+    outer = makerjs.model.outline(edge, 0.2, undefined, true)
   } else {
-    outerModel = {
+    outer = {
       models: {
-        outer,
+        combined,
         filletsModel,
       },
     }
   }
-  makerjs.model.center(outerModel)
 
   let borderOuter
   let borderInner
 
   if (innerBorderWidth) {
     borderOuter = makerjs.model.outline(
-      outerModel,
+      outer,
       outerBorderWidth,
       undefined,
       true,
@@ -136,13 +145,12 @@ export function generateTopRoundModel({
 
   if (textLines.length > 0) {
     makerjs.model.center(text)
-    makerjs.model.moveRelative(text, [0, -0.75])
   }
 
   const topRound = {
     models: {
       edge: { ...edge, layer: "edge" },
-      outer: { ...outerModel, layer: "outer" },
+      outer: { ...outer, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
@@ -213,8 +221,8 @@ export function generateTopRoundModel({
   return { svg }
 }
 
-export const TopRound: React.FC<SvgProps> = (props) => {
-  const { svg } = generateTopRoundModel(props)
+export const Donnelly: React.FC<SvgProps> = (props) => {
+  const { svg } = generateDonnellyModel(props)
 
   return (
     <div

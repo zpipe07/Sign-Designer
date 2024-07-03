@@ -32,15 +32,16 @@ export const SignDesigner: React.FC<Props> = ({
       shape: shape || "rectangle",
       size: size || "large",
       color: color || "black/white",
-      fontFamily: fontFamily || "Albert",
+      fontFamily: fontFamily || "BreeSerif",
       mountingStyle: mountingStyle || "wall mounted",
       edgeStyle: "square",
+      borderWidth: "0.2",
       textLines: textLines?.length
         ? textLines
         : [
-            { value: "", fontSize: 2 },
-            { value: "", fontSize: 2 },
-            { value: "", fontSize: 2 },
+            { value: "", fontSize: "2" },
+            { value: "", fontSize: "2" },
+            { value: "", fontSize: "2" },
           ],
     },
   })

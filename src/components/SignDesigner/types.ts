@@ -5,8 +5,6 @@ export type ColorCombo = `${Color}/${Color}`
 export type Decoration = "foo" | "bar"
 
 export type FontFamily =
-  | "Albert"
-  | "Expletus"
   | "Arbutus"
   | "Danfo"
   | "AdventPro"
@@ -39,6 +37,7 @@ export type Shape =
   | "top round"
   // | "sideRound"
   | "bread"
+  | "donnelly"
 
 export type Size =
   | "extra small"
@@ -55,7 +54,7 @@ export type SizeConfig = {
   // }
 }
 
-export type TextLine = { value: string; fontSize: number }
+export type TextLine = { value: string; fontSize: string }
 
 export type MountingStyle = "hanging" | "wall mounted"
 
@@ -69,6 +68,7 @@ export type DesignFormInputs = {
   fontFamily: FontFamily
   mountingStyle: MountingStyle
   edgeStyle: EdgeStyle
+  borderWidth: string
   // orientation: Orientation
   // decoration: Decoration | ""
 }

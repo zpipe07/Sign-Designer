@@ -97,7 +97,8 @@ export async function bigCommerceFetch<T>({
   query,
   variables,
   headers,
-  cache = "force-cache",
+  // cache = "force-cache",
+  cache = "no-store",
 }: {
   query: string
   variables?: ExtractVariables<T>

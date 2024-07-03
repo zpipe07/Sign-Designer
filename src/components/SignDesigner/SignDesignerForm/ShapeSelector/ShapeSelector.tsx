@@ -75,7 +75,7 @@ export const ShapeSelector: React.FC = () => {
                 sx={{
                   margin: 0,
                   padding: 2,
-                  flex: "1 0  25%",
+                  flex: "0 1 33.33%",
                 }}
                 {...register("shape")}
               />
