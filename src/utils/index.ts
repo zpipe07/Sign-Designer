@@ -10,7 +10,7 @@ import {
 
 export function parseSearchParams(
   searchParams: URLSearchParams,
-): DesignFormInputs & { showShadow?: boolean } {
+): DesignFormInputs & { showShadow?: boolean; validate?: boolean } {
   const shape = searchParams.get("shape") as Shape
   const size = searchParams.get("size") as Size
   const textLines = searchParams.get("textLines")
@@ -22,6 +22,7 @@ export function parseSearchParams(
   const edgeStyle = searchParams.get("edgeStyle") as EdgeStyle
   const showShadow = searchParams.get("showShadow") === "true"
   const borderWidth = searchParams.get("borderWidth")
+  const validate = searchParams.get("validate") === "true"
 
   let parsedTextLines = []
   if (textLines) {
@@ -42,5 +43,6 @@ export function parseSearchParams(
     edgeStyle,
     showShadow,
     borderWidth: borderWidth || "0",
+    validate,
   }
 }

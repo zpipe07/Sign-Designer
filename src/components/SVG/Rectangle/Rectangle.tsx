@@ -4,7 +4,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-const TEXT_OFFSET = 2.75
+const TEXT_OFFSET = 3
 
 export function generateRectangleModel({
   height,
@@ -19,7 +19,8 @@ export function generateRectangleModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+  validate,
+}: SvgProps) {
   let edge
   let outer
 
@@ -158,6 +159,19 @@ export function generateRectangleModel({
     }
   }
 
+  let doesTextFit
+
+  if (validate) {
+    const outerMeasure = borderInner
+      ? makerjs.measure.modelExtents(borderInner)
+      : makerjs.measure.modelExtents(outer)
+    const textMeasure = makerjs.measure.modelExtents(text)
+
+    doesTextFit =
+      outerMeasure.width > textMeasure.width &&
+      outerMeasure.height > textMeasure.height
+  }
+
   const tabletFaceMount = {
     models: {
       edge: { ...edge, layer: "edge" },
@@ -221,6 +235,7 @@ export function generateRectangleModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),

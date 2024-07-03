@@ -2,7 +2,7 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 
-function calculateAngle(arcLength: number, radius: number) {
+export function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
   return angle
 }
@@ -22,7 +22,8 @@ export function generateEllipseModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+  validate,
+}: SvgProps) {
   let edge
   let outer
 
@@ -53,6 +54,7 @@ export function generateEllipseModel({
     )
   }
 
+  let doesTextFit = true
   const text: any = {
     models: {},
   }
@@ -73,6 +75,18 @@ export function generateEllipseModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 0.5 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
 
@@ -105,6 +119,18 @@ export function generateEllipseModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 3 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
 
@@ -136,6 +162,18 @@ export function generateEllipseModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 3 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
   }
@@ -186,6 +224,31 @@ export function generateEllipseModel({
       },
     }
   }
+
+  // let doesTextFit
+
+  // if (validate) {
+  //   const offset = 1.0
+
+  //   if (borderInner) {
+  //     const borderInnerMeasure =
+  //       makerjs.measure.modelExtents(borderInner)
+  //     const textMeasure = makerjs.measure.modelExtents(text)
+
+  //     doesTextFit =
+  //       borderInnerMeasure.width - offset > textMeasure.width &&
+  //       borderInnerMeasure.height - offset > textMeasure.height
+  //   } else {
+  //     const outerMeasure = makerjs.measure.modelExtents(outer)
+  //     const textMeasure = makerjs.measure.modelExtents(text)
+
+  //     doesTextFit =
+  //       outerMeasure.width - offset > textMeasure.width &&
+  //       outerMeasure.height - offset > textMeasure.height
+  //   }
+  // }
+
+  console.log({ doesTextFit })
 
   const tabletFaceMount = {
     models: {
@@ -251,6 +314,7 @@ export function generateEllipseModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),

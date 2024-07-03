@@ -1,13 +1,9 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import { calculateAngle } from "@/src/components/SVG/Ellipse"
 
-function calculateAngle(arcLength: number, radius: number) {
-  const angle = (arcLength / radius) * (180 / Math.PI)
-  return angle
-}
-
-const TEXT_OFFSET = 3.0
+const TEXT_OFFSET = 3.125
 
 export function generateBreadModel({
   height,
@@ -22,7 +18,8 @@ export function generateBreadModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+  validate,
+}: SvgProps) {
   const arc = makerjs.model.move(
     new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
     [0, height / 2],
@@ -201,6 +198,19 @@ export function generateBreadModel({
     }
   }
 
+  let doesTextFit
+
+  if (validate) {
+    const outerMeasure = borderInner
+      ? makerjs.measure.modelExtents(borderInner)
+      : makerjs.measure.modelExtents(outer)
+    const textMeasure = makerjs.measure.modelExtents(text)
+
+    doesTextFit =
+      outerMeasure.width > textMeasure.width &&
+      outerMeasure.height > textMeasure.height
+  }
+
   const modelToExport = {
     models: {
       edge: { ...edge, layer: "edge" },
@@ -264,6 +274,7 @@ export function generateBreadModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),
