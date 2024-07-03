@@ -159,34 +159,6 @@ export function generateRectangleModel({
     }
   }
 
-  // for (const key in text.models) {
-  //   const { models } = text.models[key]
-  //   console.log({ ...models })
-
-  //   for (const key in models) {
-  //     const { paths } = models[key]
-
-  //     for (const key in paths) {
-  //       const path = paths[key]
-  //       const points = makerjs.path.toPoints(path, 100)
-  //       const isInside = points.every(
-  //         (point) => {
-  //           const isPointInside = makerjs.measure.isPointInsideModel(
-  //             point,
-  //             borderInner,
-  //           )
-  //           if (!isPointInside) {
-  //             console.log({ point, isPointInside })
-  //           }
-  //           return isPointInside
-  //         },
-
-  //         // makerjs.measure.isPointInsideModel(point, outer),
-  //         // makerjs.measure.isPointInsideModel(point, borderOuter),
-  //       )
-  //     }
-  //   }
-  // }
   let doesTextFit
 
   if (validate) {
