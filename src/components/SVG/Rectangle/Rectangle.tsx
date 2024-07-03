@@ -20,11 +20,7 @@ export function generateRectangleModel({
   actualDimensions,
   showShadow,
   validate,
-}: SvgProps & {
-  actualDimensions?: boolean
-  showShadow?: boolean
-  validate?: boolean
-}) {
+}: SvgProps) {
   let edge
   let outer
 

@@ -17,7 +17,7 @@ export function generateDonnellyModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+}: SvgProps) {
   const leftEllipse = new makerjs.models.Ellipse(
     height / 3,
     height / 2,

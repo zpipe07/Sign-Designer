@@ -17,7 +17,7 @@ export function generateTopRoundModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+}: SvgProps) {
   const outerRect = new makerjs.models.RoundRectangle(
     width,
     (height * 2) / 3,

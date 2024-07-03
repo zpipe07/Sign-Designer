@@ -22,7 +22,7 @@ export function generateBreadModel({
   strokeOnly,
   actualDimensions,
   showShadow,
-}: SvgProps & { actualDimensions?: boolean; showShadow?: boolean }) {
+}: SvgProps) {
   const arc = makerjs.model.move(
     new makerjs.models.EllipticArc(0, 180, width / 2, height / 4),
     [0, height / 2],

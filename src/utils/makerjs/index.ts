@@ -5,13 +5,7 @@ import { generateRectangleModel } from "@/src/components/SVG/Rectangle"
 import { generateTopRoundModel } from "@/src/components/SVG/TopRound"
 import { SvgProps } from "@/src/components/SVG/types"
 
-export function generateModel(
-  props: SvgProps & {
-    actualDimensions?: boolean
-    showShadow?: boolean
-    validate?: boolean
-  },
-) {
+export function generateModel(props: SvgProps) {
   if (props.inputs.shape === "ellipse") {
     return generateEllipseModel(props)
   }
