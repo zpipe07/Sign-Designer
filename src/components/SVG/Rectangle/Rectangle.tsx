@@ -199,22 +199,14 @@ export function generateRectangleModel({
   let doesTextFit
 
   if (validate) {
-    if (borderInner) {
-      const borderInnerMeasure =
-        makerjs.measure.modelExtents(borderInner)
-      const textMeasure = makerjs.measure.modelExtents(text)
+    const outerMeasure = borderInner
+      ? makerjs.measure.modelExtents(borderInner)
+      : makerjs.measure.modelExtents(outer)
+    const textMeasure = makerjs.measure.modelExtents(text)
 
-      doesTextFit =
-        borderInnerMeasure.width > textMeasure.width &&
-        borderInnerMeasure.height > textMeasure.height
-    } else {
-      const outerMeasure = makerjs.measure.modelExtents(outer)
-      const textMeasure = makerjs.measure.modelExtents(text)
-
-      doesTextFit =
-        outerMeasure.width > textMeasure.width &&
-        outerMeasure.height > textMeasure.height
-    }
+    doesTextFit =
+      outerMeasure.width > textMeasure.width &&
+      outerMeasure.height > textMeasure.height
   }
 
   const tabletFaceMount = {
