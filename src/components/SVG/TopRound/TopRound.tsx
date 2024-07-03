@@ -3,7 +3,7 @@ import makerjs from "makerjs"
 import { SvgProps } from "@/src/components/SVG/types"
 import { calculateAngle } from "@/src/components/SVG/Ellipse"
 
-const TEXT_OFFSET = 2.9
+const TEXT_OFFSET = 2.75
 
 export function generateTopRoundModel({
   height,
@@ -18,14 +18,16 @@ export function generateTopRoundModel({
   strokeOnly,
   actualDimensions,
   showShadow,
+  validate,
 }: SvgProps) {
   const outerRect = new makerjs.models.RoundRectangle(
     width,
     (height * 2) / 3,
     0.25,
   )
+  const arcRadius = width / 3
   const outerEllipse = new makerjs.models.Ellipse(
-    width / 3,
+    arcRadius,
     height / 2,
   )
   const measureOuterEllipse =
@@ -80,6 +82,7 @@ export function generateTopRoundModel({
     )
   }
 
+  let doesTextFit = true
   const text: any = {
     models: {},
   }
@@ -100,6 +103,18 @@ export function generateTopRoundModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 0.5 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
 
@@ -111,11 +126,10 @@ export function generateTopRoundModel({
         parseFloat(fontSize),
       )
       const measure = makerjs.measure.modelExtents(textModel)
-      const arcWidth = width / 2
-      const angle = calculateAngle(measure.width, arcWidth)
+      const angle = calculateAngle(measure.width, arcRadius)
       const topArc = new makerjs.paths.Arc(
         [0, 0],
-        arcWidth,
+        arcRadius,
         90 - angle / 2,
         90 + angle / 2,
       )
@@ -129,10 +143,19 @@ export function generateTopRoundModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET + 0.25])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+
+        if (arcRadius * 2 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       // const textModel = new makerjs.models.Text(
       //   font,
       //   value,
@@ -159,6 +182,18 @@ export function generateTopRoundModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
+
+      if (validate) {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        const innerMeasure = borderInner
+          ? makerjs.measure.modelExtents(borderInner)
+          : makerjs.measure.modelExtents(outer)
+
+        if (innerMeasure.width - 0.5 <= textMeasure.width) {
+          doesTextFit = false
+        }
+      }
+
       continue
     }
   }
@@ -230,6 +265,7 @@ export function generateTopRoundModel({
       height: actualDimensions ? `${height}in` : "100%",
       width: actualDimensions ? `${width}in` : "100%",
       viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
       ...(showShadow && {
         filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
       }),
