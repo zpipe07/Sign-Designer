@@ -156,17 +156,6 @@ export function generateTopRoundModel({
         }
       }
 
-      // const textModel = new makerjs.models.Text(
-      //   font,
-      //   value,
-      //   parseFloat(fontSize),
-      // )
-
-      // makerjs.model.center(textModel)
-      // makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
-      // text.models[`textModel${index}`] = {
-      //   ...textModel,
-      // }
       continue
     }
 
