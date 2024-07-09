@@ -1,18 +1,16 @@
 "use client"
 
+import { useState } from "react"
 import Typography from "@mui/material/Typography"
 
 import { useGetOrders } from "@/src/hooks/queries/useGetOrders"
 import { OrdersView } from "@/src/components/Orders/OrdersView"
+import { OrderPagination } from "@/src/components/Orders/OrderPagination"
 
 export const Orders: React.FC = () => {
-  const { data, isLoading, isError } = useGetOrders()
+  const [page, setPage] = useState(1)
 
-  if (isLoading) {
-    return <Typography>Loading...</Typography>
-  }
-
-  // console.log({ data })
+  const { data, isLoading, isError } = useGetOrders(page)
 
   return (
     <>
@@ -20,7 +18,17 @@ export const Orders: React.FC = () => {
         Orders
       </Typography>
 
-      <OrdersView orders={data.orders} />
+      <OrderPagination
+        page={page}
+        setPage={setPage}
+        pages={data?.pages}
+      />
+
+      {isLoading ? (
+        <Typography>Loading...</Typography>
+      ) : (
+        <OrdersView orders={data.orders} />
+      )}
     </>
   )
 }
