@@ -1,4 +1,10 @@
-export type Color = "black" | "white" | "tan" | "green" | "yellow"
+export type Color =
+  | "black"
+  | "white"
+  | "tan"
+  | "green"
+  | "yellow"
+  | "#D6DAD2"
 
 export type ColorCombo = `${Color}::${Color}`
 
