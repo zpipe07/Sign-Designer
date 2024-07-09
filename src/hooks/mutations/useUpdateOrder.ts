@@ -15,7 +15,7 @@ export const useUpdateOrder = (options?: UseMutationOptions) => {
     orderId,
     updateData,
   }: {
-    orderId: string
+    orderId: number
     updateData: UpdateOrderData
   }) => {
     const res = await fetch(`/api/v1/admin/orders/${orderId}`, {

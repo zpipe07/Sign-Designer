@@ -5,29 +5,15 @@ import TableRow from "@mui/material/TableRow"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
-import Typography from "@mui/material/Typography"
-import { NativeSelect } from "@mui/material"
 
 import { OrderDetails } from "@/src/components/Orders/OrderDetails"
-import {
-  OrderStatus,
-  orderStatuses,
-} from "@/src/app/api/v1/admin/orders/[orderId]/route"
-import { useUpdateOrder } from "@/src/hooks/mutations/useUpdateOrder"
+import { OrderStatusSelect } from "@/src/components/Orders/OrderStatusSelect"
+import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 
-export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
+export const OrderRow: React.FC<{ order: BigCommerceOrder }> = ({
+  order,
+}) => {
   const [open, setOpen] = useState(false)
-
-  const { mutate } = useUpdateOrder()
-
-  const handleStatusChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    mutate({
-      orderId: order.id,
-      updateData: { status: e.target.value as OrderStatus },
-    })
-  }
 
   return (
     <>
@@ -35,17 +21,7 @@ export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
         <TableCell>{order.id}</TableCell>
         <TableCell>{order.date_created}</TableCell>
         <TableCell>
-          <NativeSelect
-            defaultValue={order.status}
-            variant="filled"
-            onChange={handleStatusChange}
-          >
-            {orderStatuses.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </NativeSelect>
+          <OrderStatusSelect order={order} />
         </TableCell>
         <TableCell>
           <IconButton

@@ -1,8 +1,13 @@
+import queryString from "query-string"
+
 export const PAGE_LIMIT = 10
 
 export async function GET() {
+  const qs = queryString.stringify({
+    is_deleted: false,
+  })
   const res = await fetch(
-    `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders/count`,
+    `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders/count?${qs}`,
     {
       method: "GET",
       headers: {

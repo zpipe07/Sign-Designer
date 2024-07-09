@@ -1,8 +1,10 @@
 import Image from "next/image"
 import Typography from "@mui/material/Typography"
 import {
+  Alert,
   Box,
   Button,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -16,10 +18,29 @@ import { useGetProducts } from "@/src/hooks/queries/useGetProducts"
 export const OrderDetails: React.FC<{ orderId: number }> = ({
   orderId,
 }) => {
-  const { data, isLoading, isError } = useGetProducts(orderId)
+  const { data, isLoading, error } = useGetProducts(orderId)
 
   if (isLoading) {
-    return <Typography>Loading...</Typography>
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: 1,
+          paddingBottom: 1,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    )
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error" sx={{ marginTop: 2, marginBottom: 2 }}>
+        There was an error fetching products for this order.
+      </Alert>
+    )
   }
 
   return (
@@ -37,7 +58,7 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.products.map((product: any) => {
+            {data?.products.map((product) => {
               return (
                 <TableRow key={product.id}>
                   <TableCell>{product.id}</TableCell>

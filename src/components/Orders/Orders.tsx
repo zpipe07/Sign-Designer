@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Typography from "@mui/material/Typography"
-import { Box, CircularProgress } from "@mui/material"
+import { Alert, Box, CircularProgress } from "@mui/material"
 
 import { useGetOrders } from "@/src/hooks/queries/useGetOrders"
 import { OrdersView } from "@/src/components/Orders/OrdersView"
@@ -11,7 +11,15 @@ import { OrderPagination } from "@/src/components/Orders/OrderPagination"
 export const Orders: React.FC = () => {
   const [page, setPage] = useState(1)
 
-  const { data, isLoading, isError } = useGetOrders(page)
+  const { data, isLoading, error } = useGetOrders(page)
+
+  if (error) {
+    return (
+      <Alert severity="error" sx={{ marginBottom: 2 }}>
+        There was an error fetching orders.
+      </Alert>
+    )
+  }
 
   return (
     <>
@@ -21,7 +29,7 @@ export const Orders: React.FC = () => {
 
       <OrderPagination page={page} setPage={setPage} />
 
-      {isLoading ? (
+      {isLoading || !data ? (
         <Box
           sx={{
             display: "flex",

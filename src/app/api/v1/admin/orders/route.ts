@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
     sort: "date_created:desc",
     page,
     limit: PAGE_LIMIT.toString(),
+    is_deleted: false,
   })
   const res = await fetch(
     `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders?${qs}`,
