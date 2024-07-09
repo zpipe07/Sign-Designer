@@ -6,18 +6,47 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
 import Typography from "@mui/material/Typography"
+import { NativeSelect } from "@mui/material"
 
 import { OrderDetails } from "@/src/components/Orders/OrderDetails"
+import {
+  OrderStatus,
+  orderStatuses,
+} from "@/src/app/api/v1/admin/orders/[orderId]/route"
+import { useUpdateOrder } from "@/src/hooks/mutations/useUpdateOrder"
 
 export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
   const [open, setOpen] = useState(false)
+
+  const { mutate } = useUpdateOrder()
+
+  const handleStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    mutate({
+      orderId: order.id,
+      updateData: { status: e.target.value as OrderStatus },
+    })
+  }
 
   return (
     <>
       <TableRow key={order.id}>
         <TableCell>{order.id}</TableCell>
         <TableCell>{order.date_created}</TableCell>
-        <TableCell>{order.status}</TableCell>
+        <TableCell>
+          <NativeSelect
+            defaultValue={order.status}
+            variant="filled"
+            onChange={handleStatusChange}
+          >
+            {orderStatuses.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </NativeSelect>
+        </TableCell>
         <TableCell>
           <IconButton
             aria-label="expand row"
