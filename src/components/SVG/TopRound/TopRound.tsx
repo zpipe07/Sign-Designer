@@ -3,7 +3,7 @@ import makerjs from "makerjs"
 import { SvgProps } from "@/src/components/SVG/types"
 import { calculateAngle } from "@/src/components/SVG/Ellipse"
 
-const TEXT_OFFSET = 2.75
+const TEXT_OFFSET = 3.0
 
 export function generateTopRoundModel({
   height,
@@ -22,10 +22,10 @@ export function generateTopRoundModel({
 }: SvgProps) {
   const outerRect = new makerjs.models.RoundRectangle(
     width,
-    (height * 2) / 3,
+    (height * 3) / 4,
     0.25,
   )
-  const arcRadius = width / 3
+  const arcRadius = width / 2.25
   const outerEllipse = new makerjs.models.Ellipse(
     arcRadius,
     height / 2,
@@ -33,10 +33,7 @@ export function generateTopRoundModel({
   const measureOuterEllipse =
     makerjs.measure.modelExtents(outerEllipse)
 
-  makerjs.model.move(outerEllipse, [
-    width / 2,
-    measureOuterEllipse.height / 2,
-  ])
+  makerjs.model.move(outerEllipse, [width / 2, height / 2])
 
   const outer = makerjs.model.combineUnion(outerRect, outerEllipse)
   const chain = makerjs.model.findSingleChain(outer)
@@ -143,7 +140,7 @@ export function generateTopRoundModel({
         true,
       )
       makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET + 0.25])
+      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
       text.models[`textModel${index}`] = {
         ...textModel,
       }
@@ -189,7 +186,6 @@ export function generateTopRoundModel({
 
   if (textLines.length > 0) {
     makerjs.model.center(text)
-    makerjs.model.moveRelative(text, [0, -0.75])
   }
 
   const topRound = {
