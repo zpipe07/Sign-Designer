@@ -1,6 +1,6 @@
 export type Color = "black" | "white" | "tan" | "green" | "yellow"
 
-export type ColorCombo = `${Color}/${Color}`
+export type ColorCombo = `${Color}::${Color}`
 
 export type Decoration = "foo" | "bar"
 

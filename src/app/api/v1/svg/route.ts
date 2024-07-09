@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
   const font = opentype.loadSync(`${fontUrl}`)
   const { height, width } = SIZE_CONFIG_MAP[size]
-  const [foregroundColor, backgroundColor] = color.split("/") as [
+  const [foregroundColor, backgroundColor] = color.split("::") as [
     Color,
     Color,
   ]

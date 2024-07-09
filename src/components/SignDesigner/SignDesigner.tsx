@@ -31,7 +31,7 @@ export const SignDesigner: React.FC<Props> = ({
     defaultValues: {
       shape: shape || "rectangle",
       size: size || "large",
-      color: color || "black/white",
+      color: color || "black::white",
       fontFamily: fontFamily || "BreeSerif",
       mountingStyle: mountingStyle || "wall mounted",
       edgeStyle: "square",
