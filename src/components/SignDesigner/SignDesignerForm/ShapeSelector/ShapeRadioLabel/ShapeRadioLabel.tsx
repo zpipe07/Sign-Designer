@@ -21,11 +21,12 @@ export const ShapeRadioLabel: React.FC<Props> = ({
     {
       shape,
       size,
-      // @ts-ignore
-      color: "#D6DAD2/#D6DAD2",
+      color: "#D6DAD2::#D6DAD2",
       textLines: [],
       fontFamily: "BreeSerif",
       mountingStyle: "hanging",
+      edgeStyle: "square",
+      borderWidth: "0",
     },
     "shape",
   )

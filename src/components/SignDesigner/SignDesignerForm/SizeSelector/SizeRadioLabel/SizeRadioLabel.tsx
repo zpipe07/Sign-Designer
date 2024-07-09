@@ -28,11 +28,12 @@ export const SizeRadioLabel: React.FC<Props> = ({
     {
       shape: selectedShape,
       size,
-      // @ts-ignore
-      color: "#D6DAD2/#D6DAD2",
+      color: "#D6DAD2::#D6DAD2",
       textLines: [],
       fontFamily: "BreeSerif",
       mountingStyle: "hanging",
+      edgeStyle: "square",
+      borderWidth: "0",
     },
     "size",
   )
