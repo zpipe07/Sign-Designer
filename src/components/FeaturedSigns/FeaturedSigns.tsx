@@ -12,7 +12,7 @@ const FEATURED_SIGNS: {
     inputs: {
       shape: "rectangle",
       size: "large",
-      color: "black/white",
+      color: "black::white",
       fontFamily: "BreeSerif",
       mountingStyle: "hanging",
       edgeStyle: "square",
@@ -29,7 +29,7 @@ const FEATURED_SIGNS: {
     inputs: {
       shape: "ellipse",
       size: "large",
-      color: "green/tan",
+      color: "green::tan",
       fontFamily: "BreeSerif",
       mountingStyle: "hanging",
       edgeStyle: "square",
@@ -46,7 +46,7 @@ const FEATURED_SIGNS: {
     inputs: {
       shape: "bread",
       size: "large",
-      color: "black/yellow",
+      color: "black::yellow",
       fontFamily: "Arbutus",
       mountingStyle: "hanging",
       edgeStyle: "square",

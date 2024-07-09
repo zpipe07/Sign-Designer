@@ -11,7 +11,7 @@ export default function Layout({
     defaultValues: {
       shape: "rectangle",
       size: "extra large",
-      color: "black/white",
+      color: "black::white",
       textLines: [
         // { value: "123" },
         { value: "" },

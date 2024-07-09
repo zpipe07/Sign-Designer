@@ -43,7 +43,7 @@ export const ColorSelector: React.FC = () => {
         {data.productOptionsMap.color.values.map(
           ({ label, entityId }) => {
             const [foregroundColor, backgroundColor] =
-              label.split("/")
+              label.split("::")
 
             return (
               <FormControlLabel

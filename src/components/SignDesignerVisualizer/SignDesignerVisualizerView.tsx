@@ -40,7 +40,7 @@ export const SignDesignerVisualizerView: React.FC<Props> = ({
       return !!value
     })
   const [foregroundColor, backgroundColor] =
-    (inputs?.color?.split("/") as Color[]) || []
+    (inputs?.color?.split("::") as Color[]) || []
   const { width, height } = SIZE_CONFIG_MAP[inputs.size as Size]
   // SIZE_CONFIG_MAP[inputs.size as Size][
   //   inputs.orientation as Orientation

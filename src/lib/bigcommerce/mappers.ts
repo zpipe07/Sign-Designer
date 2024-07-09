@@ -518,7 +518,7 @@ export const formDataToCartItem = async (
   // @ts-ignore
   const { height, width } = SIZE_CONFIG_MAP[data.size as Size]
   const [foregroundColor, backgroundColor] = data.color.split(
-    "/",
+    "::",
   ) as Color[]
   const { svg: svgPathOnly } = generateModel({
     height,
@@ -549,7 +549,7 @@ export const formDataToCartItem = async (
     actualDimensions: false,
     showShadow: true,
   })
-  const fileId = randomUUID()
+  const fileId = `${data.color}-${randomUUID()}`
 
   // generate SVG file
   const pathOnlyFileName = `${fileId}--path-only.svg`
