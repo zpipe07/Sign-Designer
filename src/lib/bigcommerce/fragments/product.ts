@@ -6,7 +6,7 @@ const productOptionFragment = /* GraphQL */ `
     isRequired
     ... on MultipleChoiceOption {
       displayStyle
-      values(first: 5) {
+      values(first: 10) {
         edges {
           node {
             entityId
