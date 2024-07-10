@@ -1,6 +1,6 @@
 import queryString from "query-string"
 
-export const PAGE_LIMIT = 5
+import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 export async function GET() {
   const qs = queryString.stringify({

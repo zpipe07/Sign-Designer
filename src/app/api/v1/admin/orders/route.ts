@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server"
 import queryString from "query-string"
 
-import { PAGE_LIMIT } from "@/src/app/api/v1/admin/orders/count/route"
+import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
