@@ -1,6 +1,6 @@
 import queryString from "query-string"
 
-export const PAGE_LIMIT = 10
+export const PAGE_LIMIT = 5
 
 export async function GET() {
   const qs = queryString.stringify({

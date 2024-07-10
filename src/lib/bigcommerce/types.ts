@@ -609,48 +609,48 @@ export type BigCommerceProductOption = {
   }
 }
 
-// export type BigCommerceOrder = {
-//   id: number
-//   entityId: number
-//   sku: string
-//   upc: string | null
-//   name: string
-//   brand: {
-//     name: string
-//   } | null
-//   plainTextDescription: string
-//   description: string
-//   availabilityV2: {
-//     status: string
-//     description: string
-//   }
-//   defaultImage: {
-//     url: string
-//     altText: string
-//   }
-//   images: {
-//     edges: Array<{
-//       node: {
-//         url: string
-//         altText: string
-//       }
-//     }>
-//   }
-//   seo: BigCommerceSEO
-//   path: string
-//   prices: {
-//     price: BigCommerceMoney
-//     priceRange: {
-//       min: BigCommerceMoney
-//       max: BigCommerceMoney
-//     }
-//   }
-//   createdAt: {
-//     utc: Date
-//   }
-//   variants: Connection<BigCommerceProductVariant>
-//   productOptions: Connection<BigCommerceProductOption>
-// }
+export type BigCommerceProduct = {
+  id: number
+  entityId: number
+  sku: string
+  upc: string | null
+  name: string
+  brand: {
+    name: string
+  } | null
+  plainTextDescription: string
+  description: string
+  availabilityV2: {
+    status: string
+    description: string
+  }
+  defaultImage: {
+    url: string
+    altText: string
+  }
+  images: {
+    edges: Array<{
+      node: {
+        url: string
+        altText: string
+      }
+    }>
+  }
+  seo: BigCommerceSEO
+  path: string
+  prices: {
+    price: BigCommerceMoney
+    priceRange: {
+      min: BigCommerceMoney
+      max: BigCommerceMoney
+    }
+  }
+  createdAt: {
+    utc: Date
+  }
+  variants: Connection<BigCommerceProductVariant>
+  productOptions: Connection<BigCommerceProductOption>
+}
 
 export type LineItem = {
   merchandiseId: string
@@ -760,7 +760,7 @@ export type BigCommerceOrder = {
   custom_status: string
 }
 
-export type BigCommerceProduct = {
+export type BigCommerceOrderProduct = {
   id: number
   order_id: number
   product_id: number

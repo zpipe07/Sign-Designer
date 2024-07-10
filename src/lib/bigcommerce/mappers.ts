@@ -643,6 +643,17 @@ export const formDataToCartItem = async (
         //   // @ts-ignore
         //   optionValueEntityId: formToCartMap.color[data.color],
         // },
+        {
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "color")
+              ?.id as string,
+            10,
+          ),
+          optionValueEntityId: product.options
+            .find(({ name }) => name === "color")
+            ?.values.find(({ label }) => label === data.color)
+            ?.entityId!,
+        },
       ],
       textFields: [
         // {
