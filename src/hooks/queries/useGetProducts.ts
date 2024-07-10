@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { BigCommerceProduct } from "@/src/lib/bigcommerce/types"
+import { BigCommerceOrderProduct } from "@/src/lib/bigcommerce/types"
 
 export const useGetProducts = (orderId: number) => {
   const getProducts = async () => {
@@ -12,7 +12,7 @@ export const useGetProducts = (orderId: number) => {
     return data
   }
 
-  return useQuery<{ products: BigCommerceProduct[] }>({
+  return useQuery<{ products: BigCommerceOrderProduct[] }>({
     queryKey: [`/api/v1/admin/orders/${orderId}/products`],
     queryFn: getProducts,
   })
