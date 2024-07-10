@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query"
 
-import { OrderStatus } from "@/src/app/api/v1/admin/orders/[orderId]/route"
+import { OrderStatus } from "@/src/lib/bigcommerce/types"
 
 export type UpdateOrderData = { status: OrderStatus }
 
