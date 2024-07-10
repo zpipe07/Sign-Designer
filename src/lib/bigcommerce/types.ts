@@ -835,3 +835,20 @@ export type BigCommerceOrderProduct = {
   configurable_fields: any[]
   discounted_total_inc_tax: string
 }
+
+export type OrderStatus =
+  | "Incomplete"
+  | "Pending"
+  | "Shipped"
+  | "Partially Shipped"
+  | "Refunded"
+  | "Cancelled"
+  | "Declined"
+  | "Awaiting Payment"
+  | "Awaiting Pickup"
+  | "Awaiting Shipment"
+  | "Completed"
+  | "Awaiting Fulfillment"
+  | "Manual Verification Required"
+  | "Disputed"
+  | "Partially Refunded"

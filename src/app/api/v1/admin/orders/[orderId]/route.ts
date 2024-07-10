@@ -1,21 +1,5 @@
 import { UpdateOrderData } from "@/src/hooks/mutations/useUpdateOrder"
-
-export type OrderStatus =
-  | "Incomplete"
-  | "Pending"
-  | "Shipped"
-  | "Partially Shipped"
-  | "Refunded"
-  | "Cancelled"
-  | "Declined"
-  | "Awaiting Payment"
-  | "Awaiting Pickup"
-  | "Awaiting Shipment"
-  | "Completed"
-  | "Awaiting Fulfillment"
-  | "Manual Verification Required"
-  | "Disputed"
-  | "Partially Refunded"
+import { OrderStatus } from "@/src/lib/bigcommerce/types"
 
 const STATUS_ID_MAP: { [key in OrderStatus]: number } = {
   Incomplete: 0,
@@ -35,24 +19,6 @@ const STATUS_ID_MAP: { [key in OrderStatus]: number } = {
   "Partially Refunded": 14,
 }
 
-export const orderStatuses: OrderStatus[] = [
-  "Incomplete",
-  "Pending",
-  "Shipped",
-  "Partially Shipped",
-  "Refunded",
-  "Cancelled",
-  "Declined",
-  "Awaiting Payment",
-  "Awaiting Pickup",
-  "Awaiting Shipment",
-  "Completed",
-  "Awaiting Fulfillment",
-  "Manual Verification Required",
-  "Disputed",
-  "Partially Refunded",
-]
-
 export async function PUT(
   request: Request,
   { params }: { params: { orderId: string } },
@@ -68,7 +34,7 @@ export async function PUT(
         "X-Auth-Token": process.env.ORDERS_ACCESS_TOKEN!,
       },
       body: JSON.stringify({
-        status_id: STATUS_ID_MAP[body.status],
+        status_id: STATUS_ID_MAP[body.status as OrderStatus],
       }),
     },
   )
