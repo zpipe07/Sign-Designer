@@ -446,3 +446,5 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     maxLinesOfText: 3,
   },
 }
+
+export const PAGE_LIMIT = 5

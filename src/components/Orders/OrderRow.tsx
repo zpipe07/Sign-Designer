@@ -5,11 +5,14 @@ import TableRow from "@mui/material/TableRow"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
-import Typography from "@mui/material/Typography"
 
 import { OrderDetails } from "@/src/components/Orders/OrderDetails"
+import { OrderStatusSelect } from "@/src/components/Orders/OrderStatusSelect"
+import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 
-export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
+export const OrderRow: React.FC<{ order: BigCommerceOrder }> = ({
+  order,
+}) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -17,7 +20,9 @@ export const OrderRow: React.FC<{ order: any }> = ({ order }) => {
       <TableRow key={order.id}>
         <TableCell>{order.id}</TableCell>
         <TableCell>{order.date_created}</TableCell>
-        <TableCell>{order.status}</TableCell>
+        <TableCell>
+          <OrderStatusSelect order={order} />
+        </TableCell>
         <TableCell>
           <IconButton
             aria-label="expand row"

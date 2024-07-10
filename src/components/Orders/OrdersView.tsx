@@ -6,9 +6,10 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 
 import { OrderRow } from "@/src/components/Orders/OrderRow"
+import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 
 type Props = {
-  orders: any[]
+  orders: BigCommerceOrder[]
 }
 
 export const OrdersView: React.FC<Props> = ({ orders }) => {
