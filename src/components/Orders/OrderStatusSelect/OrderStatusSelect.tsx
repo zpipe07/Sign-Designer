@@ -1,11 +1,11 @@
 import { Select, SelectChangeEvent } from "@mui/material"
 
-import {
-  OrderStatus,
-  orderStatuses,
-} from "@/src/app/api/v1/admin/orders/[orderId]/route"
 import { useUpdateOrder } from "@/src/hooks/mutations/useUpdateOrder"
-import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
+import {
+  BigCommerceOrder,
+  OrderStatus,
+} from "@/src/lib/bigcommerce/types"
+import { orderStatuses } from "@/src/lib/bigcommerce/constants"
 
 export const OrderStatusSelect: React.FC<{
   order: BigCommerceOrder

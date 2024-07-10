@@ -43,8 +43,6 @@ export const Orders: React.FC = () => {
       ) : (
         <OrdersView orders={data.orders} />
       )}
-
-      <OrderPagination page={page} setPage={setPage} />
     </>
   )
 }
