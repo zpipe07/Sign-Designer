@@ -59,12 +59,19 @@ export function generateRectangleModel({
     models: {},
   }
 
+  let index = -1
+
   for (const textLine of textLines) {
-    const index = Object.keys(text.models).length
+    index += 1
     const { value, fontSize } = textLine
+
+    if (!value) {
+      continue
+    }
 
     if (index === 0) {
       // primary
+
       const textModel = new makerjs.models.Text(
         font,
         value,

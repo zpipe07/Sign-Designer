@@ -16,11 +16,10 @@ export const SignVisualizer: React.FC = () => {
   const { width, height, maxLinesOfText } =
     SIZE_CONFIG_MAP[inputs.size!]
 
-  const textLines = inputs?.textLines
-    ?.slice(0, maxLinesOfText)
-    .filter(({ value }) => {
-      return !!value
-    })
+  const textLines = inputs.textLines?.slice(0, maxLinesOfText)
+  // .filter(({ value }) => {
+  //   return !!value
+  // })
 
   const {
     data: svg,

@@ -83,12 +83,6 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     }
   }
 
-  console.log({
-    createCartError,
-    addCartItemError,
-    updateCartItemError,
-  })
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
