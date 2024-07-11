@@ -2,6 +2,10 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import { calculateAngle } from "@/src/components/SVG/Ellipse"
+import {
+  BOLT_OFFSET,
+  BOLT_RADIUS,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const TEXT_OFFSET = 3.0
 
@@ -194,13 +198,81 @@ export function generateTopRoundModel({
     makerjs.model.center(text)
   }
 
-  const topRound = {
+  let bolts = {}
+  if (inputs.mountingStyle === "wall mounted") {
+    const outerMeasure = makerjs.measure.modelExtents(outerModel)
+
+    const boltTopLeft = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
+    )
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / 4 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        (inputs.edgeStyle === "round" ? 0.1 : 0),
+    ])
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / 4 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        (inputs.edgeStyle === "round" ? 0.1 : 0),
+    ])
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomRight), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    bolts = {
+      models: {
+        boltTopLeft,
+        boltTopRight,
+        boltBottomLeft,
+        boltBottomRight,
+      },
+    }
+  }
+
+  const topRoundModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outerModel, layer: "outer" },
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
+      bolts: { ...bolts, layer: "bolts" },
     },
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
@@ -264,7 +336,7 @@ export function generateTopRoundModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(topRound, options)
+  const svg = makerjs.exporter.toSVG(topRoundModel, options)
 
   return { svg }
 }

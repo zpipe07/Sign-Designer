@@ -245,7 +245,7 @@ export function generateEllipseModel({
     }
   }
 
-  const tabletFaceMount = {
+  const ellipseModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
@@ -317,7 +317,7 @@ export function generateEllipseModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+  const svg = makerjs.exporter.toSVG(ellipseModel, options)
 
   return { svg }
 }

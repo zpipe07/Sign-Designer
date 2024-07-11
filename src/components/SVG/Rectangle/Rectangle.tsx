@@ -127,7 +127,7 @@ export function generateRectangleModel({
     makerjs.model.center(text)
   }
 
-  let bolts = {} as any
+  let bolts = {}
   if (inputs.mountingStyle === "wall mounted") {
     const outerMeasure = makerjs.measure.modelExtents(outer)
 
@@ -207,7 +207,7 @@ export function generateRectangleModel({
     }
   }
 
-  const tabletFaceMount = {
+  const rectangleModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
@@ -278,7 +278,7 @@ export function generateRectangleModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+  const svg = makerjs.exporter.toSVG(rectangleModel, options)
 
   return { svg }
 }
