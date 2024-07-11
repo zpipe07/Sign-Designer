@@ -119,7 +119,7 @@ export function generateRectangleModel({
     }
   }
 
-  if (textLines.length > 0) {
+  if (Object.keys(text.models).length > 0) {
     makerjs.model.center(text)
   }
 
