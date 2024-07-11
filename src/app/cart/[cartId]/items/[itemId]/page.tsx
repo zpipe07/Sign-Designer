@@ -73,9 +73,9 @@ export default function Page() {
 
   return (
     <>
-      <Typography variant="h3" component="h1" marginBottom={2}>
+      {/* <Typography variant="h3" component="h1" marginBottom={2}>
         Edit item
-      </Typography>
+      </Typography> */}
 
       <SignDesigner isEditing />
     </>
