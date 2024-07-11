@@ -29,8 +29,20 @@ export const useRemoveFromCart = () => {
     const updatedLines = data?.cart?.lines.filter(
       ({ id }) => id !== lineItemId,
     )
+    const updatedAmount = updatedLines?.reduce(
+      (acc, { cost, quantity }) =>
+        acc + parseFloat(cost.totalAmount.amount) * quantity,
+      0,
+    )
+    const updatedCost = {
+      ...data?.cart?.cost,
+      subtotalAmount: {
+        ...data?.cart?.cost?.subtotalAmount,
+        amount: updatedAmount?.toString(),
+      },
+    }
     const updatedCart = updatedLines?.length
-      ? { ...data?.cart, lines: updatedLines }
+      ? { ...data?.cart, lines: updatedLines, cost: updatedCost }
       : undefined
 
     queryClient.setQueryData(["/api/v1/cart"], {
