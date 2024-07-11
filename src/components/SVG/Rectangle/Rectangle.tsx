@@ -125,43 +125,67 @@ export function generateRectangleModel({
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
-    const boltOffset = 1
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+    const boltOffset = 0.25
     const boldRadius = 0.125
-    const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
-    makerjs.model.move(makerjs.model.center(boltTop), [
-      0,
-      height / 2 - boltOffset,
-    ])
-    const boltBottom = new makerjs.models.Ellipse(
+
+    const boltTopLeft = new makerjs.models.Ellipse(
       boldRadius,
       boldRadius,
     )
-    makerjs.model.move(makerjs.model.center(boltBottom), [
-      0,
-      height / -2 + boltOffset,
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        boltOffset,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        boltOffset,
     ])
-    const boltLeft = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltLeft), [
-      (-1 * width) / 2 + boltOffset,
-      0,
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        boltOffset,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        boltOffset,
     ])
-    const boltRight = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltRight), [
-      width / 2 - boltOffset,
-      0,
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        boltOffset,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        boltOffset,
     ])
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomRight), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        boltOffset,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        boltOffset,
+    ])
+
     bolts = {
       models: {
-        boltTop,
-        boltBottom,
-        boltLeft,
-        boltRight,
+        boltTopLeft,
+        boltTopRight,
+        boltBottomLeft,
+        boltBottomRight,
       },
     }
   }
