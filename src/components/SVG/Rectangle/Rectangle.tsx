@@ -3,6 +3,10 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import {
+  BOLT_RADIUS,
+  BOLT_OFFSET,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const TEXT_OFFSET = 3
 
@@ -123,45 +127,67 @@ export function generateRectangleModel({
     makerjs.model.center(text)
   }
 
-  let bolts = {} as any
+  let bolts = {}
   if (inputs.mountingStyle === "wall mounted") {
-    const boltOffset = 1
-    const boldRadius = 0.125
-    const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
-    makerjs.model.move(makerjs.model.center(boltTop), [
-      0,
-      height / 2 - boltOffset,
-    ])
-    const boltBottom = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+
+    const boltTopLeft = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
     )
-    makerjs.model.move(makerjs.model.center(boltBottom), [
-      0,
-      height / -2 + boltOffset,
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
     ])
-    const boltLeft = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltLeft), [
-      (-1 * width) / 2 + boltOffset,
-      0,
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
     ])
-    const boltRight = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltRight), [
-      width / 2 - boltOffset,
-      0,
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
     ])
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomRight), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
     bolts = {
       models: {
-        boltTop,
-        boltBottom,
-        boltLeft,
-        boltRight,
+        boltTopLeft,
+        boltTopRight,
+        boltBottomLeft,
+        boltBottomRight,
       },
     }
   }
@@ -181,7 +207,7 @@ export function generateRectangleModel({
     }
   }
 
-  const tabletFaceMount = {
+  const rectangleModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
@@ -252,7 +278,7 @@ export function generateRectangleModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+  const svg = makerjs.exporter.toSVG(rectangleModel, options)
 
   return { svg }
 }

@@ -2,6 +2,10 @@ import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import { calculateAngle } from "@/src/components/SVG/Ellipse"
+import {
+  BOLT_OFFSET,
+  BOLT_RADIUS,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const TEXT_OFFSET = 3.125
 
@@ -163,43 +167,65 @@ export function generateBreadModel({
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
-    const boltOffset = 1
-    const boldRadius = 0.125
-    const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
-    makerjs.model.move(makerjs.model.center(boltTop), [
-      0,
-      height / 2 - boltOffset,
-    ])
-    const boltBottom = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+
+    const boltTopLeft = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
     )
-    makerjs.model.move(makerjs.model.center(boltBottom), [
-      0,
-      height / -2 + boltOffset,
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / 3 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
     ])
-    const boltLeft = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltLeft), [
-      width / -2 + boltOffset,
-      0,
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(boltTopRight, [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / 3 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
     ])
-    const boltRight = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
-    makerjs.model.move(makerjs.model.center(boltRight), [
-      width / 2 - boltOffset,
-      0,
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(boltBottomRight, [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
     ])
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(boltBottomLeft, [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
     bolts = {
       models: {
-        boltTop,
-        boltBottom,
-        boltLeft,
-        boltRight,
+        boltTopLeft,
+        boltTopRight,
+        boltBottomRight,
+        boltBottomLeft,
       },
     }
   }
@@ -219,7 +245,7 @@ export function generateBreadModel({
     }
   }
 
-  const modelToExport = {
+  const breadModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
@@ -290,7 +316,7 @@ export function generateBreadModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(modelToExport, options)
+  const svg = makerjs.exporter.toSVG(breadModel, options)
 
   return { svg }
 }

@@ -1,6 +1,10 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import {
+  BOLT_OFFSET,
+  BOLT_RADIUS,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 export function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
@@ -190,37 +194,47 @@ export function generateEllipseModel({
 
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
-    const boltOffset = 1
-    const boldRadius = 0.125
-    const boltTop = new makerjs.models.Ellipse(boldRadius, boldRadius)
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+
+    const boltTop = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
+    )
     makerjs.model.move(makerjs.model.center(boltTop), [
       0,
-      height / 2 - boltOffset,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
     ])
-    const boltBottom = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
+
+    const boltBottom = makerjs.model.clone(boltTop)
     makerjs.model.move(makerjs.model.center(boltBottom), [
       0,
-      (-1 * height) / 2 + boltOffset,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
     ])
-    const boltLeft = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
+
+    const boltLeft = makerjs.model.clone(boltTop)
     makerjs.model.move(makerjs.model.center(boltLeft), [
-      (-1 * width) / 2 + boltOffset,
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
       0,
     ])
-    const boltRight = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
-    )
+
+    const boltRight = makerjs.model.clone(boltTop)
     makerjs.model.move(makerjs.model.center(boltRight), [
-      width / 2 - boltOffset,
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
       0,
     ])
+
     bolts = {
       models: {
         boltTop,
@@ -231,32 +245,7 @@ export function generateEllipseModel({
     }
   }
 
-  // let doesTextFit
-
-  // if (validate) {
-  //   const offset = 1.0
-
-  //   if (borderInner) {
-  //     const borderInnerMeasure =
-  //       makerjs.measure.modelExtents(borderInner)
-  //     const textMeasure = makerjs.measure.modelExtents(text)
-
-  //     doesTextFit =
-  //       borderInnerMeasure.width - offset > textMeasure.width &&
-  //       borderInnerMeasure.height - offset > textMeasure.height
-  //   } else {
-  //     const outerMeasure = makerjs.measure.modelExtents(outer)
-  //     const textMeasure = makerjs.measure.modelExtents(text)
-
-  //     doesTextFit =
-  //       outerMeasure.width - offset > textMeasure.width &&
-  //       outerMeasure.height - offset > textMeasure.height
-  //   }
-  // }
-
-  console.log({ doesTextFit })
-
-  const tabletFaceMount = {
+  const ellipseModel = {
     models: {
       edge: { ...edge, layer: "edge" },
       outer: { ...outer, layer: "outer" },
@@ -328,7 +317,7 @@ export function generateEllipseModel({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
-  const svg = makerjs.exporter.toSVG(tabletFaceMount, options)
+  const svg = makerjs.exporter.toSVG(ellipseModel, options)
 
   return { svg }
 }

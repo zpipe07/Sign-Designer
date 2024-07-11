@@ -1,6 +1,10 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import {
+  BOLT_OFFSET,
+  BOLT_RADIUS,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const TEXT_OFFSET = 3
 
@@ -191,6 +195,75 @@ export function generateDonnellyModel({
     makerjs.model.center(text)
   }
 
+  let bolts = {}
+  if (inputs.mountingStyle === "wall mounted") {
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+
+    const boltTopLeft = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
+    )
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET +
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+    ])
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+    ])
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET +
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomRight), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    bolts = {
+      models: {
+        boltTopLeft,
+        boltTopRight,
+        boltBottomLeft,
+        boltBottomRight,
+      },
+    }
+  }
+
   const topRound = {
     models: {
       edge: { ...edge, layer: "edge" },
@@ -198,6 +271,7 @@ export function generateDonnellyModel({
       borderOuter: { ...borderOuter, layer: "borderOuter" },
       borderInner: { ...borderInner, layer: "borderInner" },
       text: { ...text, layer: "text" },
+      bolts: { ...bolts, layer: "bolts" },
     },
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
