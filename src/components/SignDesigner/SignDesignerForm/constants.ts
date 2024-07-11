@@ -448,3 +448,5 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
 }
 
 export const PAGE_LIMIT = 5
+export const BOLT_OFFSET = 0.25
+export const BOLT_RADIUS = 0.125

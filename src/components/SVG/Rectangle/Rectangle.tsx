@@ -3,6 +3,10 @@
 import makerjs from "makerjs"
 
 import { SvgProps } from "@/src/components/SVG/types"
+import {
+  BOLT_RADIUS,
+  BOLT_OFFSET,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 const TEXT_OFFSET = 3
 
@@ -126,22 +130,20 @@ export function generateRectangleModel({
   let bolts = {} as any
   if (inputs.mountingStyle === "wall mounted") {
     const outerMeasure = makerjs.measure.modelExtents(outer)
-    const boltOffset = 0.25
-    const boldRadius = 0.125
 
     const boltTopLeft = new makerjs.models.Ellipse(
-      boldRadius,
-      boldRadius,
+      BOLT_RADIUS,
+      BOLT_RADIUS,
     )
     makerjs.model.move(makerjs.model.center(boltTopLeft), [
       outerMeasure.width / -2 +
         outerBorderWidth +
         innerBorderWidth +
-        boltOffset,
+        BOLT_OFFSET,
       outerMeasure.height / 2 -
         outerBorderWidth -
         innerBorderWidth -
-        boltOffset,
+        BOLT_OFFSET,
     ])
 
     const boltTopRight = makerjs.model.clone(boltTopLeft)
@@ -149,11 +151,11 @@ export function generateRectangleModel({
       outerMeasure.width / 2 -
         outerBorderWidth -
         innerBorderWidth -
-        boltOffset,
+        BOLT_OFFSET,
       outerMeasure.height / 2 -
         outerBorderWidth -
         innerBorderWidth -
-        boltOffset,
+        BOLT_OFFSET,
     ])
 
     const boltBottomLeft = makerjs.model.clone(boltTopLeft)
@@ -161,11 +163,11 @@ export function generateRectangleModel({
       outerMeasure.width / -2 +
         outerBorderWidth +
         innerBorderWidth +
-        boltOffset,
+        BOLT_OFFSET,
       outerMeasure.height / -2 +
         outerBorderWidth +
         innerBorderWidth +
-        boltOffset,
+        BOLT_OFFSET,
     ])
 
     const boltBottomRight = makerjs.model.clone(boltTopLeft)
@@ -173,11 +175,11 @@ export function generateRectangleModel({
       outerMeasure.width / 2 -
         outerBorderWidth -
         innerBorderWidth -
-        boltOffset,
+        BOLT_OFFSET,
       outerMeasure.height / -2 +
         outerBorderWidth +
         innerBorderWidth +
-        boltOffset,
+        BOLT_OFFSET,
     ])
 
     bolts = {
