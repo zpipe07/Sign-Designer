@@ -9,6 +9,7 @@ import TableCell from "@mui/material/TableCell"
 import TableBody from "@mui/material/TableBody"
 import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
+import EditIcon from "@mui/icons-material/Edit"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
@@ -80,12 +81,12 @@ export const CartView: React.FC<Props> = ({ cart }) => {
                     </Typography> */}
                   </TableCell>
                   <TableCell>
-                    <Button
+                    {/* <Button
                       component={Link}
                       href={`/cart/${cart.id}/items/${id}`}
                     >
-                      Edit
-                    </Button>
+                      <EditIcon />
+                    </Button> */}
 
                     <RemoveFromCartButton
                       cartId={cart.id}

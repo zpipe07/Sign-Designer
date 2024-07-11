@@ -1,19 +1,18 @@
 "use client"
 
+import Link from "next/link"
 import { useFormContext } from "react-hook-form"
 import { useParams, useRouter } from "next/navigation"
 import Grid from "@mui/material/Grid"
 import { LoadingButton } from "@mui/lab"
-import { Alert, Box, Divider, useTheme } from "@mui/material"
+import { Alert, Box, Button, Divider, useTheme } from "@mui/material"
 
 import {
   ColorSelector,
-  DecorationSelector,
   FontSelector,
   ShapeSelector,
   SizeSelector,
   TextInput,
-  OrientationSelector,
 } from "@/src/components/SignDesigner/SignDesignerForm"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useCreateCart } from "@/src/hooks/mutations/useCreateCart"
@@ -24,6 +23,7 @@ import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { EdgeSelector } from "@/src/components/EdgeSelector"
 import { BorderSelector } from "@/src/components/SignDesigner/SignDesignerForm/BorderSelector"
+import { DEFAULT_FORM_VALUES } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   isEditing?: boolean
@@ -36,11 +36,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
 
   const params = useParams<{ cartId: string; itemId: string }>()
 
-  const { handleSubmit } = useFormContext<DesignFormInputs>()
-
-  const onSuccess = () => {
-    router.push("/cart")
-  }
+  const { handleSubmit, reset } = useFormContext<DesignFormInputs>()
 
   const { data: cartData } = useGetCart()
 
@@ -48,19 +44,22 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     mutate: createCart,
     isPending: isPendingCreateCart,
     error: createCartError,
-  } = useCreateCart({ onSuccess })
+    isSuccess: createCartSuccess,
+  } = useCreateCart()
 
   const {
     mutate: addCartItem,
     isPending: isPendingAddCartItem,
     error: addCartItemError,
-  } = useAddCartItem({ onSuccess })
+    isSuccess: addCartItemSuccess,
+  } = useAddCartItem()
 
   const {
     mutate: updateCartItem,
     isPending: isPendingUpdateCartItem,
     error: updateCartItemError,
-  } = useUpdateCartItem({ onSuccess })
+    isSuccess: updateCartItemSuccess,
+  } = useUpdateCartItem()
 
   const onSubmit = (data: DesignFormInputs) => {
     if (isEditing) {
@@ -82,6 +81,14 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
       createCart(data)
     }
   }
+
+  const handleResetForm = () => {
+    reset(DEFAULT_FORM_VALUES)
+    window.scrollTo(0, 0)
+  }
+
+  const isSuccess =
+    createCartSuccess || addCartItemSuccess || updateCartItemSuccess
 
   return (
     <>
@@ -144,32 +151,81 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
           </Grid>
 
           <Grid item xs={12}>
-            {/* <Button variant="outlined" size="large">
-            Save
-          </Button> */}
+            {isSuccess ? (
+              <Box>
+                <Alert severity="success" sx={{ marginBottom: 1 }}>
+                  Item added to cart
+                </Alert>
 
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <PriceDisplay />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <Button
+                    component={Link}
+                    href="/cart"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    sx={{
+                      flexGrow: 1,
+                      margin: 1,
+                    }}
+                  >
+                    View Cart
+                  </Button>
 
-              <LoadingButton
-                variant="contained"
-                size="large"
-                type="submit"
-                color="secondary"
-                loading={
-                  isPendingCreateCart ||
-                  isPendingAddCartItem ||
-                  isPendingUpdateCartItem
-                }
-                sx={{ marginLeft: 2 }}
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    onClick={handleResetForm}
+                    sx={{
+                      flexGrow: 1,
+                      margin: 1,
+                    }}
+                  >
+                    Create a new sign
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  flexWrap: "wrap",
+                }}
               >
-                {isEditing ? "Update" : "Add to cart"}
-              </LoadingButton>
-            </Box>
+                <PriceDisplay />
+
+                <LoadingButton
+                  variant="contained"
+                  size="large"
+                  type="submit"
+                  color="secondary"
+                  loading={
+                    isPendingCreateCart ||
+                    isPendingAddCartItem ||
+                    isPendingUpdateCartItem
+                  }
+                  sx={{
+                    marginLeft: "auto",
+
+                    [theme.breakpoints.up("md")]: {
+                      width: "100%",
+                      marginTop: 1,
+                    },
+                  }}
+                >
+                  {isEditing ? "Update" : "Add to cart"}
+                </LoadingButton>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </form>
