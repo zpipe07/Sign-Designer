@@ -11,6 +11,7 @@ import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 import { SignVisualizer } from "@/src/components/SignVisualizer"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { AddressBarUpdater } from "@/src/components/SignDesigner/AddressBarUpdater"
+import { DEFAULT_FORM_VALUES } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 type Props = {
   isEditing?: boolean
@@ -29,20 +30,17 @@ export const SignDesigner: React.FC<Props> = ({
 
   const formMethods = useForm<DesignFormInputs>({
     defaultValues: {
-      shape: shape || "rectangle",
-      size: size || "large",
-      color: color || "black::white",
-      fontFamily: fontFamily || "BreeSerif",
-      mountingStyle: mountingStyle || "wall mounted",
-      edgeStyle: "square",
-      borderWidth: "0.2",
+      shape: shape || DEFAULT_FORM_VALUES.shape,
+      size: size || DEFAULT_FORM_VALUES.size,
+      color: color || DEFAULT_FORM_VALUES.color,
+      fontFamily: fontFamily || DEFAULT_FORM_VALUES.fontFamily,
+      mountingStyle:
+        mountingStyle || DEFAULT_FORM_VALUES.mountingStyle,
+      edgeStyle: DEFAULT_FORM_VALUES.edgeStyle,
+      borderWidth: DEFAULT_FORM_VALUES.borderWidth,
       textLines: textLines?.length
         ? textLines
-        : [
-            { value: "", fontSize: "2" },
-            { value: "", fontSize: "2" },
-            { value: "", fontSize: "2" },
-          ],
+        : DEFAULT_FORM_VALUES.textLines,
     },
   })
 

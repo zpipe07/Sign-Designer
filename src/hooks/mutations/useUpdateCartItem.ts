@@ -6,7 +6,7 @@ import {
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
-export const useUpdateCartItem = (options: UseMutationOptions) => {
+export const useUpdateCartItem = (options?: UseMutationOptions) => {
   const queryClient = useQueryClient()
 
   const updateCartItem = async ({
@@ -33,7 +33,7 @@ export const useUpdateCartItem = (options: UseMutationOptions) => {
   const onSuccess = (data: any) => {
     queryClient.setQueryData(["/api/v1/cart"], { cart: data })
 
-    if (options.onSuccess) {
+    if (options?.onSuccess) {
       options.onSuccess(data, undefined, undefined)
     }
   }

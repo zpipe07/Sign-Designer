@@ -2,6 +2,7 @@ import {
   SizeConfig,
   FontFamily,
   Size,
+  DesignFormInputs,
 } from "@/src/components/SignDesigner/types"
 
 export const designOptions: any = {
@@ -445,6 +446,21 @@ export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
     height: 9.5,
     maxLinesOfText: 3,
   },
+}
+
+export const DEFAULT_FORM_VALUES: DesignFormInputs = {
+  shape: "rectangle",
+  size: "large",
+  color: "black::white",
+  fontFamily: "BreeSerif",
+  mountingStyle: "wall mounted",
+  edgeStyle: "square",
+  borderWidth: "0.2",
+  textLines: [
+    { value: "", fontSize: "2" },
+    { value: "", fontSize: "2" },
+    { value: "", fontSize: "2" },
+  ],
 }
 
 export const PAGE_LIMIT = 5
