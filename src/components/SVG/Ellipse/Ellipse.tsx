@@ -67,24 +67,21 @@ export function generateEllipseModel({
 
   for (const textLine of textLines) {
     index += 1
-    const { value, fontSize } = textLine
+    const { value, fontSize, offset } = textLine
 
     if (!value) {
       continue
     }
 
+    const textModel = new makerjs.models.Text(
+      font,
+      value,
+      parseFloat(fontSize),
+    )
+
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       makerjs.model.center(textModel)
-
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -96,17 +93,10 @@ export function generateEllipseModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width / 2)
       const topArc = new makerjs.paths.Arc(
@@ -129,9 +119,6 @@ export function generateEllipseModel({
         0,
         TEXT_OFFSET - measure.height / 2,
       ])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -144,16 +131,11 @@ export function generateEllipseModel({
         }
       }
 
-      continue
+      // continue
     }
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width / 2)
       const bottomArc = new makerjs.paths.Arc(
@@ -175,9 +157,6 @@ export function generateEllipseModel({
         0,
         -TEXT_OFFSET + measure.height / 2,
       ])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -189,13 +168,15 @@ export function generateEllipseModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
-  }
 
-  if (Object.keys(text.models).length > 0) {
-    makerjs.model.center(text)
+    if (parseFloat(offset)) {
+      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+    }
+
+    text.models[`textModel${index}`] = {
+      ...textModel,
+    }
   }
 
   let bolts = {} as any
