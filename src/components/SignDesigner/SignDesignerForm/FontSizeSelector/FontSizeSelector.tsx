@@ -53,16 +53,6 @@ export const FontSizeSelector: React.FC<Props> = ({ index }) => {
             const input = ref.current?.querySelector("input")
             input?.stepUp()
             setValue(`textLines.${index}.fontSize`, input?.value)
-            // const currentFontSize = parseFloat(
-            //   getValues().textLines[index].fontSize,
-            // )
-            // const rounded =
-            //   Math.round(currentFontSize * 100) / 100
-            // console.log({ currentFontSize, rounded })
-            // setValue(
-            //   `textLines.${index}.fontSize`,
-            //   (rounded + FONT_SIZE_STEP).toString(10),
-            // )
           }}
         >
           <ArrowDropUpIcon />
@@ -74,16 +64,6 @@ export const FontSizeSelector: React.FC<Props> = ({ index }) => {
             const input = ref.current?.querySelector("input")
             input?.stepDown()
             setValue(`textLines.${index}.fontSize`, input?.value)
-            // const currentFontSize = parseFloat(
-            //   getValues().textLines[index].fontSize,
-            // )
-            // const rounded =
-            //   Math.round(currentFontSize * 100) / 100
-            // console.log({ currentFontSize, rounded })
-            // setValue(
-            //   `textLines.${index}.fontSize`,
-            //   (rounded - FONT_SIZE_STEP).toString(10),
-            // )
           }}
         >
           <ArrowDropDownIcon />

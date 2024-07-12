@@ -9,7 +9,7 @@ import theme from "@/src/theme"
 
 export const SignVisualizer: React.FC = () => {
   const inputs = useWatch<DesignFormInputs>()
-  console.log({ inputs })
+
   const ref = useRef<HTMLDivElement>(null)
 
   const [doesTextFit, setDoesTextFit] = useState<boolean>(true)

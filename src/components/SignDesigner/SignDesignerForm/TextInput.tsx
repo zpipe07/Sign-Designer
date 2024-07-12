@@ -1,6 +1,5 @@
 "use client"
 
-import { useRef } from "react"
 import {
   useFieldArray,
   useFormContext,
@@ -9,25 +8,14 @@ import {
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { Size } from "@/src/components/SignDesigner/types"
-import { Button, ButtonGroup } from "@mui/material"
 import { FontSizeSelector } from "@/src/components/SignDesigner/SignDesignerForm/FontSizeSelector"
 import { OffsetSelector } from "@/src/components/SignDesigner/SignDesignerForm/OffsetSelector"
 
-const FONT_SIZE_STEP = 0.2
-const OFFSET_STEP = 0.25
-
 export const TextInput: React.FC = () => {
-  const fontSizeRef = useRef<HTMLDivElement>(null)
-
-  const offsetRef = useRef<HTMLDivElement>(null)
-
-  const { register, setValue, getValues } = useFormContext()
-  // console.log("getValues", getValues())
+  const { register } = useFormContext()
 
   const size: Size = useWatch({ name: "size" })
 
@@ -59,10 +47,6 @@ export const TextInput: React.FC = () => {
             label = "Lower"
           }
 
-          const { ref, ...rest } = register(
-            `textLines.${index}.fontSize`,
-          )
-
           return (
             <Grid
               item
@@ -81,79 +65,6 @@ export const TextInput: React.FC = () => {
                   {...register(`textLines.${index}.value`)}
                 />
 
-                {/* <Box
-                  sx={{
-                    position: "relative",
-                    flex: "0 0 100px",
-                    marginRight: 1,
-                  }}
-                  ref={fontSizeRef}
-                >
-                  <TextField
-                    type="number"
-                    label="Size"
-                    inputProps={{
-                      step: "0.2",
-                      min: "1",
-                      max: "5",
-                      tabIndex: index === 1 ? 1 : 2,
-                    }}
-                    {...register(`textLines.${index}.fontSize`)}
-                  />
-                  <ButtonGroup
-                    orientation="vertical"
-                    size="small"
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      right: 0,
-                      transform: "translateY(-50%)",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{ borderRadius: 1 }}
-                      onClick={() => {
-                        console.log({ fontSizeRef })
-                        const input =
-                          fontSizeRef.current?.querySelector("input")
-                        console.log({ input })
-                        input?.stepUp()
-                        // const currentFontSize = parseFloat(
-                        //   getValues().textLines[index].fontSize,
-                        // )
-                        // const rounded =
-                        //   Math.round(currentFontSize * 100) / 100
-                        // console.log({ currentFontSize, rounded })
-                        // setValue(
-                        //   `textLines.${index}.fontSize`,
-                        //   (rounded + FONT_SIZE_STEP).toString(10),
-                        // )
-                      }}
-                    >
-                      <ArrowDropUpIcon />
-                    </Button>
-                    <Button
-                      variant="contained"
-                      sx={{ borderRadius: 1 }}
-                      onClick={() => {
-                        fontSizeRef.current?.stepDown()
-                        // const currentFontSize = parseFloat(
-                        //   getValues().textLines[index].fontSize,
-                        // )
-                        // const rounded =
-                        //   Math.round(currentFontSize * 100) / 100
-                        // console.log({ currentFontSize, rounded })
-                        // setValue(
-                        //   `textLines.${index}.fontSize`,
-                        //   (rounded - FONT_SIZE_STEP).toString(10),
-                        // )
-                      }}
-                    >
-                      <ArrowDropDownIcon />
-                    </Button>
-                  </ButtonGroup>
-                </Box> */}
                 <FontSizeSelector index={index} />
 
                 <OffsetSelector index={index} />

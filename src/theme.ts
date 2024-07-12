@@ -50,13 +50,6 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
-    MuiButtonGroup: {
-      styleOverrides: {
-        root: {
-          borderRadius: 10,
-        },
-      },
-    },
   },
 }
 const theme = createTheme(themeOptions)
