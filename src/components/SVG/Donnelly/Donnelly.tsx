@@ -108,22 +108,26 @@ export function generateDonnellyModel({
 
   for (const textLine of textLines) {
     index += 1
-    const { value, fontSize } = textLine
+    const { value, fontSize, offset } = textLine
 
     if (!value) {
       continue
     }
 
+    const textModel = new makerjs.models.Text(
+      font,
+      value,
+      parseFloat(fontSize),
+    )
+
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
-
       if (inputs.size === "extra small vertical") {
         const textMeasure = makerjs.measure.modelExtents(textModel)
+        text.models[`textModel${index}`] = {
+          models: {},
+        }
+
         value.split("").forEach((char, i) => {
           const charModel = new makerjs.models.Text(
             font,
@@ -138,16 +142,23 @@ export function generateDonnellyModel({
             0,
           ])
 
-          text.models[`textModel${index}${i}`] = {
+          text.models[`textModel${index}`].models[`charModel${i}`] = {
             ...charModel,
           }
         })
+
+        makerjs.model.center(text.models[`textModel${index}`])
+
+        if (parseFloat(offset)) {
+          makerjs.model.moveRelative(
+            text.models[`textModel${index}`],
+            [parseFloat(offset), 0],
+          )
+        }
+
+        continue
       } else {
         makerjs.model.center(textModel)
-
-        text.models[`textModel${index}`] = {
-          ...textModel,
-        }
       }
 
       if (validate) {
@@ -160,23 +171,12 @@ export function generateDonnellyModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
-
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -188,22 +188,12 @@ export function generateDonnellyModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -215,13 +205,15 @@ export function generateDonnellyModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
-  }
 
-  if (Object.keys(text.models).length > 0) {
-    makerjs.model.center(text)
+    if (parseFloat(offset)) {
+      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+    }
+
+    text.models[`textModel${index}`] = {
+      ...textModel,
+    }
   }
 
   let bolts = {}
