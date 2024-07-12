@@ -23,6 +23,12 @@ export function generateDonnellyModel({
   showShadow,
   validate,
 }: SvgProps) {
+  if (inputs.size === "extra small vertical") {
+    const temp = height
+    height = width
+    width = temp
+  }
+
   const leftEllipse = new makerjs.models.Ellipse(
     height / 3,
     height / 2,
@@ -115,10 +121,33 @@ export function generateDonnellyModel({
         value,
         parseFloat(fontSize),
       )
-      makerjs.model.center(textModel)
 
-      text.models[`textModel${index}`] = {
-        ...textModel,
+      if (inputs.size === "extra small vertical") {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        value.split("").forEach((char, i) => {
+          const charModel = new makerjs.models.Text(
+            font,
+            char,
+            parseFloat(fontSize),
+          )
+
+          makerjs.model.rotate(charModel, -90)
+          makerjs.model.center(charModel)
+          makerjs.model.moveRelative(charModel, [
+            textMeasure.height * -i * 1.125,
+            0,
+          ])
+
+          text.models[`textModel${index}${i}`] = {
+            ...charModel,
+          }
+        })
+      } else {
+        makerjs.model.center(textModel)
+
+        text.models[`textModel${index}`] = {
+          ...textModel,
+        }
       }
 
       if (validate) {
@@ -273,6 +302,13 @@ export function generateDonnellyModel({
       text: { ...text, layer: "text" },
       bolts: { ...bolts, layer: "bolts" },
     },
+  }
+  if (inputs.size === "extra small vertical") {
+    makerjs.model.rotate(topRound, 90)
+
+    const temp = height
+    height = width
+    width = temp
   }
   const strokeOnlyStyle = { fill: "none", stroke: "black" }
   const options: makerjs.exporter.ISVGRenderOptions = {

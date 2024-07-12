@@ -5,6 +5,7 @@ import { Alert, Box, Skeleton, debounce } from "@mui/material"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import theme from "@/src/theme"
 
 export const SignVisualizer: React.FC = () => {
   const inputs = useWatch<DesignFormInputs>()
@@ -15,6 +16,8 @@ export const SignVisualizer: React.FC = () => {
 
   const { width, height, maxLinesOfText } =
     SIZE_CONFIG_MAP[inputs.size!]
+
+  const isVertical = inputs.size?.includes("vertical")
 
   const textLines = inputs.textLines?.slice(0, maxLinesOfText)
   // .filter(({ value }) => {
@@ -67,13 +70,44 @@ export const SignVisualizer: React.FC = () => {
             width: "100%",
             height: 0,
             paddingTop: `${(height / width) * 100}%`,
+
+            ...(isVertical && {
+              paddingTop: 0,
+              height: 300,
+              width: 70,
+              margin: "0 auto",
+
+              [theme.breakpoints.up("sm")]: {
+                width: 93.33,
+                height: 400,
+              },
+
+              [theme.breakpoints.up("md")]: {
+                width: 116.66,
+                height: 500,
+              },
+            }),
           }}
         />
       ) : (
         <>
           <Box
             dangerouslySetInnerHTML={{ __html: svg }}
-            sx={{ fontSize: 0 }}
+            sx={{
+              fontSize: 0,
+
+              svg: {
+                maxHeight: 300,
+
+                [theme.breakpoints.up("sm")]: {
+                  maxHeight: 400,
+                },
+
+                [theme.breakpoints.up("md")]: {
+                  maxHeight: 500,
+                },
+              },
+            }}
             ref={ref}
           />
 
