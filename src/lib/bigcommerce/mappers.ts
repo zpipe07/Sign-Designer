@@ -520,31 +520,24 @@ export const formDataToCartItem = async (
   const [foregroundColor, backgroundColor] = data.color.split(
     "::",
   ) as Color[]
-  const { svg: svgPathOnly } = generateModel({
+  const modelInputs = {
     height,
     width,
-    outerBorderWidth: 0.25,
-    innerBorderWidth: 0.15,
+    outerBorderWidth: 0.3,
+    innerBorderWidth: parseFloat(data.borderWidth),
     textLines,
     foregroundColor,
     backgroundColor,
     inputs: data,
     font,
-    // productOptionsMap,
+  }
+  const { svg: svgPathOnly } = generateModel({
+    ...modelInputs,
     strokeOnly: true,
     actualDimensions: true,
   })
   const { svg: svgWithFill } = generateModel({
-    height,
-    width,
-    outerBorderWidth: 0.25,
-    innerBorderWidth: 0.15,
-    textLines,
-    foregroundColor,
-    backgroundColor,
-    inputs: data,
-    font,
-    // productOptionsMap,
+    ...modelInputs,
     strokeOnly: false,
     actualDimensions: false,
     showShadow: true,
