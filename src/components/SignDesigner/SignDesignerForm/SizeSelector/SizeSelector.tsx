@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { useFormContext, useWatch } from "react-hook-form"
 import { useTheme } from "@mui/material"
 import FormControl from "@mui/material/FormControl"
@@ -16,13 +17,35 @@ import { SizeRadioLabel } from "@/src/components/SignDesigner/SignDesignerForm/S
 export const SizeSelector: React.FC = () => {
   const theme = useTheme()
 
-  const { register } = useFormContext()
+  const { register, setValue } = useFormContext()
 
   const selectedSize = useWatch({ name: "size" })
 
   const selectedShape = useWatch({ name: "shape" })
 
   const { data, isLoading } = useGetProduct(112)
+
+  const purchasableVariants = data?.product.variants.filter(
+    ({ availableForSale }) => availableForSale,
+  )
+  const selectedVariants = purchasableVariants?.filter(
+    ({ selectedOptions }) => {
+      return selectedOptions.some(({ name, value }) => {
+        return name === "shape" && value === selectedShape
+      })
+    },
+  )
+  const options = selectedVariants?.map(
+    ({ selectedOptions }) =>
+      selectedOptions.find(({ name }) => name === "size")?.value,
+  )
+
+  useEffect(() => {
+    if (!options?.includes(selectedSize)) {
+      setValue("size", options?.[0])
+    }
+  }, [options, selectedSize, setValue])
+
   if (isLoading) {
     return <LinearProgress />
   }
@@ -30,21 +53,6 @@ export const SizeSelector: React.FC = () => {
   if (!data) {
     return null
   }
-
-  const purchasableVariants = data.product.variants.filter(
-    ({ availableForSale }) => availableForSale,
-  )
-  const selectedVariants = purchasableVariants.filter(
-    ({ selectedOptions }) => {
-      return selectedOptions.some(({ name, value }) => {
-        return name === "shape" && value === selectedShape
-      })
-    },
-  )
-  const options = selectedVariants.map(
-    ({ selectedOptions }) =>
-      selectedOptions.find(({ name }) => name === "size")?.value,
-  )
 
   return (
     <FormControl fullWidth>
@@ -62,7 +70,7 @@ export const SizeSelector: React.FC = () => {
           },
         }}
       >
-        {options.map((value) => {
+        {options?.map((value) => {
           return (
             <FormControlLabel
               value={value}
