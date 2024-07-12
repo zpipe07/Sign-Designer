@@ -372,18 +372,13 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
   "extra small": {
-    //   horizontal: {
-    //     width: 1500,
-    //     height: 300,
-    //     maxLinesOfText: 1,
-    //   },
-    //   vertical: {
-    //     width: 300,
-    //     height: 1500,
-    //     maxLinesOfText: 1,
-    //   },
     width: 15,
     height: 3.5,
+    maxLinesOfText: 1,
+  },
+  "extra small vertical": {
+    width: 3.5,
+    height: 15,
     maxLinesOfText: 1,
   },
   small: {

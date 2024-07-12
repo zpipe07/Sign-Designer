@@ -75,18 +75,38 @@ export function generateRectangleModel({
 
     if (index === 0) {
       // primary
-
       const textModel = new makerjs.models.Text(
         font,
         value,
         parseFloat(fontSize),
       )
 
-      makerjs.model.center(textModel)
+      if (inputs.size === "extra small vertical") {
+        const textMeasure = makerjs.measure.modelExtents(textModel)
+        value.split("").forEach((char, i) => {
+          const charModel = new makerjs.models.Text(
+            font,
+            char,
+            parseFloat(fontSize),
+          )
+          makerjs.model.center(charModel)
+          makerjs.model.moveRelative(charModel, [
+            0,
+            textMeasure.height * -i * 1.125,
+          ])
 
-      text.models[`textModel${index}`] = {
-        ...textModel,
+          text.models[`textModel${index}${i}`] = {
+            ...charModel,
+          }
+        })
+      } else {
+        makerjs.model.center(textModel)
+
+        text.models[`textModel${index}`] = {
+          ...textModel,
+        }
       }
+
       continue
     }
 
@@ -122,6 +142,7 @@ export function generateRectangleModel({
       continue
     }
   }
+  // }
 
   if (Object.keys(text.models).length > 0) {
     makerjs.model.center(text)

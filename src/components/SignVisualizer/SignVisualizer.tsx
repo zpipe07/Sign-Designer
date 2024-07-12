@@ -73,7 +73,13 @@ export const SignVisualizer: React.FC = () => {
         <>
           <Box
             dangerouslySetInnerHTML={{ __html: svg }}
-            sx={{ fontSize: 0 }}
+            sx={{
+              fontSize: 0,
+
+              svg: {
+                maxHeight: 500,
+              },
+            }}
             ref={ref}
           />
 

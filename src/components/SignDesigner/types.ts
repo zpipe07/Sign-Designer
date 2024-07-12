@@ -47,6 +47,7 @@ export type Shape =
 
 export type Size =
   | "extra small"
+  | "extra small vertical"
   | "small"
   | "medium"
   | "large"
