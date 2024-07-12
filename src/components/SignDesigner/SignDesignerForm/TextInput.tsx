@@ -16,6 +16,7 @@ import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/
 import { Size } from "@/src/components/SignDesigner/types"
 import { Button, ButtonGroup } from "@mui/material"
 import { FontSizeSelector } from "@/src/components/SignDesigner/SignDesignerForm/FontSizeSelector"
+import { OffsetSelector } from "@/src/components/SignDesigner/SignDesignerForm/OffsetSelector"
 
 const FONT_SIZE_STEP = 0.2
 const OFFSET_STEP = 0.25
@@ -155,72 +156,7 @@ export const TextInput: React.FC = () => {
                 </Box> */}
                 <FontSizeSelector index={index} />
 
-                <Box
-                  sx={{
-                    position: "relative",
-                    flex: "0 0 100px",
-                  }}
-                >
-                  <TextField
-                    type="number"
-                    label="Offset"
-                    inputProps={{
-                      step: "0.25",
-                      tabIndex: index === 1 ? 1 : 2,
-                    }}
-                    sx={{ flex: "0 0 100px" }}
-                    {...register(`textLines.${index}.offset`)}
-                    ref={offsetRef}
-                  />
-
-                  <ButtonGroup
-                    orientation="vertical"
-                    size="small"
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      right: 0,
-                      transform: "translateY(-50%)",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{ borderRadius: 1 }}
-                      onClick={() => {
-                        offsetRef.current?.stepUp()
-                        // const currentOffset = parseFloat(
-                        //   getValues().textLines[index].offset,
-                        // )
-                        // const rounded =
-                        //   Math.round(currentOffset * 10) / 10
-                        // setValue(
-                        //   `textLines.${index}.offset`,
-                        //   (rounded + OFFSET_STEP).toString(10),
-                        // )
-                      }}
-                    >
-                      <ArrowDropUpIcon />
-                    </Button>
-                    <Button
-                      variant="contained"
-                      sx={{ borderRadius: 1 }}
-                      onClick={() => {
-                        offsetRef.current?.stepDown()
-                        // const currentOffset = parseFloat(
-                        //   getValues().textLines[index].offset,
-                        // )
-                        // const rounded =
-                        //   Math.round(currentOffset * 10) / 10
-                        // setValue(
-                        //   `textLines.${index}.offset`,
-                        //   (rounded - OFFSET_STEP).toString(10),
-                        // )
-                      }}
-                    >
-                      <ArrowDropDownIcon />
-                    </Button>
-                  </ButtonGroup>
-                </Box>
+                <OffsetSelector index={index} />
               </Box>
             </Grid>
           )
