@@ -83,14 +83,10 @@ export const TextInput: React.FC = () => {
                 <TextField
                   type="number"
                   label="Offset"
-                  inputProps={
-                    {
-                      // step: "0.2",
-                      // min: "1",
-                      // max: "5",
-                      // tabIndex: index === 1 ? 1 : 2,
-                    }
-                  }
+                  inputProps={{
+                    step: "0.25",
+                    tabIndex: index === 1 ? 1 : 2,
+                  }}
                   sx={{ flex: "0 0 100px" }}
                   {...register(`textLines.${index}.offset`)}
                 />

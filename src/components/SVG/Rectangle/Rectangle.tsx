@@ -67,22 +67,32 @@ export function generateRectangleModel({
 
   for (const textLine of textLines) {
     index += 1
-    const { value, fontSize } = textLine
+    const { value, fontSize, offset } = textLine
 
     if (!value) {
       continue
     }
 
+    const textModel = new makerjs.models.Text(
+      font,
+      value,
+      parseFloat(fontSize),
+    )
+
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
+      // const textModel = new makerjs.models.Text(
+      //   font,
+      //   value,
+      //   parseFloat(fontSize),
+      // )
 
       if (inputs.size === "extra small vertical") {
         const textMeasure = makerjs.measure.modelExtents(textModel)
+        text.models[`textModel${index}`] = {
+          models: {},
+        }
+
         value.split("").forEach((char, i) => {
           const charModel = new makerjs.models.Text(
             font,
@@ -95,58 +105,93 @@ export function generateRectangleModel({
             textMeasure.height * -i * 1.125,
           ])
 
-          text.models[`textModel${index}${i}`] = {
+          text.models[`textModel${index}`].models[`charModel${i}`] = {
             ...charModel,
           }
         })
+
+        makerjs.model.center(text.models[`textModel${index}`])
+
+        if (parseFloat(offset)) {
+          makerjs.model.moveRelative(
+            text.models[`textModel${index}`],
+            [0, parseFloat(offset)],
+          )
+        }
+
+        continue
       } else {
         makerjs.model.center(textModel)
 
-        text.models[`textModel${index}`] = {
-          ...textModel,
-        }
+        // if (parseFloat(offset)) {
+        //   makerjs.model.moveRelative(textModel, [
+        //     0,
+        //     parseFloat(offset),
+        //   ])
+        // }
+
+        // text.models[`textModel${index}`] = {
+        //   ...textModel,
+        // }
       }
 
-      continue
+      // continue
     }
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
+      // const textModel = new makerjs.models.Text(
+      //   font,
+      //   value,
+      //   parseFloat(fontSize),
+      // )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
-      continue
+      // if (parseFloat(offset)) {
+      //   makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+      // }
+
+      // text.models[`textModel${index}`] = {
+      //   ...textModel,
+      // }
+      // continue
     }
 
     if (index === 2) {
       // family name
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
+      // const textModel = new makerjs.models.Text(
+      //   font,
+      //   value,
+      //   parseFloat(fontSize),
+      // )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
 
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
-      continue
+      // if (parseFloat(offset)) {
+      //   makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+      // }
+
+      // text.models[`textModel${index}`] = {
+      //   ...textModel,
+      // }
+      // continue
+    }
+
+    if (parseFloat(offset)) {
+      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+    }
+
+    text.models[`textModel${index}`] = {
+      ...textModel,
     }
   }
+
   // }
 
-  if (Object.keys(text.models).length > 0) {
-    makerjs.model.center(text)
-  }
+  // if (Object.keys(text.models).length > 0) {
+  //   makerjs.model.center(text)
+  // }
 
   let bolts = {}
   if (inputs.mountingStyle === "wall mounted") {
