@@ -448,9 +448,9 @@ export const DEFAULT_FORM_VALUES: DesignFormInputs = {
   edgeStyle: "square",
   borderWidth: "0.2",
   textLines: [
-    { value: "", fontSize: "2" },
-    { value: "", fontSize: "2" },
-    { value: "", fontSize: "2" },
+    { value: "", fontSize: "2", offset: "0" },
+    { value: "", fontSize: "2", offset: "0" },
+    { value: "", fontSize: "2", offset: "0" },
   ],
 }
 

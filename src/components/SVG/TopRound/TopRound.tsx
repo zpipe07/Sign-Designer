@@ -34,8 +34,6 @@ export function generateTopRoundModel({
     arcRadius,
     height / 2,
   )
-  const measureOuterEllipse =
-    makerjs.measure.modelExtents(outerEllipse)
 
   makerjs.model.move(outerEllipse, [width / 2, height / 2])
 
@@ -92,24 +90,21 @@ export function generateTopRoundModel({
 
   for (const textLine of textLines) {
     index += 1
-    const { value, fontSize } = textLine
+    const { value, fontSize, offset } = textLine
 
     if (!value) {
       continue
     }
 
+    const textModel = new makerjs.models.Text(
+      font,
+      value,
+      parseFloat(fontSize),
+    )
+
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       makerjs.model.center(textModel)
-
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -121,17 +116,10 @@ export function generateTopRoundModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, arcRadius)
       const topArc = new makerjs.paths.Arc(
@@ -151,9 +139,6 @@ export function generateTopRoundModel({
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -162,22 +147,12 @@ export function generateTopRoundModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
 
       if (validate) {
         const textMeasure = makerjs.measure.modelExtents(textModel)
@@ -189,13 +164,15 @@ export function generateTopRoundModel({
           doesTextFit = false
         }
       }
-
-      continue
     }
-  }
 
-  if (Object.keys(text.models).length > 0) {
-    makerjs.model.center(text)
+    if (parseFloat(offset)) {
+      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+    }
+
+    text.models[`textModel${index}`] = {
+      ...textModel,
+    }
   }
 
   let bolts = {}

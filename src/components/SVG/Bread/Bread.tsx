@@ -92,33 +92,28 @@ export function generateBreadModel({
 
   for (const textLine of textLines) {
     index += 1
-    const { value, fontSize } = textLine
+    const { value, fontSize, offset } = textLine
 
     if (!value) {
       continue
     }
 
+    const textModel = new makerjs.models.Text(
+      font,
+      value,
+      parseFloat(fontSize),
+    )
+
     if (index === 0) {
       // primary
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       makerjs.model.center(textModel)
       text.models[`textModel${index}`] = {
         ...textModel,
       }
-      continue
     }
 
     if (index === 1) {
       // upper
-      const textModel = new makerjs.models.Text(
-        font,
-        value,
-        parseFloat(fontSize),
-      )
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width)
       const topArc = new makerjs.paths.Arc(
@@ -141,28 +136,21 @@ export function generateBreadModel({
       text.models[`textModel${index}`] = {
         ...textModel,
       }
-      continue
     }
 
     if (index === 2) {
       // lower
-      const textModel = new makerjs.models.Text(
-        font,
-        textLine.value,
-        parseFloat(fontSize),
-      )
-
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-      text.models[`textModel${index}`] = {
-        ...textModel,
-      }
-      continue
     }
-  }
 
-  if (Object.keys(text.models).length > 0) {
-    makerjs.model.center(text)
+    if (parseFloat(offset)) {
+      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+    }
+
+    text.models[`textModel${index}`] = {
+      ...textModel,
+    }
   }
 
   let bolts = {} as any
