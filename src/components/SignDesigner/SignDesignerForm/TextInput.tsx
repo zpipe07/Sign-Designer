@@ -8,6 +8,8 @@ import {
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
+import SwapVertIcon from "@mui/icons-material/SwapVert"
+import { IconButton } from "@mui/material"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { Size } from "@/src/components/SignDesigner/types"
@@ -21,13 +23,39 @@ export const TextInput: React.FC = () => {
 
   const maxLinesOfText = SIZE_CONFIG_MAP[size].maxLinesOfText
 
-  const { fields } = useFieldArray({
+  const { fields, swap } = useFieldArray({
     name: "textLines",
   })
 
   return (
-    <>
-      <Grid container spacing={2}>
+    <Box position="relative">
+      <IconButton
+        size="small"
+        sx={{
+          position: "absolute",
+          top: 98,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+        onClick={() => swap(0, 1)}
+      >
+        <SwapVertIcon />
+      </IconButton>
+
+      <IconButton
+        size="small"
+        sx={{
+          position: "absolute",
+          top: 194,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+        onClick={() => swap(0, 2)}
+      >
+        <SwapVertIcon />
+      </IconButton>
+
+      <Grid container spacing={5}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {
           let placeholder
           let label
@@ -73,6 +101,6 @@ export const TextInput: React.FC = () => {
           )
         })}
       </Grid>
-    </>
+    </Box>
   )
 }
