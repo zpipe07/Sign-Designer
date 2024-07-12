@@ -130,8 +130,6 @@ export function generateEllipseModel({
           doesTextFit = false
         }
       }
-
-      // continue
     }
 
     if (index === 2) {

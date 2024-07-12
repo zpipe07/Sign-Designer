@@ -2,7 +2,6 @@ import { Box, Grid, Typography } from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
-import { off } from "process"
 
 const FEATURED_SIGNS: {
   title: string

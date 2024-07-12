@@ -24,7 +24,6 @@ export async function GET(request: NextRequest) {
     borderWidth,
     validate,
   } = parseSearchParams(searchParams)
-  console.log({ textLines })
 
   if (!shape) {
     return new NextResponse(

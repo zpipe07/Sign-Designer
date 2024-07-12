@@ -81,12 +81,6 @@ export function generateRectangleModel({
 
     if (index === 0) {
       // primary
-      // const textModel = new makerjs.models.Text(
-      //   font,
-      //   value,
-      //   parseFloat(fontSize),
-      // )
-
       if (inputs.size === "extra small vertical") {
         const textMeasure = makerjs.measure.modelExtents(textModel)
         text.models[`textModel${index}`] = {
@@ -122,60 +116,19 @@ export function generateRectangleModel({
         continue
       } else {
         makerjs.model.center(textModel)
-
-        // if (parseFloat(offset)) {
-        //   makerjs.model.moveRelative(textModel, [
-        //     0,
-        //     parseFloat(offset),
-        //   ])
-        // }
-
-        // text.models[`textModel${index}`] = {
-        //   ...textModel,
-        // }
       }
-
-      // continue
     }
 
     if (index === 1) {
       // upper
-      // const textModel = new makerjs.models.Text(
-      //   font,
-      //   value,
-      //   parseFloat(fontSize),
-      // )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
-
-      // if (parseFloat(offset)) {
-      //   makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
-      // }
-
-      // text.models[`textModel${index}`] = {
-      //   ...textModel,
-      // }
-      // continue
     }
 
     if (index === 2) {
-      // family name
-      // const textModel = new makerjs.models.Text(
-      //   font,
-      //   value,
-      //   parseFloat(fontSize),
-      // )
+      // lower
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-
-      // if (parseFloat(offset)) {
-      //   makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
-      // }
-
-      // text.models[`textModel${index}`] = {
-      //   ...textModel,
-      // }
-      // continue
     }
 
     if (parseFloat(offset)) {
@@ -186,12 +139,6 @@ export function generateRectangleModel({
       ...textModel,
     }
   }
-
-  // }
-
-  // if (Object.keys(text.models).length > 0) {
-  //   makerjs.model.center(text)
-  // }
 
   let bolts = {}
   if (inputs.mountingStyle === "wall mounted") {
