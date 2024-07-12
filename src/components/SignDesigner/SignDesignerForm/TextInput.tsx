@@ -11,6 +11,8 @@ import Box from "@mui/material/Box"
 
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { Size } from "@/src/components/SignDesigner/types"
+import { FontSizeSelector } from "@/src/components/SignDesigner/SignDesignerForm/FontSizeSelector"
+import { OffsetSelector } from "@/src/components/SignDesigner/SignDesignerForm/OffsetSelector"
 
 export const TextInput: React.FC = () => {
   const { register } = useFormContext()
@@ -49,16 +51,12 @@ export const TextInput: React.FC = () => {
             <Grid
               item
               xs={12}
-              // sm={4}
-              // md={6}
-              // lg={4}
               order={index === 1 ? 1 : 2}
               key={field.id}
             >
               <Box display="flex">
                 <TextField
                   fullWidth
-                  // placeholder={placeholder}
                   label={label}
                   sx={{ flexGrow: 1, marginRight: 1 }}
                   inputProps={{
@@ -67,29 +65,9 @@ export const TextInput: React.FC = () => {
                   {...register(`textLines.${index}.value`)}
                 />
 
-                <TextField
-                  type="number"
-                  label="Size"
-                  inputProps={{
-                    step: "0.2",
-                    min: "1",
-                    max: "5",
-                    tabIndex: index === 1 ? 1 : 2,
-                  }}
-                  sx={{ flex: "0 0 100px", marginRight: 1 }}
-                  {...register(`textLines.${index}.fontSize`)}
-                />
+                <FontSizeSelector index={index} />
 
-                <TextField
-                  type="number"
-                  label="Offset"
-                  inputProps={{
-                    step: "0.25",
-                    tabIndex: index === 1 ? 1 : 2,
-                  }}
-                  sx={{ flex: "0 0 100px" }}
-                  {...register(`textLines.${index}.offset`)}
-                />
+                <OffsetSelector index={index} />
               </Box>
             </Grid>
           )
