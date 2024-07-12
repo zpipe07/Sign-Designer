@@ -23,7 +23,7 @@ export const ShapeRadioLabel: React.FC<Props> = ({
       size,
       color: "#D6DAD2::#D6DAD2",
       textLines: [],
-      fontFamily: "BreeSerif",
+      fontFamily: "Rampart",
       mountingStyle: "hanging",
       edgeStyle: "square",
       borderWidth: "0",

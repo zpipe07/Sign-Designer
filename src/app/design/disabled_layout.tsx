@@ -21,7 +21,7 @@ export default function Layout({
         { value: "" },
       ],
       // orientation: "horizontal",
-      fontFamily: "BreeSerif",
+      fontFamily: "Rampart",
       // decoration: "",
       mountingStyle: "wall mounted",
     },
