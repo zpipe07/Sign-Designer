@@ -66,6 +66,7 @@ export const TextInput: React.FC = () => {
                   }}
                   {...register(`textLines.${index}.value`)}
                 />
+
                 <TextField
                   type="number"
                   label="Size"
@@ -75,8 +76,23 @@ export const TextInput: React.FC = () => {
                     max: "5",
                     tabIndex: index === 1 ? 1 : 2,
                   }}
-                  sx={{ flex: "0 0 100px" }}
+                  sx={{ flex: "0 0 100px", marginRight: 1 }}
                   {...register(`textLines.${index}.fontSize`)}
+                />
+
+                <TextField
+                  type="number"
+                  label="Offset"
+                  inputProps={
+                    {
+                      // step: "0.2",
+                      // min: "1",
+                      // max: "5",
+                      // tabIndex: index === 1 ? 1 : 2,
+                    }
+                  }
+                  sx={{ flex: "0 0 100px" }}
+                  {...register(`textLines.${index}.offset`)}
                 />
               </Box>
             </Grid>
