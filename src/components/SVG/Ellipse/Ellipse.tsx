@@ -102,36 +102,24 @@ export function generateEllipseModel({
       // upper
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width / 2)
-      const topArc = new makerjs.paths.Arc(
-        [0, 0],
-        width / 2,
+      const ellipticArc = new makerjs.models.EllipticArc(
         90 - angle / 2,
         90 + angle / 2,
+        width / 2,
+        height / 2,
       )
-
-      makerjs.path.center(topArc)
-      makerjs.path.moveRelative(topArc, [
-        0,
-        TEXT_OFFSET - measure.height / 2,
-      ])
-      text.paths[`topArc${index}`] = topArc
-
-      makerjs.layout.childrenOnPath(
+      const chain = makerjs.model.findSingleChain(ellipticArc)
+      makerjs.layout.childrenOnChain(
         textModel,
-        topArc,
+        chain,
         0.5,
-        true,
         false,
-        true,
+        false,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [
         0,
         TEXT_OFFSET - measure.height / 2,
-      ])
-      makerjs.model.rotate(textModel, -2, [
-        0,
-        TEXT_OFFSET - measure.height / 2 + parseFloat(offset),
       ])
 
       if (validate) {
@@ -150,24 +138,20 @@ export function generateEllipseModel({
       // lower
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width / 2)
-      const bottomArc = new makerjs.paths.Arc(
-        [0, 0],
-        width / 2,
+      const ellipticArc = new makerjs.models.EllipticArc(
         270 - angle / 2,
         270 + angle / 2,
+        width / 2,
+        height / 2,
       )
+      const chain = makerjs.model.findSingleChain(ellipticArc)
 
-      makerjs.path.center(bottomArc)
-      makerjs.path.moveRelative(bottomArc, [0, -3.5])
-      text.paths[`bottomArc${index}`] = bottomArc
-
-      makerjs.layout.childrenOnPath(
+      makerjs.layout.childrenOnChain(
         textModel,
-        bottomArc,
+        chain,
         0.5,
-        false,
-        false,
         true,
+        false,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [

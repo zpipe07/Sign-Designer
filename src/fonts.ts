@@ -63,3 +63,6 @@ export const VastShadow = localFont({
 export const Rampart = localFont({
   src: "../public/fonts/RampartOne-Regular.ttf",
 })
+export const MuseoModerno = localFont({
+  src: "../public/fonts/MuseoModerno-Bold.ttf",
+})

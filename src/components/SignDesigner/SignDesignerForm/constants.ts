@@ -364,6 +364,7 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Train: "TrainOne-Regular.ttf",
   VastShadow: "VastShadow-Regular.ttf",
   Rampart: "RampartOne-Regular.ttf",
+  MuseoModerno: "MuseoModerno-Bold.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
