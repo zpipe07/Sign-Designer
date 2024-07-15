@@ -101,7 +101,7 @@ export function generateEllipseModel({
     if (index === 1) {
       // upper
       const measure = makerjs.measure.modelExtents(textModel)
-      const angle = calculateAngle(measure.width + 3, width / 2)
+      const angle = calculateAngle(measure.width * 1.25, width / 2)
       const ellipticArc = new makerjs.models.EllipticArc(
         90 - angle / 2,
         90 + angle / 2,
@@ -109,6 +109,7 @@ export function generateEllipseModel({
         height / 2.25,
       )
       const chain = makerjs.model.findSingleChain(ellipticArc)
+
       makerjs.layout.childrenOnChain(
         textModel,
         chain,
