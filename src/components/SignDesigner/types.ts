@@ -30,6 +30,7 @@ export type FontFamily =
   | "Train"
   | "VastShadow"
   | "Rampart"
+  | "MuseoModerno"
 
 export type Orientation = "horizontal" | "vertical"
 

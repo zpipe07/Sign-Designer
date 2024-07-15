@@ -33,6 +33,7 @@ import {
   Train,
   VastShadow,
   Rampart,
+  MuseoModerno,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -55,6 +56,7 @@ const fontFamilies: FontFamily[] = [
   "Train",
   "VastShadow",
   "Rampart",
+  "MuseoModerno",
 ]
 
 const fontMap = {
@@ -77,6 +79,7 @@ const fontMap = {
   Train,
   VastShadow,
   Rampart,
+  MuseoModerno,
 }
 
 export const FontSelector: React.FC = () => {

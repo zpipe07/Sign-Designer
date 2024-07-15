@@ -68,8 +68,7 @@ export const SignDesigner: React.FC<Props> = ({
           <Grid
             item
             xs={12}
-            md={7}
-            lg={8}
+            md={6}
             sx={{
               alignSelf: "flex-start",
               position: "sticky",
@@ -98,7 +97,7 @@ export const SignDesigner: React.FC<Props> = ({
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={5} lg={4}>
+          <Grid item xs={12} md={6}>
             <SignDesignerForm isEditing={isEditing} />
           </Grid>
         </Grid>

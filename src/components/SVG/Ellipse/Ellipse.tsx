@@ -61,6 +61,7 @@ export function generateEllipseModel({
   let doesTextFit = true
   const text: any = {
     models: {},
+    paths: {},
   }
 
   let index = -1
@@ -77,6 +78,8 @@ export function generateEllipseModel({
       font,
       value,
       parseFloat(fontSize),
+      false,
+      true,
     )
 
     if (index === 0) {
@@ -98,20 +101,20 @@ export function generateEllipseModel({
     if (index === 1) {
       // upper
       const measure = makerjs.measure.modelExtents(textModel)
-      const angle = calculateAngle(measure.width, width / 2)
-      const topArc = new makerjs.paths.Arc(
-        [0, 0],
-        width / 2,
+      const angle = calculateAngle(measure.width * 1.25, width / 2)
+      const ellipticArc = new makerjs.models.EllipticArc(
         90 - angle / 2,
         90 + angle / 2,
+        width / 2.25,
+        height / 2.25,
       )
+      const chain = makerjs.model.findSingleChain(ellipticArc)
 
-      makerjs.layout.childrenOnPath(
+      makerjs.layout.childrenOnChain(
         textModel,
-        topArc,
-        0.3,
-        true,
-        true,
+        chain,
+        0.5,
+        false,
         true,
       )
       makerjs.model.center(textModel)
@@ -136,19 +139,20 @@ export function generateEllipseModel({
       // lower
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, width / 2)
-      const bottomArc = new makerjs.paths.Arc(
-        [0, 0],
-        width / 2,
+      const ellipticArc = new makerjs.models.EllipticArc(
         270 - angle / 2,
         270 + angle / 2,
+        width / 2.25,
+        height / 2.25,
       )
-      makerjs.layout.childrenOnPath(
+      const chain = makerjs.model.findSingleChain(ellipticArc)
+
+      makerjs.layout.childrenOnChain(
         textModel,
-        bottomArc,
-        0.4,
+        chain,
+        0.5,
+        true,
         false,
-        true,
-        true,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [

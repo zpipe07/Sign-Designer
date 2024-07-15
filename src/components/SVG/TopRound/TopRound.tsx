@@ -122,19 +122,19 @@ export function generateTopRoundModel({
       // upper
       const measure = makerjs.measure.modelExtents(textModel)
       const angle = calculateAngle(measure.width, arcRadius)
-      const topArc = new makerjs.paths.Arc(
-        [0, 0],
-        arcRadius,
+      const ellipticArc = new makerjs.models.EllipticArc(
         90 - angle / 2,
         90 + angle / 2,
+        arcRadius,
+        arcRadius,
       )
+      const chain = makerjs.model.findSingleChain(ellipticArc)
 
-      makerjs.layout.childrenOnPath(
+      makerjs.layout.childrenOnChain(
         textModel,
-        topArc,
-        0.3,
-        true,
-        true,
+        chain,
+        0.5,
+        false,
         true,
       )
       makerjs.model.center(textModel)
