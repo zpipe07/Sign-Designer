@@ -61,6 +61,7 @@ export function generateEllipseModel({
   let doesTextFit = true
   const text: any = {
     models: {},
+    paths: {},
   }
 
   let index = -1
@@ -77,6 +78,8 @@ export function generateEllipseModel({
       font,
       value,
       parseFloat(fontSize),
+      false,
+      true,
     )
 
     if (index === 0) {
@@ -106,18 +109,29 @@ export function generateEllipseModel({
         90 + angle / 2,
       )
 
+      makerjs.path.center(topArc)
+      makerjs.path.moveRelative(topArc, [
+        0,
+        TEXT_OFFSET - measure.height / 2,
+      ])
+      text.paths[`topArc${index}`] = topArc
+
       makerjs.layout.childrenOnPath(
         textModel,
         topArc,
-        0.3,
+        0.5,
         true,
-        true,
+        false,
         true,
       )
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [
         0,
         TEXT_OFFSET - measure.height / 2,
+      ])
+      makerjs.model.rotate(textModel, -2, [
+        0,
+        TEXT_OFFSET - measure.height / 2 + parseFloat(offset),
       ])
 
       if (validate) {
@@ -142,12 +156,17 @@ export function generateEllipseModel({
         270 - angle / 2,
         270 + angle / 2,
       )
+
+      makerjs.path.center(bottomArc)
+      makerjs.path.moveRelative(bottomArc, [0, -3.5])
+      text.paths[`bottomArc${index}`] = bottomArc
+
       makerjs.layout.childrenOnPath(
         textModel,
         bottomArc,
-        0.4,
+        0.5,
         false,
-        true,
+        false,
         true,
       )
       makerjs.model.center(textModel)
