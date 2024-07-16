@@ -852,3 +852,19 @@ export type OrderStatus =
   | "Manual Verification Required"
   | "Disputed"
   | "Partially Refunded"
+
+type BigCommerceWebhookScope = "store/order/created"
+
+type BigCommerceWebhookDataType = "order"
+
+export type BigCommerceWebhookPayload = {
+  producer: string
+  hash: string
+  created_at: number
+  store_id: string
+  scope: BigCommerceWebhookScope
+  data: {
+    type: BigCommerceWebhookDataType
+    id: number
+  }
+}
