@@ -355,16 +355,13 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   SpicyRice: "SpicyRice-Regular.ttf",
   Ultra: "Ultra-Regular.ttf",
   Shrikhand: "Shrikhand-Regular.ttf",
-  BungeeShade: "BungeeShade-Regular.ttf",
   Limelight: "Limelight-Regular.ttf",
-  Monoton: "Monoton-Regular.ttf",
   Audiowide: "Audiowide-Regular.ttf",
   TacOne: "TacOne-Regular.ttf",
-  Cinzel: "CinzelDecorative-Bold.ttf",
   Train: "TrainOne-Regular.ttf",
-  VastShadow: "VastShadow-Regular.ttf",
-  Rampart: "RampartOne-Regular.ttf",
-  MuseoModerno: "MuseoModerno-Bold.ttf",
+  MoiraiOne: "MoiraiOne-Regular.ttf",
+  AoboshiOne: "AoboshiOne-Regular.ttf",
+  BagelFatOne: "BagelFatOne-Regular.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
@@ -444,7 +441,7 @@ export const DEFAULT_FORM_VALUES: DesignFormInputs = {
   shape: "rectangle",
   size: "large",
   color: "black::white",
-  fontFamily: "Rampart",
+  fontFamily: "Arbutus",
   mountingStyle: "wall mounted",
   edgeStyle: "square",
   borderWidth: "0.2",

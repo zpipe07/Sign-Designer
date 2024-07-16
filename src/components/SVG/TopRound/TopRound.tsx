@@ -100,6 +100,7 @@ export function generateTopRoundModel({
       font,
       value,
       parseFloat(fontSize),
+      true,
     )
 
     if (index === 0) {
@@ -130,13 +131,7 @@ export function generateTopRoundModel({
       )
       const chain = makerjs.model.findSingleChain(ellipticArc)
 
-      makerjs.layout.childrenOnChain(
-        textModel,
-        chain,
-        0.5,
-        false,
-        true,
-      )
+      makerjs.layout.childrenOnChain(textModel, chain, 0, false, true)
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 

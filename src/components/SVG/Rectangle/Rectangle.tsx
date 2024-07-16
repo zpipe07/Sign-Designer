@@ -77,6 +77,7 @@ export function generateRectangleModel({
       font,
       value,
       parseFloat(fontSize),
+      true,
     )
 
     if (index === 0) {

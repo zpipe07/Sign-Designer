@@ -24,16 +24,13 @@ import {
   SpicyRice,
   Ultra,
   Shrikhand,
-  BungeeShade,
   Limelight,
-  Monoton,
   Audiowide,
   TacOne,
-  Cinzel,
   Train,
-  VastShadow,
-  Rampart,
-  MuseoModerno,
+  MoiraiOne,
+  AoboshiOne,
+  BagelFatOne,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -47,16 +44,13 @@ const fontFamilies: FontFamily[] = [
   "SpicyRice",
   "Ultra",
   "Shrikhand",
-  "BungeeShade",
   "Limelight",
-  "Monoton",
   "Audiowide",
   "TacOne",
-  "Cinzel",
   "Train",
-  "VastShadow",
-  "Rampart",
-  "MuseoModerno",
+  "MoiraiOne",
+  "AoboshiOne",
+  "BagelFatOne",
 ]
 
 const fontMap = {
@@ -70,16 +64,13 @@ const fontMap = {
   SpicyRice,
   Ultra,
   Shrikhand,
-  BungeeShade,
   Limelight,
-  Monoton,
   Audiowide,
   TacOne,
-  Cinzel,
   Train,
-  VastShadow,
-  Rampart,
-  MuseoModerno,
+  MoiraiOne,
+  AoboshiOne,
+  BagelFatOne,
 }
 
 export const FontSelector: React.FC = () => {
