@@ -28,6 +28,7 @@ export type FontFamily =
   | "MoiraiOne"
   | "AoboshiOne"
   | "BagelFatOne"
+  | "GermaniaOne"
 
 export type Orientation = "horizontal" | "vertical"
 

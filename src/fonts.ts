@@ -57,3 +57,6 @@ export const AoboshiOne = localFont({
 export const BagelFatOne = localFont({
   src: "../public/fonts/BagelFatOne-Regular.ttf",
 })
+export const GermaniaOne = localFont({
+  src: "../public/fonts/GermaniaOne-Regular.ttf",
+})
