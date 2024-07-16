@@ -38,6 +38,11 @@ export async function POST(request: Request) {
     const fileId = fileIdOption?.value
     console.log({ fileId })
     const supabase = createClient()
+    // black::white-d2d48585-b9a3-40a0-a95d-1860c0069db6--path-only.svg
+    const { data } = await supabase.storage
+      .from("signs")
+      .getPublicUrl(`${fileId}--path-only.svg`)
+    console.log({ data })
     const { error } = await supabase.storage
       .from("signs")
       .move(
