@@ -78,7 +78,7 @@ export function generateEllipseModel({
       font,
       value,
       parseFloat(fontSize),
-      false,
+      true,
       true,
     )
 
@@ -110,13 +110,7 @@ export function generateEllipseModel({
       )
       const chain = makerjs.model.findSingleChain(ellipticArc)
 
-      makerjs.layout.childrenOnChain(
-        textModel,
-        chain,
-        0.5,
-        false,
-        true,
-      )
+      makerjs.layout.childrenOnChain(textModel, chain, 0, false, true)
       makerjs.model.center(textModel)
       makerjs.model.moveRelative(textModel, [
         0,
@@ -150,7 +144,7 @@ export function generateEllipseModel({
       makerjs.layout.childrenOnChain(
         textModel,
         chain,
-        0.5,
+        1.5,
         true,
         false,
       )

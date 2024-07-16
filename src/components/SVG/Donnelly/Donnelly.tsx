@@ -118,6 +118,7 @@ export function generateDonnellyModel({
       font,
       value,
       parseFloat(fontSize),
+      true,
     )
 
     if (index === 0) {

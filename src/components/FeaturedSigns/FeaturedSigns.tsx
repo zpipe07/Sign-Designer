@@ -13,7 +13,7 @@ const FEATURED_SIGNS: {
       shape: "rectangle",
       size: "large",
       color: "black::white",
-      fontFamily: "Rampart",
+      fontFamily: "Shrikhand",
       mountingStyle: "hanging",
       edgeStyle: "square",
       borderWidth: "0.2",

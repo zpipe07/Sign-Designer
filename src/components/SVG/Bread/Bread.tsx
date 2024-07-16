@@ -102,6 +102,7 @@ export function generateBreadModel({
       font,
       value,
       parseFloat(fontSize),
+      true,
     )
 
     if (index === 0) {

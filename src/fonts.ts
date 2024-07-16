@@ -36,14 +36,8 @@ export const Ultra = localFont({
 export const Shrikhand = localFont({
   src: "../public/fonts/Shrikhand-Regular.ttf",
 })
-export const BungeeShade = localFont({
-  src: "../public/fonts/BungeeShade-Regular.ttf",
-})
 export const Limelight = localFont({
   src: "../public/fonts/Limelight-Regular.ttf",
-})
-export const Monoton = localFont({
-  src: "../public/fonts/Monoton-Regular.ttf",
 })
 export const Audiowide = localFont({
   src: "../public/fonts/Audiowide-Regular.ttf",
@@ -51,18 +45,18 @@ export const Audiowide = localFont({
 export const TacOne = localFont({
   src: "../public/fonts/TacOne-Regular.ttf",
 })
-export const Cinzel = localFont({
-  src: "../public/fonts/CinzelDecorative-Bold.ttf",
-})
 export const Train = localFont({
   src: "../public/fonts/TrainOne-Regular.ttf",
 })
-export const VastShadow = localFont({
-  src: "../public/fonts/VastShadow-Regular.ttf",
+export const MoiraiOne = localFont({
+  src: "../public/fonts/MoiraiOne-Regular.ttf",
 })
-export const Rampart = localFont({
-  src: "../public/fonts/RampartOne-Regular.ttf",
+export const AoboshiOne = localFont({
+  src: "../public/fonts/AoboshiOne-Regular.ttf",
 })
-export const MuseoModerno = localFont({
-  src: "../public/fonts/MuseoModerno-Bold.ttf",
+export const BagelFatOne = localFont({
+  src: "../public/fonts/BagelFatOne-Regular.ttf",
+})
+export const GermaniaOne = localFont({
+  src: "../public/fonts/GermaniaOne-Regular.ttf",
 })
