@@ -36,6 +36,7 @@ export async function POST(request: Request) {
       (option) => option.display_name === "file_id",
     )
     const fileId = fileIdOption?.value
+    console.log({ fileId })
     const supabase = createClient()
     const { error } = await supabase.storage
       .from("signs")
