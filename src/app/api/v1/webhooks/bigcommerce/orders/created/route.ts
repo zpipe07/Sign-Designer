@@ -3,7 +3,7 @@ import { BigCommerceWebhookPayload } from "@/src/lib/bigcommerce/types"
 export async function POST(request: Request) {
   const body: BigCommerceWebhookPayload = await request.json()
   const res = await fetch(
-    `https://api.bigcommerce.com/stores/${body.producer}/v2/orders/${body.data.id}`,
+    `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders/${body.data.id}`,
     {
       method: "GET",
       headers: {
@@ -14,6 +14,7 @@ export async function POST(request: Request) {
       cache: "no-store",
     },
   )
+  console.log({ res })
   const order = await res.json()
   console.log({ order })
 
