@@ -14,11 +14,12 @@ import {
 } from "@mui/material"
 
 import { useGetProducts } from "@/src/hooks/queries/useGetProducts"
+import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 
-export const OrderDetails: React.FC<{ orderId: number }> = ({
-  orderId,
+export const OrderDetails: React.FC<{ order: BigCommerceOrder }> = ({
+  order,
 }) => {
-  const { data, isLoading, error } = useGetProducts(orderId)
+  const { data, isLoading, error } = useGetProducts(order.id)
 
   if (isLoading) {
     return (
@@ -61,7 +62,9 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
             {data?.products.map((product) => {
               return (
                 <TableRow key={product.id}>
-                  <TableCell>{product.id}</TableCell>
+                  <TableCell>
+                    {order.id}-{product.id}
+                  </TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>
@@ -69,7 +72,15 @@ export const OrderDetails: React.FC<{ orderId: number }> = ({
                       if (option.display_name === "file_id") {
                         const fileId = option.display_value
                         const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
-                        const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--path-only.svg?download=`
+                        const addIdToFileName =
+                          new Date(
+                            "Tue, 16 Jul 2024 18:42:51 +0000",
+                          ).getTime() <=
+                          new Date(order.date_created).getTime()
+                        const fileName = addIdToFileName
+                          ? `${order.id}-${product.id}-${fileId}--path-only.svg`
+                          : `${fileId}--path-only.svg`
+                        const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileName}?download=`
 
                         return (
                           <Box

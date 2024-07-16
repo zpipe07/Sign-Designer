@@ -49,7 +49,7 @@ export const OrderRow: React.FC<{ order: BigCommerceOrder }> = ({
           colSpan={6}
         >
           <Collapse in={open} mountOnEnter>
-            <OrderDetails orderId={order.id} />
+            <OrderDetails order={order} />
           </Collapse>
         </TableCell>
       </TableRow>
