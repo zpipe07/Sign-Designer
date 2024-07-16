@@ -1,4 +1,7 @@
-import { BigCommerceWebhookPayload } from "@/src/lib/bigcommerce/types"
+import {
+  BigCommerceOrder,
+  BigCommerceWebhookPayload,
+} from "@/src/lib/bigcommerce/types"
 
 export async function POST(request: Request) {
   const body: BigCommerceWebhookPayload = await request.json()
@@ -14,9 +17,19 @@ export async function POST(request: Request) {
       cache: "no-store",
     },
   )
-  console.log({ res })
-  const order = await res.json()
-  console.log({ order })
+  const order: BigCommerceOrder = await res.json()
+  // console.log({ order })
+  const productsRes = await fetch(order.products.url, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "X-Auth-Token": process.env.ORDERS_ACCESS_TOKEN!,
+    },
+    cache: "no-store",
+  })
+  const products = await productsRes.json()
+  console.log({ products })
 
   // create order in our system
 
