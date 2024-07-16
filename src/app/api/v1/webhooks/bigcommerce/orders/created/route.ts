@@ -3,6 +3,7 @@ import {
   BigCommerceOrderProduct,
   BigCommerceWebhookPayload,
 } from "@/src/lib/bigcommerce/types"
+import { createClient } from "@/src/utils/supabase/server"
 
 export async function POST(request: Request) {
   const body: BigCommerceWebhookPayload = await request.json()
@@ -19,7 +20,6 @@ export async function POST(request: Request) {
     },
   )
   const order: BigCommerceOrder = await res.json()
-  // console.log({ order })
   const productsRes = await fetch(order.products.url, {
     method: "GET",
     headers: {
@@ -30,13 +30,24 @@ export async function POST(request: Request) {
     cache: "no-store",
   })
   const products: BigCommerceOrderProduct[] = await productsRes.json()
-  console.log({ products })
 
-  products.forEach((product) => {
-    console.log("product_options", product.product_options)
-  })
+  for (const product of products) {
+    const fileIdOption = product.product_options.find(
+      (option) => option.display_name === "file_id",
+    )
+    const fileId = fileIdOption?.value
+    const supabase = createClient()
+    const { error } = await supabase.storage
+      .from("signs")
+      .move(
+        `${fileId}--path-only.svg`,
+        `${order.id}-${product.id}-${fileId}--path-only.svg`,
+      )
 
-  // create order in our system
+    if (error) {
+      throw error
+    }
+  }
 
   return Response.json({ status: "ok" })
 }
