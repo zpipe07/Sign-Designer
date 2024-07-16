@@ -1,5 +1,6 @@
 import {
   BigCommerceOrder,
+  BigCommerceOrderProduct,
   BigCommerceWebhookPayload,
 } from "@/src/lib/bigcommerce/types"
 
@@ -28,8 +29,12 @@ export async function POST(request: Request) {
     },
     cache: "no-store",
   })
-  const products = await productsRes.json()
+  const products: BigCommerceOrderProduct[] = await productsRes.json()
   console.log({ products })
+
+  products.forEach((product) => {
+    console.log("product_options", product.product_options)
+  })
 
   // create order in our system
 
