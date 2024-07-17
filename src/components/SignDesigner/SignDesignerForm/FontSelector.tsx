@@ -90,7 +90,17 @@ export const FontSelector: React.FC = () => {
         Selected: {selectedFontFamily}
       </FormHelperText>
 
-      <RadioGroup name="fontFamily" sx={{ flexDirection: "row" }}>
+      <RadioGroup
+        name="fontFamily"
+        sx={{
+          flexDirection: "row",
+          justifyContent: "center",
+
+          [theme.breakpoints.up("sm")]: {
+            justifyContent: "flex-start",
+          },
+        }}
+      >
         {fontFamilies.map((fontFamily) => (
           <FormControlLabel
             key={fontFamily}
