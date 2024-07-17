@@ -79,6 +79,17 @@ export async function POST(request: Request) {
       )?.value!,
     ) as TextLine[]
 
+    console.log({
+      borderWidth,
+      color,
+      edgeStyle,
+      fontFamily,
+      mountingStyle,
+      shape,
+      size,
+      textLines,
+    })
+
     const dirRelativeToPublicFolder = "fonts"
     const dir = path.resolve("./public", dirRelativeToPublicFolder)
     const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
