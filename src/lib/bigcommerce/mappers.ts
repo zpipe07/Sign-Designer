@@ -1,9 +1,9 @@
-import opentype from "opentype.js"
-import { promises as fs } from "fs"
-import { decode } from "base64-arraybuffer"
-import { randomUUID } from "crypto"
-import path from "path"
-import queryString from "query-string"
+// import opentype from "opentype.js"
+// import { promises as fs } from "fs"
+// import { decode } from "base64-arraybuffer"
+// import { randomUUID } from "crypto"
+// import path from "path"
+// import queryString from "query-string"
 
 import { createClient } from "@/src/utils/supabase/server"
 import {
@@ -500,104 +500,87 @@ export const formDataToCartItem = async (
   product: VercelProduct,
   // productOptionsMap: ProductOptionsMap,
 ): Promise<LineItem> => {
-  const dirRelativeToPublicFolder = "fonts"
-  const dir = path.resolve("./public", dirRelativeToPublicFolder)
-  const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
-  const font = opentype.loadSync(`${fontUrl}`)
-  const maxLinesOfText =
-    // @ts-ignore
-    SIZE_CONFIG_MAP[data.size as Size].maxLinesOfText
-  const textLines: TextLine[] = data.textLines
-    ?.slice(0, maxLinesOfText)
-    .filter(({ value }: TextLine) => {
-      return !!value
-    })
+  // const dirRelativeToPublicFolder = "fonts"
+  // const dir = path.resolve("./public", dirRelativeToPublicFolder)
+  // const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
+  // const font = opentype.loadSync(`${fontUrl}`)
+  // const maxLinesOfText =
+  //   // @ts-ignore
+  //   SIZE_CONFIG_MAP[data.size as Size].maxLinesOfText
+  // const textLines: TextLine[] = data.textLines
+  //   ?.slice(0, maxLinesOfText)
+  //   .filter(({ value }: TextLine) => {
+  //     return !!value
+  //   })
   // @ts-ignore
-  const { height, width } = SIZE_CONFIG_MAP[data.size as Size]
-  const [foregroundColor, backgroundColor] = data.color.split(
-    "::",
-  ) as Color[]
-  const modelInputs = {
-    height,
-    width,
-    outerBorderWidth: 0.3,
-    innerBorderWidth: parseFloat(data.borderWidth),
-    textLines,
-    foregroundColor,
-    backgroundColor,
-    inputs: data,
-    font,
-  }
-  const { svg: svgPathOnly } = generateModel({
-    ...modelInputs,
-    strokeOnly: true,
-    actualDimensions: true,
-  })
-  const { svg: svgWithFill } = generateModel({
-    ...modelInputs,
-    strokeOnly: false,
-    actualDimensions: false,
-    showShadow: true,
-  })
-  const fileId = `${data.color}-${randomUUID()}`
+  // const { height, width } = SIZE_CONFIG_MAP[data.size as Size]
+  // const [foregroundColor, backgroundColor] = data.color.split(
+  //   "::",
+  // ) as Color[]
+  // const modelInputs = {
+  //   height,
+  //   width,
+  //   outerBorderWidth: 0.3,
+  //   innerBorderWidth: parseFloat(data.borderWidth),
+  //   textLines,
+  //   foregroundColor,
+  //   backgroundColor,
+  //   inputs: data,
+  //   font,
+  // }
+  // const { svg: svgPathOnly } = generateModel({
+  //   ...modelInputs,
+  //   strokeOnly: true,
+  //   actualDimensions: true,
+  // })
+  // const { svg: svgWithFill } = generateModel({
+  //   ...modelInputs,
+  //   strokeOnly: false,
+  //   actualDimensions: false,
+  //   showShadow: true,
+  // })
+  // const fileId = `${data.color}-${randomUUID()}`
 
   // generate SVG file
-  const pathOnlyFileName = `${fileId}--path-only.svg`
-  await fs.writeFile(`/tmp/${pathOnlyFileName}`, svgPathOnly)
-  const svgPathOnlyFile = await fs.readFile(
-    `/tmp/${pathOnlyFileName}`,
-    {
-      encoding: "base64",
-    },
-  )
+  // const pathOnlyFileName = `${fileId}--path-only.svg`
+  // await fs.writeFile(`/tmp/${pathOnlyFileName}`, svgPathOnly)
+  // const svgPathOnlyFile = await fs.readFile(
+  //   `/tmp/${pathOnlyFileName}`,
+  //   {
+  //     encoding: "base64",
+  //   },
+  // )
 
-  const withFillFileName = `${fileId}--with-fill.svg`
-  await fs.writeFile(`/tmp/${withFillFileName}`, svgWithFill)
-  const svgWithFillFile = await fs.readFile(
-    `/tmp/${withFillFileName}`,
-    {
-      encoding: "base64",
-    },
-  )
+  // const withFillFileName = `${fileId}--with-fill.svg`
+  // await fs.writeFile(`/tmp/${withFillFileName}`, svgWithFill)
+  // const svgWithFillFile = await fs.readFile(
+  //   `/tmp/${withFillFileName}`,
+  //   {
+  //     encoding: "base64",
+  //   },
+  // )
 
   // save file to supabase
-  const supabase = createClient()
-  const { error: svgPathOnlyFileError } = await supabase.storage
-    .from("signs")
-    .upload(pathOnlyFileName, decode(svgPathOnlyFile), {
-      contentType: "image/svg+xml",
-    })
-
-  if (svgPathOnlyFileError) {
-    throw svgPathOnlyFileError
-  }
-
-  const { error: svgWithFillFileError } = await supabase.storage
-    .from("signs")
-    .upload(withFillFileName, decode(svgWithFillFile), {
-      contentType: "image/svg+xml",
-    })
-
-  if (svgWithFillFileError) {
-    throw svgWithFillFileError
-  }
-
-  // const { error: dxfFileError } = await supabase.storage
+  // const supabase = createClient()
+  // const { error: svgPathOnlyFileError } = await supabase.storage
   //   .from("signs")
-  //   .upload(`${id}.dxf`, decode(dxfFile), {
-  //     contentType: "application/dxf",
+  //   .upload(pathOnlyFileName, decode(svgPathOnlyFile), {
+  //     contentType: "image/svg+xml",
   //   })
 
-  // if (dxfFileError) {
-  //   throw dxfFileError
+  // if (svgPathOnlyFileError) {
+  //   throw svgPathOnlyFileError
   // }
 
-  // const {
-  //   data: { publicUrl: publicUrlPathOnly },
-  // } = supabase.storage.from("signs").getPublicUrl(pathOnlyFileName)
-  // const {
-  //   data: { publicUrl },
-  // } = supabase.storage.from("signs").getPublicUrl(withFillFileName)
+  // const { error: svgWithFillFileError } = await supabase.storage
+  //   .from("signs")
+  //   .upload(withFillFileName, decode(svgWithFillFile), {
+  //     contentType: "image/svg+xml",
+  //   })
+
+  // if (svgWithFillFileError) {
+  //   throw svgWithFillFileError
+  // }
 
   const variant = getProductVariant(data, product)
 
@@ -611,28 +594,6 @@ export const formDataToCartItem = async (
     merchandiseId: variant.id,
     selectedOptions: {
       multipleChoices: [
-        // {
-        //   optionEntityId: formToCartMap.shape.entityId,
-        //   optionValueEntityId: formToCartMap.shape[data.shape],
-        // },
-        // {
-        //   optionEntityId: formToCartMap.orientation.entityId,
-        //   optionValueEntityId:
-        //     formToCartMap.orientation[data.orientation],
-        // },
-        // {
-        //   optionEntityId: formToCartMap.size.entityId,
-        //   optionValueEntityId: formToCartMap.size[data.size],
-        // },
-        // {
-        //   optionEntityId: formToCartMap.font.entityId,
-        //   optionValueEntityId: formToCartMap.font[data.fontFamily],
-        // },
-        // {
-        //   optionEntityId: formToCartMap.color.entityId,
-        //   // @ts-ignore
-        //   optionValueEntityId: formToCartMap.color[data.color],
-        // },
         {
           optionEntityId: parseInt(
             product.options.find(({ name }) => name === "color")
@@ -647,39 +608,21 @@ export const formDataToCartItem = async (
       ],
       textFields: [
         // {
-        //   optionEntityId: formToCartMap.textLine.entityId,
-        //   text: data.textLines[0].value,
-        // },
-        // {
-        //   optionEntityId: formToCartMap.svgRaw.entityId,
-        //   text: svg,
+        //   optionEntityId: parseInt(
+        //     product.options.find(({ name }) => name === "file_id")
+        //       ?.id as string,
+        //     10,
+        //   ),
+        //   text: fileId,
         // },
         // {
         //   optionEntityId: parseInt(
-        //     product.options.find(
-        //       ({ name }) => name === "filePathOnly",
-        //     )?.id as string,
+        //     product.options.find(({ name }) => name === "file_id")
+        //       ?.id as string,
         //     10,
         //   ),
-        //   text: publicUrlPathOnly,
+        //   text: "abc123",
         // },
-        // {
-        //   optionEntityId: parseInt(
-        //     product.options.find(
-        //       ({ name }) => name === "fileWithFill",
-        //     )?.id as string,
-        //     10,
-        //   ),
-        //   text: publicUrlPathOnly,
-        // },
-        {
-          optionEntityId: parseInt(
-            product.options.find(({ name }) => name === "file_id")
-              ?.id as string,
-            10,
-          ),
-          text: fileId,
-        },
         {
           optionEntityId: parseInt(
             product.options.find(({ name }) => name === "font")
@@ -726,18 +669,6 @@ export const formDataToCartItem = async (
           text: data.edgeStyle,
         },
       ],
-      // multiLineTextFields: [
-      //   {
-      //     optionEntityId: parseInt(
-      //       product.options.find(({ name }) => name === "textLines")
-      //         ?.id as string,
-      //       10,
-      //     ),
-      //     text: data.textLines
-      //       .map((text) => queryString.stringify(text))
-      //       .join("\n"),
-      //   },
-      // ],
     },
   }
 }

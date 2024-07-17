@@ -3,25 +3,17 @@ import { cookies } from "next/headers"
 import { addToCart, getCart, getProduct } from "@/src/lib/bigcommerce"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { formDataToCartItem } from "@/src/lib/bigcommerce/mappers"
-import { createProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 
 export async function POST(request: Request) {
   // create cart and set cartID cookie
-
   const product = await getProduct("112")
 
   if (!product) {
     throw new Error("Product not found")
   }
 
-  const productOptionsMap = createProductOptionsMap(product)
   const formData: DesignFormInputs = await request.json()
-  const lineItem = await formDataToCartItem(
-    formData,
-    product,
-    // productOptionsMap,
-  )
-  console.log({ ...lineItem.selectedOptions })
+  const lineItem = await formDataToCartItem(formData, product)
   const cart = await addToCart(undefined, [lineItem])
 
   cookies().set("cartId", cart.id)

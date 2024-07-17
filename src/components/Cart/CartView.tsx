@@ -1,5 +1,5 @@
-import Image from "next/image"
-import Link from "next/link"
+// import Image from "next/image"
+// import Link from "next/link"
 import Typography from "@mui/material/Typography"
 import Table from "@mui/material/Table"
 import TableHead from "@mui/material/TableHead"
@@ -7,13 +7,13 @@ import TableContainer from "@mui/material/TableContainer"
 import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
 import TableBody from "@mui/material/TableBody"
-import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
-import EditIcon from "@mui/icons-material/Edit"
+// import Button from "@mui/material/Button"
+// import EditIcon from "@mui/icons-material/Edit"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
 import { CheckoutButton } from "@/src/components/CheckoutButton"
-import { RemoveFromCartButton } from "@/src/components/RemoveFromCartButton"
+import { CartItemRow } from "@/src/components/Cart/CartItemRow"
 
 type Props = {
   cart: VercelCart
@@ -35,68 +35,13 @@ export const CartView: React.FC<Props> = ({ cart }) => {
           </TableHead>
 
           <TableBody>
-            {cart.lines.map(({ id, merchandise, cost, quantity }) => {
-              const fileId = merchandise.selectedOptions.find(
-                ({ name }) => name === "file_id",
-              )?.value!
-              const imgSrc = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileId}--with-fill.svg`
-
+            {cart.lines.map((lineItem) => {
               return (
-                <TableRow key={id}>
-                  <TableCell>
-                    <Typography>{merchandise.title}</Typography>
-
-                    {/* <Typography variant="body2">
-                      <strong>Shape: </strong>
-                      {
-                        merchandise.selectedOptions.find(
-                          ({ name }) => name === "shape_modifier",
-                        )?.value
-                      }
-                    </Typography> */}
-
-                    <Typography variant="body2">
-                      <strong>Size: </strong>
-                      {
-                        merchandise.selectedOptions.find(
-                          ({ name }) => name === "size",
-                        )?.value
-                      }
-                    </Typography>
-
-                    <Image
-                      src={imgSrc}
-                      alt=""
-                      width={100}
-                      height={100}
-                    />
-
-                    {/* <Typography variant="body2">
-                      <strong>Color: </strong>
-                      {
-                        merchandise.selectedOptions.find(
-                          ({ name }) => name === "color",
-                        )?.value
-                      }
-                    </Typography> */}
-                  </TableCell>
-                  <TableCell>
-                    {/* <Button
-                      component={Link}
-                      href={`/cart/${cart.id}/items/${id}`}
-                    >
-                      <EditIcon />
-                    </Button> */}
-
-                    <RemoveFromCartButton
-                      cartId={cart.id}
-                      lineItemId={id}
-                    />
-                  </TableCell>
-                  <TableCell>${cost.totalAmount.amount}</TableCell>
-                  <TableCell>{quantity}</TableCell>
-                  <TableCell>${cost.totalAmount.amount}</TableCell>
-                </TableRow>
+                <CartItemRow
+                  lineItem={lineItem}
+                  cart={cart}
+                  key={lineItem.id}
+                />
               )
             })}
           </TableBody>
