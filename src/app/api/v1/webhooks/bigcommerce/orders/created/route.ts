@@ -132,7 +132,9 @@ export async function POST(request: Request) {
     const supabase = createClient()
     const { error } = await supabase.storage
       .from("signs")
-      .upload(filename, decode(svgFile))
+      .upload(filename, decode(svgFile), {
+        contentType: "image/svg+xml",
+      })
 
     if (error) {
       throw error
