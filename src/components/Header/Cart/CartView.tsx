@@ -61,6 +61,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         // MenuListProps={{
         //   "aria-labelledby": "basic-button",
         // }}
+        sx={{ zIndex: 99999 }}
         keepMounted
       >
         <Box padding={2} sx={{ minWidth: 300 }}>

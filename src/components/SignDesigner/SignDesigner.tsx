@@ -25,6 +25,8 @@ export const SignDesigner: React.FC<Props> = ({
   textLines,
   fontFamily,
   mountingStyle,
+  edgeStyle,
+  borderWidth,
 }) => {
   const theme = useTheme()
 
@@ -36,8 +38,8 @@ export const SignDesigner: React.FC<Props> = ({
       fontFamily: fontFamily || DEFAULT_FORM_VALUES.fontFamily,
       mountingStyle:
         mountingStyle || DEFAULT_FORM_VALUES.mountingStyle,
-      edgeStyle: DEFAULT_FORM_VALUES.edgeStyle,
-      borderWidth: DEFAULT_FORM_VALUES.borderWidth,
+      edgeStyle: edgeStyle || DEFAULT_FORM_VALUES.edgeStyle,
+      borderWidth: borderWidth || DEFAULT_FORM_VALUES.borderWidth,
       textLines: textLines?.length
         ? textLines
         : DEFAULT_FORM_VALUES.textLines,

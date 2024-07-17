@@ -55,6 +55,7 @@ export const BorderSelector: React.FC = () => {
               max={0.5}
               step={0.1}
               marks={marks}
+              defaultValue={selectedBorderWidth}
               valueLabelDisplay="auto"
               onChange={(_, value) => {
                 props.field.onChange(value.toString(10))
