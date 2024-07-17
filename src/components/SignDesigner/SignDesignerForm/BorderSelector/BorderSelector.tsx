@@ -56,7 +56,9 @@ export const BorderSelector: React.FC = () => {
               step={0.1}
               marks={marks}
               valueLabelDisplay="auto"
-              onChange={(_, value) => props.field.onChange(value)}
+              onChange={(_, value) => {
+                props.field.onChange(value.toString(10))
+              }}
             />
           )
         }}

@@ -717,6 +717,14 @@ export const formDataToCartItem = async (
           //   .join("\n"),
           text: JSON.stringify(data.textLines),
         },
+        {
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "edge_style")
+              ?.id as string,
+            10,
+          ),
+          text: data.edgeStyle,
+        },
       ],
       // multiLineTextFields: [
       //   {
