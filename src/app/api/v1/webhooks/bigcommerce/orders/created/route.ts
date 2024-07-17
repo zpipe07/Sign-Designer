@@ -1,9 +1,29 @@
+import opentype from "opentype.js"
+import { promises as fs } from "fs"
+import { decode } from "base64-arraybuffer"
+
 import {
   BigCommerceOrder,
   BigCommerceOrderProduct,
   BigCommerceWebhookPayload,
 } from "@/src/lib/bigcommerce/types"
 import { createClient } from "@/src/utils/supabase/server"
+import path from "path"
+import {
+  FONT_MAP,
+  SIZE_CONFIG_MAP,
+} from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import {
+  Color,
+  ColorCombo,
+  EdgeStyle,
+  FontFamily,
+  MountingStyle,
+  Shape,
+  Size,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
+import { generateModel } from "@/src/utils/makerjs"
 
 export async function POST(request: Request) {
   const body: BigCommerceWebhookPayload = await request.json()
@@ -32,21 +52,95 @@ export async function POST(request: Request) {
   const products: BigCommerceOrderProduct[] = await productsRes.json()
 
   for (const product of products) {
-    const fileIdOption = product.product_options.find(
-      (option) => option.display_name === "file_id",
-    )
-    const fileId = fileIdOption?.value
+    const borderWidth = product.product_options?.find(
+      (option) => option.name === "border_width",
+    )?.value!
+    const color = product.product_options?.find(
+      (option) => option.name === "color",
+    )?.value as ColorCombo
+    const edgeStyle = product.product_options?.find(
+      (option) => option.name === "edge_style",
+    )?.value as EdgeStyle
+    const fontFamily = product.product_options?.find(
+      (option) => option.name === "font",
+    )?.value as FontFamily
+    const mountingStyle = product.product_options?.find(
+      (option) => option.name === "mounting_style",
+    )?.value as MountingStyle
+    const shape = product.product_options?.find(
+      (option) => option.name === "shape",
+    )?.value as Shape
+    const size = product.product_options?.find(
+      (option) => option.name === "size",
+    )?.value as Size
+    const textLines = JSON.parse(
+      product.product_options?.find(
+        (option) => option.name === "text_lines",
+      )?.value!,
+    ) as TextLine[]
+
+    const dirRelativeToPublicFolder = "fonts"
+    const dir = path.resolve("./public", dirRelativeToPublicFolder)
+    const fontUrl = `${dir}/${FONT_MAP[fontFamily]}`
+    const font = opentype.loadSync(`${fontUrl}`)
+    const { height, width } = SIZE_CONFIG_MAP[size]
+    const [foregroundColor, backgroundColor] = color.split(
+      "::",
+    ) as Color[]
+    const modelInputs = {
+      height,
+      width,
+      outerBorderWidth: 0.3,
+      innerBorderWidth: parseFloat(borderWidth),
+      textLines,
+      foregroundColor,
+      backgroundColor,
+      inputs: {
+        borderWidth,
+        color,
+        edgeStyle,
+        fontFamily,
+        mountingStyle,
+        shape,
+        size,
+        textLines,
+      },
+      font,
+    }
+    const { svg } = generateModel({
+      ...modelInputs,
+      strokeOnly: true,
+      actualDimensions: true,
+    })
+
+    const filename = `${order.id}-${product.id}-${color}.svg`
+    await fs.writeFile(`/tmp/${filename}`, svg)
+    const svgFile = await fs.readFile(`/tmp/${filename}`, {
+      encoding: "base64",
+    })
     const supabase = createClient()
     const { error } = await supabase.storage
       .from("signs")
-      .move(
-        `${fileId}--path-only.svg`,
-        `${order.id}-${product.id}-${fileId}--path-only.svg`,
-      )
+      .upload(filename, decode(svgFile))
 
     if (error) {
       throw error
     }
+    // const fileIdOption = product.product_options.find(
+    //   (option) => option.display_name === "file_id",
+    // )
+    // const fileId = fileIdOption?.value
+    // const supabase = createClient()
+    // const { error } = await supabase.storage
+    //   .from("signs")
+    //   .move(
+    //     `${fileId}--path-only.svg`,
+    //     `${order.id}-${product.id}-${fileId}--path-only.svg`,
+    //   )
+
+    // if (error) {
+    //   throw error
+    // }
   }
 
   return Response.json({ status: "ok" })
