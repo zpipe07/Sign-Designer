@@ -1,7 +1,7 @@
 import { Controller, useFormContext, useWatch } from "react-hook-form"
 import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
-import { Slider, TextField } from "@mui/material"
+import { Box, Slider, TextField } from "@mui/material"
 // import FormControlLabel from "@mui/material/FormControlLabel"
 // import Radio from "@mui/material/Radio"
 // import RadioGroup from "@mui/material/RadioGroup"
@@ -44,27 +44,29 @@ export const BorderSelector: React.FC = () => {
         Border width: {selectedBorderWidth}&quot;
       </FormLabel>
 
-      <Controller
-        control={control}
-        render={(props) => {
-          return (
-            <Slider
-              name="borderWidth"
-              value={selectedBorderWidth}
-              min={0}
-              max={0.5}
-              step={0.1}
-              marks={marks}
-              defaultValue={selectedBorderWidth}
-              valueLabelDisplay="auto"
-              onChange={(_, value) => {
-                props.field.onChange(value.toString(10))
-              }}
-            />
-          )
-        }}
-        {...register("borderWidth")}
-      />
+      <Box paddingLeft={2} paddingRight={2}>
+        <Controller
+          control={control}
+          render={(props) => {
+            return (
+              <Slider
+                name="borderWidth"
+                value={selectedBorderWidth}
+                min={0}
+                max={0.5}
+                step={0.1}
+                marks={marks}
+                defaultValue={selectedBorderWidth}
+                valueLabelDisplay="auto"
+                onChange={(_, value) => {
+                  props.field.onChange(value.toString(10))
+                }}
+              />
+            )
+          }}
+          {...register("borderWidth")}
+        />
+      </Box>
     </FormControl>
   )
 }
