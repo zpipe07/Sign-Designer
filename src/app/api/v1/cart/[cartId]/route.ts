@@ -20,6 +20,7 @@ export async function PUT(
     product,
     // productOptionsMap,
   )
+  console.log({ ...lineItem.selectedOptions })
   const cart = await addToCart(params.cartId, [lineItem])
 
   return Response.json({ cart })

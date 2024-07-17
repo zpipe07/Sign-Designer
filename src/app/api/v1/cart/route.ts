@@ -21,6 +21,7 @@ export async function POST(request: Request) {
     product,
     // productOptionsMap,
   )
+  console.log({ ...lineItem.selectedOptions })
   const cart = await addToCart(undefined, [lineItem])
 
   cookies().set("cartId", cart.id)

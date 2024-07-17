@@ -39,6 +39,7 @@ export async function PATCH(
     product,
     // productOptionsMap,
   )
+  console.log({ ...lineItem.selectedOptions })
   const cart = await updateCart(params.cartId, [
     { ...lineItem, id: params.itemId },
   ])
