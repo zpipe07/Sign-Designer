@@ -53,29 +53,29 @@ export async function POST(request: Request) {
 
   for (const product of products) {
     const borderWidth = product.product_options?.find(
-      (option) => option.name === "border_width",
+      (option) => option.display_name === "border_width",
     )?.value!
     const color = product.product_options?.find(
-      (option) => option.name === "color",
+      (option) => option.display_name === "color",
     )?.value as ColorCombo
     const edgeStyle = product.product_options?.find(
-      (option) => option.name === "edge_style",
+      (option) => option.display_name === "edge_style",
     )?.value as EdgeStyle
     const fontFamily = product.product_options?.find(
-      (option) => option.name === "font",
+      (option) => option.display_name === "font",
     )?.value as FontFamily
     const mountingStyle = product.product_options?.find(
-      (option) => option.name === "mounting_style",
+      (option) => option.display_name === "mounting_style",
     )?.value as MountingStyle
     const shape = product.product_options?.find(
-      (option) => option.name === "shape",
+      (option) => option.display_name === "shape",
     )?.value as Shape
     const size = product.product_options?.find(
-      (option) => option.name === "size",
+      (option) => option.display_name === "size",
     )?.value as Size
     const textLines = JSON.parse(
       product.product_options?.find(
-        (option) => option.name === "text_lines",
+        (option) => option.display_name === "text_lines",
       )?.value!,
     ) as TextLine[]
 
