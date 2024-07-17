@@ -38,7 +38,14 @@ export const ColorSelector: React.FC = () => {
       <RadioGroup
         aria-labelledby="color-label"
         name="color"
-        sx={{ flexDirection: "row" }}
+        sx={{
+          flexDirection: "row",
+          justifyContent: "center",
+
+          [theme.breakpoints.up("sm")]: {
+            justifyContent: "flex-start",
+          },
+        }}
       >
         {data.productOptionsMap.color.values.map(
           ({ label, entityId }) => {

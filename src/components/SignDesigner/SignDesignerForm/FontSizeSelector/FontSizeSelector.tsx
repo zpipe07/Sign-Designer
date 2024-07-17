@@ -34,6 +34,7 @@ export const FontSizeSelector: React.FC<Props> = ({ index }) => {
           max: "5",
           tabIndex: index === 1 ? 1 : 2,
         }}
+        fullWidth
         {...register(`textLines.${index}.fontSize`)}
       />
       <ButtonGroup

@@ -32,6 +32,7 @@ export const OffsetSelector: React.FC<Props> = ({ index }) => {
           tabIndex: index === 1 ? 1 : 2,
         }}
         sx={{ flex: "0 0 100px" }}
+        fullWidth
         {...register(`textLines.${index}.offset`)}
       />
 

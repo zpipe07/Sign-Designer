@@ -74,8 +74,12 @@ export const SignDesigner: React.FC<Props> = ({
             sx={{
               alignSelf: "flex-start",
               position: "sticky",
-              top: theme.spacing(0),
+              top: theme.spacing(-3),
               zIndex: 9999,
+
+              [theme.breakpoints.up("md")]: {
+                top: theme.spacing(0),
+              },
             }}
           >
             <Card

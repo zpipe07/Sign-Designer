@@ -74,8 +74,16 @@ export const ShapeSelector: React.FC = () => {
                 key={entityId}
                 sx={{
                   margin: 0,
-                  padding: 2,
+                  padding: 1,
                   flex: "0 1 33.33%",
+
+                  [theme.breakpoints.up("sm")]: {
+                    flex: "1 1 20%",
+                  },
+
+                  [theme.breakpoints.up("md")]: {
+                    padding: 0.5,
+                  },
                 }}
                 {...register("shape")}
               />

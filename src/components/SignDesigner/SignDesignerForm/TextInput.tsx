@@ -29,31 +29,35 @@ export const TextInput: React.FC = () => {
 
   return (
     <Box position="relative">
-      <IconButton
-        size="small"
-        sx={{
-          position: "absolute",
-          top: 98,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-        onClick={() => swap(0, 1)}
-      >
-        <SwapVertIcon />
-      </IconButton>
+      {maxLinesOfText >= 2 && (
+        <IconButton
+          size="small"
+          sx={{
+            position: "absolute",
+            top: 98,
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+          onClick={() => swap(0, 1)}
+        >
+          <SwapVertIcon />
+        </IconButton>
+      )}
 
-      <IconButton
-        size="small"
-        sx={{
-          position: "absolute",
-          top: 194,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-        onClick={() => swap(0, 2)}
-      >
-        <SwapVertIcon />
-      </IconButton>
+      {maxLinesOfText >= 3 && (
+        <IconButton
+          size="small"
+          sx={{
+            position: "absolute",
+            top: 194,
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+          onClick={() => swap(0, 2)}
+        >
+          <SwapVertIcon />
+        </IconButton>
+      )}
 
       <Grid container spacing={5}>
         {fields.slice(0, maxLinesOfText).map((field, index) => {

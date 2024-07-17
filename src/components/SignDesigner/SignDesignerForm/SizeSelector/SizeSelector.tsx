@@ -92,7 +92,24 @@ export const SizeSelector: React.FC = () => {
               key={value}
               sx={{
                 margin: 0,
-                padding: 2.25,
+                padding: theme.spacing(1, 2.5, 1, 1),
+                flex: "0 1 33.33%",
+
+                display: "flex",
+                justifyContent: "center",
+
+                [theme.breakpoints.up("sm")]: {
+                  padding: theme.spacing(1, 4, 1, 1),
+                  flex: "1 1 20%",
+                },
+
+                [theme.breakpoints.up("md")]: {
+                  flex: "1 1 33.33%",
+                },
+
+                [theme.breakpoints.up("lg")]: {
+                  flex: "1 1 20%",
+                },
               }}
               {...register("size")}
             />

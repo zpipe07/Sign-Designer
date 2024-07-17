@@ -46,6 +46,7 @@ export const SizeRadioLabel: React.FC<Props> = ({
         variant="rectangular"
         width={100}
         height={100 * ratio}
+        sx={{ maxHeight: 150 }}
       />
     )
   }
@@ -81,8 +82,13 @@ export const SizeRadioLabel: React.FC<Props> = ({
           fontSize: 0,
           borderRadius: 0.5,
           padding: 0.5,
-          maxWidth: 150 * ratioOfMaxWidth,
+          maxWidth: 250 * ratioOfMaxWidth,
+          // maxHeight: 150,
           transition: "box-shadow 0.15s ease-in-out 0s",
+
+          svg: {
+            maxHeight: "100%",
+          },
 
           ...(checked && {
             boxShadow: `0 0 0 3px ${theme.palette.secondary.main}`,
