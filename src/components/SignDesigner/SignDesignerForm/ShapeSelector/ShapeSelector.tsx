@@ -78,7 +78,7 @@ export const ShapeSelector: React.FC = () => {
                   flex: "0 1 33.33%",
 
                   [theme.breakpoints.up("sm")]: {
-                    flex: "0 1 20%",
+                    flex: "1 1 20%",
                   },
 
                   [theme.breakpoints.up("md")]: {
