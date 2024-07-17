@@ -1,9 +1,9 @@
-import React from "react"
 import opentype from "opentype.js"
 import { promises as fs } from "fs"
 import { decode } from "base64-arraybuffer"
 import { randomUUID } from "crypto"
 import path from "path"
+import queryString from "query-string"
 
 import { createClient } from "@/src/utils/supabase/server"
 import {
@@ -36,14 +36,11 @@ import {
   FontFamily,
   TextLine,
 } from "@/src/components/SignDesigner/types"
-import { SignDesignerVisualizerView } from "@/src/components/SignDesignerVisualizer"
 import {
   FONT_MAP,
   SIZE_CONFIG_MAP,
-  product,
   signProductId,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import { ProductOptionsMap } from "@/src/hooks/queries/useGetProduct"
 import { getProductVariant } from "@/src/lib/bigcommerce/utils"
 import { generateModel } from "@/src/utils/makerjs"
 
@@ -683,19 +680,56 @@ export const formDataToCartItem = async (
           ),
           text: fileId,
         },
-      ],
-      multiLineTextFields: [
         {
           optionEntityId: parseInt(
-            product.options.find(({ name }) => name === "textLines")
+            product.options.find(({ name }) => name === "font")
               ?.id as string,
             10,
           ),
-          text: data.textLines
-            .map(({ value }: { value: string }) => value)
-            .join("\n"),
+          text: data.fontFamily,
+        },
+        {
+          optionEntityId: parseInt(
+            product.options.find(
+              ({ name }) => name === "mounting_style",
+            )?.id as string,
+            10,
+          ),
+          text: data.mountingStyle,
+        },
+        {
+          optionEntityId: parseInt(
+            product.options.find(
+              ({ name }) => name === "border_width",
+            )?.id as string,
+            10,
+          ),
+          text: data.borderWidth,
+        },
+        {
+          optionEntityId: parseInt(
+            product.options.find(({ name }) => name === "text_lines")
+              ?.id as string,
+            10,
+          ),
+          // text: data.textLines
+          //   .map((text) => queryString.stringify(text))
+          //   .join("\n"),
+          text: JSON.stringify(data.textLines),
         },
       ],
+      // multiLineTextFields: [
+      //   {
+      //     optionEntityId: parseInt(
+      //       product.options.find(({ name }) => name === "textLines")
+      //         ?.id as string,
+      //       10,
+      //     ),
+      //     text: data.textLines
+      //       .map((text) => queryString.stringify(text))
+      //       .join("\n"),
+      //   },
+      // ],
     },
   }
 }

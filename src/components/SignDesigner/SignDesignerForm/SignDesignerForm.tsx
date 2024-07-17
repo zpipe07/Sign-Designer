@@ -45,6 +45,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     isPending: isPendingCreateCart,
     error: createCartError,
     isSuccess: createCartSuccess,
+    reset: resetCreateCart,
   } = useCreateCart()
 
   const {
@@ -52,6 +53,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     isPending: isPendingAddCartItem,
     error: addCartItemError,
     isSuccess: addCartItemSuccess,
+    reset: resetAddCartItem,
   } = useAddCartItem()
 
   const {
@@ -59,6 +61,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     isPending: isPendingUpdateCartItem,
     error: updateCartItemError,
     isSuccess: updateCartItemSuccess,
+    reset: resetUpdateCartItem,
   } = useUpdateCartItem()
 
   const onSubmit = (data: DesignFormInputs) => {
@@ -85,6 +88,9 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
   const handleResetForm = () => {
     reset(DEFAULT_FORM_VALUES)
     window.scrollTo(0, 0)
+    resetCreateCart()
+    resetAddCartItem()
+    resetUpdateCartItem()
   }
 
   const isSuccess =
