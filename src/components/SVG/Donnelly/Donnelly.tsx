@@ -34,6 +34,7 @@ export function generateDonnellyModel({
     height / 2,
   )
   const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
+
   makerjs.model.center(leftEllipse)
   makerjs.model.move(leftEllipse, [
     width / -2 + leftEllipseMeasure.width / 2,
@@ -46,6 +47,7 @@ export function generateDonnellyModel({
     height,
     0.25,
   )
+
   makerjs.model.center(outerRect)
 
   const combinedTemp = makerjs.model.combineUnion(
@@ -130,6 +132,10 @@ export function generateDonnellyModel({
         }
 
         value.split("").forEach((char, i) => {
+          if (char === " ") {
+            return
+          }
+
           const charModel = new makerjs.models.Text(
             font,
             char,

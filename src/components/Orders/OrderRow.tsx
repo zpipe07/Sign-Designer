@@ -13,7 +13,7 @@ import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 export const OrderRow: React.FC<{ order: BigCommerceOrder }> = ({
   order,
 }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <>

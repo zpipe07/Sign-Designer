@@ -738,10 +738,11 @@ export type BigCommerceOrder = {
     url: string
     resource: string
   }
-  products: {
-    url: string
-    resource: string
-  }
+  // products: {
+  //   url: string
+  //   resource: string
+  // }
+  products: BigCommerceOrderProduct[]
   shipping_addresses: {
     url: string
     resource: string

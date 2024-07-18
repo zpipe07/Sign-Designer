@@ -15,8 +15,13 @@ export const Orders: React.FC = () => {
 
   const searchParams = useSearchParams()
   const statusId = searchParams.get("status_id")
+  const color = searchParams.get("color")
 
-  const { data, isLoading, error } = useGetOrders({ page, statusId })
+  const { data, isLoading, error } = useGetOrders({
+    page,
+    statusId,
+    color,
+  })
 
   if (error) {
     return (
@@ -33,7 +38,11 @@ export const Orders: React.FC = () => {
       </Typography>
 
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ marginRight: "auto" }}>
+        <Box
+          sx={{
+            marginRight: "auto",
+          }}
+        >
           <OrdersFilters />
         </Box>
 

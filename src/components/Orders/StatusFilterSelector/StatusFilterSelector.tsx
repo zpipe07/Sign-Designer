@@ -10,7 +10,7 @@ import {
 import { orderStatuses } from "@/src/lib/bigcommerce/constants"
 import { STATUS_ID_MAP } from "@/src/lib/bigcommerce/types"
 
-export const StatusSelector: React.FC = () => {
+export const StatusFilterSelector: React.FC = () => {
   const params = useSearchParams()
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -27,10 +27,8 @@ export const StatusSelector: React.FC = () => {
   }
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel id="demo-simple-select-label" variant="outlined">
-        Order status
-      </InputLabel>
+    <FormControl variant="outlined" fullWidth>
+      <InputLabel variant="outlined">Order status</InputLabel>
 
       <NativeSelect
         onChange={handleChange}

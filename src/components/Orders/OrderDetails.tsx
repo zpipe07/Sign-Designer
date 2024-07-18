@@ -1,8 +1,5 @@
 import Typography from "@mui/material/Typography"
 import {
-  Alert,
-  Box,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -11,38 +8,12 @@ import {
   TableRow,
 } from "@mui/material"
 
-import { useGetProducts } from "@/src/hooks/queries/useGetProducts"
 import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 import { OrderDetailsRow } from "@/src/components/Orders/OrderDetailsRow"
 
 export const OrderDetails: React.FC<{ order: BigCommerceOrder }> = ({
   order,
 }) => {
-  const { data, isLoading, error } = useGetProducts(order.id)
-
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          paddingTop: 1,
-          paddingBottom: 1,
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Alert severity="error" sx={{ marginTop: 2, marginBottom: 2 }}>
-        There was an error fetching products for this order.
-      </Alert>
-    )
-  }
-
   return (
     <>
       <Typography variant="h6">Products</Typography>
@@ -59,7 +30,7 @@ export const OrderDetails: React.FC<{ order: BigCommerceOrder }> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.products.map((product) => {
+            {order.products.map((product) => {
               return (
                 <OrderDetailsRow
                   key={product.id}

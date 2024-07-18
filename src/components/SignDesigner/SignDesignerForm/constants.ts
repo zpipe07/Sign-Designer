@@ -453,6 +453,6 @@ export const DEFAULT_FORM_VALUES: DesignFormInputs = {
   ],
 }
 
-export const PAGE_LIMIT = 5
+export const PAGE_LIMIT = 100
 export const BOLT_OFFSET = 0.25
 export const BOLT_RADIUS = 0.125

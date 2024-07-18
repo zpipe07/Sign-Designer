@@ -93,9 +93,9 @@ export const OrderDetailsRow: React.FC<Props> = ({
             <Box
               dangerouslySetInnerHTML={{ __html: svg }}
               sx={{
-                maxWidth: 200,
+                maxWidth: 75,
                 svg: {
-                  maxHeight: 150,
+                  maxHeight: 100,
                 },
               }}
             />
