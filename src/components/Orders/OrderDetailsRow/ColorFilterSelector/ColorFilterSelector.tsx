@@ -2,7 +2,6 @@ import { ChangeEvent } from "react"
 import { useSearchParams } from "next/navigation"
 import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
-import LinearProgress from "@mui/material/LinearProgress"
 import NativeSelect from "@mui/material/NativeSelect"
 import OutlinedInput from "@mui/material/OutlinedInput"
 
@@ -26,14 +25,6 @@ export const ColorFilterSelector: React.FC = () => {
     history.pushState(null, "", url)
   }
 
-  if (isLoading) {
-    return <LinearProgress />
-  }
-
-  if (!data) {
-    return null
-  }
-
   return (
     <FormControl variant="outlined" fullWidth>
       <InputLabel variant="outlined">Color</InputLabel>
@@ -45,7 +36,7 @@ export const ColorFilterSelector: React.FC = () => {
       >
         <option value="all">All</option>
 
-        {data.productOptionsMap.color.values.map(({ label }) => {
+        {data?.productOptionsMap.color.values.map(({ label }) => {
           return (
             <option key={label} value={label}>
               {label}

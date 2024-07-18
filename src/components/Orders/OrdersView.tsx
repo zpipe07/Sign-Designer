@@ -16,7 +16,7 @@ type Props = {
 export const OrdersView: React.FC<Props> = ({ orders }) => {
   return (
     <TableContainer>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Order ID</TableCell>

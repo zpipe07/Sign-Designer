@@ -1,8 +1,9 @@
-import { Skeleton } from "@mui/material"
+import { IconButton, Skeleton } from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
+import DownloadIcon from "@mui/icons-material/Download"
 
 import {
   ColorCombo,
@@ -76,24 +77,17 @@ export const OrderDetailsRow: React.FC<Props> = ({
       </TableCell>
       <TableCell>{product.name}</TableCell>
       <TableCell>{product.quantity}</TableCell>
-      <TableCell>
-        <Box component="dl" sx={{ padding: 0, margin: 0 }}>
-          <Box component="dt" sx={{ padding: 0, margin: 0 }}>
-            <strong>Color</strong>
-          </Box>
-          <Box component="dd" sx={{ padding: 0, margin: 0 }}>
-            {color}
-          </Box>
-        </Box>
-
+      <TableCell align="center">
         {isLoading ? (
-          <Skeleton variant="rectangular" height={140} />
+          <Skeleton variant="rectangular" height={50} />
         ) : (
           svg && (
             <Box
               dangerouslySetInnerHTML={{ __html: svg }}
               sx={{
+                display: "inline-block",
                 maxWidth: 75,
+
                 svg: {
                   maxHeight: 100,
                 },
@@ -103,15 +97,23 @@ export const OrderDetailsRow: React.FC<Props> = ({
         )}
       </TableCell>
       <TableCell>
-        <Button
-          variant="contained"
-          color="primary"
+        <Box component="dl" sx={{ padding: 0, margin: 0 }}>
+          <Box component="dt" sx={{ padding: 0, margin: 0 }}>
+            <strong>Color</strong>
+          </Box>
+          <Box component="dd" sx={{ padding: 0, margin: 0 }}>
+            {color}
+          </Box>
+        </Box>
+      </TableCell>
+      <TableCell align="right">
+        <IconButton
           href={downloadHref}
-          sx={{ marginLeft: 1 }}
           download
+          sx={{ border: "1px solid" }}
         >
-          Download file
-        </Button>
+          <DownloadIcon />
+        </IconButton>
       </TableCell>
     </TableRow>
   )

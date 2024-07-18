@@ -25,6 +25,7 @@ export const OrderStatusSelect: React.FC<{
       defaultValue={order.status}
       onChange={handleStatusChange}
       native
+      size="small"
     >
       {orderStatuses.map((status) => (
         <option key={status} value={status}>
