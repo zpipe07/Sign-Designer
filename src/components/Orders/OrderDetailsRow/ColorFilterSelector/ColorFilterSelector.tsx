@@ -10,7 +10,7 @@ import { useGetProduct } from "@/src/hooks/queries/useGetProduct"
 export const ColorFilterSelector: React.FC = () => {
   const params = useSearchParams()
 
-  const { data, isLoading } = useGetProduct(112)
+  const { data } = useGetProduct(112)
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target
