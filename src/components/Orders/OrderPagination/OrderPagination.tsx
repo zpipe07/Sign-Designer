@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation"
-import { Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import Pagination from "@mui/material/Pagination"
 import Stack from "@mui/material/Stack"
 
@@ -34,9 +34,13 @@ export const OrderPagination: React.FC<Props> = ({
     )
   }
 
+  if (data.pages === 0) {
+    return null
+  }
+
   return (
-    <>
-      <Stack marginTop={2}>
+    <Box>
+      <Stack>
         <Pagination
           count={data.pages}
           color="primary"
@@ -45,9 +49,9 @@ export const OrderPagination: React.FC<Props> = ({
         />
       </Stack>
 
-      <Typography marginTop={1} marginBottom={1}>
+      <Typography marginTop={1}>
         Total orders: {data.count}
       </Typography>
-    </>
+    </Box>
   )
 }

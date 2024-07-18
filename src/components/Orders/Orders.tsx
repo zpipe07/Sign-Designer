@@ -8,7 +8,7 @@ import { Alert, Box, CircularProgress } from "@mui/material"
 import { useGetOrders } from "@/src/hooks/queries/useGetOrders"
 import { OrdersView } from "@/src/components/Orders/OrdersView"
 import { OrderPagination } from "@/src/components/Orders/OrderPagination"
-import { OrdersFiltersForm } from "@/src/components/Orders/OrdersFiltersForm"
+import { OrdersFilters } from "@/src/components/Orders/OrdersFilters"
 
 export const Orders: React.FC = () => {
   const [page, setPage] = useState(1)
@@ -32,10 +32,13 @@ export const Orders: React.FC = () => {
         Orders
       </Typography>
 
-      <OrdersFiltersForm />
-      {/* <OrdersFilters /> */}
+      <Box sx={{ display: "flex" }}>
+        <Box sx={{ marginRight: "auto" }}>
+          <OrdersFilters />
+        </Box>
 
-      <OrderPagination page={page} setPage={setPage} />
+        <OrderPagination page={page} setPage={setPage} />
+      </Box>
 
       {isLoading || !data ? (
         <Box
