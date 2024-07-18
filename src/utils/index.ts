@@ -42,7 +42,7 @@ export function parseSearchParams(
     mountingStyle,
     edgeStyle,
     showShadow,
-    borderWidth: borderWidth || "0",
+    borderWidth: borderWidth || "",
     validate,
   }
 }
