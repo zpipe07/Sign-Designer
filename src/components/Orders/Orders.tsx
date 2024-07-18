@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import Typography from "@mui/material/Typography"
 import { Alert, Box, CircularProgress } from "@mui/material"
 
@@ -12,7 +13,10 @@ import { OrdersFiltersForm } from "@/src/components/Orders/OrdersFiltersForm"
 export const Orders: React.FC = () => {
   const [page, setPage] = useState(1)
 
-  const { data, isLoading, error } = useGetOrders(page)
+  const searchParams = useSearchParams()
+  const statusId = searchParams.get("status_id")
+
+  const { data, isLoading, error } = useGetOrders({ page, statusId })
 
   if (error) {
     return (
