@@ -89,6 +89,10 @@ export function generateRectangleModel({
         }
 
         value.split("").forEach((char, i) => {
+          if (char === " ") {
+            return
+          }
+
           const charModel = new makerjs.models.Text(
             font,
             char,
