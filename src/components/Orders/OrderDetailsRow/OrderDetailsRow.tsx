@@ -52,7 +52,7 @@ export const OrderDetailsRow: React.FC<Props> = ({
   const textLines = JSON.parse(
     product.product_options.find(
       ({ display_name }) => display_name === "text_lines",
-    )?.display_value!,
+    )?.display_value || "[]",
   ) as TextLine[]
   const inputs = {
     shape,
