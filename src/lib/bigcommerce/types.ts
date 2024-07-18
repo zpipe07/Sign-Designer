@@ -738,10 +738,11 @@ export type BigCommerceOrder = {
     url: string
     resource: string
   }
-  products: {
-    url: string
-    resource: string
-  }
+  // products: {
+  //   url: string
+  //   resource: string
+  // }
+  products: BigCommerceOrderProduct[]
   shipping_addresses: {
     url: string
     resource: string
@@ -852,6 +853,24 @@ export type OrderStatus =
   | "Manual Verification Required"
   | "Disputed"
   | "Partially Refunded"
+
+export const STATUS_ID_MAP: { [key in OrderStatus]: number } = {
+  Incomplete: 0,
+  Pending: 1,
+  Shipped: 2,
+  "Partially Shipped": 3,
+  Refunded: 4,
+  Cancelled: 5,
+  Declined: 6,
+  "Awaiting Payment": 7,
+  "Awaiting Pickup": 8,
+  "Awaiting Shipment": 9,
+  Completed: 10,
+  "Awaiting Fulfillment": 11,
+  "Manual Verification Required": 12,
+  Disputed: 13,
+  "Partially Refunded": 14,
+}
 
 type BigCommerceWebhookScope = "store/order/created"
 

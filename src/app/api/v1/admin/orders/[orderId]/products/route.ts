@@ -11,6 +11,7 @@ export async function GET(
         "content-type": "application/json",
         "X-Auth-Token": process.env.ORDERS_ACCESS_TOKEN!,
       },
+      cache: "no-store",
     },
   )
   const products = await res.json()

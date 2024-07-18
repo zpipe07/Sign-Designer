@@ -74,8 +74,14 @@ export const CartItemRow: React.FC<Props> = ({ lineItem, cart }) => {
 
         {svg && (
           <Box
-            sx={{ maxWidth: 200 }}
             dangerouslySetInnerHTML={{ __html: svg }}
+            sx={{
+              maxWidth: 150,
+
+              svg: {
+                maxHeight: 150,
+              },
+            }}
           />
         )}
       </TableCell>
