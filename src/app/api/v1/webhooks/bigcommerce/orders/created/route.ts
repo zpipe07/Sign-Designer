@@ -40,7 +40,8 @@ export async function POST(request: Request) {
     },
   )
   const order: BigCommerceOrder = await res.json()
-  const productsRes = await fetch(order.products.url, {
+  const productUrl = `https://api.bigcommerce.com/stores/${process.env.BIGCOMMERCE_STORE_HASH}/v2/orders/${body.data.id}/products`
+  const productsRes = await fetch(productUrl, {
     method: "GET",
     headers: {
       accept: "application/json",
