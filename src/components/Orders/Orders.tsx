@@ -7,6 +7,7 @@ import { Alert, Box, CircularProgress } from "@mui/material"
 import { useGetOrders } from "@/src/hooks/queries/useGetOrders"
 import { OrdersView } from "@/src/components/Orders/OrdersView"
 import { OrderPagination } from "@/src/components/Orders/OrderPagination"
+import { OrdersFiltersForm } from "@/src/components/Orders/OrdersFiltersForm"
 
 export const Orders: React.FC = () => {
   const [page, setPage] = useState(1)
@@ -26,6 +27,9 @@ export const Orders: React.FC = () => {
       <Typography variant="h4" component="h2" marginBottom={2}>
         Orders
       </Typography>
+
+      <OrdersFiltersForm />
+      {/* <OrdersFilters /> */}
 
       <OrderPagination page={page} setPage={setPage} />
 
