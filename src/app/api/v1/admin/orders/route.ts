@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server"
 import queryString from "query-string"
 
-import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+// import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { BigCommerceOrder } from "@/src/lib/bigcommerce/types"
 
 export async function GET(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const qs = queryString.stringify({
     sort: "date_created:desc",
     page,
-    limit: PAGE_LIMIT.toString(),
+    // limit: PAGE_LIMIT.toString(),
     is_deleted: false,
     ...(statusId && { status_id: statusId }),
   })

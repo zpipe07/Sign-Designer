@@ -46,7 +46,7 @@ export const Orders: React.FC = () => {
           <OrdersFilters />
         </Box>
 
-        <OrderPagination page={page} setPage={setPage} />
+        {/* <OrderPagination page={page} setPage={setPage} /> */}
       </Box>
 
       {isLoading || !data ? (

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server"
 import queryString from "query-string"
 
-import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+// import { PAGE_LIMIT } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -23,7 +23,10 @@ export async function GET(request: NextRequest) {
     },
   )
   const { count } = await res.json()
-  const pages = Math.ceil(count / PAGE_LIMIT)
+  // const pages = Math.ceil(count / PAGE_LIMIT)
 
-  return Response.json({ count, pages })
+  return Response.json({
+    count,
+    // pages
+  })
 }
