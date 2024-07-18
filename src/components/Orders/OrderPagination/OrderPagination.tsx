@@ -1,3 +1,4 @@
+import { useSearchParams } from "next/navigation"
 import { Typography } from "@mui/material"
 import Pagination from "@mui/material/Pagination"
 import Stack from "@mui/material/Stack"
@@ -13,7 +14,10 @@ export const OrderPagination: React.FC<Props> = ({
   page,
   setPage,
 }) => {
-  const { data, isLoading } = useGetOrderCount()
+  const searchParams = useSearchParams()
+  const statusId = searchParams.get("status_id")
+
+  const { data, isLoading } = useGetOrderCount({ statusId })
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
