@@ -40,13 +40,7 @@ export const SignVisualizerCarousel: React.FC = () => {
           <SignVisualizer />
         </Box>
 
-        <Box
-          sx={{
-            width: "100%",
-          }}
-        >
-          <ProductVariantImage />
-        </Box>
+        <ProductVariantImage />
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
