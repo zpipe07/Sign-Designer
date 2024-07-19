@@ -41,7 +41,6 @@ export default function RootLayout({
           <Providers>
             <Header />
 
-            {/* <Container maxWidth="xl">{children}</Container> */}
             {children}
 
             <Footer />
