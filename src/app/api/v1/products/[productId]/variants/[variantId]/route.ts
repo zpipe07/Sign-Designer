@@ -16,6 +16,7 @@ export async function GET(
       cache: "no-store",
     },
   )
+  console.log({ res })
   const { data: variant } = await res.json()
 
   return Response.json({ variant })
