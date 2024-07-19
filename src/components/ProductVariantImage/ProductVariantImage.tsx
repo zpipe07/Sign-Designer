@@ -15,7 +15,7 @@ export const ProductVariantImage: React.FC = () => {
 
   const { data: variantData } = useGetProductVariant(112, variant?.id)
 
-  if (variantData?.variant.image_url) {
+  if (variantData?.variant?.image_url) {
     return (
       <Image
         src={variantData.variant.image_url}
