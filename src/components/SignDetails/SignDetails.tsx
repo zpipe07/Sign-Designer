@@ -29,11 +29,14 @@ export const SignDetails: React.FC = () => {
 
         <Grid item xs={12} sm={6}>
           <Image
-            src="/images/sign-preview.png"
+            src="/images/product/IMG_5837.jpg"
             alt=""
-            width={333}
-            height={353}
-            style={{ maxWidth: "100%" }}
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={500}
+            height={300}
           />
         </Grid>
       </Grid>

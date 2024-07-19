@@ -1,13 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useWatch } from "react-hook-form"
-import { Alert, Box, Skeleton, debounce } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Skeleton,
+  debounce,
+  useTheme,
+} from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
 import { SIZE_CONFIG_MAP } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import theme from "@/src/theme"
+import { ProductVariantImage } from "@/src/components/ProductVariantImage"
 
 export const SignVisualizer: React.FC = () => {
+  const theme = useTheme()
+
   const inputs = useWatch<DesignFormInputs>()
 
   const ref = useRef<HTMLDivElement>(null)

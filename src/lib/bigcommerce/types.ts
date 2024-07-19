@@ -83,6 +83,41 @@ export type VercelProductVariant = {
   price: VercelMoney
 }
 
+export type VercelProductVariantDetails = {
+  id: number
+  product_id: number
+  sku: string
+  sku_id: number
+  price: null
+  calculated_price: number
+  sale_price: null
+  retail_price: null
+  map_price: null
+  fixed_cost_shipping_price: null
+  cost_price: number
+  weight: null
+  width: null
+  height: null
+  depth: null
+  is_free_shipping: boolean
+  calculated_weight: number
+  purchasing_disabled: boolean
+  purchasing_disabled_message: string
+  image_url: string
+  upc: string
+  mpn: string
+  gtin: string
+  inventory_level: number
+  inventory_warning_level: number
+  bin_picking_number: string
+  option_values: {
+    id: number
+    label: string
+    option_id: number
+    option_display_name: string
+  }[]
+}
+
 export type VercelSEO = {
   title: string
   description: string

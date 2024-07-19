@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { createClient } from "@supabase/supabase-js"
 import CssBaseline from "@mui/material/CssBaseline"
-import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
 
 import { Header } from "@/src/components/Header"
@@ -42,7 +41,7 @@ export default function RootLayout({
           <Providers>
             <Header />
 
-            <Container maxWidth="xl">{children}</Container>
+            {children}
 
             <Footer />
           </Providers>
