@@ -12,6 +12,7 @@ import { SignVisualizer } from "@/src/components/SignVisualizer"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { AddressBarUpdater } from "@/src/components/SignDesigner/AddressBarUpdater"
 import { DEFAULT_FORM_VALUES } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { SignVisualizerCarousel } from "@/src/components/SignVisualizerCarousel"
 
 type Props = {
   isEditing?: boolean
@@ -98,7 +99,7 @@ export const SignDesigner: React.FC<Props> = ({
                   },
                 }}
               >
-                <SignVisualizer />
+                <SignVisualizerCarousel />
               </Box>
             </Card>
           </Grid>

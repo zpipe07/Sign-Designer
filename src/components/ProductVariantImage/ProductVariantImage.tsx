@@ -20,7 +20,11 @@ export const ProductVariantImage: React.FC = () => {
       <Image
         src={variantData.variant.image_url}
         alt=""
-        width={300}
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+        width={500}
         height={300}
       />
     )

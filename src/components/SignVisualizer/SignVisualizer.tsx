@@ -127,8 +127,6 @@ export const SignVisualizer: React.FC = () => {
           )}
         </>
       )}
-
-      <ProductVariantImage />
     </Box>
   )
 }
