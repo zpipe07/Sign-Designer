@@ -7,10 +7,13 @@ import Grid from "@mui/material/Grid"
 import { TextInputForm } from "@/src/components/TextInputForm"
 import { HeroContainer } from "@/src/components/HeroContainer"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
+import { HeroCarousel } from "@/src/components/HeroCarousel"
 
 export default function Home() {
   return (
     <>
+      <HeroCarousel />
+
       <HeroContainer>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
