@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { VercelProductVariant } from "@/src/lib/bigcommerce/types"
+import { VercelProductVariantDetails } from "@/src/lib/bigcommerce/types"
 
 export const useGetProductVariant = (
   productId: number,
@@ -16,7 +16,7 @@ export const useGetProductVariant = (
   }
 
   return useQuery<{
-    productVariant: VercelProductVariant
+    variant: VercelProductVariantDetails
   }>({
     queryKey: [`/api/v1/products/${productId}/variants/${variantId}`],
     queryFn: getProductVariant,

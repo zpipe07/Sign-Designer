@@ -15,13 +15,16 @@ export const ProductVariantImage: React.FC = () => {
 
   const { data: variantData } = useGetProductVariant(112, variant?.id)
 
+  if (variantData?.variant.image_url) {
+    return (
+      <Image
+        src={variantData.variant.image_url}
+        alt=""
+        width={300}
+        height={300}
+      />
+    )
+  }
+
   return null
-  // if (variantData?.productVariant.)
-  // <Image
-  // // key={index}
-  // // src={image.url}
-  // // alt={image.altText}
-  // // width={image.width}
-  // // height={image.height}
-  // />
 }
