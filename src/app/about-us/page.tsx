@@ -2,8 +2,8 @@ import { Container, Typography } from "@mui/material"
 
 export default function Page() {
   return (
-    <Container>
-      <Typography variant="h3" component="h1">
+    <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
+      <Typography variant="h3" component="h1" marginBottom={1}>
         About us
       </Typography>
 

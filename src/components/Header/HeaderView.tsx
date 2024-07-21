@@ -24,7 +24,9 @@ import { Cart } from "@/src/components/Header/Cart"
 const pages = [
   { label: "Sign Designer", href: "/design" },
   { label: "Our Work", href: "/our-work" },
-  { label: "About Us", href: "/about-us" },
+  // { label: "About Us", href: "/about-us" },
+  // { label: "Contact Us", href: "/contact-us" },
+  { label: "FAQs", href: "/faqs" },
 ]
 
 type Props = {
