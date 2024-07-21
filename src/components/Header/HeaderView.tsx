@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { User } from "@supabase/supabase-js"
+import Image from "next/image"
 import Link from "next/link"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
@@ -12,21 +13,21 @@ import Button from "@mui/material/Button"
 import Tooltip from "@mui/material/Tooltip"
 import Avatar from "@mui/material/Avatar"
 import MenuIcon from "@mui/icons-material/Menu"
-import AdbIcon from "@mui/icons-material/Adb"
 import AppBar from "@mui/material/AppBar"
 import Container from "@mui/material/Container"
 import Toolbar from "@mui/material/Toolbar"
+import { useTheme } from "@mui/material"
 
 import { SignOut } from "@/src/components/Header/SignOut"
 import { Cart } from "@/src/components/Header/Cart"
-import { useTheme } from "@mui/material"
 
 const pages = [
-  { label: "Design your sign", href: "/design" },
-  { label: "View our work", href: "/our-work" },
-  { label: "About us", href: "/about-us" },
+  { label: "Sign Designer", href: "/design" },
+  { label: "Our Work", href: "/our-work" },
+  // { label: "About Us", href: "/about-us" },
+  // { label: "Contact Us", href: "/contact-us" },
+  { label: "FAQs", href: "/faqs" },
 ]
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 type Props = {
   user: User | null
@@ -71,9 +72,15 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <AdbIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+            <Image
+              src="/images/logos/LogoMarkBlue.png"
+              alt=""
+              width={697 / 6}
+              height={446 / 6}
+            />
+          </Box>
+
           <Typography
             variant="h6"
             noWrap
@@ -89,7 +96,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               textDecoration: "none",
             }}
           >
-            Sign Designer
+            Sign Genie
           </Typography>
 
           <Box
@@ -120,7 +127,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", md: "none", zIndex: 99999 },
               }}
             >
               {pages.map(({ label, href }) => (
@@ -136,9 +143,15 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+
+          <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <Image
+              src="/images/logos/LogoMarkBlue.png"
+              alt=""
+              width={697 / 7}
+              height={446 / 7}
+            />
+          </Box>
           <Typography
             variant="h5"
             noWrap
@@ -153,9 +166,10 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              fontSize: 24,
             }}
           >
-            Sign Designer
+            Sign Genie
           </Typography>
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
@@ -166,7 +180,14 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
                 href={href}
                 key={label}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "inherit", display: "block" }}
+                sx={{
+                  fontSize: 18,
+                  padding: 2,
+                  borderRadius: 0,
+                  color: "inherit",
+                  display: "block",
+                  textTransform: "none",
+                }}
               >
                 {label}
               </Button>
