@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form"
 import TextField from "@mui/material/TextField"
 import { LoadingButton } from "@mui/lab"
 
-type FormData = {
+import { useSendEmail } from "@/src/hooks/mutations/useSendEmail"
+
+export type FormData = {
   name: string
   email: string
   message: string
@@ -13,8 +15,11 @@ type FormData = {
 export const ContactUsForm: React.FC = () => {
   const { register, handleSubmit } = useForm<FormData>()
 
+  const { mutate, isPending } = useSendEmail()
+
   const onSubmit = (data: FormData) => {
     console.log(data)
+    mutate(data)
   }
 
   return (
@@ -42,12 +47,14 @@ export const ContactUsForm: React.FC = () => {
         rows={4}
         {...register("message")}
       />
+
       <LoadingButton
         type="submit"
         variant="contained"
         color="primary"
         size="large"
         fullWidth
+        loading={isPending}
       >
         Send
       </LoadingButton>
