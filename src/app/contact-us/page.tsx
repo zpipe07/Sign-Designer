@@ -4,7 +4,7 @@ import { ContactUsForm } from "@/src/components/ContactUsForm"
 
 export default function Page() {
   return (
-    <Container>
+    <Container sx={{ paddingBottom: 2 }} maxWidth="md">
       <Typography
         variant="h3"
         component="h1"
@@ -13,7 +13,7 @@ export default function Page() {
       >
         Contact us
       </Typography>
-      <Typography>
+      <Typography marginBottom={2}>
         Send us a message, ask us a question, or just say hello!
       </Typography>
 

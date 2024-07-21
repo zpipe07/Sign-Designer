@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField"
 import { LoadingButton } from "@mui/lab"
 
 import { useSendEmail } from "@/src/hooks/mutations/useSendEmail"
+import { Grid } from "@mui/material"
 
 export type FormData = {
   name: string
@@ -18,46 +19,54 @@ export const ContactUsForm: React.FC = () => {
   const { mutate, isPending } = useSendEmail()
 
   const onSubmit = (data: FormData) => {
-    console.log(data)
     mutate(data)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        label="Name"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        {...register("name")}
-      />
-      <TextField
-        label="Email"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        {...register("email")}
-      />
-      <TextField
-        label="Message"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        multiline
-        rows={4}
-        {...register("message")}
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Name"
+            variant="outlined"
+            fullWidth
+            {...register("name")}
+          />
+        </Grid>
 
-      <LoadingButton
-        type="submit"
-        variant="contained"
-        color="primary"
-        size="large"
-        fullWidth
-        loading={isPending}
-      >
-        Send
-      </LoadingButton>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            fullWidth
+            {...register("email")}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            label="Message"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+            {...register("message")}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            loading={isPending}
+            sx={{ minWidth: 250 }}
+          >
+            Send
+          </LoadingButton>
+        </Grid>
+      </Grid>
     </form>
   )
 }
