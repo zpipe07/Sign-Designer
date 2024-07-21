@@ -2,10 +2,10 @@
 
 import { useForm } from "react-hook-form"
 import TextField from "@mui/material/TextField"
+import { Grid } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 
 import { useSendEmail } from "@/src/hooks/mutations/useSendEmail"
-import { Grid } from "@mui/material"
 
 export type FormData = {
   name: string
