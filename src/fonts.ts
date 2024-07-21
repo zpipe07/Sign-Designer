@@ -60,3 +60,6 @@ export const BagelFatOne = localFont({
 export const GermaniaOne = localFont({
   src: "../public/fonts/GermaniaOne-Regular.ttf",
 })
+export const XCompany = localFont({
+  src: "../public/fonts/XCompany.ttf",
+})

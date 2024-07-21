@@ -363,6 +363,7 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   AoboshiOne: "AoboshiOne-Regular.ttf",
   BagelFatOne: "BagelFatOne-Regular.ttf",
   GermaniaOne: "GermaniaOne-Regular.ttf",
+  XCompany: "XCompany.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {
