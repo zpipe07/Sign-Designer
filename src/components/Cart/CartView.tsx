@@ -48,7 +48,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         </Table>
       </TableContainer>
 
-      <Box marginTop={2} marginBottom={2} textAlign="right">
+      {/* <Box marginTop={2} marginBottom={2} textAlign="right">
         <Typography variant="h5">Subtotal</Typography>
         <Typography>${cart.cost.subtotalAmount.amount}</Typography>
         <Typography marginBottom={1} variant="body2">
@@ -56,7 +56,7 @@ export const CartView: React.FC<Props> = ({ cart }) => {
         </Typography>
 
         <CheckoutButton />
-      </Box>
+      </Box> */}
     </>
   )
 }
