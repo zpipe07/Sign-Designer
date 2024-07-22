@@ -14,7 +14,7 @@ import { CartView } from "@/src/components/Cart/CartView"
 
 type Props = {
   isOpen: boolean
-  onClose: (value: string) => void
+  onClose: () => void
 }
 
 export const CartSuccessDialog: React.FC<Props> = ({
@@ -60,6 +60,7 @@ export const CartSuccessDialog: React.FC<Props> = ({
           color="primary"
           size="large"
           fullWidth
+          href={data?.cart?.checkoutUrl}
           sx={{
             marginBottom: 1,
 
@@ -76,6 +77,7 @@ export const CartSuccessDialog: React.FC<Props> = ({
           color="primary"
           size="large"
           fullWidth
+          onClick={() => onClose()}
         >
           Continue shopping
         </Button>

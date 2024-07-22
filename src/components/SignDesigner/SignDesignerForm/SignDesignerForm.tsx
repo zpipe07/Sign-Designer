@@ -2,10 +2,13 @@
 
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import Grid from "@mui/material/Grid"
+import Alert from "@mui/material/Alert"
+import Box from "@mui/material/Box"
+import Divider from "@mui/material/Divider"
+import useTheme from "@mui/material/styles/useTheme"
 import { LoadingButton } from "@mui/lab"
-import { Alert, Box, Divider, useTheme } from "@mui/material"
 
 import {
   ColorSelector,
@@ -23,7 +26,6 @@ import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { EdgeSelector } from "@/src/components/EdgeSelector"
 import { BorderSelector } from "@/src/components/SignDesigner/SignDesignerForm/BorderSelector"
-import { DEFAULT_FORM_VALUES } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import { CartSuccessDialog } from "@/src/components/CartSuccessDialog"
 
 type Props = {
@@ -33,13 +35,11 @@ type Props = {
 export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const router = useRouter()
-
   const theme = useTheme()
 
   const params = useParams<{ cartId: string; itemId: string }>()
 
-  const { handleSubmit, reset } = useFormContext<DesignFormInputs>()
+  const { handleSubmit } = useFormContext<DesignFormInputs>()
 
   const { data: cartData } = useGetCart()
 
@@ -55,21 +55,18 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     mutate: createCart,
     isPending: isPendingCreateCart,
     error: createCartError,
-    reset: resetCreateCart,
   } = useCreateCart({ onSuccess })
 
   const {
     mutate: addCartItem,
     isPending: isPendingAddCartItem,
     error: addCartItemError,
-    reset: resetAddCartItem,
   } = useAddCartItem({ onSuccess })
 
   const {
     mutate: updateCartItem,
     isPending: isPendingUpdateCartItem,
     error: updateCartItemError,
-    reset: resetUpdateCartItem,
   } = useUpdateCartItem({ onSuccess })
 
   const onSubmit = (data: DesignFormInputs) => {
@@ -96,7 +93,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
   return (
     <>
       <CartSuccessDialog
-        isOpen={isDialogOpen || true}
+        isOpen={isDialogOpen}
         onClose={handleClose}
       />
 
