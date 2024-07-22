@@ -364,6 +364,12 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   BagelFatOne: "BagelFatOne-Regular.ttf",
   GermaniaOne: "GermaniaOne-Regular.ttf",
   XCompany: "XCompany.ttf",
+  Gerhaus: "Gerhaus.ttf",
+  LifeKittie: "LifeKittie.ttf",
+  QuantifierNbp: "QuantifierNbp.ttf",
+  EdgeOfTheGalaxy: "EdgeOfTheGalaxy.otf",
+  Forque: "Forque.ttf",
+  Airstream: "Airstream.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

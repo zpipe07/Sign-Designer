@@ -30,6 +30,12 @@ export type FontFamily =
   | "BagelFatOne"
   | "GermaniaOne"
   | "XCompany"
+  | "Gerhaus"
+  | "LifeKittie"
+  | "QuantifierNbp"
+  | "EdgeOfTheGalaxy"
+  | "Forque"
+  | "Airstream"
 
 export type Orientation = "horizontal" | "vertical"
 

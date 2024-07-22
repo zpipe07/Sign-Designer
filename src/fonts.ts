@@ -63,3 +63,21 @@ export const GermaniaOne = localFont({
 export const XCompany = localFont({
   src: "../public/fonts/XCompany.ttf",
 })
+export const Gerhaus = localFont({
+  src: "../public/fonts/Gerhaus.ttf",
+})
+export const LifeKittie = localFont({
+  src: "../public/fonts/LifeKittie.ttf",
+})
+export const QuantifierNbp = localFont({
+  src: "../public/fonts/QuantifierNbp.ttf",
+})
+export const EdgeOfTheGalaxy = localFont({
+  src: "../public/fonts/EdgeOfTheGalaxy.otf",
+})
+export const Forque = localFont({
+  src: "../public/fonts/Forque.ttf",
+})
+export const Airstream = localFont({
+  src: "../public/fonts/Airstream.ttf",
+})

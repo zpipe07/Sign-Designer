@@ -33,6 +33,12 @@ import {
   BagelFatOne,
   GermaniaOne,
   XCompany,
+  Gerhaus,
+  LifeKittie,
+  QuantifierNbp,
+  EdgeOfTheGalaxy,
+  Forque,
+  Airstream,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -55,6 +61,12 @@ const fontFamilies: FontFamily[] = [
   "BagelFatOne",
   "GermaniaOne",
   "XCompany",
+  "Gerhaus",
+  "LifeKittie",
+  "QuantifierNbp",
+  "EdgeOfTheGalaxy",
+  "Forque",
+  "Airstream",
 ]
 
 const fontMap = {
@@ -77,6 +89,12 @@ const fontMap = {
   BagelFatOne,
   GermaniaOne,
   XCompany,
+  Gerhaus,
+  LifeKittie,
+  QuantifierNbp,
+  EdgeOfTheGalaxy,
+  Forque,
+  Airstream,
 }
 
 export const FontSelector: React.FC = () => {
