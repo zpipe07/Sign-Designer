@@ -72,6 +72,22 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters>
+          <Typography
+            variant="body1"
+            noWrap
+            component={Link}
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontWeight: 700,
+              fontSize: 26,
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Sign Genie
+          </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
             <Image
               src="/images/logos/LogoMarkBlue.png"
@@ -80,24 +96,6 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               height={446 / 6}
             />
           </Box>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Sign Genie
-          </Typography>
 
           <Box
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
@@ -153,7 +151,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
             />
           </Box>
           <Typography
-            variant="h5"
+            variant="body1"
             noWrap
             component={Link}
             href="/"
@@ -161,9 +159,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
               fontSize: 24,

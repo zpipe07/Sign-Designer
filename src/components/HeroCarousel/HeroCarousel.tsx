@@ -19,6 +19,10 @@ import {
   useDotButton,
 } from "@/src/components/CarouselDot"
 
+import OneImg from "../../../public/images/product/IMG_5834.jpg"
+import TwoImg from "../../../public/images/product/IMG_5822.jpg"
+import ThreeImg from "../../../public/images/product/IMG_5837.jpg"
+
 export const HeroCarousel: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
@@ -39,15 +43,7 @@ export const HeroCarousel: React.FC = () => {
     <Box
       sx={{
         position: "relative",
-        minHeight: 400,
-
-        [theme.breakpoints.up("sm")]: {
-          minHeight: 500,
-        },
-
-        [theme.breakpoints.up("md")]: {
-          minHeight: 600,
-        },
+        height: 600,
       }}
     >
       <Box
@@ -65,9 +61,27 @@ export const HeroCarousel: React.FC = () => {
             top: "50%",
             transform: "translateY(-50%)",
           },
+
+          [theme.breakpoints.up("lg")]: {
+            right: "25%",
+          },
         }}
       >
-        <Card elevation={5}>
+        <Card
+          elevation={5}
+          sx={{
+            [theme.breakpoints.up("sm")]: {
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            },
+
+            [theme.breakpoints.up("lg")]: {
+              borderRadius: 1,
+            },
+          }}
+        >
           <CardContent>
             <Typography
               variant="h5"
@@ -119,6 +133,10 @@ export const HeroCarousel: React.FC = () => {
           zIndex: 9,
           display: "flex",
           alignItems: "center",
+
+          [theme.breakpoints.down("sm")]: {
+            display: "none",
+          },
         }}
       >
         <IconButton
@@ -150,66 +168,58 @@ export const HeroCarousel: React.FC = () => {
         ref={emblaRef}
         sx={{
           overflow: "hidden",
+          height: "100%",
         }}
       >
         <Box
           sx={{
             display: "grid",
             gridAutoFlow: "column",
-            gridAutoColumns: "80%",
-            height: 300,
-
-            [theme.breakpoints.up("sm")]: {
-              height: 400,
-            },
-
-            [theme.breakpoints.up("md")]: {
-              height: 500,
-            },
-
-            [theme.breakpoints.up("md")]: {
-              height: 600,
-            },
+            gridAutoColumns: "100%",
+            height: "100%",
           }}
         >
-          <Image
-            src="/images/product/IMG_5834.jpg"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              minHeight: "100%",
-            }}
-          />
+          <Box position="relative">
+            <Image
+              src={OneImg}
+              alt=""
+              placeholder="blur"
+              quality={100}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </Box>
 
-          <Image
-            src="/images/product/IMG_5822.jpg"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              minHeight: "100%",
-            }}
-          />
+          <Box position="relative">
+            <Image
+              src={TwoImg}
+              alt=""
+              placeholder="blur"
+              quality={100}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </Box>
 
-          <Image
-            src="/images/product/IMG_5837.jpg"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              minHeight: "100%",
-            }}
-          />
+          <Box position="relative">
+            <Image
+              src={ThreeImg}
+              alt=""
+              placeholder="blur"
+              quality={100}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>
