@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import { createClient } from "@supabase/supabase-js"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
@@ -13,8 +12,6 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 )
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,7 +30,6 @@ export default function RootLayout({
       <html lang="en">
         <Box
           component="body"
-          className={inter.className}
           sx={{
             backgroundColor: "#F3F8EE", // theme.palette.background.default,
           }}
