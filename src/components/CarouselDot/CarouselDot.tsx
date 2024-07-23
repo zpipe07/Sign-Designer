@@ -58,7 +58,7 @@ export const CarouselDot: React.FC<Props> = ({
   onClick,
 }) => {
   return (
-    <Box sx={{ padding: 0.5 }}>
+    <Box sx={{ padding: 0.5, fontSize: 0 }}>
       <IconButton
         size="small"
         onClick={onClick}
