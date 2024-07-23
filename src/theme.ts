@@ -2,6 +2,7 @@
 
 // import { Roboto } from "next/font/google"
 import { ThemeOptions, createTheme } from "@mui/material/styles"
+import { DM_Sans, DM_Serif_Display } from "next/font/google"
 
 // const roboto = Roboto({
 //   weight: ["300", "400", "500", "700"],
@@ -14,6 +15,16 @@ import { ThemeOptions, createTheme } from "@mui/material/styles"
 //     fontFamily: roboto.style.fontFamily,
 //   },
 // })
+
+export const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+})
+export const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-dm-serif-display",
+})
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -56,6 +67,27 @@ export const themeOptions: ThemeOptions = {
           zIndex: 9999999,
         },
       },
+    },
+  },
+  typography: {
+    fontFamily: dmSans.style.fontFamily,
+    h1: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
+    },
+    h2: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
+    },
+    h3: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
+    },
+    h4: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
+    },
+    h5: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
+    },
+    h6: {
+      fontFamily: dmSerifDisplay.style.fontFamily,
     },
   },
 }
