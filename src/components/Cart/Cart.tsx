@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography"
 
 import { CartView } from "@/src/components/Cart/CartView"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
+import { CheckoutButton } from "@/src/components/CheckoutButton"
 
 export const Cart: React.FC = () => {
   const { data, isLoading } = useGetCart()
@@ -33,5 +34,21 @@ export const Cart: React.FC = () => {
     )
   }
 
-  return <CartView cart={data.cart} />
+  return (
+    <>
+      <CartView cart={data.cart} />
+
+      <Box marginTop={2} marginBottom={2} textAlign="right">
+        <Typography variant="h5">Subtotal</Typography>
+        <Typography>
+          ${data.cart.cost.subtotalAmount.amount}
+        </Typography>
+        <Typography marginBottom={1} variant="body2">
+          Shipping & taxes calculated at checkout
+        </Typography>
+
+        <CheckoutButton />
+      </Box>
+    </>
+  )
 }

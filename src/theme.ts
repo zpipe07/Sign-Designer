@@ -50,6 +50,13 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          zIndex: 9999999,
+        },
+      },
+    },
   },
 }
 const theme = createTheme(themeOptions)

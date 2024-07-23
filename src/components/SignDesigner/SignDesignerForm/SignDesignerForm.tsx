@@ -1,11 +1,14 @@
 "use client"
 
-import Link from "next/link"
+import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import Grid from "@mui/material/Grid"
+import Alert from "@mui/material/Alert"
+import Box from "@mui/material/Box"
+import Divider from "@mui/material/Divider"
+import useTheme from "@mui/material/styles/useTheme"
 import { LoadingButton } from "@mui/lab"
-import { Alert, Box, Button, Divider, useTheme } from "@mui/material"
 
 import {
   ColorSelector,
@@ -23,46 +26,48 @@ import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { EdgeSelector } from "@/src/components/EdgeSelector"
 import { BorderSelector } from "@/src/components/SignDesigner/SignDesignerForm/BorderSelector"
-import { DEFAULT_FORM_VALUES } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { CartSuccessDialog } from "@/src/components/CartSuccessDialog"
 
 type Props = {
   isEditing?: boolean
 }
 
 export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
-  const router = useRouter()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const theme = useTheme()
 
   const params = useParams<{ cartId: string; itemId: string }>()
 
-  const { handleSubmit, reset } = useFormContext<DesignFormInputs>()
+  const { handleSubmit } = useFormContext<DesignFormInputs>()
 
   const { data: cartData } = useGetCart()
+
+  const onSuccess = () => {
+    setIsDialogOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsDialogOpen(false)
+  }
 
   const {
     mutate: createCart,
     isPending: isPendingCreateCart,
     error: createCartError,
-    isSuccess: createCartSuccess,
-    reset: resetCreateCart,
-  } = useCreateCart()
+  } = useCreateCart({ onSuccess })
 
   const {
     mutate: addCartItem,
     isPending: isPendingAddCartItem,
     error: addCartItemError,
-    isSuccess: addCartItemSuccess,
-    reset: resetAddCartItem,
-  } = useAddCartItem()
+  } = useAddCartItem({ onSuccess })
 
   const {
     mutate: updateCartItem,
     isPending: isPendingUpdateCartItem,
     error: updateCartItemError,
-    isSuccess: updateCartItemSuccess,
-    reset: resetUpdateCartItem,
-  } = useUpdateCartItem()
+  } = useUpdateCartItem({ onSuccess })
 
   const onSubmit = (data: DesignFormInputs) => {
     if (isEditing) {
@@ -85,19 +90,13 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
     }
   }
 
-  const handleResetForm = () => {
-    reset(DEFAULT_FORM_VALUES)
-    window.scrollTo(0, 0)
-    resetCreateCart()
-    resetAddCartItem()
-    resetUpdateCartItem()
-  }
-
-  const isSuccess =
-    createCartSuccess || addCartItemSuccess || updateCartItemSuccess
-
   return (
     <>
+      <CartSuccessDialog
+        isOpen={isDialogOpen}
+        onClose={handleClose}
+      />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -157,7 +156,7 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
           </Grid>
 
           <Grid item xs={12}>
-            {isSuccess ? (
+            {/* {isSuccess ? (
               <Box>
                 <Alert severity="success" sx={{ marginBottom: 1 }}>
                   Item added to cart
@@ -198,40 +197,40 @@ export const SignDesignerForm: React.FC<Props> = ({ isEditing }) => {
                   </Button>
                 </Box>
               </Box>
-            ) : (
-              <Box
+            ) : ( */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                flexWrap: "wrap",
+              }}
+            >
+              <PriceDisplay />
+
+              <LoadingButton
+                variant="contained"
+                size="large"
+                type="submit"
+                color="secondary"
+                loading={
+                  isPendingCreateCart ||
+                  isPendingAddCartItem ||
+                  isPendingUpdateCartItem
+                }
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  flexWrap: "wrap",
+                  marginLeft: "auto",
+
+                  [theme.breakpoints.up("md")]: {
+                    width: "100%",
+                    marginTop: 1,
+                  },
                 }}
               >
-                <PriceDisplay />
-
-                <LoadingButton
-                  variant="contained"
-                  size="large"
-                  type="submit"
-                  color="secondary"
-                  loading={
-                    isPendingCreateCart ||
-                    isPendingAddCartItem ||
-                    isPendingUpdateCartItem
-                  }
-                  sx={{
-                    marginLeft: "auto",
-
-                    [theme.breakpoints.up("md")]: {
-                      width: "100%",
-                      marginTop: 1,
-                    },
-                  }}
-                >
-                  {isEditing ? "Update" : "Add to cart"}
-                </LoadingButton>
-              </Box>
-            )}
+                {isEditing ? "Update" : "Add to cart"}
+              </LoadingButton>
+            </Box>
+            {/* )} */}
           </Grid>
         </Grid>
       </form>
