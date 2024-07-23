@@ -1,7 +1,9 @@
+import Link from "next/link"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import Typography from "@mui/material/Typography"
-import { Box, Skeleton } from "@mui/material"
+import { Box, Button, Skeleton } from "@mui/material"
+import EditIcon from "@mui/icons-material/Edit"
 
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
 import { RemoveFromCartButton } from "@/src/components/RemoveFromCartButton"
@@ -87,6 +89,13 @@ export const CartItemRow: React.FC<Props> = ({ lineItem, cart }) => {
       </TableCell>
 
       <TableCell>
+        <Button
+          component={Link}
+          href={`/cart/${cart.id}/items/${lineItem.id}`}
+        >
+          <EditIcon />
+        </Button>
+
         <RemoveFromCartButton
           cartId={cart.id}
           lineItemId={lineItem.id}
