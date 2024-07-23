@@ -10,13 +10,9 @@ export const useGetSignSvg = (
   showShadow?: boolean,
   validate?: boolean,
 ) => {
-  // const queryClient = useQueryClient()
-
   const getSignSvg = async (
     { signal }: any,
     inputs: DesignFormInputs,
-    // queryKeySuffix?: string,
-    // enabled = true,
     showShadow?: boolean,
     validate?: boolean,
   ) => {

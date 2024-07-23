@@ -11,7 +11,6 @@ import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
 
 export default function Home() {
-  console.log("Home")
   return (
     <>
       <HeroCarousel />
