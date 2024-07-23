@@ -1,8 +1,8 @@
-import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Alert, CircularProgress } from "@mui/material"
+import { Alert } from "@mui/material"
 
 import { useRemoveFromCart } from "@/src/hooks/mutations/useRemoveFromCart"
+import { LoadingButton } from "@mui/lab"
 
 type Props = {
   cartId: string
@@ -21,14 +21,14 @@ export const RemoveFromCartButton: React.FC<Props> = ({
 
   return (
     <>
-      <IconButton
-        disabled={isPending}
+      <LoadingButton
+        loading={isPending}
         onClick={() => {
           removeFromCart({ cartId, lineItemId })
         }}
       >
-        {isPending ? <CircularProgress /> : <DeleteIcon />}
-      </IconButton>
+        <DeleteIcon />
+      </LoadingButton>
 
       {error && (
         <Alert severity="error" sx={{ marginTop: 1 }}>

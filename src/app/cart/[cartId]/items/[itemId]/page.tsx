@@ -1,56 +1,57 @@
 "use client"
 
-import { useEffect } from "react"
 import { useParams } from "next/navigation"
 import { useFormContext } from "react-hook-form"
-import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
 
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { SignDesigner } from "@/src/components/SignDesigner"
+import { Container } from "@mui/material"
+import {
+  ColorCombo,
+  DesignFormInputs,
+  EdgeStyle,
+  FontFamily,
+  MountingStyle,
+  Shape,
+  Size,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
 
 export default function Page() {
-  const { setValue } = useFormContext()
-
   const params = useParams<{ cartId: string; itemId: string }>()
 
   const { data, isLoading } = useGetCart()
 
-  useEffect(() => {
-    const cartItem = data?.cart?.lines.find(
-      ({ id }) => id === params.itemId,
-    )
+  const cartItem = data?.cart?.lines.find(
+    ({ id }) => id === params.itemId,
+  )
 
-    if (cartItem) {
-      const selectedOptions = cartItem?.merchandise.selectedOptions
-      const shape = selectedOptions?.find(
-        ({ name }) => name === "shape",
-      )?.value
-      const orientation = selectedOptions?.find(
-        ({ name }) => name === "orientation",
-      )?.value
-      const size = selectedOptions?.find(
-        ({ name }) => name === "size",
-      )?.value
-      const textLine = selectedOptions?.find(
-        ({ name }) => name === "textLine",
-      )?.value
-      const font = selectedOptions?.find(
-        ({ name }) => name === "font",
-      )?.value
-      const color = selectedOptions?.find(
-        ({ name }) => name === "color",
-      )?.value
-
-      setValue("shape", shape)
-      setValue("orientation", orientation)
-      setValue("size", size)
-      setValue("textLines", [{ value: textLine }])
-      setValue("fontFamily", font)
-      setValue("color", color)
-    }
-  }, [data?.cart?.lines, params.itemId, setValue])
+  const selectedOptions = cartItem?.merchandise.selectedOptions
+  const inputs: DesignFormInputs = {
+    shape: selectedOptions?.find(({ name }) => name === "shape")
+      ?.value as Shape,
+    size: selectedOptions?.find(({ name }) => name === "size")
+      ?.value as Size,
+    textLines: JSON.parse(
+      selectedOptions?.find(({ name }) => name === "text_lines")
+        ?.value || "[]",
+    ) as TextLine[],
+    fontFamily: selectedOptions?.find(({ name }) => name === "font")
+      ?.value as FontFamily,
+    color: selectedOptions?.find(({ name }) => name === "color")
+      ?.value as ColorCombo,
+    mountingStyle: selectedOptions?.find(
+      ({ name }) => name === "mounting_style",
+    )?.value as MountingStyle,
+    edgeStyle: selectedOptions?.find(
+      ({ name }) => name === "edge_style",
+    )?.value as EdgeStyle,
+    borderWidth: selectedOptions?.find(
+      ({ name }) => name === "border_width",
+    )?.value!,
+  }
 
   if (isLoading) {
     return (
@@ -72,12 +73,8 @@ export default function Page() {
   }
 
   return (
-    <>
-      {/* <Typography variant="h3" component="h1" marginBottom={2}>
-        Edit item
-      </Typography> */}
-
-      <SignDesigner isEditing />
-    </>
+    <Container>
+      <SignDesigner isEditing {...inputs} />
+    </Container>
   )
 }
