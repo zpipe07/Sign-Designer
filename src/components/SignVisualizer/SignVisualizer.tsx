@@ -51,9 +51,13 @@ export const SignVisualizer: React.FC = () => {
   )
 
   useEffect(() => {
+    const textLines = inputs.textLines?.slice(0, maxLinesOfText)
     const data = queryClient.getQueryData([
       "/api/v1/svg",
-      inputs,
+      {
+        ...inputs,
+        textLines,
+      } as DesignFormInputs,
       true,
       true,
     ])
