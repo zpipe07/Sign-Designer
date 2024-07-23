@@ -20,8 +20,6 @@ export const useGetSignSvg = (
     showShadow?: boolean,
     validate?: boolean,
   ) => {
-    console.log("getSignSvg()")
-    console.log({ inputs, showShadow, validate })
     const formattedInputs = {
       ...inputs,
       ...(showShadow && { showShadow }),

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 import { useWatch } from "react-hook-form"
 import {
   Alert,
@@ -32,6 +33,8 @@ export const SignVisualizer: React.FC = () => {
   //   return !!value
   // })
 
+  const queryClient = useQueryClient()
+
   const {
     data: svg,
     isFetching,
@@ -48,6 +51,22 @@ export const SignVisualizer: React.FC = () => {
   )
 
   useEffect(() => {
+    const data = queryClient.getQueryData([
+      "/api/v1/svg",
+      inputs,
+      true,
+      true,
+    ])
+
+    if (data) {
+      queryClient.setQueryData(
+        ["/api/v1/svg", inputs, true, true],
+        data,
+      )
+
+      return
+    }
+
     fetchData()
   }, [inputs])
 
