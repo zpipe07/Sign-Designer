@@ -10,9 +10,18 @@ export const useGetSignSvg = (
   showShadow?: boolean,
   validate?: boolean,
 ) => {
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()
 
-  const getSignSvg = async ({ signal }: any) => {
+  const getSignSvg = async (
+    { signal }: any,
+    inputs: DesignFormInputs,
+    // queryKeySuffix?: string,
+    // enabled = true,
+    showShadow?: boolean,
+    validate?: boolean,
+  ) => {
+    console.log("getSignSvg()")
+    console.log({ inputs, showShadow, validate })
     const formattedInputs = {
       ...inputs,
       ...(showShadow && { showShadow }),
@@ -36,8 +45,10 @@ export const useGetSignSvg = (
     queryKey: [
       `/api/v1/svg${queryKeySuffix ? `-${queryKeySuffix}` : ""}`,
       inputs,
+      showShadow,
+      validate,
     ],
-    queryFn: getSignSvg,
+    queryFn: (arg) => getSignSvg(arg, inputs, showShadow, validate),
     // initialData: () => {
     //   const cache = queryClient.getQueryCache()
     //   const queries = cache.findAll({

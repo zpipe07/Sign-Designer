@@ -19,6 +19,7 @@ export const FeaturedSignCard: React.FC<{
   title: string
   inputs: DesignFormInputs
 }> = ({ title, inputs }) => {
+  console.log({ title, inputs })
   const { data: svg, isLoading } = useGetSignSvg(inputs, "featured")
 
   const textLines = JSON.stringify(
