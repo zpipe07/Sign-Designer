@@ -33,7 +33,7 @@ const createCartRedirectUrl = () => {
           headers: {
             accept: "application/json",
             "content-type": "application/json",
-            "x-auth-token": process.env.BIGCOMMERCE_ACCESS_TOKEN!,
+            "x-auth-token": process.env.CARTS_ACCESS_TOKEN!,
           },
         },
       )

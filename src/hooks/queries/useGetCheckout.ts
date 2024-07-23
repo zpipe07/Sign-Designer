@@ -2,8 +2,12 @@ import { useQuery } from "@tanstack/react-query"
 
 import { StorefrontCheckoutResponse } from "@/src/lib/bigcommerce/storefront-config"
 
-export const useGetCheckout = (cartId: string) => {
+export const useGetCheckout = (cartId?: string) => {
   const getCheckout = async () => {
+    if (!cartId) {
+      return
+    }
+
     const res = await fetch(`/api/v1/cart/${cartId}/checkout`)
     const checkout = await res.json()
 

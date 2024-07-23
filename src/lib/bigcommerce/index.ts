@@ -341,7 +341,6 @@ export async function addToCart(
         variables,
         cache: "no-store",
       })
-
     bigCommerceCart = res.body.data.cart.createCart.cart
   }
 
