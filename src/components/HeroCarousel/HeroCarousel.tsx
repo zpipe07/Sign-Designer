@@ -2,6 +2,7 @@ import { useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import useEmblaCarousel from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
 import {
   Box,
   Button,
@@ -24,14 +25,22 @@ import TwoImg from "../../../public/images/product/IMG_5822.jpg"
 import ThreeImg from "../../../public/images/product/IMG_5837.jpg"
 
 export const HeroCarousel: React.FC = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 5000 }),
+  ])
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
+    if (emblaApi) {
+      emblaApi.scrollPrev()
+      emblaApi.plugins().autoplay.reset()
+    }
   }, [emblaApi])
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
+    if (emblaApi) {
+      emblaApi.scrollNext()
+      emblaApi.plugins().autoplay.reset()
+    }
   }, [emblaApi])
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -150,7 +159,10 @@ export const HeroCarousel: React.FC = () => {
           return (
             <CarouselDot
               key={index}
-              onClick={() => onDotButtonClick(index)}
+              onClick={() => {
+                onDotButtonClick(index)
+                emblaApi?.plugins().autoplay.reset()
+              }}
               isSelected={index === selectedIndex}
             />
           )
