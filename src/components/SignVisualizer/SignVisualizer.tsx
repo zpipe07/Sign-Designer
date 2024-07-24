@@ -23,8 +23,9 @@ export const SignVisualizer: React.FC = () => {
 
   const [doesTextFit, setDoesTextFit] = useState<boolean>(true)
 
-  const { width, height, maxLinesOfText } =
-    SIZE_CONFIG_MAP[inputs.size!]
+  const { width, height, maxLinesOfText } = inputs.size
+    ? SIZE_CONFIG_MAP[inputs.size]
+    : { width: 0, height: 0, maxLinesOfText: 0 }
 
   const isVertical = inputs.size?.includes("vertical")
 
