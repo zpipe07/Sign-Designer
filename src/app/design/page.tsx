@@ -6,7 +6,7 @@ import { SignDetails } from "@/src/components/SignDetails"
 import { SignDesignerSearchParams } from "@/src/components/SignDesignerSearchParams"
 
 export const metadata: Metadata = {
-  title: "Create your custom sign",
+  title: "SignGenie - Create your custom sign",
   description:
     "Create a sign with your own text, shape, color, and more.",
 }

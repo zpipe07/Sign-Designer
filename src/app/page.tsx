@@ -10,7 +10,7 @@ import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
 
 export const metadata: Metadata = {
-  title: "Welcome to SignGenie",
+  title: "SignGenie - Welcome",
   description:
     "SignGenie allows you to create custom signs for your home or business. Get started today!",
 }
