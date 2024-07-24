@@ -1,6 +1,13 @@
 import { Container, Typography } from "@mui/material"
 
 import { ContactUsForm } from "@/src/components/ContactUsForm"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "SignGenie - Contact us",
+  description:
+    "Contact us with any questions or comments you have about our custom signs.",
+}
 
 export default function Page() {
   return (
