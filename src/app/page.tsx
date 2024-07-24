@@ -1,5 +1,4 @@
-"use client"
-
+import { Metadata } from "next"
 import Image from "next/image"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
@@ -9,6 +8,12 @@ import { TextInputForm } from "@/src/components/TextInputForm"
 import { HeroContainer } from "@/src/components/HeroContainer"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
+
+export const metadata: Metadata = {
+  title: "Welcome to SignGenie",
+  description:
+    "SignGenie allows you to create custom signs for your home or business. Get started today!",
+}
 
 export default function Home() {
   return (

@@ -1,3 +1,5 @@
+"use client"
+
 import { useTheme } from "@mui/material"
 import Box from "@mui/material/Box"
 

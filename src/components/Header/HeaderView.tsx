@@ -92,8 +92,8 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
             <Image
               src="/images/logos/LogoMarkBlue.png"
               alt=""
-              width={697 / 6}
-              height={446 / 6}
+              width={540 / 6}
+              height={289 / 6}
             />
           </Box>
 
@@ -146,8 +146,8 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
             <Image
               src="/images/logos/LogoMarkBlue.png"
               alt=""
-              width={697 / 7}
-              height={446 / 7}
+              width={540 / 7}
+              height={289 / 7}
             />
           </Box>
           <Typography

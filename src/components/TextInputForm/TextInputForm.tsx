@@ -1,3 +1,5 @@
+"use client"
+
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { Button, Grid, TextField } from "@mui/material"
