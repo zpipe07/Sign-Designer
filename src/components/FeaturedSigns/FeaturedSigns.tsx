@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Container, Grid, Typography } from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
@@ -63,19 +63,21 @@ const FEATURED_SIGNS: {
 export const FeaturedSigns: React.FC = () => {
   return (
     <Box component="section" paddingTop={2} paddingBottom={2}>
-      <Typography variant="h4" marginBottom={1}>
-        Featured Signs
-      </Typography>
+      <Container>
+        <Typography variant="h3" textAlign="center" marginBottom={2}>
+          Featured Signs
+        </Typography>
 
-      <Grid container spacing={2}>
-        {FEATURED_SIGNS.map(({ title, inputs }) => {
-          return (
-            <Grid item xs={12} sm={6} md={4} key={title}>
-              <FeaturedSignCard title={title} inputs={inputs} />
-            </Grid>
-          )
-        })}
-      </Grid>
+        <Grid container spacing={2}>
+          {FEATURED_SIGNS.map(({ title, inputs }) => {
+            return (
+              <Grid item xs={12} sm={4} md={4} key={title}>
+                <FeaturedSignCard title={title} inputs={inputs} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Container>
     </Box>
   )
 }

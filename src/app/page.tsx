@@ -1,11 +1,8 @@
 import { Metadata } from "next"
-import Image from "next/image"
-import Typography from "@mui/material/Typography"
-import Grid from "@mui/material/Grid"
-import { Container } from "@mui/material"
+import { Divider } from "@mui/material"
 
-import { TextInputForm } from "@/src/components/TextInputForm"
-import { HeroContainer } from "@/src/components/HeroContainer"
+// import { TextInputForm } from "@/src/components/TextInputForm"
+// import { HeroContainer } from "@/src/components/HeroContainer"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
 import { OurSignsSection } from "@/src/components/OurSignsSection"
@@ -23,7 +20,9 @@ export default function Home() {
 
       <OurSignsSection />
 
-      <HeroContainer>
+      <Divider />
+
+      {/* <HeroContainer>
         <Container>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
@@ -54,11 +53,11 @@ export default function Home() {
             </Grid>
           </Grid>
         </Container>
-      </HeroContainer>
+      </HeroContainer> */}
 
-      <Container>
-        <FeaturedSigns />
-      </Container>
+      {/* <Container> */}
+      <FeaturedSigns />
+      {/* </Container> */}
     </>
   )
 }

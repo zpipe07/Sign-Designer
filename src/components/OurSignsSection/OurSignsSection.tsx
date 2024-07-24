@@ -3,6 +3,7 @@
 import Image from "next/image"
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Container,
@@ -61,13 +62,6 @@ export const OurSignsSection: React.FC = () => {
                       },
                     }}
                   >
-                    <Box marginBottom={2} flexGrow={1}>
-                      <Typography variant="h4">
-                        {card.title}
-                      </Typography>
-                      <Typography>{card.desciption}</Typography>
-                    </Box>
-
                     <Image
                       src={`/images/product/${card.image}`}
                       alt=""
@@ -78,6 +72,17 @@ export const OurSignsSection: React.FC = () => {
                         flexShrink: 0,
                       }}
                     />
+
+                    <Box flexGrow={1}>
+                      <Typography variant="h4">
+                        {card.title}
+                      </Typography>
+                      <Typography marginBottom={1}>
+                        {card.desciption}
+                      </Typography>
+
+                      <Button variant="outlined">Learn more</Button>
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>
