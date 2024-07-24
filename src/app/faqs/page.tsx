@@ -1,7 +1,14 @@
+import { Metadata } from "next"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
 import { FAQsSection } from "@/src/components/FAQsSection"
+
+export const metadata: Metadata = {
+  title: "SignGenie - FAQs",
+  description:
+    "See our most frequently asked questions about our custom signs.",
+}
 
 export default function Page() {
   return (

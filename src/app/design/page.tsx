@@ -1,20 +1,22 @@
-"use client"
-
-import { useSearchParams } from "next/navigation"
+import { Metadata } from "next"
 import { Container } from "@mui/material"
 
 import { SignDesigner } from "@/src/components/SignDesigner"
 import { SignDetails } from "@/src/components/SignDetails"
-import { parseSearchParams } from "@/src/utils"
+import { SignDesignerSearchParams } from "@/src/components/SignDesignerSearchParams"
+
+export const metadata: Metadata = {
+  title: "SignGenie - Create your custom sign",
+  description:
+    "Create a sign with your own text, shape, color, and more.",
+}
 
 export default function Page() {
-  const searchParams = useSearchParams()
-
-  const params = parseSearchParams(searchParams)
-
   return (
     <Container>
-      <SignDesigner {...params} />
+      <SignDesignerSearchParams>
+        <SignDesigner />
+      </SignDesignerSearchParams>
 
       <SignDetails />
     </Container>

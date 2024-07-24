@@ -1,5 +1,12 @@
+import { Metadata } from "next"
 import Image from "next/image"
 import { Container, Grid, Typography } from "@mui/material"
+
+export const metadata: Metadata = {
+  title: "SignGenie - Our work",
+  description:
+    "View examples of our custom signs for homes and businesses.",
+}
 
 const IMAGES = [
   "IMG_6032.jpg",

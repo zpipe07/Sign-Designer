@@ -1,5 +1,5 @@
 import queryString from "query-string"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
