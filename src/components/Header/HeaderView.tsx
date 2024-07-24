@@ -66,8 +66,7 @@ export const HeaderView: React.FC<Props> = ({ user }) => {
       position="static"
       sx={{
         color: theme.palette.text.primary,
-        // backgroundColor: theme.palette.background.default,
-        backgroundColor: "purple",
+        backgroundColor: theme.palette.background.default,
         boxShadow: "0 4px 15px 6px rgba(165, 165, 165, 0.2)",
       }}
     >
