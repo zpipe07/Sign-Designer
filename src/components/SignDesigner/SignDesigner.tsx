@@ -1,7 +1,7 @@
 "use client"
 
 import { FormProvider, useForm } from "react-hook-form"
-import { Card, useTheme } from "@mui/material"
+import { Alert, Card, useTheme } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
@@ -47,7 +47,7 @@ export const SignDesigner: React.FC<Props> = ({
     },
   })
 
-  const { isLoading } = useGetProduct(112)
+  const { isLoading, error } = useGetProduct(112)
 
   if (isLoading) {
     return (
@@ -61,6 +61,14 @@ export const SignDesigner: React.FC<Props> = ({
       >
         <CircularProgress />
       </Box>
+    )
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error" variant="filled" sx={{ my: 4 }}>
+        There was an error fetching the product.
+      </Alert>
     )
   }
 

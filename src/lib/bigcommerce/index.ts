@@ -752,6 +752,10 @@ export async function getProduct(
     },
   })
 
+  if (!res.body.data.site.product) {
+    return undefined
+  }
+
   return bigCommerceToVercelProduct(res.body.data.site.product)
 }
 
