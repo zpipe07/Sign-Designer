@@ -2,6 +2,8 @@
 
 import { Box, Container, Typography, useTheme } from "@mui/material"
 
+import { SiteMap } from "@/src/components/SiteMap"
+
 export const Footer: React.FC = () => {
   const theme = useTheme()
 
@@ -15,7 +17,13 @@ export const Footer: React.FC = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Typography>SIGN GENIE — All Rights Reserved</Typography>
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Typography>SIGN GENIE — All Rights Reserved</Typography>
+
+          <SiteMap />
+        </Box>
       </Container>
     </Box>
   )
