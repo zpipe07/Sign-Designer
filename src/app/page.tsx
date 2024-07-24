@@ -8,6 +8,7 @@ import { TextInputForm } from "@/src/components/TextInputForm"
 import { HeroContainer } from "@/src/components/HeroContainer"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
+import { OurSignsSection } from "@/src/components/OurSignsSection"
 
 export const metadata: Metadata = {
   title: "SignGenie - Welcome",
@@ -19,6 +20,8 @@ export default function Home() {
   return (
     <>
       <HeroCarousel />
+
+      <OurSignsSection />
 
       <HeroContainer>
         <Container>
