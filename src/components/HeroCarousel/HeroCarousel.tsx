@@ -57,7 +57,7 @@ export const HeroCarousel: React.FC = () => {
         height: 600,
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           position: "absolute",
           bottom: 0,
@@ -133,6 +133,61 @@ export const HeroCarousel: React.FC = () => {
             </Button>
           </CardContent>
         </Card>
+      </Box> */}
+
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: 0,
+          width: "100%",
+          transform: "translateY(-50%)",
+          zIndex: 9,
+          padding: 2,
+        }}
+      >
+        <Typography
+          variant="h2"
+          sx={{
+            color: theme.palette.primary.contrastText,
+            textShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
+            textAlign: "center",
+            marginBottom: 2,
+          }}
+        >
+          Refresh your home today
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            href="/design"
+            component={Link}
+            sx={{
+              marginBottom: 2,
+            }}
+          >
+            Design your sign
+          </Button>
+
+          <Button
+            variant="outlined"
+            size="large"
+            color="info"
+            href="/design"
+            component={Link}
+          >
+            View our signs
+          </Button>
+        </Box>
       </Box>
 
       <Box
@@ -144,10 +199,6 @@ export const HeroCarousel: React.FC = () => {
           zIndex: 9,
           display: "flex",
           alignItems: "center",
-
-          [theme.breakpoints.down("sm")]: {
-            display: "none",
-          },
         }}
       >
         <IconButton

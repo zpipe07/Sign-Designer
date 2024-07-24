@@ -1,20 +1,7 @@
 "use client"
 
-// import { Roboto } from "next/font/google"
 import { ThemeOptions, createTheme } from "@mui/material/styles"
 import { DM_Sans, DM_Serif_Display } from "next/font/google"
-
-// const roboto = Roboto({
-//   weight: ["300", "400", "500", "700"],
-//   subsets: ["latin"],
-//   display: "swap",
-// })
-
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: roboto.style.fontFamily,
-//   },
-// })
 
 export const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -39,6 +26,9 @@ export const themeOptions: ThemeOptions = {
     background: {
       default: "#F3F8EE",
     },
+    info: {
+      main: "#FFFFFF",
+    },
   },
   components: {
     MuiOutlinedInput: {
@@ -53,11 +43,23 @@ export const themeOptions: ThemeOptions = {
         root: {
           borderRadius: 500,
           fontWeight: 600,
+          borderWidth: 2,
+
+          "&:hover": {
+            borderWidth: 2,
+          },
         },
         sizeLarge: {
           paddingLeft: "3rem",
           paddingRight: "3rem",
           fontSize: "1rem",
+        },
+        outlined: {
+          borderColor: "inherit",
+
+          "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.15)",
+          },
         },
       },
     },
