@@ -31,10 +31,10 @@ export const FeaturedSignCard: React.FC<{
   const url = `/design?${qs}`
 
   return (
-    <Card>
+    <Card variant="outlined">
       {/* @ts-ignore */}
       <CardActionArea component={Link} href={url}>
-        <CardMedia>
+        <CardContent sx={{ textAlign: "center" }}>
           {isLoading ? (
             <Skeleton
               variant="rectangular"
@@ -44,22 +44,17 @@ export const FeaturedSignCard: React.FC<{
               }}
             />
           ) : (
-            <Box
-              sx={{ padding: 2 }}
-              dangerouslySetInnerHTML={{ __html: svg! }}
-            />
+            <Box dangerouslySetInnerHTML={{ __html: svg! }} />
           )}
-        </CardMedia>
 
-        <CardContent>
-          <Typography variant="h5">{title}</Typography>
-        </CardContent>
+          <Typography variant="h4" marginBottom={1}>
+            {title}
+          </Typography>
 
-        <CardActions>
-          <Button type="button" variant="contained">
+          <Button type="button" variant="outlined">
             Customize this sign
           </Button>
-        </CardActions>
+        </CardContent>
       </CardActionArea>
     </Card>
   )

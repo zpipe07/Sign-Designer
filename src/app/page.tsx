@@ -6,6 +6,7 @@ import { Divider } from "@mui/material"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
 import { OurSignsSection } from "@/src/components/OurSignsSection"
+import { InfoSection } from "@/src/components/InfoSection"
 
 export const metadata: Metadata = {
   title: "SignGenie - Welcome",
@@ -20,7 +21,9 @@ export default function Home() {
 
       <OurSignsSection />
 
-      <Divider />
+      <InfoSection />
+
+      {/* <Divider /> */}
 
       {/* <HeroContainer>
         <Container>
