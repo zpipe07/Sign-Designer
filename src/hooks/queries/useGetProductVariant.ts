@@ -6,7 +6,10 @@ export const useGetProductVariant = (
   productId: number,
   variantId?: string,
 ) => {
-  const getProductVariant = async () => {
+  const getProductVariant = async (
+    productId: number,
+    variantId: string,
+  ) => {
     const res = await fetch(
       `/api/v1/products/${productId}/variants/${variantId}`,
     )
@@ -19,6 +22,7 @@ export const useGetProductVariant = (
     variant: VercelProductVariantDetails
   }>({
     queryKey: [`/api/v1/products/${productId}/variants/${variantId}`],
-    queryFn: getProductVariant,
+    queryFn: () => getProductVariant(productId, variantId!),
+    enabled: !!variantId,
   })
 }
