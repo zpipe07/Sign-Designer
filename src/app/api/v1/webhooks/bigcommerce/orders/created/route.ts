@@ -164,12 +164,14 @@ export async function POST(request: Request) {
 // https://sign-designer.vercel.app/api/v1/webhooks/bigcommerce/orders/created
 
 // POST https://api.bigcommerce.com/stores/dh8nzctx6e/v3/hooks
+// POST https://api.bigcommerce.com/stores/fnurpzpyyh/v3/hooks
 // X-Auth-Token: epmvjeckmcqziy8iap0qomdtnduzc95
 // Content-Type: application/json
 // Accept: application/json
 // {
 //   "scope": "store/order/created",
 //   "destination": "https://sign-designer.vercel.app/api/v1/webhooks/bigcommerce/orders/created",
+//   "destination": "https://signgenie.io/api/v1/webhooks/bigcommerce/orders/created",
 //   "is_active": true,
 //   "headers": {}
 // }
