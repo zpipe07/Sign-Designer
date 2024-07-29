@@ -20,7 +20,8 @@ import {
   BigCommerceOrderProduct,
 } from "@/src/lib/bigcommerce/types"
 import { createClient } from "@/src/utils/supabase/client"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useCreateOrderSvg } from "@/src/hooks/mutations/useCreateOrderSvg"
 
 type Props = {
   product: BigCommerceOrderProduct
@@ -74,13 +75,38 @@ export const OrderDetailsRow: React.FC<Props> = ({
 
   const supabase = createClient()
 
-  useEffect(() => {
-    const { data } = supabase.storage
-      .from("signs")
-      .getPublicUrl(fileName)
+  const [fileExists, setFileExists] = useState(false)
 
-    console.log({ data })
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await supabase.storage
+        .from("signs")
+        .createSignedUrl(fileName, 60)
+
+      console.log({ ...data })
+      setFileExists(!!data?.signedUrl)
+    }
+
+    fetchData()
   }, [supabase, fileName])
+  console.log({ fileExists })
+
+  const { mutate, isPending } = useCreateOrderSvg()
+
+  const handleClick = async () => {
+    mutate({
+      shape,
+      size,
+      color,
+      fontFamily,
+      mountingStyle,
+      edgeStyle,
+      borderWidth,
+      textLines,
+      orderId: order.id,
+      productId: product.id,
+    })
+  }
 
   return (
     <TableRow>
@@ -119,13 +145,19 @@ export const OrderDetailsRow: React.FC<Props> = ({
         </Box>
       </TableCell>
       <TableCell align="right">
-        <IconButton
-          href={downloadHref}
-          download
-          sx={{ border: "1px solid" }}
-        >
-          <DownloadIcon />
-        </IconButton>
+        {fileExists ? (
+          <IconButton
+            href={downloadHref}
+            download
+            sx={{ border: "1px solid" }}
+          >
+            <DownloadIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleClick} disabled={isPending}>
+            <DownloadIcon color="secondary" />
+          </IconButton>
+        )}
       </TableCell>
     </TableRow>
   )
