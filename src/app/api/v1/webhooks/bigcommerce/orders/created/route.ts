@@ -131,16 +131,15 @@ export async function POST(request: Request) {
       encoding: "base64",
     })
     const supabase = createClient()
-    // const { error } = await supabase.storage
-    //   .from("signs")
-    //   .upload(filename, decode(svgFile), {
-    //     contentType: "image/svg+xml",
-    //   })
+    const { error } = await supabase.storage
+      .from("signs")
+      .upload(filename, decode(svgFile), {
+        contentType: "image/svg+xml",
+      })
 
-    // if (error) {
-    //   throw error
-    // }
-
+    if (error) {
+      throw error
+    }
     // const fileIdOption = product.product_options.find(
     //   (option) => option.display_name === "file_id",
     // )
