@@ -19,6 +19,8 @@ import {
   BigCommerceOrder,
   BigCommerceOrderProduct,
 } from "@/src/lib/bigcommerce/types"
+import { createClient } from "@/src/utils/supabase/client"
+import { useEffect } from "react"
 
 type Props = {
   product: BigCommerceOrderProduct
@@ -69,6 +71,16 @@ export const OrderDetailsRow: React.FC<Props> = ({
 
   const fileName = `${order.id}-${product.id}-${color}.svg`
   const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileName}?download=`
+
+  const supabase = createClient()
+
+  useEffect(() => {
+    const { data } = supabase.storage
+      .from("signs")
+      .getPublicUrl(fileName)
+
+    console.log({ data })
+  }, [supabase, fileName])
 
   return (
     <TableRow>
