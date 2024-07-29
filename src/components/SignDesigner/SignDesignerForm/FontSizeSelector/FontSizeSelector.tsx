@@ -31,7 +31,6 @@ export const FontSizeSelector: React.FC<Props> = ({ index }) => {
         inputProps={{
           step: "0.2",
           min: "1",
-          max: "6",
           tabIndex: index === 1 ? 1 : 2,
         }}
         fullWidth
