@@ -19,9 +19,11 @@ export default function Home() {
     <>
       <HeroCarousel />
 
-      <OurSignsSection />
-
       <InfoSection />
+
+      <FeaturedSigns />
+
+      {/* <OurSignsSection /> */}
 
       {/* <Divider /> */}
 
@@ -59,7 +61,7 @@ export default function Home() {
       </HeroContainer> */}
 
       {/* <Container> */}
-      <FeaturedSigns />
+
       {/* </Container> */}
     </>
   )
