@@ -57,6 +57,7 @@ export const SignDetails: React.FC = () => {
               </Box>
               <Box component="li">Weather proof</Box>
               <Box component="li">UV proof</Box>
+              <Box component="li">Rot proof</Box>
               <Box component="li">CNC machined</Box>
               <Box component="li">Made of HDPE</Box>
             </Box>
