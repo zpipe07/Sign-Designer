@@ -10,22 +10,21 @@ import FlagIcon from "@mui/icons-material/Flag"
 
 const CARDS = [
   {
-    title: "Made to order",
-    description:
-      "Each sign is cut to the exact specifications of your order. We guarantee the perfect fit.",
-    icon: CarpenterIcon,
-  },
-  {
-    title: "Built to last",
+    title: "Lifetime warranty",
     description:
       "Our signs are made from the highest quality materials. They are built to last a lifetime.",
     icon: BuildIcon,
   },
   {
     title: "Made in the USA",
-    description:
-      "We are proud to say that every sign is made in the USA. We support local businesses.",
+    description: "Each sign is proudly made in the USA.",
     icon: FlagIcon,
+  },
+  {
+    title: "Made to order",
+    description:
+      "Each sign is cut to the exact specifications of your order. We guarantee the perfect fit.",
+    icon: CarpenterIcon,
   },
   // {
   //   title: "Perfect Gifts",

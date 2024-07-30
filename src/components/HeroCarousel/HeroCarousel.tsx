@@ -200,10 +200,10 @@ export const HeroCarousel: React.FC = () => {
             sx={{
               color: theme.palette.primary.contrastText,
               textAlign: "center",
-              marginBottom: 1,
+              marginBottom: 2,
             }}
           >
-            Refresh your home today
+            Custom signs to match your style
           </Typography>
 
           <Box
@@ -236,7 +236,7 @@ export const HeroCarousel: React.FC = () => {
                 margin: 1,
               }}
             >
-              View our signs
+              View sign gallery
             </Button>
           </Box>
         </Box>
