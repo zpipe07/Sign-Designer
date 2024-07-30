@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react"
 import { IconButton, Skeleton } from "@mui/material"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import DownloadIcon from "@mui/icons-material/Download"
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 
 import {
   ColorCombo,
@@ -20,7 +21,6 @@ import {
   BigCommerceOrderProduct,
 } from "@/src/lib/bigcommerce/types"
 import { createClient } from "@/src/utils/supabase/client"
-import { useEffect, useState } from "react"
 import { useCreateOrderSvg } from "@/src/hooks/mutations/useCreateOrderSvg"
 
 type Props = {
@@ -81,17 +81,19 @@ export const OrderDetailsRow: React.FC<Props> = ({
     const fetchData = async () => {
       const { data } = await supabase.storage
         .from("signs")
-        .createSignedUrl(fileName, 60)
+        .createSignedUrl(fileName, 1)
 
-      console.log({ ...data })
       setFileExists(!!data?.signedUrl)
     }
 
     fetchData()
   }, [supabase, fileName])
-  console.log({ fileExists })
 
-  const { mutate, isPending } = useCreateOrderSvg()
+  const onSuccess = () => {
+    setFileExists(true)
+  }
+
+  const { mutate, isPending } = useCreateOrderSvg({ onSuccess })
 
   const handleClick = async () => {
     mutate({
@@ -154,8 +156,16 @@ export const OrderDetailsRow: React.FC<Props> = ({
             <DownloadIcon />
           </IconButton>
         ) : (
-          <IconButton onClick={handleClick} disabled={isPending}>
-            <DownloadIcon color="secondary" />
+          <IconButton
+            onClick={handleClick}
+            disabled={isPending}
+            sx={{
+              border: "1px solid",
+
+              "&:disabled": { opacity: 0.75 },
+            }}
+          >
+            <CloudUploadIcon />
           </IconButton>
         )}
       </TableCell>
