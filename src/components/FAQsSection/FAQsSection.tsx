@@ -1,4 +1,10 @@
-import { Divider, List } from "@mui/material"
+import {
+  Box,
+  Container,
+  Divider,
+  List,
+  Typography,
+} from "@mui/material"
 
 import { FAQItem } from "@/src/components/FAQsSection/FAQItem"
 
@@ -6,7 +12,11 @@ const FAQS = [
   {
     question: "What are your signs made of?",
     answer:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam ea ipsum, impedit dolore eos debitis. Ipsa in commodi quas odio.",
+      "Our signs are made of King ColorCore®. This is a high-density polyethylene sheet that is perfect for outdoor use. It is waterproof, UV-resistant, and will not rot or splinter.",
+  },
+  {
+    question: "Do your signs include a warranty?",
+    answer: "Yes! We offer a lifetime warranty on all of our signs.",
   },
   {
     question: "How long will it take for my order to arrive?",
@@ -22,16 +32,29 @@ const FAQS = [
 
 export const FAQsSection: React.FC = () => {
   return (
-    <List disablePadding>
-      {FAQS.map((faq, index) => {
-        return (
-          <>
-            <FAQItem faq={faq} key={faq.question} />
+    <Box component="section" py={4}>
+      <Container>
+        <Typography
+          variant="h3"
+          component="h1"
+          marginBottom={2}
+          textAlign="center"
+        >
+          FAQs
+        </Typography>
 
-            {index < FAQS.length - 1 && <Divider />}
-          </>
-        )
-      })}
-    </List>
+        <List disablePadding>
+          {FAQS.map((faq, index) => {
+            return (
+              <>
+                <FAQItem faq={faq} key={faq.question} />
+
+                {index < FAQS.length - 1 && <Divider />}
+              </>
+            )
+          })}
+        </List>
+      </Container>
+    </Box>
   )
 }

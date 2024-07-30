@@ -4,28 +4,34 @@ import { Typography, useTheme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
+import CarpenterIcon from "@mui/icons-material/Carpenter"
+import BuildIcon from "@mui/icons-material/Build"
+import FlagIcon from "@mui/icons-material/Flag"
 
 const CARDS = [
   {
-    title: "Hierloom Pieces",
+    title: "Made to order",
     description:
-      "Each piece is lovingly handmade by the best possible artisans and checked and re-checked for durability.",
+      "Each sign is cut to the exact specifications of your order. We guarantee the perfect fit.",
+    icon: CarpenterIcon,
   },
   {
-    title: "Ethical Materials",
+    title: "Built to last",
     description:
-      "All of our wools and cottons come from ethical sources. We guarantee the best in humanitarian apparel.",
+      "Our signs are made from the highest quality materials. They are built to last a lifetime.",
+    icon: BuildIcon,
   },
   {
-    title: "Free Shipping",
+    title: "Made in the USA",
     description:
-      "Free shipping on all orders over $100. Pieces are shipped via next day delivery anywhere in the USA.",
+      "We are proud to say that every sign is made in the USA. We support local businesses.",
+    icon: FlagIcon,
   },
-  {
-    title: "Perfect Gifts",
-    description:
-      "Every piece of Falconette is beautifully wrapped. Each piece is a gift even if that gift is to yourself.",
-  },
+  // {
+  //   title: "Perfect Gifts",
+  //   description:
+  //     "Every piece of Falconette is beautifully wrapped. Each piece is a gift even if that gift is to yourself.",
+  // },
 ]
 
 export const InfoSection: React.FC = () => {
@@ -43,12 +49,21 @@ export const InfoSection: React.FC = () => {
       }}
     >
       <Container>
-        <Grid container spacing={4}>
-          {CARDS.map((card) => {
+        <Grid container spacing={6}>
+          {CARDS.map(({ title, description, icon: Icon }) => {
             return (
-              <Grid item xs={12} sm={6} md={3} key={card.title}>
-                <Typography variant="h5">{card.title}</Typography>
-                <Typography>{card.description}</Typography>
+              <Grid
+                item
+                xs={12}
+                md={4}
+                key={title}
+                sx={{ textAlign: "center" }}
+              >
+                <Icon sx={{ fontSize: 24 }} />
+                <Typography variant="h5" marginBottom={1}>
+                  {title}
+                </Typography>
+                <Typography>{description}</Typography>
               </Grid>
             )
           })}

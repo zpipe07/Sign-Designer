@@ -70,6 +70,13 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          opacity: 0.85,
+        },
+      },
+    },
   },
   typography: {
     fontFamily: dmSans.style.fontFamily,
