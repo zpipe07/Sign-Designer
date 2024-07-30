@@ -11,12 +11,21 @@ const nextConfig = {
         port: "",
         pathname: "/storage/v1/object/signs/*",
       },
+      // staging big commerce images
       {
         protocol: "https",
         hostname: "cdn11.bigcommerce.com",
         port: "",
         pathname:
           "/s-dh8nzctx6e/product_images/attribute_rule_images/*",
+      },
+      // prod big commerce images
+      {
+        protocol: "https",
+        hostname: "cdn11.bigcommerce.com",
+        port: "",
+        pathname:
+          "/s-fnurpzpyyh/product_images/attribute_rule_images/*",
       },
     ],
   },

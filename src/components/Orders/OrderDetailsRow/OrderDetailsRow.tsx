@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react"
 import { IconButton, Skeleton } from "@mui/material"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import DownloadIcon from "@mui/icons-material/Download"
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 
 import {
   ColorCombo,
@@ -19,6 +20,8 @@ import {
   BigCommerceOrder,
   BigCommerceOrderProduct,
 } from "@/src/lib/bigcommerce/types"
+import { createClient } from "@/src/utils/supabase/client"
+import { useCreateOrderSvg } from "@/src/hooks/mutations/useCreateOrderSvg"
 
 type Props = {
   product: BigCommerceOrderProduct
@@ -70,6 +73,43 @@ export const OrderDetailsRow: React.FC<Props> = ({
   const fileName = `${order.id}-${product.id}-${color}.svg`
   const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileName}?download=`
 
+  const supabase = createClient()
+
+  const [fileExists, setFileExists] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await supabase.storage
+        .from("signs")
+        .createSignedUrl(fileName, 1)
+
+      setFileExists(!!data?.signedUrl)
+    }
+
+    fetchData()
+  }, [supabase, fileName])
+
+  const onSuccess = () => {
+    setFileExists(true)
+  }
+
+  const { mutate, isPending } = useCreateOrderSvg({ onSuccess })
+
+  const handleClick = async () => {
+    mutate({
+      shape,
+      size,
+      color,
+      fontFamily,
+      mountingStyle,
+      edgeStyle,
+      borderWidth,
+      textLines,
+      orderId: order.id,
+      productId: product.id,
+    })
+  }
+
   return (
     <TableRow>
       <TableCell>
@@ -107,13 +147,27 @@ export const OrderDetailsRow: React.FC<Props> = ({
         </Box>
       </TableCell>
       <TableCell align="right">
-        <IconButton
-          href={downloadHref}
-          download
-          sx={{ border: "1px solid" }}
-        >
-          <DownloadIcon />
-        </IconButton>
+        {fileExists ? (
+          <IconButton
+            href={downloadHref}
+            download
+            sx={{ border: "1px solid" }}
+          >
+            <DownloadIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={handleClick}
+            disabled={isPending}
+            sx={{
+              border: "1px solid",
+
+              "&:disabled": { opacity: 0.75 },
+            }}
+          >
+            <CloudUploadIcon />
+          </IconButton>
+        )}
       </TableCell>
     </TableRow>
   )

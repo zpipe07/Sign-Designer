@@ -9,7 +9,7 @@ export async function GET(
   const product = await getProduct(params.productId)
 
   if (!product) {
-    return Response.json({ product: undefined })
+    return Response.json({}, { status: 404 })
   }
 
   return Response.json({ product })

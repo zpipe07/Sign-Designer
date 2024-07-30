@@ -504,11 +504,13 @@ export const formDataToCartItem = async (
   // const dir = path.resolve("./public", dirRelativeToPublicFolder)
   // const fontUrl = `${dir}/${FONT_MAP[data.fontFamily as FontFamily]}`
   // const font = opentype.loadSync(`${fontUrl}`)
-  // const maxLinesOfText =
-  //   // @ts-ignore
-  //   SIZE_CONFIG_MAP[data.size as Size].maxLinesOfText
-  // const textLines: TextLine[] = data.textLines
-  //   ?.slice(0, maxLinesOfText)
+  const maxLinesOfText =
+    // @ts-ignore
+    SIZE_CONFIG_MAP[data.size as Size].maxLinesOfText
+  const textLines: TextLine[] = data.textLines?.slice(
+    0,
+    maxLinesOfText,
+  )
   //   .filter(({ value }: TextLine) => {
   //     return !!value
   //   })
@@ -658,7 +660,8 @@ export const formDataToCartItem = async (
           // text: data.textLines
           //   .map((text) => queryString.stringify(text))
           //   .join("\n"),
-          text: JSON.stringify(data.textLines),
+          // text: JSON.stringify(data.textLines),
+          text: JSON.stringify(textLines),
         },
         {
           optionEntityId: parseInt(

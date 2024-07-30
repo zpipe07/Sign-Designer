@@ -19,9 +19,11 @@ import { OffsetSelector } from "@/src/components/SignDesigner/SignDesignerForm/O
 export const TextInput: React.FC = () => {
   const { register } = useFormContext()
 
-  const size: Size = useWatch({ name: "size" })
+  const size: Size | undefined = useWatch({ name: "size" })
 
-  const maxLinesOfText = SIZE_CONFIG_MAP[size].maxLinesOfText
+  const maxLinesOfText = size
+    ? SIZE_CONFIG_MAP[size].maxLinesOfText
+    : 0
 
   const { fields, swap } = useFieldArray({
     name: "textLines",
