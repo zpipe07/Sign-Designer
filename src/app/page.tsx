@@ -1,12 +1,13 @@
 import { Metadata } from "next"
-import { Divider } from "@mui/material"
+// import { Divider } from "@mui/material"
 
 // import { TextInputForm } from "@/src/components/TextInputForm"
 // import { HeroContainer } from "@/src/components/HeroContainer"
+// import { OurSignsSection } from "@/src/components/OurSignsSection"
 import { FeaturedSigns } from "@/src/components/FeaturedSigns"
 import { HeroCarousel } from "@/src/components/HeroCarousel"
-import { OurSignsSection } from "@/src/components/OurSignsSection"
 import { InfoSection } from "@/src/components/InfoSection"
+import { FAQsSection } from "@/src/components/FAQsSection"
 
 export const metadata: Metadata = {
   title: "SignGenie - Welcome",
@@ -22,6 +23,8 @@ export default function Home() {
       <InfoSection />
 
       <FeaturedSigns />
+
+      <FAQsSection />
 
       {/* <OurSignsSection /> */}
 

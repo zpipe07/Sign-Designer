@@ -13,14 +13,14 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <Container sx={{ paddingBottom: 2 }} maxWidth="md">
-      <Typography
+      {/* <Typography
         variant="h3"
         component="h1"
         marginTop={2}
         marginBottom={1}
       >
         FAQs
-      </Typography>
+      </Typography> */}
 
       <FAQsSection />
     </Container>

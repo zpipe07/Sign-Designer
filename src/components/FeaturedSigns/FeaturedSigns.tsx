@@ -62,7 +62,7 @@ const FEATURED_SIGNS: {
 
 export const FeaturedSigns: React.FC = () => {
   return (
-    <Box component="section" paddingTop={2} paddingBottom={2}>
+    <Box component="section" py={4}>
       <Container>
         <Typography variant="h3" textAlign="center" marginBottom={2}>
           Featured Signs

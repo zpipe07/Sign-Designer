@@ -7,6 +7,7 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import { Typography } from "@mui/material"
 
 type Props = {
   faq: { question: string; answer: string }
@@ -22,12 +23,16 @@ export const FAQItem: React.FC<Props> = ({ faq }) => {
   return (
     <ListItem disableGutters sx={{ display: "block" }}>
       <ListItemButton onClick={handleClick}>
-        <ListItemText primary={faq.question} />
+        <ListItemText>
+          <Typography variant="h5">{faq.question}</Typography>
+        </ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
       <Collapse in={open}>
-        <ListItemText secondary={faq.answer} />
+        <ListItemText>
+          <Typography>{faq.answer}</Typography>
+        </ListItemText>
       </Collapse>
     </ListItem>
   )
