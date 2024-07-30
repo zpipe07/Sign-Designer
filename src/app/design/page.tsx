@@ -4,6 +4,7 @@ import { Container } from "@mui/material"
 import { SignDesigner } from "@/src/components/SignDesigner"
 import { SignDetails } from "@/src/components/SignDetails"
 import { SignDesignerSearchParams } from "@/src/components/SignDesignerSearchParams"
+import { FAQsSection } from "@/src/components/FAQsSection"
 
 export const metadata: Metadata = {
   title: "SignGenie - Create your custom sign",
@@ -13,12 +14,16 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Container>
-      <SignDesignerSearchParams>
-        <SignDesigner />
-      </SignDesignerSearchParams>
+    <>
+      <Container>
+        <SignDesignerSearchParams>
+          <SignDesigner />
+        </SignDesignerSearchParams>
 
-      <SignDetails />
-    </Container>
+        <SignDetails />
+      </Container>
+
+      <FAQsSection />
+    </>
   )
 }

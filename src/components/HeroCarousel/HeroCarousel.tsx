@@ -60,11 +60,11 @@ export const HeroCarousel: React.FC = () => {
         },
 
         [theme.breakpoints.up("lg")]: {
-          gridTemplateColumns: "auto 475px",
+          gridTemplateColumns: "auto 500px",
         },
 
         [theme.breakpoints.up("xl")]: {
-          gridTemplateColumns: "auto 575px",
+          gridTemplateColumns: "1fr 1fr",
         },
       }}
     >
@@ -190,6 +190,7 @@ export const HeroCarousel: React.FC = () => {
           [theme.breakpoints.up("md")]: {
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
           },
         }}
       >
