@@ -84,7 +84,7 @@ export const SignDesigner: React.FC<Props> = ({
               alignSelf: "flex-start",
               position: "sticky",
               top: theme.spacing(-3),
-              zIndex: 9999,
+              zIndex: 999,
 
               [theme.breakpoints.up("md")]: {
                 top: theme.spacing(0),
