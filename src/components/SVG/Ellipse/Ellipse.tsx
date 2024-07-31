@@ -1,10 +1,13 @@
 import makerjs from "makerjs"
+import jsdom from "jsdom"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import {
   BOLT_OFFSET,
   BOLT_RADIUS,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+
+const { JSDOM } = jsdom
 
 export function calculateAngle(arcLength: number, radius: number) {
   const angle = (arcLength / radius) * (180 / Math.PI)
@@ -302,7 +305,18 @@ export function generateEllipseModel({
   }
   const svg = makerjs.exporter.toSVG(ellipseModel, options)
 
-  return { svg }
+  const dom = new JSDOM(svg)
+
+  dom.window.document.querySelectorAll("path").forEach((path) => {
+    const id = path.getAttribute("id")
+
+    if (id) {
+      path.setAttribute("inkscape:groupmode", "layer")
+      path.setAttribute("inkscape:label", id)
+    }
+  })
+
+  return { svg: dom.window.document.body.innerHTML }
 }
 
 export const Ellipse: React.FC<SvgProps> = (props) => {
