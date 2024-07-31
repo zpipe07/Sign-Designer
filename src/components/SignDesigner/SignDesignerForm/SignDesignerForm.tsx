@@ -22,11 +22,11 @@ import { useCreateCart } from "@/src/hooks/mutations/useCreateCart"
 import { useAddCartItem } from "@/src/hooks/mutations/useAddCartItem"
 import { useUpdateCartItem } from "@/src/hooks/mutations/useUpdateCartItem"
 import { PriceDisplay } from "@/src/components/PriceDisplay"
-import { MountingSelector } from "@/src/components/SignConfigurer"
 import { useGetCart } from "@/src/hooks/queries/useGetCart"
 import { EdgeSelector } from "@/src/components/EdgeSelector"
 import { BorderSelector } from "@/src/components/SignDesigner/SignDesignerForm/BorderSelector"
 import { CartSuccessDialog } from "@/src/components/CartSuccessDialog"
+import { MountingSelector } from "@/src/components/SignDesigner/SignDesignerForm/MountingSelector"
 
 type Props = {
   isEditing?: boolean
