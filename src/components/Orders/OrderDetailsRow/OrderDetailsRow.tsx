@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useState } from "react"
 import { IconButton, Skeleton } from "@mui/material"
 import Box from "@mui/material/Box"
@@ -22,6 +24,7 @@ import {
 } from "@/src/lib/bigcommerce/types"
 import { createClient } from "@/src/utils/supabase/client"
 import { useCreateOrderSvg } from "@/src/hooks/mutations/useCreateOrderSvg"
+import { getFilename } from "@/src/utils"
 
 type Props = {
   product: BigCommerceOrderProduct
@@ -69,9 +72,8 @@ export const OrderDetailsRow: React.FC<Props> = ({
     textLines,
   }
   const { data: svg, isLoading } = useGetSignSvg(inputs)
-
-  const fileName = `${order.id}-${product.id}-${color}.svg`
-  const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${fileName}?download=`
+  const filename = getFilename(order.id, product.id, color, textLines)
+  const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${filename}?download=`
 
   const supabase = createClient()
 
@@ -81,13 +83,13 @@ export const OrderDetailsRow: React.FC<Props> = ({
     const fetchData = async () => {
       const { data } = await supabase.storage
         .from("signs")
-        .createSignedUrl(fileName, 1)
+        .createSignedUrl(filename, 1)
 
       setFileExists(!!data?.signedUrl)
     }
 
     fetchData()
-  }, [supabase, fileName])
+  }, [supabase, filename])
 
   const onSuccess = () => {
     setFileExists(true)

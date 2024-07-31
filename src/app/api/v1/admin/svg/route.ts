@@ -1,3 +1,9 @@
+import { NextRequest } from "next/server"
+import opentype from "opentype.js"
+import path from "path"
+import { decode } from "base64-arraybuffer"
+import { promises as fs } from "fs"
+
 import {
   FONT_MAP,
   SIZE_CONFIG_MAP,
@@ -8,12 +14,8 @@ import {
   Size,
 } from "@/src/components/SignDesigner/types"
 import { generateModel } from "@/src/utils/makerjs"
-import { NextRequest } from "next/server"
-import opentype from "opentype.js"
-import path from "path"
-import { promises as fs } from "fs"
 import { createClient } from "@/src/utils/supabase/server"
-import { decode } from "base64-arraybuffer"
+import { getFilename } from "@/src/utils"
 
 export async function POST(request: NextRequest) {
   // given the parameters of a sign, return the SVG
@@ -64,7 +66,8 @@ export async function POST(request: NextRequest) {
     strokeOnly: true,
     actualDimensions: true,
   })
-  const filename = `${orderId}-${productId}-${color}.svg`
+  const filename = getFilename(orderId, productId, color, textLines)
+
   await fs.writeFile(`/tmp/${filename}`, svg)
   const svgFile = await fs.readFile(`/tmp/${filename}`, {
     encoding: "base64",
