@@ -6,6 +6,7 @@ import {
   MountingStyle,
   Shape,
   Size,
+  TextLine,
 } from "@/src/components/SignDesigner/types"
 
 export function parseSearchParams(
@@ -45,4 +46,19 @@ export function parseSearchParams(
     borderWidth: borderWidth || "",
     validate,
   }
+}
+
+export const getFilename = (
+  orderId: number,
+  productId: number,
+  color: string,
+  textLines: TextLine[],
+) => {
+  const text = textLines
+    .filter(({ value }) => !!value)
+    .map(({ value }) => value)
+    .join("-")
+    .replace(/\s/g, "")
+
+  return `${orderId}_${productId}_${color}_${text}.svg`
 }

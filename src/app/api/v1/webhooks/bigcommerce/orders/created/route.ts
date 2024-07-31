@@ -24,6 +24,7 @@ import {
   TextLine,
 } from "@/src/components/SignDesigner/types"
 import { generateModel } from "@/src/utils/makerjs"
+import { getFilename } from "@/src/utils"
 
 export async function POST(request: Request) {
   const body: BigCommerceWebhookPayload = await request.json()
@@ -125,7 +126,12 @@ export async function POST(request: Request) {
       actualDimensions: true,
     })
 
-    const filename = `${order.id}-${product.id}-${color}.svg`
+    const filename = getFilename(
+      order.id,
+      product.id,
+      color,
+      textLines,
+    )
     await fs.writeFile(`/tmp/${filename}`, svg)
     const svgFile = await fs.readFile(`/tmp/${filename}`, {
       encoding: "base64",
