@@ -67,7 +67,7 @@ export const SignDetails: React.FC = () => {
             <Typography variant="h3">Product Description</Typography>
             <Typography marginBottom={1}>
               Transform your home with our beautifully crafted custom
-              signs. Each sign is meticulously designed to reflect
+              signs. Each sign is meticulously manufactured to reflect
               your unique style and personality, adding a touch of
               elegance and charm to your residence. Our signs are made
               from high-quality materials, ensuring durability and
@@ -93,28 +93,20 @@ export const SignDetails: React.FC = () => {
                 </Typography>
               </Box>
 
-              <Box component="li">
-                <Typography>
-                  Premium Materials: Crafted from durable,
-                  weather-resistant materials to withstand the
-                  elements.
-                </Typography>
-              </Box>
-
-              <Box component="li">
+              {/* <Box component="li">
                 <Typography>
                   Handcrafted Quality: Each sign is carefully made by
                   skilled artisans, ensuring a unique and high-quality
                   product.
                 </Typography>
-              </Box>
+              </Box> */}
 
-              <Box component="li">
+              {/* <Box component="li">
                 <Typography>
                   Easy Installation: Comes with all necessary hardware
                   for quick and easy installation.
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
 
             <Typography>
