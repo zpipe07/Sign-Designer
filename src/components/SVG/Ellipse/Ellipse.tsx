@@ -311,8 +311,15 @@ export function generateEllipseModel({
     const id = path.getAttribute("id")
 
     if (id) {
-      path.setAttribute("inkscape:groupmode", "layer")
-      path.setAttribute("inkscape:label", id)
+      const group = dom.window.document.createElement("g")
+      path.parentNode?.insertBefore(group, path)
+      group.appendChild(path)
+
+      // path.setAttribute("inkscape:groupmode", "layer")
+      // path.setAttribute("inkscape:label", id)
+      group.setAttribute("inkscape:groupmode", "layer")
+      group.setAttribute("inkscape:label", id)
+      group.setAttribute("id", id)
     }
   })
 
