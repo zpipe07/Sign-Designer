@@ -308,6 +308,7 @@ export function generateEllipseModel({
   const dom = new JSDOM(svg)
 
   dom.window.document.querySelectorAll("path").forEach((path) => {
+    path.setAttribute("fill-rule", "evenodd")
     const id = path.getAttribute("id")
 
     if (id) {
@@ -320,8 +321,15 @@ export function generateEllipseModel({
       group.setAttribute("inkscape:groupmode", "layer")
       group.setAttribute("inkscape:label", id)
       group.setAttribute("id", id)
+
+      // const node = document.getElementsByClassName('.remove-just-this')[0];
+      // node.replaceWith(...node.childNodes);
     }
   })
+
+  const oldGroup = dom.window.document.getElementById("svgGroup")
+  // @ts-ignore
+  oldGroup?.replaceWith(...oldGroup.childNodes)
 
   return { svg: dom.window.document.body.innerHTML }
 }
