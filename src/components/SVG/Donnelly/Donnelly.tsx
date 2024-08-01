@@ -5,46 +5,49 @@ import {
   BOLT_OFFSET,
   BOLT_RADIUS,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import { getSvgOptions } from "@/src/utils/makerjs"
 
 const TEXT_OFFSET = 3
 
-export function generateDonnellyModel({
-  height,
-  width,
-  outerBorderWidth,
-  innerBorderWidth,
-  inputs,
-  textLines,
-  foregroundColor,
-  backgroundColor,
-  font,
-  strokeOnly,
-  actualDimensions,
-  showShadow,
-  validate,
-}: SvgProps) {
+export function generateDonnellyModel(props: SvgProps) {
+  const {
+    // height,
+    // width,
+    outerBorderWidth,
+    innerBorderWidth,
+    inputs,
+    textLines,
+    foregroundColor,
+    backgroundColor,
+    font,
+    strokeOnly,
+    actualDimensions,
+    showShadow,
+    validate,
+  } = props
+
   if (inputs.size === "extra small vertical") {
-    const temp = height
-    height = width
-    width = temp
+    const temp = props.height
+    props.height = props.width
+    props.width = temp
   }
 
   const leftEllipse = new makerjs.models.Ellipse(
-    height / 3,
-    height / 2,
+    props.height / 3,
+    props.height / 2,
   )
   const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
 
   makerjs.model.center(leftEllipse)
   makerjs.model.move(leftEllipse, [
-    width / -2 + leftEllipseMeasure.width / 2,
+    props.width / -2 + leftEllipseMeasure.width / 2,
     0,
   ])
 
   const rightEllipse = makerjs.model.mirror(leftEllipse, true, false)
   const outerRect = new makerjs.models.RoundRectangle(
-    width - leftEllipseMeasure.width / 3,
-    height,
+    props.width - leftEllipseMeasure.width / 3,
+    props.height,
     0.25,
   )
 
@@ -302,74 +305,16 @@ export function generateDonnellyModel({
       bolts: { ...bolts, layer: "bolts" },
     },
   }
+
   if (inputs.size === "extra small vertical") {
     makerjs.model.rotate(topRound, 90)
 
-    const temp = height
-    height = width
-    width = temp
+    const temp = props.height
+    props.height = props.width
+    props.width = temp
   }
-  const strokeOnlyStyle = { fill: "none", stroke: "black" }
-  const options: makerjs.exporter.ISVGRenderOptions = {
-    layerOptions: {
-      edge: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderOuter: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderInner: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      outer: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      text: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      bolts: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: "white",
-            stroke: "none",
-          },
-    },
-    viewBox: true,
-    svgAttrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
-      id: "svg2",
-      version: "1.1",
-      height: actualDimensions ? `${height}in` : "100%",
-      width: actualDimensions ? `${width}in` : "100%",
-      viewBox: `0 0 ${width} ${height}`,
-      ...(validate && { "data-does-text-fit": doesTextFit }),
-      ...(showShadow && {
-        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
-      }),
-    },
-    units: makerjs.unitType.Inch,
-    fillRule: "evenodd",
-  }
+
+  const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(topRound, options)
 
   return { svg }

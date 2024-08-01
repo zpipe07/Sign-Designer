@@ -7,7 +7,11 @@ import {
   BOLT_OFFSET,
   BOLT_RADIUS,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import { EDGE_WIDTH, makeInnerOutline } from "@/src/utils/makerjs"
+import {
+  EDGE_WIDTH,
+  getSvgOptions,
+  makeInnerOutline,
+} from "@/src/utils/makerjs"
 import { TextLine } from "@/src/components/SignDesigner/types"
 
 const { JSDOM } = jsdom
@@ -209,21 +213,22 @@ const makeBoltsModel = memoize(
   },
 )
 
-export function generateEllipseModel({
-  height,
-  width,
-  outerBorderWidth,
-  innerBorderWidth,
-  inputs,
-  textLines,
-  foregroundColor,
-  backgroundColor,
-  font,
-  strokeOnly,
-  actualDimensions,
-  showShadow,
-  validate,
-}: SvgProps) {
+export function generateEllipseModel(props: SvgProps) {
+  const {
+    height,
+    width,
+    outerBorderWidth,
+    innerBorderWidth,
+    inputs,
+    textLines,
+    foregroundColor,
+    backgroundColor,
+    font,
+    strokeOnly,
+    actualDimensions,
+    showShadow,
+    validate,
+  } = props
   let edge
   let outer
 
@@ -270,68 +275,10 @@ export function generateEllipseModel({
       bolts: { ...bolts, layer: "bolts" },
     },
   }
-
-  const strokeOnlyStyle = { fill: "none", stroke: "black" }
-  const options: makerjs.exporter.ISVGRenderOptions = {
-    layerOptions: {
-      edge: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderOuter: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderInner: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      outer: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      text: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      bolts: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: "white",
-            stroke: "none",
-          },
-    },
-    viewBox: true,
-    svgAttrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
-      id: "svg2",
-      version: "1.1",
-      height: actualDimensions ? `${height}in` : "100%",
-      width: actualDimensions ? `${width}in` : "100%",
-      viewBox: `0 0 ${width} ${height}`,
-      ...(validate && { "data-does-text-fit": doesTextFit }),
-      ...(showShadow && {
-        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
-      }),
-    },
-    units: makerjs.unitType.Inch,
-    fillRule: "evenodd",
-  }
+  const options = getSvgOptions({
+    ...props,
+    doesTextFit,
+  })
   const svg = makerjs.exporter.toSVG(ellipseModel, options)
   const dom = new JSDOM(svg)
 

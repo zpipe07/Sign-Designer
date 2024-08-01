@@ -39,3 +39,80 @@ export const makeInnerOutline = memoize(
     return makerjs.model.outline(model, outlineWidth, undefined, true)
   },
 )
+
+export const getSvgOptions = ({
+  strokeOnly,
+  backgroundColor,
+  foregroundColor,
+  actualDimensions,
+  height,
+  width,
+  validate,
+  showShadow,
+  doesTextFit,
+}: SvgProps & {
+  doesTextFit: boolean
+}): makerjs.exporter.ISVGRenderOptions => {
+  const strokeOnlyStyle = { fill: "none", stroke: "black" }
+
+  return {
+    layerOptions: {
+      edge: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
+          },
+      borderOuter: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
+          },
+      borderInner: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+            stroke: "none",
+          },
+      outer: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: foregroundColor,
+            stroke: "none",
+          },
+      text: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: backgroundColor,
+            stroke: "rgba(0, 0, 0, 0.25)",
+            strokeWidth: "2px",
+          },
+      bolts: strokeOnly
+        ? strokeOnlyStyle
+        : {
+            fill: "white",
+            stroke: "none",
+          },
+    },
+    viewBox: true,
+    svgAttrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
+      id: "svg2",
+      version: "1.1",
+      height: actualDimensions ? `${height}in` : "100%",
+      width: actualDimensions ? `${width}in` : "100%",
+      viewBox: `0 0 ${width} ${height}`,
+      ...(validate && { "data-does-text-fit": doesTextFit }),
+      ...(showShadow && {
+        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
+      }),
+    },
+    units: makerjs.unitType.Inch,
+    fillRule: "evenodd",
+  }
+}

@@ -1,152 +1,142 @@
 ///<reference path="../../../../node_modules/makerjs/dist/index.d.ts" />
 
 import makerjs from "makerjs"
+import memoize from "memoizee"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import {
   BOLT_RADIUS,
   BOLT_OFFSET,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import {
+  EDGE_WIDTH,
+  getSvgOptions,
+  makeInnerOutline,
+} from "@/src/utils/makerjs"
+import {
+  DesignFormInputs,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
 
 const TEXT_OFFSET = 3
 
-export function generateRectangleModel({
-  height,
-  width,
-  outerBorderWidth,
-  innerBorderWidth,
-  inputs,
-  textLines,
-  foregroundColor,
-  backgroundColor,
-  font,
-  strokeOnly,
-  actualDimensions,
-  showShadow,
-  validate,
-}: SvgProps) {
-  let edge
-  let outer
-
-  if (inputs.edgeStyle === "round") {
-    edge = new makerjs.models.RoundRectangle(width, height, 0.25)
-    makerjs.model.center(edge)
-
-    outer = makerjs.model.outline(edge, 0.2, undefined, true)
-  } else {
-    outer = new makerjs.models.RoundRectangle(width, height, 0.25)
-  }
-
-  makerjs.model.center(outer)
-
-  let borderOuter
-  let borderInner
-
-  if (innerBorderWidth) {
-    borderOuter = makerjs.model.outline(
-      outer,
-      outerBorderWidth,
-      undefined,
-      true,
-    )
-    makerjs.model.center(borderOuter)
-    borderInner = makerjs.model.outline(
-      borderOuter,
-      innerBorderWidth,
-      undefined,
-      true,
-    )
-    makerjs.model.center(borderInner)
-  }
-
-  const text: any = {
-    models: {},
-  }
-
-  let index = -1
-
-  for (const textLine of textLines) {
-    index += 1
-    const { value, fontSize, offset } = textLine
-
-    if (!value) {
-      continue
+const makeTextModel = memoize(
+  (
+    textLines: TextLine[],
+    font: opentype.Font,
+    validate: boolean | undefined,
+    borderInner: makerjs.IModel | undefined,
+    outer: makerjs.IModel,
+    inputs: DesignFormInputs,
+  ) => {
+    const text: any = {
+      models: {},
     }
 
-    const textModel = new makerjs.models.Text(
-      font,
-      value,
-      parseFloat(fontSize),
-      true,
-    )
+    let index = -1
 
-    if (index === 0) {
-      // primary
-      if (inputs.size === "extra small vertical") {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        text.models[`textModel${index}`] = {
-          models: {},
-        }
+    for (const textLine of textLines) {
+      index += 1
+      const { value, fontSize, offset } = textLine
 
-        value.split("").forEach((char, i) => {
-          if (char === " ") {
-            return
-          }
-
-          const charModel = new makerjs.models.Text(
-            font,
-            char,
-            parseFloat(fontSize),
-          )
-          makerjs.model.center(charModel)
-          makerjs.model.moveRelative(charModel, [
-            0,
-            textMeasure.height * -i * 1.125,
-          ])
-
-          text.models[`textModel${index}`].models[`charModel${i}`] = {
-            ...charModel,
-          }
-        })
-
-        makerjs.model.center(text.models[`textModel${index}`])
-
-        if (parseFloat(offset)) {
-          makerjs.model.moveRelative(
-            text.models[`textModel${index}`],
-            [0, parseFloat(offset)],
-          )
-        }
-
+      if (!value) {
         continue
-      } else {
+      }
+
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+        true,
+      )
+
+      if (index === 0) {
+        // primary
+        if (inputs.size === "extra small vertical") {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          text.models[`textModel${index}`] = {
+            models: {},
+          }
+
+          value.split("").forEach((char, i) => {
+            if (char === " ") {
+              return
+            }
+
+            const charModel = new makerjs.models.Text(
+              font,
+              char,
+              parseFloat(fontSize),
+            )
+            makerjs.model.center(charModel)
+            makerjs.model.moveRelative(charModel, [
+              0,
+              textMeasure.height * -i * 1.125,
+            ])
+
+            text.models[`textModel${index}`].models[`charModel${i}`] =
+              {
+                ...charModel,
+              }
+          })
+
+          makerjs.model.center(text.models[`textModel${index}`])
+
+          if (parseFloat(offset)) {
+            makerjs.model.moveRelative(
+              text.models[`textModel${index}`],
+              [0, parseFloat(offset)],
+            )
+          }
+
+          continue
+        } else {
+          makerjs.model.center(textModel)
+        }
+      }
+
+      if (index === 1) {
+        // upper
         makerjs.model.center(textModel)
+        makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      }
+
+      if (index === 2) {
+        // lower
+        makerjs.model.center(textModel)
+        makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
+      }
+
+      if (parseFloat(offset)) {
+        makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+      }
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
       }
     }
 
-    if (index === 1) {
-      // upper
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+    let doesTextFit = true
+
+    if (validate) {
+      const outerMeasure = borderInner
+        ? makerjs.measure.modelExtents(borderInner)
+        : makerjs.measure.modelExtents(outer)
+      const textMeasure = makerjs.measure.modelExtents(text)
+
+      if (textMeasure) {
+        doesTextFit =
+          outerMeasure.width > textMeasure.width &&
+          outerMeasure.height > textMeasure.height
+      }
     }
 
-    if (index === 2) {
-      // lower
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-    }
+    return { doesTextFit, text }
+  },
+)
 
-    if (parseFloat(offset)) {
-      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
-    }
-
-    text.models[`textModel${index}`] = {
-      ...textModel,
-    }
-  }
-
-  let bolts = {}
-  if (inputs.mountingStyle === "wall mounted") {
+const makeBoltsModel = memoize(
+  (outer, outerBorderWidth, innerBorderWidth) => {
     const outerMeasure = makerjs.measure.modelExtents(outer)
 
     const boltTopLeft = new makerjs.models.Ellipse(
@@ -200,7 +190,7 @@ export function generateRectangleModel({
         BOLT_OFFSET,
     ])
 
-    bolts = {
+    return {
       models: {
         boltTopLeft,
         boltTopRight,
@@ -208,21 +198,60 @@ export function generateRectangleModel({
         boltBottomRight,
       },
     }
+  },
+)
+
+export function generateRectangleModel(props: SvgProps) {
+  const {
+    height,
+    width,
+    outerBorderWidth,
+    innerBorderWidth,
+    inputs,
+    textLines,
+    foregroundColor,
+    backgroundColor,
+    font,
+    strokeOnly,
+    actualDimensions,
+    showShadow,
+    validate,
+  } = props
+  let edge
+  let outer
+
+  if (inputs.edgeStyle === "round") {
+    edge = new makerjs.models.RoundRectangle(width, height, 0.25)
+    makerjs.model.center(edge)
+
+    outer = makeInnerOutline(edge, EDGE_WIDTH)
+  } else {
+    outer = new makerjs.models.RoundRectangle(width, height, 0.25)
   }
 
-  let doesTextFit = true
+  makerjs.model.center(outer)
 
-  if (validate) {
-    const outerMeasure = borderInner
-      ? makerjs.measure.modelExtents(borderInner)
-      : makerjs.measure.modelExtents(outer)
-    const textMeasure = makerjs.measure.modelExtents(text)
+  let borderOuter
+  let borderInner
 
-    if (textMeasure) {
-      doesTextFit =
-        outerMeasure.width > textMeasure.width &&
-        outerMeasure.height > textMeasure.height
-    }
+  if (innerBorderWidth) {
+    borderOuter = makeInnerOutline(outer, outerBorderWidth)
+    borderInner = makeInnerOutline(borderOuter, innerBorderWidth)
+  }
+
+  const { doesTextFit, text } = makeTextModel(
+    textLines,
+    font,
+    validate,
+    borderInner,
+    outer,
+    inputs,
+  )
+
+  let bolts = {} as makerjs.IModel
+
+  if (inputs.mountingStyle === "wall mounted") {
+    bolts = makeBoltsModel(outer, outerBorderWidth, innerBorderWidth)
   }
 
   const rectangleModel = {
@@ -235,67 +264,7 @@ export function generateRectangleModel({
       bolts: { ...bolts, layer: "bolts" },
     },
   }
-  const strokeOnlyStyle = { fill: "none", stroke: "black" }
-  const options: makerjs.exporter.ISVGRenderOptions = {
-    layerOptions: {
-      edge: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderOuter: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderInner: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      outer: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      text: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      bolts: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: "white",
-            stroke: "none",
-          },
-    },
-    viewBox: true,
-    svgAttrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
-      id: "svg2",
-      version: "1.1",
-      height: actualDimensions ? `${height}in` : "100%",
-      width: actualDimensions ? `${width}in` : "100%",
-      viewBox: `0 0 ${width} ${height}`,
-      ...(validate && { "data-does-text-fit": doesTextFit }),
-      ...(showShadow && {
-        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
-      }),
-    },
-    units: makerjs.unitType.Inch,
-    fillRule: "evenodd",
-  }
+  const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(rectangleModel, options)
 
   return { svg }
