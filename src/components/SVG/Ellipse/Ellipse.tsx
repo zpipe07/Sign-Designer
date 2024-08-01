@@ -150,9 +150,10 @@ const makeTextModel = memoize(
         makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
       }
 
-      // @ts-ignore
-      text.models[`textModel${index}`] = {
-        ...textModel,
+      if (text.models) {
+        text.models[`textModel${index}`] = {
+          ...textModel,
+        }
       }
     }
 
