@@ -1,3 +1,6 @@
+import makerjs from "makerjs"
+import memoize from "memoizee"
+
 import { generateBreadModel } from "@/src/components/SVG/Bread"
 import { generateDonnellyModel } from "@/src/components/SVG/Donnelly"
 import { generateEllipseModel } from "@/src/components/SVG/Ellipse"
@@ -5,7 +8,9 @@ import { generateRectangleModel } from "@/src/components/SVG/Rectangle"
 import { generateTopRoundModel } from "@/src/components/SVG/TopRound"
 import { SvgProps } from "@/src/components/SVG/types"
 
-export function generateModel(props: SvgProps) {
+export const EDGE_WIDTH = 0.2
+
+export const generateModel = memoize((props: SvgProps) => {
   if (props.inputs.shape === "ellipse") {
     return generateEllipseModel(props)
   }
@@ -27,4 +32,10 @@ export function generateModel(props: SvgProps) {
   }
 
   throw new Error("Invalid shape")
-}
+})
+
+export const makeInnerOutline = memoize(
+  (model: makerjs.IModel, outlineWidth: number) => {
+    return makerjs.model.outline(model, outlineWidth, undefined, true)
+  },
+)

@@ -11,9 +11,6 @@ import { generateModel } from "@/src/utils/makerjs"
 import { parseSearchParams } from "@/src/utils"
 
 export async function GET(request: NextRequest) {
-  const host = request.headers.get("host")
-  console.log({ host })
-
   const searchParams = request.nextUrl.searchParams
   const {
     shape,
