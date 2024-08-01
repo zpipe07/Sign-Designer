@@ -1,13 +1,228 @@
 import makerjs from "makerjs"
+import memoizee from "memoizee"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import {
   BOLT_OFFSET,
   BOLT_RADIUS,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
-import { getSvgOptions } from "@/src/utils/makerjs"
+import {
+  EDGE_WIDTH,
+  getSvgOptions,
+  makeInnerOutline,
+} from "@/src/utils/makerjs"
+import {
+  DesignFormInputs,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
 
 const TEXT_OFFSET = 3
+
+const makeTextModel = memoizee(
+  (
+    textLines: TextLine[],
+    font: opentype.Font,
+    validate: boolean | undefined,
+    borderInner: makerjs.IModel | undefined,
+    outer: makerjs.IModel,
+    inputs: DesignFormInputs,
+  ) => {
+    let doesTextFit = true
+    const text: any = {
+      models: {},
+    }
+
+    let index = -1
+
+    for (const textLine of textLines) {
+      index += 1
+      const { value, fontSize, offset } = textLine
+
+      if (!value) {
+        continue
+      }
+
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+        true,
+      )
+
+      if (index === 0) {
+        // primary
+        if (inputs.size === "extra small vertical") {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          text.models[`textModel${index}`] = {
+            models: {},
+          }
+
+          value.split("").forEach((char, i) => {
+            if (char === " ") {
+              return
+            }
+
+            const charModel = new makerjs.models.Text(
+              font,
+              char,
+              parseFloat(fontSize),
+            )
+
+            makerjs.model.rotate(charModel, -90)
+            makerjs.model.center(charModel)
+            makerjs.model.moveRelative(charModel, [
+              textMeasure.height * -i * 1.125,
+              0,
+            ])
+
+            text.models[`textModel${index}`].models[`charModel${i}`] =
+              {
+                ...charModel,
+              }
+          })
+
+          makerjs.model.center(text.models[`textModel${index}`])
+
+          if (parseFloat(offset)) {
+            makerjs.model.moveRelative(
+              text.models[`textModel${index}`],
+              [parseFloat(offset), 0],
+            )
+          }
+
+          continue
+        } else {
+          makerjs.model.center(textModel)
+        }
+
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
+
+          if (innerMeasure.width - 0.25 <= textMeasure.width) {
+            doesTextFit = false
+          }
+        }
+      }
+
+      if (index === 1) {
+        // upper
+        makerjs.model.center(textModel)
+        makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
+
+          if (innerMeasure.width - 1.125 <= textMeasure.width) {
+            doesTextFit = false
+          }
+        }
+      }
+
+      if (index === 2) {
+        // lower
+        makerjs.model.center(textModel)
+        makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
+
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
+
+          if (innerMeasure.width - 1.125 <= textMeasure.width) {
+            doesTextFit = false
+          }
+        }
+      }
+
+      if (parseFloat(offset)) {
+        makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+      }
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
+      }
+    }
+
+    return { doesTextFit, text }
+  },
+)
+
+const makeBoltsModel = memoizee(
+  (outer, outerBorderWidth, innerBorderWidth, leftEllipseMeasure) => {
+    const outerMeasure = makerjs.measure.modelExtents(outer)
+
+    const boltTopLeft = new makerjs.models.Ellipse(
+      BOLT_RADIUS,
+      BOLT_RADIUS,
+    )
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET +
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+    ])
+
+    const boltTopRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltTopLeft), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET,
+    ])
+
+    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
+      outerMeasure.width / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET +
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    const boltBottomRight = makerjs.model.clone(boltTopLeft)
+    makerjs.model.move(makerjs.model.center(boltBottomRight), [
+      outerMeasure.width / 2 -
+        outerBorderWidth -
+        innerBorderWidth -
+        BOLT_OFFSET -
+        leftEllipseMeasure.width / 6,
+      outerMeasure.height / -2 +
+        outerBorderWidth +
+        innerBorderWidth +
+        BOLT_OFFSET,
+    ])
+
+    return {
+      models: {
+        boltTopLeft,
+        boltTopRight,
+        boltBottomLeft,
+        boltBottomRight,
+      },
+    }
+  },
+)
 
 export function generateDonnellyModel(props: SvgProps) {
   const {
@@ -76,7 +291,7 @@ export function generateDonnellyModel(props: SvgProps) {
     }
     makerjs.model.center(edge)
 
-    outer = makerjs.model.outline(edge, 0.2, undefined, true)
+    outer = makeInnerOutline(edge, EDGE_WIDTH)
   } else {
     outer = {
       models: {
@@ -90,209 +305,28 @@ export function generateDonnellyModel(props: SvgProps) {
   let borderInner
 
   if (innerBorderWidth) {
-    borderOuter = makerjs.model.outline(
+    borderOuter = makeInnerOutline(outer, outerBorderWidth)
+    borderInner = makeInnerOutline(borderOuter, innerBorderWidth)
+  }
+
+  const { doesTextFit, text } = makeTextModel(
+    textLines,
+    font,
+    validate,
+    borderInner,
+    outer,
+    inputs,
+  )
+
+  let bolts = {} as makerjs.IModel
+
+  if (inputs.mountingStyle === "wall mounted") {
+    bolts = makeBoltsModel(
       outer,
       outerBorderWidth,
-      undefined,
-      true,
-    )
-    borderInner = makerjs.model.outline(
-      borderOuter,
       innerBorderWidth,
-      undefined,
-      true,
+      leftEllipseMeasure,
     )
-  }
-
-  let doesTextFit = true
-  const text: any = {
-    models: {},
-  }
-
-  let index = -1
-
-  for (const textLine of textLines) {
-    index += 1
-    const { value, fontSize, offset } = textLine
-
-    if (!value) {
-      continue
-    }
-
-    const textModel = new makerjs.models.Text(
-      font,
-      value,
-      parseFloat(fontSize),
-      true,
-    )
-
-    if (index === 0) {
-      // primary
-      if (inputs.size === "extra small vertical") {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        text.models[`textModel${index}`] = {
-          models: {},
-        }
-
-        value.split("").forEach((char, i) => {
-          if (char === " ") {
-            return
-          }
-
-          const charModel = new makerjs.models.Text(
-            font,
-            char,
-            parseFloat(fontSize),
-          )
-
-          makerjs.model.rotate(charModel, -90)
-          makerjs.model.center(charModel)
-          makerjs.model.moveRelative(charModel, [
-            textMeasure.height * -i * 1.125,
-            0,
-          ])
-
-          text.models[`textModel${index}`].models[`charModel${i}`] = {
-            ...charModel,
-          }
-        })
-
-        makerjs.model.center(text.models[`textModel${index}`])
-
-        if (parseFloat(offset)) {
-          makerjs.model.moveRelative(
-            text.models[`textModel${index}`],
-            [parseFloat(offset), 0],
-          )
-        }
-
-        continue
-      } else {
-        makerjs.model.center(textModel)
-      }
-
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
-
-        if (innerMeasure.width - 0.25 <= textMeasure.width) {
-          doesTextFit = false
-        }
-      }
-    }
-
-    if (index === 1) {
-      // upper
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
-
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
-
-        if (innerMeasure.width - 1.125 <= textMeasure.width) {
-          doesTextFit = false
-        }
-      }
-    }
-
-    if (index === 2) {
-      // lower
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
-
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
-
-        if (innerMeasure.width - 1.125 <= textMeasure.width) {
-          doesTextFit = false
-        }
-      }
-    }
-
-    if (parseFloat(offset)) {
-      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
-    }
-
-    text.models[`textModel${index}`] = {
-      ...textModel,
-    }
-  }
-
-  let bolts = {}
-  if (inputs.mountingStyle === "wall mounted") {
-    const outerMeasure = makerjs.measure.modelExtents(outer)
-
-    const boltTopLeft = new makerjs.models.Ellipse(
-      BOLT_RADIUS,
-      BOLT_RADIUS,
-    )
-    makerjs.model.move(makerjs.model.center(boltTopLeft), [
-      outerMeasure.width / -2 +
-        outerBorderWidth +
-        innerBorderWidth +
-        BOLT_OFFSET +
-        leftEllipseMeasure.width / 6,
-      outerMeasure.height / 2 -
-        outerBorderWidth -
-        innerBorderWidth -
-        BOLT_OFFSET,
-    ])
-
-    const boltTopRight = makerjs.model.clone(boltTopLeft)
-    makerjs.model.move(makerjs.model.center(boltTopLeft), [
-      outerMeasure.width / 2 -
-        outerBorderWidth -
-        innerBorderWidth -
-        BOLT_OFFSET -
-        leftEllipseMeasure.width / 6,
-      outerMeasure.height / 2 -
-        outerBorderWidth -
-        innerBorderWidth -
-        BOLT_OFFSET,
-    ])
-
-    const boltBottomLeft = makerjs.model.clone(boltTopLeft)
-    makerjs.model.move(makerjs.model.center(boltBottomLeft), [
-      outerMeasure.width / -2 +
-        outerBorderWidth +
-        innerBorderWidth +
-        BOLT_OFFSET +
-        leftEllipseMeasure.width / 6,
-      outerMeasure.height / -2 +
-        outerBorderWidth +
-        innerBorderWidth +
-        BOLT_OFFSET,
-    ])
-
-    const boltBottomRight = makerjs.model.clone(boltTopLeft)
-    makerjs.model.move(makerjs.model.center(boltBottomRight), [
-      outerMeasure.width / 2 -
-        outerBorderWidth -
-        innerBorderWidth -
-        BOLT_OFFSET -
-        leftEllipseMeasure.width / 6,
-      outerMeasure.height / -2 +
-        outerBorderWidth +
-        innerBorderWidth +
-        BOLT_OFFSET,
-    ])
-
-    bolts = {
-      models: {
-        boltTopLeft,
-        boltTopRight,
-        boltBottomLeft,
-        boltBottomRight,
-      },
-    }
   }
 
   const topRound = {
