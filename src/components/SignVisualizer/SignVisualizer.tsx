@@ -4,6 +4,7 @@ import { useWatch } from "react-hook-form"
 import {
   Alert,
   Box,
+  LinearProgress,
   Skeleton,
   debounce,
   useTheme,
@@ -39,6 +40,7 @@ export const SignVisualizer: React.FC = () => {
   const {
     data: svg,
     isFetching,
+    isLoading,
     refetch,
   } = useGetSignSvg(
     {
@@ -95,7 +97,7 @@ export const SignVisualizer: React.FC = () => {
 
   return (
     <Box position="relative">
-      {isFetching || !svg ? (
+      {isLoading || !svg ? (
         <Skeleton
           variant="rounded"
           sx={{
@@ -142,6 +144,10 @@ export const SignVisualizer: React.FC = () => {
             }}
             ref={ref}
           />
+
+          <Box height={4} marginTop={1}>
+            {isFetching  && <LinearProgress />}
+          </Box>
 
           {!doesTextFit && (
             <Alert severity="error" sx={{ marginTop: 2 }}>
