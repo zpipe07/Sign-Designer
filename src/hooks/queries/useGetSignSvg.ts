@@ -1,5 +1,5 @@
 import queryString from "query-string"
-import { useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 
@@ -43,17 +43,7 @@ export const useGetSignSvg = (
       validate,
     ],
     queryFn: (arg) => getSignSvg(arg, inputs, showShadow, validate),
-    // initialData: () => {
-    //   const cache = queryClient.getQueryCache()
-    //   const queries = cache.findAll({
-    //     queryKey: [
-    //       `/api/v1/svg${queryKeySuffix ? `-${queryKeySuffix}` : ""}`,
-    //     ],
-    //   })
-    //   const previousQuery = queries[queries.length - 1]
-
-    //   return previousQuery?.state.data as string
-    // },
+    placeholderData: keepPreviousData,
     enabled,
   })
 }

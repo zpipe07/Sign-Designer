@@ -1,230 +1,162 @@
 import makerjs from "makerjs"
+import memoizee from "memoizee"
 
 import { SvgProps } from "@/src/components/SVG/types"
 import {
   BOLT_OFFSET,
   BOLT_RADIUS,
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
+import {
+  EDGE_WIDTH,
+  formatSvg,
+  getSvgOptions,
+  makeInnerOutline,
+} from "@/src/utils/makerjs"
+import {
+  DesignFormInputs,
+  TextLine,
+} from "@/src/components/SignDesigner/types"
 
 const TEXT_OFFSET = 3
 
-export function generateDonnellyModel({
-  height,
-  width,
-  outerBorderWidth,
-  innerBorderWidth,
-  inputs,
-  textLines,
-  foregroundColor,
-  backgroundColor,
-  font,
-  strokeOnly,
-  actualDimensions,
-  showShadow,
-  validate,
-}: SvgProps) {
-  if (inputs.size === "extra small vertical") {
-    const temp = height
-    height = width
-    width = temp
-  }
-
-  const leftEllipse = new makerjs.models.Ellipse(
-    height / 3,
-    height / 2,
-  )
-  const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
-
-  makerjs.model.center(leftEllipse)
-  makerjs.model.move(leftEllipse, [
-    width / -2 + leftEllipseMeasure.width / 2,
-    0,
-  ])
-
-  const rightEllipse = makerjs.model.mirror(leftEllipse, true, false)
-  const outerRect = new makerjs.models.RoundRectangle(
-    width - leftEllipseMeasure.width / 3,
-    height,
-    0.25,
-  )
-
-  makerjs.model.center(outerRect)
-
-  const combinedTemp = makerjs.model.combineUnion(
-    outerRect,
-    leftEllipse,
-  )
-  const combined = makerjs.model.combineUnion(
-    combinedTemp,
-    rightEllipse,
-  )
-  const chain = makerjs.model.findSingleChain(combined)
-  const filletsModel = makerjs.chain.fillet(chain, 0.25)
-
-  let edge
-  let outer
-
-  if (inputs.edgeStyle === "round") {
-    edge = {
-      models: {
-        combined,
-        filletsModel,
-      },
-    }
-    makerjs.model.center(edge)
-
-    outer = makerjs.model.outline(edge, 0.2, undefined, true)
-  } else {
-    outer = {
-      models: {
-        combined,
-        filletsModel,
-      },
-    }
-  }
-
-  let borderOuter
-  let borderInner
-
-  if (innerBorderWidth) {
-    borderOuter = makerjs.model.outline(
-      outer,
-      outerBorderWidth,
-      undefined,
-      true,
-    )
-    borderInner = makerjs.model.outline(
-      borderOuter,
-      innerBorderWidth,
-      undefined,
-      true,
-    )
-  }
-
-  let doesTextFit = true
-  const text: any = {
-    models: {},
-  }
-
-  let index = -1
-
-  for (const textLine of textLines) {
-    index += 1
-    const { value, fontSize, offset } = textLine
-
-    if (!value) {
-      continue
+const makeTextModel = memoizee(
+  (
+    textLines: TextLine[],
+    font: opentype.Font,
+    validate: boolean | undefined,
+    borderInner: makerjs.IModel | undefined,
+    outer: makerjs.IModel,
+    inputs: DesignFormInputs,
+  ) => {
+    let doesTextFit = true
+    const text: any = {
+      models: {},
     }
 
-    const textModel = new makerjs.models.Text(
-      font,
-      value,
-      parseFloat(fontSize),
-      true,
-    )
+    let index = -1
 
-    if (index === 0) {
-      // primary
-      if (inputs.size === "extra small vertical") {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        text.models[`textModel${index}`] = {
-          models: {},
-        }
+    for (const textLine of textLines) {
+      index += 1
+      const { value, fontSize, offset } = textLine
 
-        value.split("").forEach((char, i) => {
-          if (char === " ") {
-            return
-          }
-
-          const charModel = new makerjs.models.Text(
-            font,
-            char,
-            parseFloat(fontSize),
-          )
-
-          makerjs.model.rotate(charModel, -90)
-          makerjs.model.center(charModel)
-          makerjs.model.moveRelative(charModel, [
-            textMeasure.height * -i * 1.125,
-            0,
-          ])
-
-          text.models[`textModel${index}`].models[`charModel${i}`] = {
-            ...charModel,
-          }
-        })
-
-        makerjs.model.center(text.models[`textModel${index}`])
-
-        if (parseFloat(offset)) {
-          makerjs.model.moveRelative(
-            text.models[`textModel${index}`],
-            [parseFloat(offset), 0],
-          )
-        }
-
+      if (!value) {
         continue
-      } else {
+      }
+
+      const textModel = new makerjs.models.Text(
+        font,
+        value,
+        parseFloat(fontSize),
+        true,
+      )
+
+      if (index === 0) {
+        // primary
+        if (inputs.size === "extra small vertical") {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          text.models[`textModel${index}`] = {
+            models: {},
+          }
+
+          value.split("").forEach((char, i) => {
+            if (char === " ") {
+              return
+            }
+
+            const charModel = new makerjs.models.Text(
+              font,
+              char,
+              parseFloat(fontSize),
+            )
+
+            makerjs.model.rotate(charModel, -90)
+            makerjs.model.center(charModel)
+            makerjs.model.moveRelative(charModel, [
+              textMeasure.height * -i * 1.125,
+              0,
+            ])
+
+            text.models[`textModel${index}`].models[`charModel${i}`] =
+              {
+                ...charModel,
+              }
+          })
+
+          makerjs.model.center(text.models[`textModel${index}`])
+
+          if (parseFloat(offset)) {
+            makerjs.model.moveRelative(
+              text.models[`textModel${index}`],
+              [parseFloat(offset), 0],
+            )
+          }
+
+          continue
+        } else {
+          makerjs.model.center(textModel)
+        }
+
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
+
+          if (innerMeasure.width - 0.25 <= textMeasure.width) {
+            doesTextFit = false
+          }
+        }
+      }
+
+      if (index === 1) {
+        // upper
         makerjs.model.center(textModel)
-      }
+        makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
 
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
 
-        if (innerMeasure.width - 0.25 <= textMeasure.width) {
-          doesTextFit = false
+          if (innerMeasure.width - 1.125 <= textMeasure.width) {
+            doesTextFit = false
+          }
         }
       }
-    }
 
-    if (index === 1) {
-      // upper
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, TEXT_OFFSET])
+      if (index === 2) {
+        // lower
+        makerjs.model.center(textModel)
+        makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
 
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
+        if (validate) {
+          const textMeasure = makerjs.measure.modelExtents(textModel)
+          const innerMeasure = borderInner
+            ? makerjs.measure.modelExtents(borderInner)
+            : makerjs.measure.modelExtents(outer)
 
-        if (innerMeasure.width - 1.125 <= textMeasure.width) {
-          doesTextFit = false
+          if (innerMeasure.width - 1.125 <= textMeasure.width) {
+            doesTextFit = false
+          }
         }
+      }
+
+      if (parseFloat(offset)) {
+        makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
+      }
+
+      text.models[`textModel${index}`] = {
+        ...textModel,
       }
     }
 
-    if (index === 2) {
-      // lower
-      makerjs.model.center(textModel)
-      makerjs.model.moveRelative(textModel, [0, -TEXT_OFFSET])
+    return { doesTextFit, text }
+  },
+)
 
-      if (validate) {
-        const textMeasure = makerjs.measure.modelExtents(textModel)
-        const innerMeasure = borderInner
-          ? makerjs.measure.modelExtents(borderInner)
-          : makerjs.measure.modelExtents(outer)
-
-        if (innerMeasure.width - 1.125 <= textMeasure.width) {
-          doesTextFit = false
-        }
-      }
-    }
-
-    if (parseFloat(offset)) {
-      makerjs.model.moveRelative(textModel, [0, parseFloat(offset)])
-    }
-
-    text.models[`textModel${index}`] = {
-      ...textModel,
-    }
-  }
-
-  let bolts = {}
-  if (inputs.mountingStyle === "wall mounted") {
+const makeBoltsModel = memoizee(
+  (outer, outerBorderWidth, innerBorderWidth, leftEllipseMeasure) => {
     const outerMeasure = makerjs.measure.modelExtents(outer)
 
     const boltTopLeft = new makerjs.models.Ellipse(
@@ -282,7 +214,7 @@ export function generateDonnellyModel({
         BOLT_OFFSET,
     ])
 
-    bolts = {
+    return {
       models: {
         boltTopLeft,
         boltTopRight,
@@ -290,6 +222,112 @@ export function generateDonnellyModel({
         boltBottomRight,
       },
     }
+  },
+)
+
+export function generateDonnellyModel(props: SvgProps) {
+  const {
+    // height,
+    // width,
+    outerBorderWidth,
+    innerBorderWidth,
+    inputs,
+    textLines,
+    foregroundColor,
+    backgroundColor,
+    font,
+    strokeOnly,
+    actualDimensions,
+    showShadow,
+    validate,
+  } = props
+
+  if (inputs.size === "extra small vertical") {
+    const temp = props.height
+    props.height = props.width
+    props.width = temp
+  }
+
+  const leftEllipse = new makerjs.models.Ellipse(
+    props.height / 3,
+    props.height / 2,
+  )
+  const leftEllipseMeasure = makerjs.measure.modelExtents(leftEllipse)
+
+  makerjs.model.center(leftEllipse)
+  makerjs.model.move(leftEllipse, [
+    props.width / -2 + leftEllipseMeasure.width / 2,
+    0,
+  ])
+
+  const rightEllipse = makerjs.model.mirror(leftEllipse, true, false)
+  const outerRect = new makerjs.models.RoundRectangle(
+    props.width - leftEllipseMeasure.width / 3,
+    props.height,
+    0.25,
+  )
+
+  makerjs.model.center(outerRect)
+
+  const combinedTemp = makerjs.model.combineUnion(
+    outerRect,
+    leftEllipse,
+  )
+  const combined = makerjs.model.combineUnion(
+    combinedTemp,
+    rightEllipse,
+  )
+  const chain = makerjs.model.findSingleChain(combined)
+  const filletsModel = makerjs.chain.fillet(chain, 0.25)
+
+  let edge
+  let outer
+
+  if (inputs.edgeStyle === "round") {
+    edge = {
+      models: {
+        combined,
+        filletsModel,
+      },
+    }
+    makerjs.model.center(edge)
+
+    outer = makeInnerOutline(edge, EDGE_WIDTH)
+  } else {
+    outer = {
+      models: {
+        combined,
+        filletsModel,
+      },
+    }
+  }
+
+  let borderOuter
+  let borderInner
+
+  if (innerBorderWidth) {
+    borderOuter = makeInnerOutline(outer, outerBorderWidth)
+    borderInner = makeInnerOutline(borderOuter, innerBorderWidth)
+  }
+
+  const { doesTextFit, text } = makeTextModel(
+    textLines,
+    font,
+    validate,
+    borderInner,
+    outer,
+    inputs,
+  )
+
+  let bolts = {} as makerjs.IModel
+
+  if (inputs.mountingStyle === "wall mounted") {
+    bolts = makeBoltsModel(
+      outer,
+      outerBorderWidth,
+      innerBorderWidth,
+      leftEllipseMeasure,
+    )
   }
 
   const topRound = {
@@ -302,77 +340,20 @@ export function generateDonnellyModel({
       bolts: { ...bolts, layer: "bolts" },
     },
   }
+
   if (inputs.size === "extra small vertical") {
     makerjs.model.rotate(topRound, 90)
 
-    const temp = height
-    height = width
-    width = temp
+    const temp = props.height
+    props.height = props.width
+    props.width = temp
   }
-  const strokeOnlyStyle = { fill: "none", stroke: "black" }
-  const options: makerjs.exporter.ISVGRenderOptions = {
-    layerOptions: {
-      edge: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderOuter: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      borderInner: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      outer: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: foregroundColor,
-            stroke: "none",
-          },
-      text: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: backgroundColor,
-            stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
-          },
-      bolts: strokeOnly
-        ? strokeOnlyStyle
-        : {
-            fill: "white",
-            stroke: "none",
-          },
-    },
-    viewBox: true,
-    svgAttrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "xmlns:inkscape": "http://www.inkscape.org/namespaces/inkscape",
-      id: "svg2",
-      version: "1.1",
-      height: actualDimensions ? `${height}in` : "100%",
-      width: actualDimensions ? `${width}in` : "100%",
-      viewBox: `0 0 ${width} ${height}`,
-      ...(validate && { "data-does-text-fit": doesTextFit }),
-      ...(showShadow && {
-        filter: "drop-shadow( 0px 0px 2px rgba(0, 0, 0, 0.5))",
-      }),
-    },
-    units: makerjs.unitType.Inch,
-    fillRule: "evenodd",
-  }
-  const svg = makerjs.exporter.toSVG(topRound, options)
 
-  return { svg }
+  const options = getSvgOptions({ ...props, doesTextFit })
+  const svg = makerjs.exporter.toSVG(topRound, options)
+  const formattedSvg = formatSvg(svg)
+
+  return { svg: formattedSvg }
 }
 
 export const Donnelly: React.FC<SvgProps> = (props) => {
