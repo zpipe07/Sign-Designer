@@ -8,6 +8,7 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   EDGE_WIDTH,
+  formatSvg,
   getSvgOptions,
   makeInnerOutline,
 } from "@/src/utils/makerjs"
@@ -350,8 +351,9 @@ export function generateDonnellyModel(props: SvgProps) {
 
   const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(topRound, options)
+  const formattedSvg = formatSvg(svg)
 
-  return { svg }
+  return { svg: formattedSvg }
 }
 
 export const Donnelly: React.FC<SvgProps> = (props) => {

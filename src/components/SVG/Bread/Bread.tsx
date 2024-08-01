@@ -9,6 +9,7 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   EDGE_WIDTH,
+  formatSvg,
   getSvgOptions,
   makeInnerOutline,
 } from "@/src/utils/makerjs"
@@ -271,8 +272,9 @@ export function generateBreadModel(props: SvgProps) {
   }
   const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(breadModel, options)
+  const formattedSvg = formatSvg(svg)
 
-  return { svg }
+  return { svg: formattedSvg }
 }
 
 export const Bread: React.FC<SvgProps> = (props) => {

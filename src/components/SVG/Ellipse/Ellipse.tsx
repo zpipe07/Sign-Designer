@@ -9,6 +9,7 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   EDGE_WIDTH,
+  formatSvg,
   getSvgOptions,
   makeInnerOutline,
 } from "@/src/utils/makerjs"
@@ -281,31 +282,9 @@ export function generateEllipseModel(props: SvgProps) {
     doesTextFit,
   })
   const svg = makerjs.exporter.toSVG(ellipseModel, options)
-  const dom = new JSDOM(svg)
+  const formattedSvg = formatSvg(svg)
 
-  if (strokeOnly) {
-    // update the svg file to render layers in Vcarve
-    dom.window.document.querySelectorAll("path").forEach((path) => {
-      path.setAttribute("fill-rule", "evenodd")
-      const id = path.getAttribute("id")
-
-      if (id) {
-        const group = dom.window.document.createElement("g")
-
-        path.parentNode?.insertBefore(group, path)
-        group.appendChild(path)
-        group.setAttribute("inkscape:groupmode", "layer")
-        group.setAttribute("inkscape:label", id)
-        group.setAttribute("id", id)
-      }
-    })
-  }
-
-  const oldGroup = dom.window.document.getElementById("svgGroup")
-
-  oldGroup?.replaceWith(...oldGroup.childNodes)
-
-  return { svg: dom.window.document.body.innerHTML }
+  return { svg: formattedSvg }
 }
 
 export const Ellipse: React.FC<SvgProps> = (props) => {

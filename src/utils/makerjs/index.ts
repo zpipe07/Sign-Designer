@@ -1,5 +1,6 @@
 import makerjs from "makerjs"
 import memoize from "memoizee"
+import jsdom from "jsdom"
 
 import { generateBreadModel } from "@/src/components/SVG/Bread"
 import { generateDonnellyModel } from "@/src/components/SVG/Donnelly"
@@ -115,4 +116,31 @@ export const getSvgOptions = ({
     units: makerjs.unitType.Inch,
     fillRule: "evenodd",
   }
+}
+
+const { JSDOM } = jsdom
+
+export const formatSvg = (svg: string) => {
+  const dom = new JSDOM(svg)
+
+  dom.window.document.querySelectorAll("path").forEach((path) => {
+    path.setAttribute("fill-rule", "evenodd")
+    const id = path.getAttribute("id")
+
+    if (id) {
+      const group = dom.window.document.createElement("g")
+
+      path.parentNode?.insertBefore(group, path)
+      group.appendChild(path)
+      group.setAttribute("inkscape:groupmode", "layer")
+      group.setAttribute("inkscape:label", id)
+      group.setAttribute("id", id)
+    }
+  })
+
+  const oldGroup = dom.window.document.getElementById("svgGroup")
+
+  oldGroup?.replaceWith(...oldGroup.childNodes)
+
+  return dom.window.document.body.innerHTML
 }

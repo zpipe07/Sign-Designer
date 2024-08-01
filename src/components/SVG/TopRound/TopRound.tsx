@@ -9,6 +9,7 @@ import {
 } from "@/src/components/SignDesigner/SignDesignerForm/constants"
 import {
   EDGE_WIDTH,
+  formatSvg,
   getSvgOptions,
   makeInnerOutline,
 } from "@/src/utils/makerjs"
@@ -289,8 +290,9 @@ export function generateTopRoundModel(props: SvgProps) {
   }
   const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(topRoundModel, options)
+  const formattedSvg = formatSvg(svg)
 
-  return { svg }
+  return { svg: formattedSvg }
 }
 
 export const TopRound: React.FC<SvgProps> = (props) => {
