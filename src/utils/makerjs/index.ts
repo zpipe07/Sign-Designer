@@ -122,21 +122,69 @@ const { JSDOM } = jsdom
 
 export const formatSvg = (svg: string) => {
   const dom = new JSDOM(svg)
+  const svgElement = dom.window.document.querySelector(
+    "svg",
+  ) as SVGSVGElement
 
   dom.window.document.querySelectorAll("path").forEach((path) => {
     path.setAttribute("fill-rule", "evenodd")
-    const id = path.getAttribute("id")
 
-    if (id) {
-      const group = dom.window.document.createElement("g")
+    const id = path.getAttribute("id") as string
+    const group = dom.window.document.createElement("g")
 
-      path.parentNode?.insertBefore(group, path)
-      group.appendChild(path)
-      group.setAttribute("inkscape:groupmode", "layer")
-      group.setAttribute("inkscape:label", id)
-      group.setAttribute("id", id)
-    }
+    path.parentNode?.insertBefore(group, path)
+    group.appendChild(path)
+    group.setAttribute("inkscape:groupmode", "layer")
+    group.setAttribute("inkscape:label", id)
+    group.setAttribute("id", id)
+    path.removeAttribute("id")
+
+    // const textDuplicate = path.cloneNode(true) as SVGPathElement
+    const duplicatePath = path.cloneNode(true) as SVGPathElement
+    // textDuplicate.setAttribute("filter", "url(#textFilter)")
+    duplicatePath.setAttribute("filter", "url(#filter)")
+    // group.appendChild(textDuplicate)
+    group.appendChild(duplicatePath)
   })
+
+  const filter = dom.window.document.createElement("filter")
+
+  filter.setAttribute("id", "filter")
+  filter.innerHTML = `
+        <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="dark_edge_01"></feMorphology>
+        <feOffset dx="0.05" dy="0.05" in="dark_edge_01" result="dark_edge_03"></feOffset>
+        <feFlood flood-color="rgba(0,0,0,0.5)" result="dark_edge_04"></feFlood>
+        <feComposite in="dark_edge_04" in2="dark_edge_03" operator="in" result="dark_edge"></feComposite>
+
+        <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="light_edge_01"></feMorphology>
+        <feOffset dx="-0.0125" dy="-0.0125" in="light_edge_01" result="light_edge_03"></feOffset>
+        <feFlood flood-color="rgba(255,255,255,0.5)" result="light_edge_04"></feFlood>
+        <feComposite in="light_edge_04" in2="light_edge_03" operator="in" result="light_edge"></feComposite>
+
+        <feMerge result="edges">
+          <feMergeNode in="dark_edge"></feMergeNode>
+          <feMergeNode in="light_edge"></feMergeNode>
+        </feMerge>
+        <feComposite in="edges" in2="SourceGraphic" operator="out" result="edges_complete"></feComposite>
+
+        <feGaussianBlur stdDeviation="0.05" result="bevel_blur"></feGaussianBlur>
+        <feSpecularLighting
+          result="bevel_lighting"
+          in="bevel_blur"
+          specularConstant="10"
+          specularExponent="10"
+          lighting-color="rgba(60,60,60,0.5)"
+        >
+          <feDistantLight azimuth="25" elevation="25"></feDistantLight>
+        </feSpecularLighting>
+        <feComposite in="bevel_lighting" in2="SourceGraphic" operator="in" result="bevel_complete"></feComposite>
+
+        <feMerge result="complete">
+          <feMergeNode in="edges_complete"></feMergeNode>
+          <feMergeNode in="bevel_complete"></feMergeNode>
+        </feMerge>
+      `
+  svgElement.appendChild(filter)
 
   const oldGroup = dom.window.document.getElementById("svgGroup")
 
