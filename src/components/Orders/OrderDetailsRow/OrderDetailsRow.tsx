@@ -71,7 +71,12 @@ export const OrderDetailsRow: React.FC<Props> = ({
     borderWidth,
     textLines,
   }
-  const { data: svg, isLoading } = useGetSignSvg(inputs)
+  const { data: svg, isLoading } = useGetSignSvg(
+    inputs,
+    undefined,
+    true,
+    true,
+  )
   const filename = getFilename(order.id, product.id, color, textLines)
   const downloadHref = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/signs/${filename}?download=`
 

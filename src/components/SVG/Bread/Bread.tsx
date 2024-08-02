@@ -272,7 +272,7 @@ export function generateBreadModel(props: SvgProps) {
   }
   const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(breadModel, options)
-  const formattedSvg = formatSvg(svg)
+  const formattedSvg = formatSvg(svg, !!showShadow)
 
   return { svg: formattedSvg }
 }

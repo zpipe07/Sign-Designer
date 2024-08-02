@@ -4,10 +4,8 @@ import TableContainer from "@mui/material/TableContainer"
 import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
 import TableBody from "@mui/material/TableBody"
-import Box from "@mui/material/Box"
 
 import { VercelCart } from "@/src/lib/bigcommerce/types"
-import { CheckoutButton } from "@/src/components/CheckoutButton"
 import { CartItemRow } from "@/src/components/Cart/CartItemRow"
 
 type Props = {

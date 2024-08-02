@@ -36,6 +36,8 @@ export const SizeRadioLabel: React.FC<Props> = ({
       borderWidth: "0",
     },
     "size",
+    true,
+    false,
   )
 
   if (isLoading) {

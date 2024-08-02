@@ -94,7 +94,7 @@ export const SignDesigner: React.FC<Props> = ({
             <Card
               elevation={3}
               sx={{
-                padding: 2,
+                padding: 1,
               }}
             >
               <Box

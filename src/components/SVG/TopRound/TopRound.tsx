@@ -290,7 +290,7 @@ export function generateTopRoundModel(props: SvgProps) {
   }
   const options = getSvgOptions({ ...props, doesTextFit })
   const svg = makerjs.exporter.toSVG(topRoundModel, options)
-  const formattedSvg = formatSvg(svg)
+  const formattedSvg = formatSvg(svg, !!showShadow)
 
   return { svg: formattedSvg }
 }
