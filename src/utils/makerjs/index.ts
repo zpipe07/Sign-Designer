@@ -89,7 +89,7 @@ export const getSvgOptions = ({
         : {
             fill: backgroundColor,
             stroke: "rgba(0, 0, 0, 0.25)",
-            strokeWidth: "2px",
+            strokeWidth: "1px",
           },
       bolts: strokeOnly
         ? strokeOnlyStyle
@@ -158,7 +158,7 @@ export const formatSvg = (svg: string) => {
 
         <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="light_edge_01"></feMorphology>
         <feOffset dx="-0.0125" dy="-0.0125" in="light_edge_01" result="light_edge_03"></feOffset>
-        <feFlood flood-color="rgba(255,255,255,0.5)" result="light_edge_04"></feFlood>
+        <feFlood flood-color="rgba(255,255,255,0.75)" result="light_edge_04"></feFlood>
         <feComposite in="light_edge_04" in2="light_edge_03" operator="in" result="light_edge"></feComposite>
 
         <feMerge result="edges">
