@@ -29,6 +29,8 @@ export const ShapeRadioLabel: React.FC<Props> = ({
       borderWidth: "0",
     },
     "shape",
+    true,
+    false,
   )
 
   if (isLoading) {

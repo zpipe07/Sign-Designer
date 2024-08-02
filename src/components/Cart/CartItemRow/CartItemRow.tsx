@@ -63,7 +63,12 @@ export const CartItemRow: React.FC<Props> = ({ lineItem, cart }) => {
     borderWidth,
     textLines,
   }
-  const { data: svg, isLoading } = useGetSignSvg(inputs)
+  const { data: svg, isLoading } = useGetSignSvg(
+    inputs,
+    undefined,
+    true,
+    true,
+  )
 
   return (
     <TableRow>

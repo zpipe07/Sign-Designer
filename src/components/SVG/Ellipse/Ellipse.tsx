@@ -282,7 +282,7 @@ export function generateEllipseModel(props: SvgProps) {
     doesTextFit,
   })
   const svg = makerjs.exporter.toSVG(ellipseModel, options)
-  const formattedSvg = formatSvg(svg)
+  const formattedSvg = formatSvg(svg, !!showShadow)
 
   return { svg: formattedSvg }
 }

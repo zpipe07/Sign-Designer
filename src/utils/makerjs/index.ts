@@ -120,7 +120,7 @@ export const getSvgOptions = ({
 
 const { JSDOM } = jsdom
 
-export const formatSvg = (svg: string) => {
+export const formatSvg = (svg: string, showShadow: boolean) => {
   const dom = new JSDOM(svg)
   const svgElement = dom.window.document.querySelector(
     "svg",
@@ -139,18 +139,19 @@ export const formatSvg = (svg: string) => {
     group.setAttribute("id", id)
     path.removeAttribute("id")
 
-    // const textDuplicate = path.cloneNode(true) as SVGPathElement
-    const duplicatePath = path.cloneNode(true) as SVGPathElement
-    // textDuplicate.setAttribute("filter", "url(#textFilter)")
-    duplicatePath.setAttribute("filter", "url(#filter)")
-    // group.appendChild(textDuplicate)
-    group.appendChild(duplicatePath)
+    if (showShadow) {
+      const duplicatePath = path.cloneNode(true) as SVGPathElement
+
+      duplicatePath.setAttribute("filter", "url(#filter)")
+      group.appendChild(duplicatePath)
+    }
   })
 
-  const filter = dom.window.document.createElement("filter")
+  if (showShadow) {
+    const filter = dom.window.document.createElement("filter")
 
-  filter.setAttribute("id", "filter")
-  filter.innerHTML = `
+    filter.setAttribute("id", "filter")
+    filter.innerHTML = `
         <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="dark_edge_01"></feMorphology>
         <feOffset dx="0.05" dy="0.05" in="dark_edge_01" result="dark_edge_03"></feOffset>
         <feFlood flood-color="rgba(0,0,0,0.5)" result="dark_edge_04"></feFlood>
@@ -184,7 +185,8 @@ export const formatSvg = (svg: string) => {
           <feMergeNode in="bevel_complete"></feMergeNode>
         </feMerge>
       `
-  svgElement.appendChild(filter)
+    svgElement.appendChild(filter)
+  }
 
   const oldGroup = dom.window.document.getElementById("svgGroup")
 
