@@ -25,7 +25,6 @@ export type FontFamily =
   | "Audiowide"
   | "TacOne"
   | "Train"
-  | "MoiraiOne"
   | "AoboshiOne"
   | "BagelFatOne"
   | "GermaniaOne"

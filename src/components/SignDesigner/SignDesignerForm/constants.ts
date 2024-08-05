@@ -359,7 +359,6 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Audiowide: "Audiowide-Regular.ttf",
   TacOne: "TacOne-Regular.ttf",
   Train: "TrainOne-Regular.ttf",
-  MoiraiOne: "MoiraiOne-Regular.ttf",
   AoboshiOne: "AoboshiOne-Regular.ttf",
   BagelFatOne: "BagelFatOne-Regular.ttf",
   GermaniaOne: "GermaniaOne-Regular.ttf",
