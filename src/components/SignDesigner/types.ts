@@ -24,7 +24,6 @@ export type FontFamily =
   | "Limelight"
   | "Audiowide"
   | "TacOne"
-  | "Train"
   | "AoboshiOne"
   | "BagelFatOne"
   | "GermaniaOne"

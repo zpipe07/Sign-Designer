@@ -45,9 +45,6 @@ export const Audiowide = localFont({
 export const TacOne = localFont({
   src: "../public/fonts/TacOne-Regular.ttf",
 })
-export const Train = localFont({
-  src: "../public/fonts/TrainOne-Regular.ttf",
-})
 export const AoboshiOne = localFont({
   src: "../public/fonts/AoboshiOne-Regular.ttf",
 })
