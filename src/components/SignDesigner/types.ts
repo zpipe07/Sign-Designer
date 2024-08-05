@@ -4,6 +4,8 @@ export type Color =
   | "tan"
   | "green"
   | "yellow"
+  | "saddlebrown"
+  | "darkblue"
   | "#D6DAD2"
 
 export type ColorCombo = `${Color}::${Color}`
