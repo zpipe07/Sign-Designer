@@ -49,7 +49,10 @@ export const FeaturedSignCard: React.FC<{
               }}
             />
           ) : (
-            <Box dangerouslySetInnerHTML={{ __html: svg! }} />
+            <Box
+              dangerouslySetInnerHTML={{ __html: svg! }}
+              sx={{ svg: { maxHeight: 250 } }}
+            />
           )}
 
           <Typography variant="h4" marginBottom={1}>

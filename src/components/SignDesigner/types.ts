@@ -6,6 +6,7 @@ export type Color =
   | "yellow"
   | "saddlebrown"
   | "darkblue"
+  | "darkgreen"
   | "#D6DAD2"
 
 export type ColorCombo = `${Color}::${Color}`

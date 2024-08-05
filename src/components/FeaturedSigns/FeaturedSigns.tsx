@@ -1,9 +1,16 @@
-import { Box, Container, Grid, Typography } from "@mui/material"
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material"
 
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
+import Link from "next/link"
 
-const FEATURED_SIGNS: {
+export const FEATURED_SIGNS: {
   title: string
   inputs: DesignFormInputs
 }[] = [
@@ -128,6 +135,18 @@ export const FeaturedSigns: React.FC = () => {
             )
           })}
         </Grid>
+
+        <Box textAlign="center" marginTop={2}>
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            component={Link}
+            href="/shop"
+          >
+            View all signs
+          </Button>
+        </Box>
       </Container>
     </Box>
   )
