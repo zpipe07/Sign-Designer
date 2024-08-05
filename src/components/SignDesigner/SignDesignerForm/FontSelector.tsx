@@ -39,6 +39,7 @@ import {
   EdgeOfTheGalaxy,
   Forque,
   Airstream,
+  Gemola,
 } from "@/src/fonts"
 
 const fontFamilies: FontFamily[] = [
@@ -67,6 +68,7 @@ const fontFamilies: FontFamily[] = [
   "EdgeOfTheGalaxy",
   "Forque",
   "Airstream",
+  "Gemola",
 ]
 
 const fontMap = {
@@ -95,6 +97,7 @@ const fontMap = {
   EdgeOfTheGalaxy,
   Forque,
   Airstream,
+  Gemola,
 }
 
 export const FontSelector: React.FC = () => {

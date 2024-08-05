@@ -36,6 +36,7 @@ export type FontFamily =
   | "EdgeOfTheGalaxy"
   | "Forque"
   | "Airstream"
+  | "Gemola"
 
 export type Orientation = "horizontal" | "vertical"
 
