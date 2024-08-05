@@ -365,7 +365,6 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   Gerhaus: "Gerhaus.ttf",
   LifeKittie: "LifeKittie.ttf",
   QuantifierNbp: "QuantifierNbp.ttf",
-  EdgeOfTheGalaxy: "EdgeOfTheGalaxy.otf",
   Forque: "Forque.ttf",
   Airstream: "Airstream.ttf",
   Gemola: "Gemola.ttf",

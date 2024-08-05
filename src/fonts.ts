@@ -66,9 +66,6 @@ export const LifeKittie = localFont({
 export const QuantifierNbp = localFont({
   src: "../public/fonts/QuantifierNbp.ttf",
 })
-export const EdgeOfTheGalaxy = localFont({
-  src: "../public/fonts/EdgeOfTheGalaxy.otf",
-})
 export const Forque = localFont({
   src: "../public/fonts/Forque.ttf",
 })

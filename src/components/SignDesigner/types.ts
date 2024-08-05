@@ -31,7 +31,6 @@ export type FontFamily =
   | "Gerhaus"
   | "LifeKittie"
   | "QuantifierNbp"
-  | "EdgeOfTheGalaxy"
   | "Forque"
   | "Airstream"
   | "Gemola"
