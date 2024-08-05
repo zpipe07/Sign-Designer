@@ -370,6 +370,7 @@ export const FONT_MAP: { [key in FontFamily]: string } = {
   EdgeOfTheGalaxy: "EdgeOfTheGalaxy.otf",
   Forque: "Forque.ttf",
   Airstream: "Airstream.ttf",
+  Gemola: "Gemola.ttf",
 }
 
 export const SIZE_CONFIG_MAP: { [key in Size]: SizeConfig } = {

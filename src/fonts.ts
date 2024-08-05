@@ -81,3 +81,6 @@ export const Forque = localFont({
 export const Airstream = localFont({
   src: "../public/fonts/Airstream.ttf",
 })
+export const Gemola = localFont({
+  src: "../public/fonts/Gemola.ttf",
+})
