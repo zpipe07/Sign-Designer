@@ -1,8 +1,13 @@
+"use client"
+
+import { useState } from "react"
+import { FormProvider, useForm } from "react-hook-form"
 import { Grid } from "@mui/material"
 
 import { FEATURED_SIGNS } from "@/src/components/FeaturedSigns"
 import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
+import { SignFiltersForm } from "@/src/components/SignFiltersForm"
 
 const SIGNS: {
   title: string
@@ -156,15 +161,62 @@ const SIGNS: {
 ]
 
 export const ShopSigns: React.FC = () => {
+  const [filteredSigns, setFilteredSigns] = useState(SIGNS)
+
+  const formMethods = useForm<any>({
+    defaultValues: {
+      textLines: [{ value: "" }, { value: "" }, { value: "" }],
+      color: undefined,
+      // shape: "all",
+      // size: "all",
+      // color: "all",
+      // fontFamily: "all",
+      // mountingStyle: "all",
+      // edgeStyle: "all",
+      // borderWidth: "all",
+    },
+  })
+
+  const onSubmit = (data: any) => {
+    console.log({ data })
+
+    const isTextUpdated = data.textLines.some(
+      (textLine: { value: string }) => textLine.value,
+    )
+    const updatedSigns = SIGNS.map((sign) => {
+      return {
+        ...sign,
+        inputs: {
+          ...sign.inputs,
+          textLines: isTextUpdated
+            ? sign.inputs.textLines.map((textLine, index) => {
+                return {
+                  ...textLine,
+                  value: data.textLines[index].value,
+                }
+              })
+            : sign.inputs.textLines,
+          color: data.color || sign.inputs.color,
+        },
+      }
+    })
+
+    setFilteredSigns(updatedSigns)
+  }
+
   return (
-    <Grid container spacing={2}>
-      {SIGNS.map(({ title, inputs }) => {
-        return (
-          <Grid item xs={12} sm={4} md={4} key={title}>
-            <FeaturedSignCard title={title} inputs={inputs} />
-          </Grid>
-        )
-      })}
-    </Grid>
+    <FormProvider {...formMethods}>
+      <SignFiltersForm onSubmit={onSubmit} />
+
+      <Grid container spacing={2}>
+        {filteredSigns.map(({ title, inputs }) => {
+          return (
+            <Grid item xs={12} sm={4} md={4} key={title}>
+              <FeaturedSignCard title={title} inputs={inputs} />
+            </Grid>
+          )
+        })}
+      </Grid>
+    </FormProvider>
   )
 }
