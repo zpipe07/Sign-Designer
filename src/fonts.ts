@@ -45,12 +45,6 @@ export const Audiowide = localFont({
 export const TacOne = localFont({
   src: "../public/fonts/TacOne-Regular.ttf",
 })
-export const Train = localFont({
-  src: "../public/fonts/TrainOne-Regular.ttf",
-})
-export const MoiraiOne = localFont({
-  src: "../public/fonts/MoiraiOne-Regular.ttf",
-})
 export const AoboshiOne = localFont({
   src: "../public/fonts/AoboshiOne-Regular.ttf",
 })
@@ -71,9 +65,6 @@ export const LifeKittie = localFont({
 })
 export const QuantifierNbp = localFont({
   src: "../public/fonts/QuantifierNbp.ttf",
-})
-export const EdgeOfTheGalaxy = localFont({
-  src: "../public/fonts/EdgeOfTheGalaxy.otf",
 })
 export const Forque = localFont({
   src: "../public/fonts/Forque.ttf",

@@ -16,7 +16,8 @@ import { grey } from "@mui/material/colors"
 import { Cart } from "@/src/components/Header/Cart"
 
 const pages = [
-  { label: "Create Your Sign", href: "/design" },
+  // { label: "Create Your Sign", href: "/design" },
+  { label: "Shop", href: "/shop" },
   { label: "Sign Gallery", href: "/our-work" },
   { label: "About Us", href: "/about-us" },
   { label: "Contact Us", href: "/contact-us" },

@@ -31,9 +31,11 @@ export const ColorSelector: React.FC = () => {
   return (
     <FormControl fullWidth>
       <FormLabel id="color-label">Color</FormLabel>
-      <FormHelperText sx={{ marginLeft: 0 }}>
-        Selected: {selectedColor.replace("::", " & ")}
-      </FormHelperText>
+      {selectedColor && (
+        <FormHelperText sx={{ marginLeft: 0 }}>
+          Selected: {selectedColor.replace("::", " & ")}
+        </FormHelperText>
+      )}
 
       <RadioGroup
         aria-labelledby="color-label"
@@ -67,6 +69,7 @@ export const ColorSelector: React.FC = () => {
                       transition: "box-shadow 0.15s ease-in-out 0s",
                       transform: "rotate(-45deg)",
                       cursor: "pointer",
+                      boxShadow: `0 0 10px -5px rgba(0, 0, 0, 0.5)`,
 
                       ":before, :after": {
                         content: "''",

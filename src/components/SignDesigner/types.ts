@@ -4,6 +4,9 @@ export type Color =
   | "tan"
   | "green"
   | "yellow"
+  | "saddlebrown"
+  | "darkblue"
+  | "darkgreen"
   | "#D6DAD2"
 
 export type ColorCombo = `${Color}::${Color}`
@@ -24,8 +27,6 @@ export type FontFamily =
   | "Limelight"
   | "Audiowide"
   | "TacOne"
-  | "Train"
-  | "MoiraiOne"
   | "AoboshiOne"
   | "BagelFatOne"
   | "GermaniaOne"
@@ -33,7 +34,6 @@ export type FontFamily =
   | "Gerhaus"
   | "LifeKittie"
   | "QuantifierNbp"
-  | "EdgeOfTheGalaxy"
   | "Forque"
   | "Airstream"
   | "Gemola"

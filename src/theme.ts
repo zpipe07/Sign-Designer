@@ -58,7 +58,7 @@ export const themeOptions: ThemeOptions = {
           borderColor: "inherit",
 
           "&:hover": {
-            backgroundColor: "rgba(0, 0, 0, 0.15)",
+            backgroundColor: "rgba(0, 0, 0, 0.05)",
           },
         },
       },
