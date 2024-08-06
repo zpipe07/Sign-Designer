@@ -7,9 +7,10 @@ import {
   Button,
   Card,
   CardActionArea,
-  CardActions,
+  // CardActions,
   CardContent,
-  CardMedia,
+  // CardMedia,
+  LinearProgress,
   Skeleton,
   Typography,
 } from "@mui/material"
@@ -21,12 +22,11 @@ export const FeaturedSignCard: React.FC<{
   title: string
   inputs: DesignFormInputs
 }> = ({ title, inputs }) => {
-  const { data: svg, isLoading } = useGetSignSvg(
-    inputs,
-    "featured",
-    true,
-    true,
-  )
+  const {
+    data: svg,
+    isLoading,
+    isFetching,
+  } = useGetSignSvg(inputs, "featured", true, true)
 
   const textLines = JSON.stringify(
     // Object.values(inputs.textLines).map((line) => line.value),
@@ -58,6 +58,10 @@ export const FeaturedSignCard: React.FC<{
               sx={{ svg: { maxHeight: 250 } }}
             />
           )}
+
+          <Box height={4}>
+            {isFetching && !isLoading && <LinearProgress />}
+          </Box>
 
           <Typography variant="h4" marginBottom={1}>
             {title}

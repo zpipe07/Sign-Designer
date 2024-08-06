@@ -27,12 +27,13 @@ export const SignsShopFiltersForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={2} marginBottom={1}>
+      <Grid container spacing={{ xs: 2, sm: 3 }} marginBottom={1}>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <FormLabel sx={{ marginBottom: 1 }}>
               Preview text
             </FormLabel>
+
             <Grid container spacing={1}>
               {fields.map((field, index) => {
                 let label
@@ -77,7 +78,13 @@ export const SignsShopFiltersForm: React.FC<Props> = ({
         </Grid>
       </Grid>
 
-      <Button type="submit">Apply</Button>
+      <Button
+        type="submit"
+        variant="outlined"
+        sx={{ marginRight: 1 }}
+      >
+        Apply
+      </Button>
 
       <Button onClick={handleReset}>Clear all</Button>
     </form>

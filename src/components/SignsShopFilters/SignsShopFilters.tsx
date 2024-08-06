@@ -21,7 +21,7 @@ export const SignsShopFilters: React.FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <Box marginBottom={1}>
+    <Box marginBottom={2}>
       <Box textAlign="right">
         <Button
           startIcon={isOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
