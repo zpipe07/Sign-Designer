@@ -34,16 +34,40 @@ export const SignsShopFiltersForm: React.FC<Props> = ({
               Preview text
             </FormLabel>
             <Grid container spacing={1}>
-              {fields.map((field, index) => (
-                <Grid item key={field.id} xs={12}>
-                  <TextField
-                    label="Text"
-                    size="small"
-                    fullWidth
-                    {...register(`textLines.${index}.value`)}
-                  />
-                </Grid>
-              ))}
+              {fields.map((field, index) => {
+                let label
+
+                if (index === 0) {
+                  label = "Primary"
+                }
+
+                if (index === 1) {
+                  label = "Upper"
+                }
+
+                if (index === 2) {
+                  label = "Lower"
+                }
+
+                return (
+                  <Grid
+                    item
+                    key={field.id}
+                    xs={12}
+                    order={index === 1 ? 1 : 2}
+                  >
+                    <TextField
+                      label={label}
+                      size="small"
+                      fullWidth
+                      inputProps={{
+                        tabIndex: index === 1 ? 1 : 2,
+                      }}
+                      {...register(`textLines.${index}.value`)}
+                    />
+                  </Grid>
+                )
+              })}
             </Grid>
           </FormControl>
         </Grid>
