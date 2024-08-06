@@ -2,12 +2,11 @@
 
 import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
-import { Grid } from "@mui/material"
 
 import { FEATURED_SIGNS } from "@/src/components/FeaturedSigns"
-import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
 import { DesignFormInputs } from "@/src/components/SignDesigner/types"
-import { SignFiltersForm } from "@/src/components/SignFiltersForm"
+import { SignsShopList } from "@/src/components/SignsShopList"
+import { SignsShopFilters } from "@/src/components/SignsShopFilters"
 
 const SIGNS: {
   title: string
@@ -160,7 +159,7 @@ const SIGNS: {
   },
 ]
 
-export const ShopSigns: React.FC = () => {
+export const SignsShop: React.FC = () => {
   const [filteredSigns, setFilteredSigns] = useState(SIGNS)
 
   const formMethods = useForm<any>({
@@ -206,17 +205,9 @@ export const ShopSigns: React.FC = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <SignFiltersForm onSubmit={onSubmit} />
+      <SignsShopFilters onSubmit={onSubmit} />
 
-      <Grid container spacing={2}>
-        {filteredSigns.map(({ title, inputs }) => {
-          return (
-            <Grid item xs={12} sm={4} md={4} key={title}>
-              <FeaturedSignCard title={title} inputs={inputs} />
-            </Grid>
-          )
-        })}
-      </Grid>
+      <SignsShopList signs={filteredSigns} />
     </FormProvider>
   )
 }

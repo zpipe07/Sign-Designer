@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
-import { ShopSigns } from "@/src/components/ShopSigns"
+import { SignsShop } from "@/src/components/SignsShop"
 
 export const metadata: Metadata = {
   title: "SignGenie - Shop",
@@ -22,7 +22,7 @@ export default function Page() {
         see all of the customization options.
       </Typography>
 
-      <ShopSigns />
+      <SignsShop />
     </Container>
   )
 }
