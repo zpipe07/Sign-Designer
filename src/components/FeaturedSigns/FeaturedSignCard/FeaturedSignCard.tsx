@@ -33,12 +33,16 @@ export const FeaturedSignCard: React.FC<{
     inputs.textLines,
   )
   const qs = queryString.stringify({ ...inputs, textLines })
-  const url = `/design?${qs}`
 
   return (
     <Card variant="outlined">
-      {/* @ts-ignore */}
-      <CardActionArea component={Link} href={url}>
+      <CardActionArea
+        component={Link}
+        href={{
+          pathname: "/design",
+          search: qs,
+        }}
+      >
         <CardContent sx={{ textAlign: "center" }}>
           {isLoading ? (
             <Skeleton

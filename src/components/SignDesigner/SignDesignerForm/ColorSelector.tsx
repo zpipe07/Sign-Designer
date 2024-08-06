@@ -69,6 +69,7 @@ export const ColorSelector: React.FC = () => {
                       transition: "box-shadow 0.15s ease-in-out 0s",
                       transform: "rotate(-45deg)",
                       cursor: "pointer",
+                      boxShadow: `0 0 10px -5px rgba(0, 0, 0, 0.5)`,
 
                       ":before, :after": {
                         content: "''",
