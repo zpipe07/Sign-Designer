@@ -10,34 +10,37 @@ import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { FeaturedSignCard } from "@/src/components/FeaturedSigns/FeaturedSignCard"
 import Link from "next/link"
 
-export const FEATURED_SIGNS: {
+export type FeaturedSign = {
   title: string
   inputs: DesignFormInputs
-}[] = [
+  imageUrl?: string
+}
+
+export const FEATURED_SIGNS: FeaturedSign[] = [
   {
     title: "",
     inputs: {
       shape: "ellipse",
-      size: "large",
-      color: "white::black",
-      fontFamily: "Forque",
+      size: "medium",
+      color: "black::white",
+      fontFamily: "Airstream",
       mountingStyle: "hanging",
-      edgeStyle: "square",
-      borderWidth: "0.2",
+      edgeStyle: "round",
+      borderWidth: "0",
       textLines: [
-        { value: "Text", fontSize: "3.2", offset: "0" },
-        { value: "Your custom", fontSize: "2.4", offset: "-0.5" },
-        { value: "Goes here", fontSize: "2.4", offset: "0.25" },
+        { value: "Text", fontSize: "5", offset: "-1" },
+        { value: "Your custom", fontSize: "2.6", offset: "-1" },
       ],
     },
+    imageUrl: "/images/product/ellipse/1042_elm-street.jpg",
   },
   {
     title: "",
     inputs: {
       shape: "top round",
       size: "large",
-      color: "saddlebrown::white",
-      fontFamily: "DMSerif",
+      color: "white::black",
+      fontFamily: "Sancreek",
       mountingStyle: "hanging",
       edgeStyle: "round",
       borderWidth: "0.1",
@@ -47,23 +50,24 @@ export const FEATURED_SIGNS: {
         { value: "Goes here", fontSize: "2.4", offset: "-0.25" },
       ],
     },
+    imageUrl: "/images/product/top-round/6513_orchid-hill.jpg",
   },
   {
     title: "",
     inputs: {
       shape: "bread",
-      size: "large",
-      color: "darkblue::white",
-      fontFamily: "Airstream",
+      size: "medium",
+      color: "white::black",
+      fontFamily: "Limelight",
       mountingStyle: "hanging",
-      edgeStyle: "round",
-      borderWidth: "0",
+      edgeStyle: "square",
+      borderWidth: "0.2",
       textLines: [
-        { value: "Text", fontSize: "4.6", offset: "0.5" },
-        { value: "Your custom", fontSize: "2.4", offset: "0" },
-        { value: "Goes here", fontSize: "3", offset: "-0.25" },
+        { value: "Text", fontSize: "4.8", offset: "-1.25" },
+        { value: "Your custom", fontSize: "1.6", offset: "-1" },
       ],
     },
+    imageUrl: "/images/product/bread/2209_15th-ave.jpg",
   },
   // {
   //   title: "The Standard",
@@ -127,10 +131,14 @@ export const FeaturedSigns: React.FC = () => {
         </Typography>
 
         <Grid container spacing={2}>
-          {FEATURED_SIGNS.map(({ title, inputs }) => {
+          {FEATURED_SIGNS.map(({ title, inputs, imageUrl }) => {
             return (
               <Grid item xs={12} sm={4} md={4} key={title}>
-                <FeaturedSignCard title={title} inputs={inputs} />
+                <FeaturedSignCard
+                  title={title}
+                  inputs={inputs}
+                  imageUrl={imageUrl}
+                />
               </Grid>
             )
           })}

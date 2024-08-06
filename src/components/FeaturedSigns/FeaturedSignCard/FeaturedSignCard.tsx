@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import queryString from "query-string"
 import {
   Box,
@@ -15,18 +16,19 @@ import {
   Typography,
 } from "@mui/material"
 
-import { DesignFormInputs } from "@/src/components/SignDesigner/types"
 import { useGetSignSvg } from "@/src/hooks/queries/useGetSignSvg"
+import { FeaturedSign } from "@/src/components/FeaturedSigns"
 
-export const FeaturedSignCard: React.FC<{
-  title: string
-  inputs: DesignFormInputs
-}> = ({ title, inputs }) => {
+export const FeaturedSignCard: React.FC<FeaturedSign> = ({
+  title,
+  inputs,
+  imageUrl,
+}) => {
   const {
     data: svg,
     isLoading,
     isFetching,
-  } = useGetSignSvg(inputs, "featured", true, true)
+  } = useGetSignSvg(inputs, "featured", true, true, true)
 
   const textLines = JSON.stringify(
     // Object.values(inputs.textLines).map((line) => line.value),
@@ -54,9 +56,56 @@ export const FeaturedSignCard: React.FC<{
             />
           ) : (
             <Box
-              dangerouslySetInnerHTML={{ __html: svg! }}
-              sx={{ svg: { maxHeight: 250 } }}
-            />
+              sx={{
+                position: "relative",
+
+                "&:hover": {
+                  img: {
+                    visibility: "visible !important",
+                    opacity: "1 !important",
+                    transform: "scale(1.05) !important",
+                  },
+                },
+              }}
+            >
+              <Box
+                dangerouslySetInnerHTML={{ __html: svg! }}
+                sx={{ svg: { maxHeight: 200 } }}
+              />
+
+              {imageUrl && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    width: "100%",
+
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    src={imageUrl}
+                    alt=""
+                    fill
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      visibility: "hidden",
+                      opacity: 0,
+                      transform: "scale(1)",
+                      transition: "all 0.2s ease-in-out",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+              )}
+            </Box>
           )}
 
           <Box height={4}>
