@@ -9,6 +9,7 @@ import {
 } from "@/src/components/FeaturedSigns"
 import { SignsShopList } from "@/src/components/SignsShopList"
 import { SignsShopFilters } from "@/src/components/SignsShopFilters"
+import { ColorCombo } from "@/src/components/SignDesigner/types"
 
 const SIGNS: FeaturedSign[] = [
   ...FEATURED_SIGNS,
@@ -161,17 +162,22 @@ const SIGNS: FeaturedSign[] = [
   // },
 ]
 
+export type ShopFiltersInputs = {
+  textLines: { value: string }[]
+  color: ColorCombo
+}
+
 export const SignsShop: React.FC = () => {
   const [filteredSigns, setFilteredSigns] = useState(SIGNS)
 
-  const formMethods = useForm<any>({
+  const formMethods = useForm<ShopFiltersInputs>({
     defaultValues: {
       textLines: [{ value: "" }, { value: "" }, { value: "" }],
       color: undefined,
     },
   })
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: ShopFiltersInputs) => {
     const isTextUpdated = data.textLines.some(
       (textLine: { value: string }) => textLine.value,
     )

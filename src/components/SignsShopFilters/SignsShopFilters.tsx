@@ -2,15 +2,15 @@ import { useState } from "react"
 import Button from "@mui/material/Button"
 import Collapse from "@mui/material/Collapse"
 import Box from "@mui/material/Box"
-// import Typography from "@mui/material/Typography"
 import Card from "@mui/material/Card"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 import { SignsShopFiltersForm } from "@/src/components/SignsShopFiltersForm"
+import { ShopFiltersInputs } from "@/src/components/SignsShop"
 
 type Props = {
-  onSubmit: any
+  onSubmit: (data: ShopFiltersInputs) => void
 }
 
 export const SignsShopFilters: React.FC<Props> = ({ onSubmit }) => {
@@ -33,11 +33,6 @@ export const SignsShopFilters: React.FC<Props> = ({ onSubmit }) => {
 
       <Collapse in={isOpen}>
         <Card variant="outlined" sx={{ padding: 1 }}>
-          {/* <Typography variant="body2" sx={{ marginBottom: 1 }}>
-            Choose your options and click apply to update the signs
-            below.
-          </Typography> */}
-
           <SignsShopFiltersForm onSubmit={onSubmit} />
         </Card>
       </Collapse>

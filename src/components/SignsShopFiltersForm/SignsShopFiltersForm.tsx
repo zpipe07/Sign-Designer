@@ -6,15 +6,17 @@ import Grid from "@mui/material/Grid"
 
 import { ColorSelector } from "@/src/components/SignDesigner/SignDesignerForm"
 import { FormControl, FormLabel } from "@mui/material"
+import { ShopFiltersInputs } from "@/src/components/SignsShop"
 
 type Props = {
-  onSubmit: any
+  onSubmit: (data: ShopFiltersInputs) => void
 }
 
 export const SignsShopFiltersForm: React.FC<Props> = ({
   onSubmit,
 }) => {
-  const { register, handleSubmit, reset } = useFormContext()
+  const { register, handleSubmit, reset } =
+    useFormContext<ShopFiltersInputs>()
 
   const { fields } = useFieldArray({
     name: "textLines",
