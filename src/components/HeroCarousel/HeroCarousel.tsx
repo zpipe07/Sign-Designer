@@ -217,20 +217,20 @@ export const HeroCarousel: React.FC = () => {
               variant="contained"
               color="secondary"
               size="large"
-              href="/design"
+              href="/shop"
               component={Link}
               sx={{
                 margin: 1,
               }}
             >
-              Create your sign
+              Shop our signs
             </Button>
 
             <Button
               variant="outlined"
               size="large"
               color="info"
-              href="/design"
+              href="/our-work"
               component={Link}
               sx={{
                 margin: 1,
