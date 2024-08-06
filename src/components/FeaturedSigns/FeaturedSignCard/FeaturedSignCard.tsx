@@ -8,9 +8,7 @@ import {
   Button,
   Card,
   CardActionArea,
-  // CardActions,
   CardContent,
-  // CardMedia,
   LinearProgress,
   Skeleton,
   Typography,
@@ -30,10 +28,7 @@ export const FeaturedSignCard: React.FC<FeaturedSign> = ({
     isFetching,
   } = useGetSignSvg(inputs, "featured", true, true, true)
 
-  const textLines = JSON.stringify(
-    // Object.values(inputs.textLines).map((line) => line.value),
-    inputs.textLines,
-  )
+  const textLines = JSON.stringify(inputs.textLines)
   const qs = queryString.stringify({ ...inputs, textLines })
 
   return (
