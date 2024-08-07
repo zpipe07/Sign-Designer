@@ -10,6 +10,9 @@ import { Color } from "@/src/components/SignDesigner/types"
 import { generateModel } from "@/src/utils/makerjs"
 import { parseSearchParams } from "@/src/utils"
 
+export const maxDuration = 15
+export const dynamic = "force-dynamic"
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const {
@@ -85,5 +88,3 @@ export async function GET(request: NextRequest) {
     headers: { "Content-Type": "image/svg+xml" },
   })
 }
-
-export const dynamic = "force-dynamic"
