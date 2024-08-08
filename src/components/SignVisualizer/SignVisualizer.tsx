@@ -146,7 +146,7 @@ export const SignVisualizer: React.FC = () => {
           />
 
           <Box height={4} marginTop={1}>
-            {isFetching  && <LinearProgress />}
+            {isFetching && <LinearProgress />}
           </Box>
 
           {!doesTextFit && (
