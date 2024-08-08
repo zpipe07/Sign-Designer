@@ -1,10 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
+import Tab from "@mui/material/Tab"
+import Tabs from "@mui/material/Tabs"
+import Typography from "@mui/material/Typography"
 
 import { HeroContainer } from "@/src/components/HeroContainer"
+import { SignDetailsCarousel } from "@/src/components/SignDetailsCarousel"
 
 const TabPanel: React.FC<{
   children: React.ReactNode
@@ -135,16 +139,7 @@ export const SignDetails: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Image
-            src="/images/product/IMG_5837.jpg"
-            alt=""
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={500}
-            height={300}
-          />
+          <SignDetailsCarousel />
         </Grid>
       </Grid>
     </HeroContainer>
