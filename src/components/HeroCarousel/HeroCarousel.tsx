@@ -22,9 +22,9 @@ import {
   useDotButton,
 } from "@/src/components/CarouselDot"
 
-import OneImg from "../../../public/images/product/IMG_5834.jpg"
-import TwoImg from "../../../public/images/product/IMG_5822.jpg"
-import ThreeImg from "../../../public/images/product/IMG_5837.jpg"
+import OneImg from "../../../public/images/product/donnelly/1995_donnelly-ave-II.jpg"
+import TwoImg from "../../../public/images/product/top-round/300_alamo-plaza.jpg"
+import ThreeImg from "../../../public/images/product/rectangle/516_west-l-street.jpg"
 
 export const HeroCarousel: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
