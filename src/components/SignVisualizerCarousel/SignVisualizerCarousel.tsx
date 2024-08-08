@@ -36,6 +36,9 @@ export const SignVisualizerCarousel: React.FC = () => {
           sx={{
             width: "100%",
             padding: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <SignVisualizer />
