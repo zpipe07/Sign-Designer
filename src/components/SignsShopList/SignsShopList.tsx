@@ -12,7 +12,7 @@ export const SignsShopList: React.FC<Props> = ({ signs }) => {
     <Grid container spacing={{ xs: 1, sm: 2 }}>
       {signs.map(({ title, inputs, imageUrl }) => {
         return (
-          <Grid item xs={6} sm={4} key={title}>
+          <Grid item xs={12} sm={6} md={4} key={title}>
             <FeaturedSignCard
               title={title}
               inputs={inputs}

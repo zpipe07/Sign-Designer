@@ -139,54 +139,55 @@ export const formatSvg = (svg: string, showShadow: boolean) => {
     group.setAttribute("id", id)
     path.removeAttribute("id")
 
-    if (showShadow) {
-      const duplicatePath = path.cloneNode(true) as SVGPathElement
+    // if (showShadow) {
+    //   const duplicatePath = path.cloneNode(true) as SVGPathElement
 
-      duplicatePath.setAttribute("filter", "url(#filter)")
-      group.appendChild(duplicatePath)
-    }
+    //   duplicatePath.setAttribute("filter", "url(#filter)")
+    //   group.appendChild(duplicatePath)
+    // }
   })
 
-  if (showShadow) {
-    const filter = dom.window.document.createElement("filter")
+  // if (showShadow) {
+  //   const filter = dom.window.document.createElement("filter")
 
-    filter.setAttribute("id", "filter")
-    filter.innerHTML = `
-        <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="dark_edge_01"></feMorphology>
-        <feOffset dx="0.05" dy="0.05" in="dark_edge_01" result="dark_edge_03"></feOffset>
-        <feFlood flood-color="rgba(0,0,0,0.5)" result="dark_edge_04"></feFlood>
-        <feComposite in="dark_edge_04" in2="dark_edge_03" operator="in" result="dark_edge"></feComposite>
+  //   filter.setAttribute("id", "filter")
+  //   filter.innerHTML = `
+  //       <!-- <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="dark_edge_01" color-interpolation-filters="sRGB"></feMorphology> -->
+  //       <feOffset dx="0.05" dy="0.05" in="SourceAlpha" result="dark_edge_03" color-interpolation-filters="sRGB"></feOffset>
+  //       <feFlood flood-color="rgba(0,0,0,0.5)" result="dark_edge_04" color-interpolation-filters="sRGB"></feFlood>
+  //       <feComposite in="dark_edge_04" in2="dark_edge_03" operator="in" result="dark_edge" color-interpolation-filters="sRGB"></feComposite>
 
-        <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="light_edge_01"></feMorphology>
-        <feOffset dx="-0.0125" dy="-0.0125" in="light_edge_01" result="light_edge_03"></feOffset>
-        <feFlood flood-color="rgba(255,255,255,0.75)" result="light_edge_04"></feFlood>
-        <feComposite in="light_edge_04" in2="light_edge_03" operator="in" result="light_edge"></feComposite>
+  //       <!-- <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="light_edge_01" color-interpolation-filters="sRGB"></feMorphology> -->
+  //       <feOffset dx="-0.0125" dy="-0.0125" in="SourceAlpha" result="light_edge_03" color-interpolation-filters="sRGB"></feOffset>
+  //       <feFlood flood-color="rgba(255,255,255,0.75)" result="light_edge_04" color-interpolation-filters="sRGB"></feFlood>
+  //       <feComposite in="light_edge_04" in2="light_edge_03" operator="in" result="light_edge" color-interpolation-filters="sRGB"></feComposite>
 
-        <feMerge result="edges">
-          <feMergeNode in="dark_edge"></feMergeNode>
-          <feMergeNode in="light_edge"></feMergeNode>
-        </feMerge>
-        <feComposite in="edges" in2="SourceGraphic" operator="out" result="edges_complete"></feComposite>
+  //       <feMerge result="edges" color-interpolation-filters="sRGB">
+  //         <feMergeNode in="dark_edge"></feMergeNode>
+  //         <feMergeNode in="light_edge"></feMergeNode>
+  //       </feMerge>
+  //       <feComposite in="edges" in2="SourceGraphic" operator="out" result="edges_complete" color-interpolation-filters="sRGB"></feComposite>
 
-        <feGaussianBlur stdDeviation="0.05" result="bevel_blur"></feGaussianBlur>
-        <feSpecularLighting
-          result="bevel_lighting"
-          in="bevel_blur"
-          specularConstant="10"
-          specularExponent="10"
-          lighting-color="rgba(60,60,60,0.5)"
-        >
-          <feDistantLight azimuth="25" elevation="25"></feDistantLight>
-        </feSpecularLighting>
-        <feComposite in="bevel_lighting" in2="SourceGraphic" operator="in" result="bevel_complete"></feComposite>
+  //       <feGaussianBlur stdDeviation="0.05" result="bevel_blur" color-interpolation-filters="sRGB"></feGaussianBlur>
+  //       <feSpecularLighting
+  //         result="bevel_lighting"
+  //         in="bevel_blur"
+  //         specularConstant="100"
+  //         specularExponent="100"
+  //         lighting-color="rgba(60,60,60,0.25)"
+  //         color-interpolation-filters="sRGB"
+  //       >
+  //         <feDistantLight azimuth="25" elevation="10"></feDistantLight>
+  //       </feSpecularLighting>
+  //       <feComposite in="bevel_lighting" in2="SourceGraphic" operator="in" result="bevel_complete" color-interpolation-filters="sRGB"></feComposite>
 
-        <feMerge result="complete">
-          <feMergeNode in="edges_complete"></feMergeNode>
-          <feMergeNode in="bevel_complete"></feMergeNode>
-        </feMerge>
-      `
-    svgElement.appendChild(filter)
-  }
+  //       <feMerge result="complete" color-interpolation-filters="sRGB">
+  //         <feMergeNode in="edges_complete"></feMergeNode>
+  //         <feMergeNode in="bevel_complete"></feMergeNode>
+  //       </feMerge>
+  //     `
+  //   svgElement.appendChild(filter)
+  // }
 
   const oldGroup = dom.window.document.getElementById("svgGroup")
 
